@@ -1,0 +1,813 @@
+{
+  "ok": true,
+  "productName": "Dominic FaceScan",
+  "caseClassification": "DEMONSTRATION_SYNTHETIC_BENCHMARK",
+  "demonstrationNotice": "DEMONSTRATION BENCHMARK CASE — Rights-Verified Meta AI Synthetic Portrait (Not a Live Person)",
+  "mode": "ADMIN_AUTHENTICATED_SYNTHETIC_EVALUATION",
+  "clinicalWarning": "SYNTHETIC_EXPERIMENT_ONLY — Trained on 88 AI-generated faces with AI_PROVISIONAL_LABEL. Not clinically validated; never use for patient diagnosis.",
+  "imageId": "SYN-M048",
+  "imageName": "SYN-M048.jpg",
+  "cvFold": 0,
+  "qualityGate": {
+    "ok": true,
+    "problems": [],
+    "viewMode": "frontal",
+    "viewLabel": "Frontal View (0°)",
+    "resolution": {
+      "w": 1600,
+      "h": 1600,
+      "meetsMinFace200Px": true,
+      "meetsClinical512Px": true
+    },
+    "poseDeg": {
+      "yaw": 0.0,
+      "pitch": 0.0,
+      "roll": -1.18
+    },
+    "regionsAllInside90Pct": true,
+    "regionsPartlyOutside": []
+  },
+  "geometry": {
+    "ey": 0.41319,
+    "cy": 0.68376,
+    "xc": 0.50384,
+    "xcCanonical": 0.50384,
+    "hw": 0.14109,
+    "chinRawY": 0.72277,
+    "viewMode": "frontal"
+  },
+  "handAnnotatedGeometry": {
+    "ey": 0.42,
+    "cy": 0.69,
+    "xc": 0.52,
+    "hw": 0.15
+  },
+  "regions": {
+    "boxes": {
+      "cheek": [
+        546.54,
+        726.04,
+        1065.75,
+        1029.08
+      ],
+      "jawline": [
+        501.39,
+        899.21,
+        1110.9,
+        1245.54
+      ],
+      "submental": [
+        614.26,
+        964.14,
+        998.03,
+        1332.12
+      ],
+      "neck": [
+        546.54,
+        1072.37,
+        1065.75,
+        1526.93
+      ]
+    },
+    "visible": {
+      "cheek": 1.0,
+      "jawline": 1.0,
+      "submental": 1.0,
+      "neck": 1.0
+    },
+    "outside": []
+  },
+  "individualJowlJawlineTelemetry": {
+    "telemetryType": "INDIVIDUAL_GEOMETRIC_MANDIBULAR_CONTOUR (NOT_A_CLINICAL_GRADE)",
+    "contourMode": "CALIBRATED_7PT_MANDIBULAR_SPLINE",
+    "rightJowlExcursionPctOfD": 16.67,
+    "leftJowlExcursionPctOfD": 15.44,
+    "meanJowlExcursionPctOfD": 16.05,
+    "bilateralJowlAsymmetryPct": 1.23,
+    "rightMandibularSlopeDeg": 29.23,
+    "leftMandibularSlopeDeg": 28.45,
+    "mandibularSlopeAsymmetryDeg": 0.78,
+    "mentonToGonionDepthRatio": 0.2754,
+    "eyeLineRollDeg": -1.18,
+    "calibratedChinLiftPct": 12.6,
+    "chordPointsPx": [
+      [
+        563.4,
+        1027.6
+      ],
+      [
+        805.3,
+        1156.4
+      ],
+      [
+        1048.9,
+        1017.9
+      ]
+    ],
+    "contourPolylinePx": [
+      [
+        563.4,
+        1027.6
+      ],
+      [
+        640.8,
+        1115.7
+      ],
+      [
+        703.7,
+        1174.5
+      ],
+      [
+        761.8,
+        1165.7
+      ],
+      [
+        805.3,
+        1156.4
+      ],
+      [
+        849.2,
+        1161.6
+      ],
+      [
+        907.6,
+        1165.1
+      ],
+      [
+        970.9,
+        1105.7
+      ],
+      [
+        1048.9,
+        1017.9
+      ]
+    ]
+  },
+  "proportionAnd3dTelemetry": {
+    "originalImageDimensions": {
+      "w": 1600,
+      "h": 1600,
+      "aspectRatio": 1.0
+    },
+    "interPupillaryDistancePx": 267.8,
+    "noseLengthPx": 208.05,
+    "jawWidthPx": 485.57,
+    "eyeToChinHeightPx": 495.36,
+    "facialHeightToJawWidthRatio": 1.0202,
+    "scaleUniformityRatioXY": 1.0,
+    "aspectDistortionPct": 0.0,
+    "cameraIntrinsicsIsotropic": {
+      "fx": 267.801,
+      "fy": 267.801,
+      "cx": 800.3,
+      "cy": 908.76,
+      "aspectRatio": 1.0,
+      "frontalReprojectionErrorPx": 0.0
+    },
+    "isotropic3dSurfaceMesh": {
+      "vertices": [
+        {
+          "id": "brow_mid",
+          "px": [
+            800.3,
+            492.67
+          ],
+          "xyzIsotropicIpd": [
+            0.0,
+            -1.5537,
+            0.32
+          ]
+        },
+        {
+          "id": "right_eye",
+          "px": [
+            666.43,
+            664.22
+          ],
+          "xyzIsotropicIpd": [
+            -0.4999,
+            -0.9132,
+            0.24
+          ]
+        },
+        {
+          "id": "left_eye",
+          "px": [
+            934.16,
+            657.98
+          ],
+          "xyzIsotropicIpd": [
+            0.4999,
+            -0.9365,
+            0.24
+          ]
+        },
+        {
+          "id": "nose_tip",
+          "px": [
+            802.1,
+            869.14
+          ],
+          "xyzIsotropicIpd": [
+            0.0067,
+            -0.148,
+            0.52
+          ]
+        },
+        {
+          "id": "right_malar",
+          "px": [
+            543.99,
+            829.51
+          ],
+          "xyzIsotropicIpd": [
+            -0.9571,
+            -0.2959,
+            0.3
+          ]
+        },
+        {
+          "id": "left_malar",
+          "px": [
+            1068.3,
+            829.51
+          ],
+          "xyzIsotropicIpd": [
+            1.0008,
+            -0.2959,
+            0.3
+          ]
+        },
+        {
+          "id": "right_commissure",
+          "px": [
+            698.56,
+            992.97
+          ],
+          "xyzIsotropicIpd": [
+            -0.3799,
+            0.3144,
+            0.28
+          ]
+        },
+        {
+          "id": "left_commissure",
+          "px": [
+            902.03,
+            992.97
+          ],
+          "xyzIsotropicIpd": [
+            0.3799,
+            0.3144,
+            0.28
+          ]
+        },
+        {
+          "id": "right_gonion",
+          "px": [
+            563.41,
+            1027.55
+          ],
+          "xyzIsotropicIpd": [
+            -0.8846,
+            0.4436,
+            -0.18
+          ]
+        },
+        {
+          "id": "left_gonion",
+          "px": [
+            1048.88,
+            1017.89
+          ],
+          "xyzIsotropicIpd": [
+            0.9282,
+            0.4075,
+            -0.18
+          ]
+        },
+        {
+          "id": "right_jowl",
+          "px": [
+            684.36,
+            1106.85
+          ],
+          "xyzIsotropicIpd": [
+            -0.4329,
+            0.7397,
+            0.1
+          ]
+        },
+        {
+          "id": "left_jowl",
+          "px": [
+            927.1,
+            1102.02
+          ],
+          "xyzIsotropicIpd": [
+            0.4735,
+            0.7216,
+            0.1
+          ]
+        },
+        {
+          "id": "menton",
+          "px": [
+            805.31,
+            1156.43
+          ],
+          "xyzIsotropicIpd": [
+            0.0187,
+            0.9248,
+            0.36
+          ]
+        },
+        {
+          "id": "submental",
+          "px": [
+            805.31,
+            1245.6
+          ],
+          "xyzIsotropicIpd": [
+            0.0187,
+            1.2578,
+            -0.12
+          ]
+        }
+      ],
+      "triangles": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          3,
+          2
+        ],
+        [
+          1,
+          4,
+          3
+        ],
+        [
+          2,
+          3,
+          5
+        ],
+        [
+          4,
+          6,
+          3
+        ],
+        [
+          5,
+          3,
+          7
+        ],
+        [
+          4,
+          8,
+          6
+        ],
+        [
+          5,
+          7,
+          9
+        ],
+        [
+          8,
+          10,
+          6
+        ],
+        [
+          9,
+          7,
+          11
+        ],
+        [
+          6,
+          10,
+          12
+        ],
+        [
+          7,
+          12,
+          11
+        ],
+        [
+          3,
+          6,
+          7
+        ],
+        [
+          6,
+          12,
+          7
+        ],
+        [
+          10,
+          13,
+          12
+        ],
+        [
+          11,
+          12,
+          13
+        ]
+      ],
+      "recommendedDefaultView": "2D_FAITHFUL_PHOTO_OVERLAY",
+      "honest3dLimitationNotice": "Single-camera 2D photographs cannot measure true volumetric Z-depth or sub-SMAS tissue thickness. This 3D wireframe is an aspect-locked isotropic surface relief projection (f_x = f_y = IPD_px, 0.00% X/Y distortion) anchored directly to the person's 2D landmarks; clinical sagging assessment uses the faithful 2D photograph overlay."
+    }
+  },
+  "proportionAnd3dProjectionTelemetry": {
+    "originalImageDimensions": {
+      "w": 1600,
+      "h": 1600,
+      "aspectRatio": 1.0
+    },
+    "interPupillaryDistancePx": 267.8,
+    "noseLengthPx": 208.05,
+    "jawWidthPx": 485.57,
+    "eyeToChinHeightPx": 495.36,
+    "facialHeightToJawWidthRatio": 1.0202,
+    "scaleUniformityRatioXY": 1.0,
+    "aspectDistortionPct": 0.0,
+    "cameraIntrinsicsIsotropic": {
+      "fx": 267.801,
+      "fy": 267.801,
+      "cx": 800.3,
+      "cy": 908.76,
+      "aspectRatio": 1.0,
+      "frontalReprojectionErrorPx": 0.0
+    },
+    "isotropic3dSurfaceMesh": {
+      "vertices": [
+        {
+          "id": "brow_mid",
+          "px": [
+            800.3,
+            492.67
+          ],
+          "xyzIsotropicIpd": [
+            0.0,
+            -1.5537,
+            0.32
+          ]
+        },
+        {
+          "id": "right_eye",
+          "px": [
+            666.43,
+            664.22
+          ],
+          "xyzIsotropicIpd": [
+            -0.4999,
+            -0.9132,
+            0.24
+          ]
+        },
+        {
+          "id": "left_eye",
+          "px": [
+            934.16,
+            657.98
+          ],
+          "xyzIsotropicIpd": [
+            0.4999,
+            -0.9365,
+            0.24
+          ]
+        },
+        {
+          "id": "nose_tip",
+          "px": [
+            802.1,
+            869.14
+          ],
+          "xyzIsotropicIpd": [
+            0.0067,
+            -0.148,
+            0.52
+          ]
+        },
+        {
+          "id": "right_malar",
+          "px": [
+            543.99,
+            829.51
+          ],
+          "xyzIsotropicIpd": [
+            -0.9571,
+            -0.2959,
+            0.3
+          ]
+        },
+        {
+          "id": "left_malar",
+          "px": [
+            1068.3,
+            829.51
+          ],
+          "xyzIsotropicIpd": [
+            1.0008,
+            -0.2959,
+            0.3
+          ]
+        },
+        {
+          "id": "right_commissure",
+          "px": [
+            698.56,
+            992.97
+          ],
+          "xyzIsotropicIpd": [
+            -0.3799,
+            0.3144,
+            0.28
+          ]
+        },
+        {
+          "id": "left_commissure",
+          "px": [
+            902.03,
+            992.97
+          ],
+          "xyzIsotropicIpd": [
+            0.3799,
+            0.3144,
+            0.28
+          ]
+        },
+        {
+          "id": "right_gonion",
+          "px": [
+            563.41,
+            1027.55
+          ],
+          "xyzIsotropicIpd": [
+            -0.8846,
+            0.4436,
+            -0.18
+          ]
+        },
+        {
+          "id": "left_gonion",
+          "px": [
+            1048.88,
+            1017.89
+          ],
+          "xyzIsotropicIpd": [
+            0.9282,
+            0.4075,
+            -0.18
+          ]
+        },
+        {
+          "id": "right_jowl",
+          "px": [
+            684.36,
+            1106.85
+          ],
+          "xyzIsotropicIpd": [
+            -0.4329,
+            0.7397,
+            0.1
+          ]
+        },
+        {
+          "id": "left_jowl",
+          "px": [
+            927.1,
+            1102.02
+          ],
+          "xyzIsotropicIpd": [
+            0.4735,
+            0.7216,
+            0.1
+          ]
+        },
+        {
+          "id": "menton",
+          "px": [
+            805.31,
+            1156.43
+          ],
+          "xyzIsotropicIpd": [
+            0.0187,
+            0.9248,
+            0.36
+          ]
+        },
+        {
+          "id": "submental",
+          "px": [
+            805.31,
+            1245.6
+          ],
+          "xyzIsotropicIpd": [
+            0.0187,
+            1.2578,
+            -0.12
+          ]
+        }
+      ],
+      "triangles": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          3,
+          2
+        ],
+        [
+          1,
+          4,
+          3
+        ],
+        [
+          2,
+          3,
+          5
+        ],
+        [
+          4,
+          6,
+          3
+        ],
+        [
+          5,
+          3,
+          7
+        ],
+        [
+          4,
+          8,
+          6
+        ],
+        [
+          5,
+          7,
+          9
+        ],
+        [
+          8,
+          10,
+          6
+        ],
+        [
+          9,
+          7,
+          11
+        ],
+        [
+          6,
+          10,
+          12
+        ],
+        [
+          7,
+          12,
+          11
+        ],
+        [
+          3,
+          6,
+          7
+        ],
+        [
+          6,
+          12,
+          7
+        ],
+        [
+          10,
+          13,
+          12
+        ],
+        [
+          11,
+          12,
+          13
+        ]
+      ],
+      "recommendedDefaultView": "2D_FAITHFUL_PHOTO_OVERLAY",
+      "honest3dLimitationNotice": "Single-camera 2D photographs cannot measure true volumetric Z-depth or sub-SMAS tissue thickness. This 3D wireframe is an aspect-locked isotropic surface relief projection (f_x = f_y = IPD_px, 0.00% X/Y distortion) anchored directly to the person's 2D landmarks; clinical sagging assessment uses the faithful 2D photograph overlay."
+    }
+  },
+  "modelEvaluation": {
+    "available": true,
+    "modelId": "facial-sagging-ai-v2-convnext-tiny-4regions",
+    "backbone": "convnext_tiny.fb_in22k_ft_in1k (4 region heads, grades 0–3)",
+    "onnxFile": "public/face-scan-v2/internal/v2-fold0-int8.onnx",
+    "onnxSha256": "fc7b0ac12515696c753127e43275be33369e9a1cca4754b021cc388ceb9d1d82",
+    "pytorchCheckpointsDir": "D:\\AI\\Facial-Sagging\\synthetic_dataset\\experiment\\v2\\checkpoints\\SYNTHETIC_EXPERIMENT_ONLY_v2cv_regions",
+    "regionAssessments": [
+      {
+        "region": "cheek",
+        "regionLabel": {
+          "en": "Cheek (Midface / Malar Pad)",
+          "th": "แก้ม (Cheek / Midface)"
+        },
+        "assessable": true,
+        "grade": 1,
+        "outOfFoldGrade": 1,
+        "probabilities": [
+          0.0003,
+          0.9874,
+          0.0118,
+          0.0005
+        ],
+        "topProbability": 0.9874,
+        "top2Margin": 0.9755,
+        "normalizedEntropy": 0.0515,
+        "confidenceBand": "SYNTHETIC_INTERNAL_HIGH_CONFIDENCE",
+        "predictedClassTrainSupport": 20,
+        "warnings": [
+          "Dataset Imbalance Note: In the 88-image synthetic training set, grade(s) [0, 3] for 'cheek' had <=3 training samples (Grade 0 recall = 0.00)."
+        ],
+        "aiProvisionalLabel": 1
+      },
+      {
+        "region": "jawline",
+        "regionLabel": {
+          "en": "Jawline & Jowl Border",
+          "th": "แนวกรามและกระเปาะแก้ม (Jawline & Jowl)"
+        },
+        "assessable": true,
+        "grade": 1,
+        "outOfFoldGrade": 1,
+        "probabilities": [
+          0.0,
+          0.9991,
+          0.0006,
+          0.0002
+        ],
+        "topProbability": 0.9991,
+        "top2Margin": 0.9985,
+        "normalizedEntropy": 0.0056,
+        "confidenceBand": "SYNTHETIC_INTERNAL_HIGH_CONFIDENCE",
+        "predictedClassTrainSupport": 27,
+        "warnings": [
+          "Dataset Imbalance Note: In the 88-image synthetic training set, grade(s) [0] for 'jawline' had <=3 training samples (Grade 0 recall = 0.00)."
+        ],
+        "aiProvisionalLabel": 1
+      },
+      {
+        "region": "submental",
+        "regionLabel": {
+          "en": "Under Chin (Submental)",
+          "th": "ใต้คาง (Submental)"
+        },
+        "assessable": true,
+        "grade": 1,
+        "outOfFoldGrade": 1,
+        "probabilities": [
+          0.0044,
+          0.9929,
+          0.0024,
+          0.0003
+        ],
+        "topProbability": 0.9929,
+        "top2Margin": 0.9886,
+        "normalizedEntropy": 0.0345,
+        "confidenceBand": "SYNTHETIC_INTERNAL_HIGH_CONFIDENCE",
+        "predictedClassTrainSupport": 29,
+        "warnings": [
+          "Dataset Imbalance Note: In the 88-image synthetic training set, grade(s) [0] for 'submental' had <=3 training samples (Grade 0 recall = 0.00)."
+        ],
+        "aiProvisionalLabel": 1
+      },
+      {
+        "region": "neck",
+        "regionLabel": {
+          "en": "Neck (Platysmal / Cervical)",
+          "th": "ลำคอ (Neck / Platysma)"
+        },
+        "assessable": true,
+        "grade": 2,
+        "outOfFoldGrade": 2,
+        "probabilities": [
+          0.0012,
+          0.492,
+          0.5054,
+          0.0014
+        ],
+        "topProbability": 0.5054,
+        "top2Margin": 0.0134,
+        "normalizedEntropy": 0.513,
+        "confidenceBand": "LOW_CONFIDENCE_BORDERLINE",
+        "predictedClassTrainSupport": 52,
+        "warnings": [
+          "Dataset Imbalance Note: In the 88-image synthetic training set, grade(s) [0] for 'neck' had <=3 training samples (Grade 0 recall = 0.00).",
+          "Borderline / High-Uncertainty Prediction: Top probability is 50.5% with margin 1.3% between adjacent grades."
+        ],
+        "aiProvisionalLabel": 1
+      }
+    ]
+  }
+}

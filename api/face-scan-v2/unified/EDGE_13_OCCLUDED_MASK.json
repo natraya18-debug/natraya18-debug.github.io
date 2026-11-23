@@ -1,0 +1,144 @@
+{
+  "ok": true,
+  "productName": "Dominic FaceScan",
+  "caseId": "EDGE_13_OCCLUDED_MASK",
+  "caseClassification": "DEMONSTRATION_REFERENCE_PORTRAIT_BENCHMARK",
+  "demonstrationNotice": "DEMONSTRATION BENCHMARK CASE — Stored Evaluation Portrait (Not a Live Visitor Capture)",
+  "datasetGroup": "V6_QUALITY_GATE_EDGE_CASE",
+  "imageName": "test_13_occluded_jawline_mask.jpg",
+  "resolution": "768x1376",
+  "nativeResolution": {
+    "w": 768,
+    "h": 1376,
+    "aspectRatio": 0.5581
+  },
+  "note": "Surgical mask occluding jawline/marionette/chin",
+  "unifiedQualityAndOcclusionGate": {
+    "passed": false,
+    "failureCodes": [
+      "OCCLUDED_JAWLINE"
+    ],
+    "warningCodes": [],
+    "jawlineSkinVisibilityPct": 0.0,
+    "neckSkinVisibilityPct": null,
+    "shadowAsymmetryIndex": null,
+    "viewMode": "frontal"
+  },
+  "v2CalibratedRegions": null,
+  "v2MandibularChordTelemetry": null,
+  "v6AnatomicalLandmarks": {
+    "native_image_size": [
+      768,
+      1376
+    ]
+  },
+  "v6IndividualSubRegionContours": {},
+  "proportionAnd3dTelemetry": null,
+  "proportionAnd3dProjectionTelemetry": null,
+  "mode": "UNIFIED_V2_AND_V6_BENCHMARK_DEMONSTRATION",
+  "modelComparison": {
+    "available": true,
+    "clinicalDisclaimer": "DEMONSTRATION BENCHMARK EVALUATION — V2 grades carry AI_PROVISIONAL_LABEL provenance (88 synthetic portraits); V6 grades carry 17-portrait developer reference provenance (dual-physician claim rater_b = rater_a + 0.2 INVALIDATED). Not a clinical diagnosis.",
+    "v2ConvNeXtTiny": {
+      "eval_mode": "5-Fold ConvNeXt-Tiny Ensemble (unseen subject)",
+      "single_fold_ms": 137.0,
+      "ensemble_5fold_ms": 707.5,
+      "regions": {
+        "cheek_sagging": {
+          "visible_fraction": 1.0,
+          "gradeable_by_v2_visibility": true,
+          "blocked_by_v6_occlusion_gate": false,
+          "predicted_grade_raw": 1,
+          "predicted_grade_logit_adjusted": 1,
+          "unified_grade_with_occlusion_gate": 1,
+          "expected_continuous_grade_0_3": 1.305,
+          "max_probability": 0.6941,
+          "shannon_entropy": 0.4718,
+          "uncertainty_band": "MODERATE_UNCERTAINTY",
+          "probabilities_grade_0_3": [
+            0.0027,
+            0.6941,
+            0.2989,
+            0.0043
+          ],
+          "ai_provisional_label": null
+        },
+        "jawline_sagging": {
+          "visible_fraction": 1.0,
+          "gradeable_by_v2_visibility": true,
+          "blocked_by_v6_occlusion_gate": true,
+          "predicted_grade_raw": 1,
+          "predicted_grade_logit_adjusted": 1,
+          "unified_grade_with_occlusion_gate": "NA",
+          "expected_continuous_grade_0_3": 1.228,
+          "max_probability": 0.5711,
+          "shannon_entropy": 0.795,
+          "uncertainty_band": "HIGH_UNCERTAINTY",
+          "probabilities_grade_0_3": [
+            0.132,
+            0.5711,
+            0.2332,
+            0.0636
+          ],
+          "ai_provisional_label": null
+        },
+        "submental_sagging": {
+          "visible_fraction": 1.0,
+          "gradeable_by_v2_visibility": true,
+          "blocked_by_v6_occlusion_gate": true,
+          "predicted_grade_raw": 1,
+          "predicted_grade_logit_adjusted": 1,
+          "unified_grade_with_occlusion_gate": "NA",
+          "expected_continuous_grade_0_3": 1.106,
+          "max_probability": 0.7364,
+          "shannon_entropy": 0.5844,
+          "uncertainty_band": "MODERATE_UNCERTAINTY",
+          "probabilities_grade_0_3": [
+            0.0893,
+            0.7364,
+            0.153,
+            0.0213
+          ],
+          "ai_provisional_label": null
+        },
+        "neck_sagging": {
+          "visible_fraction": 0.5714,
+          "gradeable_by_v2_visibility": false,
+          "blocked_by_v6_occlusion_gate": true,
+          "predicted_grade_raw": "NA",
+          "predicted_grade_logit_adjusted": "NA",
+          "unified_grade_with_occlusion_gate": "NA",
+          "expected_continuous_grade_0_3": null,
+          "max_probability": null,
+          "shannon_entropy": null,
+          "uncertainty_band": "UNGRADEABLE_NA",
+          "probabilities_grade_0_3": [
+            0.005,
+            0.6639,
+            0.3271,
+            0.004
+          ],
+          "ai_provisional_label": null
+        }
+      }
+    },
+    "v6S3fdHessianMlp": {
+      "status": "REJECTED_QUALITY_GATE",
+      "inference_ms": 375.6,
+      "quality_gate_passed": false,
+      "failure_codes": [
+        "OCCLUDED_JAWLINE"
+      ],
+      "warning_codes": [],
+      "jawline_visibility_pct": 0.0,
+      "neck_skin_visibility_pct": null,
+      "shadow_asymmetry_index": null,
+      "composite_sagging_grade_0_4": null,
+      "composite_sagging_score_0_100": null,
+      "croma_jawline_label": null,
+      "mandibular_max_deflection_pct_ipd": null,
+      "regions_10": {},
+      "hardcoded_v6_reference_entry_present": false
+    }
+  }
+}

@@ -1,0 +1,1975 @@
+{
+  "ok": true,
+  "productName": "Dominic FaceScan",
+  "caseId": "SYN3-B04-P008-FRT",
+  "caseClassification": "DEMONSTRATION_REFERENCE_PORTRAIT_BENCHMARK",
+  "demonstrationNotice": "DEMONSTRATION BENCHMARK CASE — Stored Evaluation Portrait (Not a Live Visitor Capture)",
+  "datasetGroup": "UNSEEN_V3B04P_LOCKED_TEST",
+  "imageName": "SYN3-B04-P008-FRT.jpg",
+  "resolution": "1280x1920",
+  "nativeResolution": {
+    "w": 1280,
+    "h": 1920,
+    "aspectRatio": 0.6667
+  },
+  "note": "Unseen Locked Test: Firm face with isolated Grade 2 neck laxity (Blind QA C:0, J:0, S:0, N:2)",
+  "unifiedQualityAndOcclusionGate": {
+    "passed": true,
+    "failureCodes": [],
+    "warningCodes": [],
+    "jawlineSkinVisibilityPct": 100.0,
+    "neckSkinVisibilityPct": 100.0,
+    "shadowAsymmetryIndex": 0.036,
+    "viewMode": "frontal"
+  },
+  "v2CalibratedRegions": {
+    "boxes": {
+      "cheek": [
+        390.85,
+        687.82,
+        889.15,
+        1018.87
+      ],
+      "jawline": [
+        347.52,
+        876.99,
+        932.48,
+        1255.34
+      ],
+      "submental": [
+        455.85,
+        947.93,
+        824.15,
+        1349.93
+      ],
+      "neck": [
+        390.85,
+        1066.16,
+        889.15,
+        1562.75
+      ]
+    },
+    "visible": {
+      "cheek": 1.0,
+      "jawline": 1.0,
+      "submental": 1.0,
+      "neck": 1.0
+    },
+    "outside": []
+  },
+  "v2MandibularChordTelemetry": {
+    "telemetryType": "INDIVIDUAL_GEOMETRIC_MANDIBULAR_CONTOUR (NOT_A_CLINICAL_GRADE)",
+    "contourMode": "FULL_468_MANDIBULAR_POLYLINE",
+    "rightJowlExcursionPctOfD": 12.8,
+    "leftJowlExcursionPctOfD": 11.3,
+    "meanJowlExcursionPctOfD": 12.05,
+    "bilateralJowlAsymmetryPct": 1.5,
+    "rightMandibularSlopeDeg": 27.22,
+    "leftMandibularSlopeDeg": 26.36,
+    "mandibularSlopeAsymmetryDeg": 0.86,
+    "mentonToGonionDepthRatio": 0.2488,
+    "eyeLineRollDeg": -3.51,
+    "calibratedChinLiftPct": 12.6,
+    "chordPointsPx": [
+      [
+        299.4,
+        988.7
+      ],
+      [
+        684.8,
+        1158.0
+      ],
+      [
+        979.6,
+        988.7
+      ]
+    ],
+    "contourPolylinePx": [
+      [
+        299.4,
+        988.7
+      ],
+      [
+        425.2,
+        1102.5
+      ],
+      [
+        498.3,
+        1142.2
+      ],
+      [
+        534.2,
+        1157.6
+      ],
+      [
+        602.6,
+        1154.3
+      ],
+      [
+        636.9,
+        1158.0
+      ],
+      [
+        684.8,
+        1158.0
+      ],
+      [
+        773.4,
+        1153.2
+      ],
+      [
+        806.1,
+        1138.9
+      ],
+      [
+        870.4,
+        1104.7
+      ],
+      [
+        903.1,
+        1091.5
+      ],
+      [
+        967.4,
+        1057.4
+      ],
+      [
+        979.6,
+        988.7
+      ]
+    ]
+  },
+  "v6AnatomicalLandmarks": {
+    "viewer_left_eye": [
+      490.67,
+      629.33
+    ],
+    "viewer_right_eye": [
+      789.33,
+      604.44
+    ],
+    "eye_midpoint": [
+      640.0,
+      616.89
+    ],
+    "glabella": [
+      635.38,
+      563.2
+    ],
+    "nose_tip": [
+      657.07,
+      827.02
+    ],
+    "subnasale": [
+      657.07,
+      842.0
+    ],
+    "alar_viewer_left": [
+      590.58,
+      819.56
+    ],
+    "alar_viewer_right": [
+      722.13,
+      808.53
+    ],
+    "commissure_viewer_left": [
+      556.34,
+      974.0
+    ],
+    "stomion": [
+      670.22,
+      974.0
+    ],
+    "commissure_viewer_right": [
+      784.1,
+      974.0
+    ],
+    "gonion_viewer_left": [
+      299.37,
+      988.72
+    ],
+    "prejowl_viewer_left": [
+      594.49,
+      1151.64
+    ],
+    "menton": [
+      684.8,
+      1158.0
+    ],
+    "prejowl_viewer_right": [
+      773.69,
+      1136.71
+    ],
+    "gonion_viewer_right": [
+      979.63,
+      988.72
+    ],
+    "traced_mandibular_contour": [
+      [
+        347.86,
+        1025.42
+      ],
+      [
+        388.34,
+        1079.04
+      ],
+      [
+        425.18,
+        1102.54
+      ],
+      [
+        462.01,
+        1123.47
+      ],
+      [
+        498.34,
+        1142.21
+      ],
+      [
+        534.15,
+        1157.63
+      ],
+      [
+        567.35,
+        1147.35
+      ],
+      [
+        602.64,
+        1154.32
+      ],
+      [
+        636.89,
+        1158.0
+      ],
+      [
+        671.13,
+        1156.52
+      ],
+      [
+        705.38,
+        1154.32
+      ],
+      [
+        740.14,
+        1160.13
+      ],
+      [
+        773.36,
+        1153.22
+      ],
+      [
+        806.05,
+        1138.9
+      ],
+      [
+        838.74,
+        1124.95
+      ],
+      [
+        870.39,
+        1104.74
+      ],
+      [
+        903.08,
+        1091.52
+      ],
+      [
+        937.32,
+        1088.95
+      ],
+      [
+        967.43,
+        1057.36
+      ],
+      [
+        996.99,
+        1018.07
+      ],
+      [
+        1027.09,
+        980.25
+      ]
+    ],
+    "taut_reference_mandibular_contour": [
+      [
+        346.83,
+        1018.81
+      ],
+      [
+        384.19,
+        1044.89
+      ],
+      [
+        421.03,
+        1068.76
+      ],
+      [
+        457.87,
+        1089.68
+      ],
+      [
+        494.19,
+        1108.05
+      ],
+      [
+        530.52,
+        1123.84
+      ],
+      [
+        566.32,
+        1136.69
+      ],
+      [
+        601.6,
+        1146.61
+      ],
+      [
+        636.89,
+        1153.96
+      ],
+      [
+        671.13,
+        1157.63
+      ],
+      [
+        705.38,
+        1158.0
+      ],
+      [
+        739.11,
+        1153.59
+      ],
+      [
+        772.83,
+        1145.87
+      ],
+      [
+        805.52,
+        1134.86
+      ],
+      [
+        838.21,
+        1120.54
+      ],
+      [
+        870.39,
+        1103.64
+      ],
+      [
+        902.05,
+        1084.18
+      ],
+      [
+        933.69,
+        1061.78
+      ],
+      [
+        965.34,
+        1036.44
+      ],
+      [
+        995.96,
+        1008.89
+      ],
+      [
+        1027.09,
+        978.78
+      ]
+    ],
+    "mandibular_deflection_pct_ipd": [
+      2.167,
+      11.0,
+      11.0,
+      11.0,
+      11.0,
+      11.0,
+      3.5,
+      2.429,
+      1.357,
+      -0.333,
+      -1.167,
+      2.167,
+      2.429,
+      1.357,
+      1.357,
+      0.286,
+      2.429,
+      8.857,
+      6.714,
+      3.0,
+      0.5
+    ],
+    "zygoma_viewer_left": [
+      244.0,
+      740.7
+    ],
+    "zygoma_viewer_right": [
+      1035.0,
+      740.7
+    ],
+    "nasal_base": [
+      657.07,
+      842.0
+    ],
+    "_contourRefinedNative": true,
+    "eye_left": [
+      490.67,
+      629.33
+    ],
+    "right_eye": [
+      490.67,
+      629.33
+    ],
+    "eye_right": [
+      789.33,
+      604.44
+    ],
+    "left_eye": [
+      789.33,
+      604.44
+    ],
+    "gonion_left": [
+      299.37,
+      988.72
+    ],
+    "gonion_right": [
+      979.63,
+      988.72
+    ],
+    "mouth_left": [
+      556.34,
+      974.0
+    ],
+    "mouth_right_subject": [
+      556.34,
+      974.0
+    ],
+    "mouth_right": [
+      784.1,
+      974.0
+    ],
+    "mouth_left_subject": [
+      784.1,
+      974.0
+    ],
+    "native_image_size": [
+      1280,
+      1920
+    ]
+  },
+  "v6IndividualSubRegionContours": {
+    "jowl_left": {
+      "labelEn": "Right Jowl (Viewer-Left)",
+      "labelTh": "กระเปาะแก้มส่วนล่างขวา (Right Jowl)",
+      "supported": true,
+      "detected": true,
+      "overlaySuppressedAbsent": false,
+      "polygons": [
+        [
+          [
+            463.58,
+            1153.59
+          ],
+          [
+            442.82,
+            1149.91
+          ],
+          [
+            427.25,
+            1149.91
+          ],
+          [
+            416.88,
+            1138.9
+          ],
+          [
+            411.69,
+            1127.88
+          ],
+          [
+            411.69,
+            1116.86
+          ],
+          [
+            422.07,
+            1105.85
+          ],
+          [
+            432.45,
+            1116.86
+          ],
+          [
+            437.63,
+            1124.21
+          ],
+          [
+            453.2,
+            1131.56
+          ],
+          [
+            463.58,
+            1138.9
+          ],
+          [
+            479.15,
+            1142.57
+          ]
+        ]
+      ],
+      "centerline": [
+        [
+          468.77,
+          1146.25
+        ],
+        [
+          453.2,
+          1142.57
+        ],
+        [
+          437.63,
+          1138.9
+        ],
+        [
+          427.25,
+          1131.56
+        ],
+        [
+          422.07,
+          1120.54
+        ],
+        [
+          416.88,
+          1109.52
+        ]
+      ],
+      "activeAreaPct": 9.2,
+      "colorRgb": [
+        245,
+        158,
+        11
+      ]
+    },
+    "jowl_right": {
+      "labelEn": "Left Jowl (Viewer-Right)",
+      "labelTh": "กระเปาะแก้มส่วนล่างซ้าย (Left Jowl)",
+      "supported": true,
+      "detected": true,
+      "overlaySuppressedAbsent": false,
+      "polygons": [
+        [
+          [
+            987.65,
+            1076.46
+          ],
+          [
+            972.1,
+            1098.51
+          ],
+          [
+            946.15,
+            1102.17
+          ],
+          [
+            920.2,
+            1113.19
+          ],
+          [
+            899.45,
+            1127.88
+          ],
+          [
+            873.5,
+            1135.22
+          ],
+          [
+            857.93,
+            1116.86
+          ],
+          [
+            878.7,
+            1105.85
+          ],
+          [
+            904.63,
+            1098.51
+          ],
+          [
+            930.58,
+            1087.48
+          ],
+          [
+            956.52,
+            1076.46
+          ],
+          [
+            972.1,
+            1054.43
+          ]
+        ]
+      ],
+      "centerline": [
+        [
+          977.28,
+          1065.45
+        ],
+        [
+          966.9,
+          1087.48
+        ],
+        [
+          940.95,
+          1094.83
+        ],
+        [
+          915.01,
+          1105.85
+        ],
+        [
+          889.07,
+          1116.86
+        ],
+        [
+          863.12,
+          1124.21
+        ]
+      ],
+      "activeAreaPct": 19.6,
+      "colorRgb": [
+        245,
+        158,
+        11
+      ]
+    },
+    "jawline_contour": {
+      "labelEn": "Jawline & Mandibular Contour",
+      "labelTh": "แนวกรอบหน้าและขอบขากรรไกรล่าง (Jawline Contour)",
+      "supported": true,
+      "detected": true,
+      "overlaySuppressedAbsent": false,
+      "polygons": [
+        [
+          [
+            972.1,
+            995.67
+          ],
+          [
+            966.9,
+            999.35
+          ],
+          [
+            961.71,
+            1003.01
+          ],
+          [
+            956.52,
+            1010.36
+          ],
+          [
+            951.33,
+            1014.04
+          ],
+          [
+            946.15,
+            1017.7
+          ],
+          [
+            935.77,
+            1014.04
+          ],
+          [
+            935.77,
+            1006.69
+          ],
+          [
+            940.95,
+            1003.01
+          ],
+          [
+            946.15,
+            995.67
+          ],
+          [
+            951.33,
+            992.0
+          ],
+          [
+            956.52,
+            988.33
+          ]
+        ],
+        [
+          [
+            473.95,
+            1050.75
+          ],
+          [
+            473.95,
+            1054.43
+          ],
+          [
+            479.15,
+            1054.43
+          ],
+          [
+            484.33,
+            1058.11
+          ],
+          [
+            484.33,
+            1061.78
+          ],
+          [
+            484.33,
+            1065.45
+          ],
+          [
+            468.77,
+            1069.12
+          ],
+          [
+            468.77,
+            1065.45
+          ],
+          [
+            463.58,
+            1065.45
+          ],
+          [
+            458.39,
+            1061.78
+          ],
+          [
+            458.39,
+            1058.11
+          ],
+          [
+            458.39,
+            1054.43
+          ]
+        ]
+      ],
+      "centerline": [
+        [
+          961.71,
+          992.0
+        ],
+        [
+          956.52,
+          995.67
+        ],
+        [
+          951.33,
+          999.35
+        ],
+        [
+          946.15,
+          1006.69
+        ],
+        [
+          946.15,
+          1010.36
+        ],
+        [
+          940.95,
+          1014.04
+        ]
+      ],
+      "activeAreaPct": 17.1,
+      "colorRgb": [
+        20,
+        184,
+        166
+      ]
+    },
+    "lower_cheek_left": {
+      "labelEn": "Right Lower Cheek / Midface Descent",
+      "labelTh": "แก้มส่วนล่างและเนื้อเยื่อหน้าแก้มขวา (Right Lower Cheek Ptosis)",
+      "supported": true,
+      "detected": false,
+      "overlaySuppressedAbsent": true,
+      "polygons": [],
+      "centerline": [],
+      "activeAreaPct": 0.0,
+      "colorRgb": [
+        56,
+        189,
+        248
+      ]
+    },
+    "lower_cheek_right": {
+      "labelEn": "Left Lower Cheek / Midface Descent",
+      "labelTh": "แก้มส่วนล่างและเนื้อเยื่อหน้าแก้มซ้าย (Left Lower Cheek Ptosis)",
+      "supported": true,
+      "detected": false,
+      "overlaySuppressedAbsent": true,
+      "polygons": [],
+      "centerline": [],
+      "activeAreaPct": 0.0,
+      "colorRgb": [
+        56,
+        189,
+        248
+      ]
+    },
+    "nasolabial_left": {
+      "labelEn": "Right Nasolabial Fold (Viewer-Left)",
+      "labelTh": "ร่องแก้มขวา (Right Nasolabial Fold)",
+      "supported": true,
+      "detected": true,
+      "overlaySuppressedAbsent": false,
+      "polygons": [
+        [
+          [
+            540.16,
+            967.78
+          ],
+          [
+            536.32,
+            973.71
+          ],
+          [
+            528.64,
+            977.31
+          ],
+          [
+            520.96,
+            977.31
+          ],
+          [
+            509.44,
+            980.98
+          ],
+          [
+            501.76,
+            980.98
+          ],
+          [
+            497.92,
+            967.78
+          ],
+          [
+            505.6,
+            964.81
+          ],
+          [
+            513.28,
+            961.84
+          ],
+          [
+            524.8,
+            961.84
+          ],
+          [
+            532.48,
+            961.84
+          ],
+          [
+            540.16,
+            958.87
+          ]
+        ]
+      ],
+      "centerline": [
+        [
+          540.16,
+          964.81
+        ],
+        [
+          532.48,
+          967.78
+        ],
+        [
+          524.8,
+          970.74
+        ],
+        [
+          517.12,
+          970.74
+        ],
+        [
+          509.44,
+          970.74
+        ],
+        [
+          501.76,
+          973.71
+        ]
+      ],
+      "activeAreaPct": 8.9,
+      "colorRgb": [
+        249,
+        115,
+        22
+      ]
+    },
+    "nasolabial_right": {
+      "labelEn": "Left Nasolabial Fold (Viewer-Right)",
+      "labelTh": "ร่องแก้มซ้าย (Left Nasolabial Fold)",
+      "supported": true,
+      "detected": true,
+      "overlaySuppressedAbsent": false,
+      "polygons": [
+        [
+          [
+            762.88,
+            852.09
+          ],
+          [
+            770.56,
+            860.99
+          ],
+          [
+            778.24,
+            872.85
+          ],
+          [
+            785.92,
+            881.75
+          ],
+          [
+            797.44,
+            890.65
+          ],
+          [
+            805.12,
+            902.51
+          ],
+          [
+            789.76,
+            908.45
+          ],
+          [
+            782.08,
+            899.55
+          ],
+          [
+            770.56,
+            890.65
+          ],
+          [
+            762.88,
+            881.75
+          ],
+          [
+            755.2,
+            869.88
+          ],
+          [
+            747.52,
+            858.02
+          ]
+        ]
+      ],
+      "centerline": [
+        [
+          755.2,
+          855.06
+        ],
+        [
+          762.88,
+          863.95
+        ],
+        [
+          770.56,
+          875.81
+        ],
+        [
+          778.24,
+          887.69
+        ],
+        [
+          789.76,
+          896.58
+        ],
+        [
+          797.44,
+          905.48
+        ]
+      ],
+      "activeAreaPct": 19.3,
+      "colorRgb": [
+        249,
+        115,
+        22
+      ]
+    },
+    "marionette_left": {
+      "labelEn": "Right Marionette Line (Viewer-Left)",
+      "labelTh": "ร่องน้ำหมากและมุมปากขวา (Right Marionette Fold)",
+      "supported": true,
+      "detected": true,
+      "overlaySuppressedAbsent": false,
+      "polygons": [
+        [
+          [
+            536.89,
+            1003.01
+          ],
+          [
+            545.14,
+            1006.69
+          ],
+          [
+            549.26,
+            1010.36
+          ],
+          [
+            557.51,
+            1014.04
+          ],
+          [
+            561.63,
+            1021.38
+          ],
+          [
+            561.63,
+            1028.72
+          ],
+          [
+            553.38,
+            1036.07
+          ],
+          [
+            549.26,
+            1032.4
+          ],
+          [
+            545.14,
+            1025.06
+          ],
+          [
+            536.89,
+            1021.38
+          ],
+          [
+            532.77,
+            1014.04
+          ],
+          [
+            524.51,
+            1010.36
+          ]
+        ]
+      ],
+      "centerline": [
+        [
+          532.77,
+          1006.69
+        ],
+        [
+          536.89,
+          1010.36
+        ],
+        [
+          545.14,
+          1017.7
+        ],
+        [
+          549.26,
+          1021.38
+        ],
+        [
+          553.38,
+          1025.06
+        ],
+        [
+          557.51,
+          1032.4
+        ]
+      ],
+      "activeAreaPct": 6.8,
+      "colorRgb": [
+        239,
+        68,
+        68
+      ]
+    },
+    "marionette_right": {
+      "labelEn": "Left Marionette Line (Viewer-Right)",
+      "labelTh": "ร่องน้ำหมากและมุมปากซ้าย (Left Marionette Fold)",
+      "supported": true,
+      "detected": true,
+      "overlaySuppressedAbsent": false,
+      "polygons": [
+        [
+          [
+            813.22,
+            988.33
+          ],
+          [
+            817.35,
+            999.35
+          ],
+          [
+            821.47,
+            1006.69
+          ],
+          [
+            825.6,
+            1017.7
+          ],
+          [
+            833.85,
+            1025.06
+          ],
+          [
+            837.98,
+            1036.07
+          ],
+          [
+            825.6,
+            1039.74
+          ],
+          [
+            821.47,
+            1032.4
+          ],
+          [
+            813.22,
+            1025.06
+          ],
+          [
+            809.1,
+            1014.04
+          ],
+          [
+            800.86,
+            1006.69
+          ],
+          [
+            796.73,
+            995.67
+          ]
+        ]
+      ],
+      "centerline": [
+        [
+          804.98,
+          992.0
+        ],
+        [
+          809.1,
+          1003.01
+        ],
+        [
+          817.35,
+          1010.36
+        ],
+        [
+          821.47,
+          1021.38
+        ],
+        [
+          825.6,
+          1028.72
+        ],
+        [
+          829.73,
+          1039.74
+        ]
+      ],
+      "activeAreaPct": 11.0,
+      "colorRgb": [
+        239,
+        68,
+        68
+      ]
+    },
+    "submental_neck": {
+      "labelEn": "Submental & Anterior Neck Contour",
+      "labelTh": "ใต้คาง เหนียง และแถบกล้ามเนื้อลำคอ (Submental & Neck)",
+      "supported": true,
+      "detected": false,
+      "overlaySuppressedAbsent": true,
+      "polygons": [],
+      "centerline": [],
+      "activeAreaPct": 0.0,
+      "colorRgb": [
+        168,
+        85,
+        247
+      ]
+    }
+  },
+  "proportionAnd3dTelemetry": {
+    "originalImageDimensions": {
+      "w": 1280,
+      "h": 1920,
+      "aspectRatio": 0.6667
+    },
+    "interPupillaryDistancePx": 299.7,
+    "noseLengthPx": 225.76,
+    "jawWidthPx": 680.26,
+    "eyeToChinHeightPx": 542.97,
+    "facialHeightToJawWidthRatio": 0.7982,
+    "scaleUniformityRatioXY": 1.0,
+    "aspectDistortionPct": 0.0,
+    "cameraIntrinsicsIsotropic": {
+      "fx": 299.695,
+      "fy": 299.695,
+      "cx": 640.0,
+      "cy": 887.44,
+      "aspectRatio": 0.6667,
+      "frontalReprojectionErrorPx": 0.0
+    },
+    "isotropic3dSurfaceMesh": {
+      "vertices": [
+        {
+          "id": "brow_mid",
+          "px": [
+            640.0,
+            432.28
+          ],
+          "xyzIsotropicIpd": [
+            0.0,
+            -1.5188,
+            0.32
+          ]
+        },
+        {
+          "id": "right_eye",
+          "px": [
+            490.67,
+            629.33
+          ],
+          "xyzIsotropicIpd": [
+            -0.4983,
+            -0.8613,
+            0.24
+          ]
+        },
+        {
+          "id": "left_eye",
+          "px": [
+            789.33,
+            604.44
+          ],
+          "xyzIsotropicIpd": [
+            0.4983,
+            -0.9443,
+            0.24
+          ]
+        },
+        {
+          "id": "nose_tip",
+          "px": [
+            657.07,
+            842.0
+          ],
+          "xyzIsotropicIpd": [
+            0.057,
+            -0.1516,
+            0.52
+          ]
+        },
+        {
+          "id": "right_malar",
+          "px": [
+            244.0,
+            740.7
+          ],
+          "xyzIsotropicIpd": [
+            -1.3213,
+            -0.4896,
+            0.3
+          ]
+        },
+        {
+          "id": "left_malar",
+          "px": [
+            1035.0,
+            740.7
+          ],
+          "xyzIsotropicIpd": [
+            1.318,
+            -0.4896,
+            0.3
+          ]
+        },
+        {
+          "id": "right_commissure",
+          "px": [
+            556.34,
+            974.0
+          ],
+          "xyzIsotropicIpd": [
+            -0.2792,
+            0.2888,
+            0.28
+          ]
+        },
+        {
+          "id": "left_commissure",
+          "px": [
+            784.1,
+            974.0
+          ],
+          "xyzIsotropicIpd": [
+            0.4808,
+            0.2888,
+            0.28
+          ]
+        },
+        {
+          "id": "right_gonion",
+          "px": [
+            299.37,
+            988.72
+          ],
+          "xyzIsotropicIpd": [
+            -1.1366,
+            0.3379,
+            -0.18
+          ]
+        },
+        {
+          "id": "left_gonion",
+          "px": [
+            979.63,
+            988.72
+          ],
+          "xyzIsotropicIpd": [
+            1.1333,
+            0.3379,
+            -0.18
+          ]
+        },
+        {
+          "id": "right_jowl",
+          "px": [
+            498.34,
+            1142.21
+          ],
+          "xyzIsotropicIpd": [
+            -0.4727,
+            0.8501,
+            0.1
+          ]
+        },
+        {
+          "id": "left_jowl",
+          "px": [
+            903.08,
+            1091.52
+          ],
+          "xyzIsotropicIpd": [
+            0.8778,
+            0.6809,
+            0.1
+          ]
+        },
+        {
+          "id": "menton",
+          "px": [
+            684.8,
+            1158.0
+          ],
+          "xyzIsotropicIpd": [
+            0.1495,
+            0.9028,
+            0.36
+          ]
+        },
+        {
+          "id": "submental",
+          "px": [
+            684.8,
+            1255.73
+          ],
+          "xyzIsotropicIpd": [
+            0.1495,
+            1.2289,
+            -0.12
+          ]
+        }
+      ],
+      "triangles": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          3,
+          2
+        ],
+        [
+          1,
+          4,
+          3
+        ],
+        [
+          2,
+          3,
+          5
+        ],
+        [
+          4,
+          6,
+          3
+        ],
+        [
+          5,
+          3,
+          7
+        ],
+        [
+          4,
+          8,
+          6
+        ],
+        [
+          5,
+          7,
+          9
+        ],
+        [
+          8,
+          10,
+          6
+        ],
+        [
+          9,
+          7,
+          11
+        ],
+        [
+          6,
+          10,
+          12
+        ],
+        [
+          7,
+          12,
+          11
+        ],
+        [
+          3,
+          6,
+          7
+        ],
+        [
+          6,
+          12,
+          7
+        ],
+        [
+          10,
+          13,
+          12
+        ],
+        [
+          11,
+          12,
+          13
+        ]
+      ],
+      "recommendedDefaultView": "2D_FAITHFUL_PHOTO_OVERLAY",
+      "honest3dLimitationNotice": "Single-camera 2D photographs cannot measure true volumetric Z-depth or sub-SMAS tissue thickness. This 3D wireframe is an aspect-locked isotropic surface relief projection (f_x = f_y = IPD_px, 0.00% X/Y distortion) anchored directly to the person's 2D landmarks; clinical sagging assessment uses the faithful 2D photograph overlay."
+    }
+  },
+  "proportionAnd3dProjectionTelemetry": {
+    "originalImageDimensions": {
+      "w": 1280,
+      "h": 1920,
+      "aspectRatio": 0.6667
+    },
+    "interPupillaryDistancePx": 299.7,
+    "noseLengthPx": 225.76,
+    "jawWidthPx": 680.26,
+    "eyeToChinHeightPx": 542.97,
+    "facialHeightToJawWidthRatio": 0.7982,
+    "scaleUniformityRatioXY": 1.0,
+    "aspectDistortionPct": 0.0,
+    "cameraIntrinsicsIsotropic": {
+      "fx": 299.695,
+      "fy": 299.695,
+      "cx": 640.0,
+      "cy": 887.44,
+      "aspectRatio": 0.6667,
+      "frontalReprojectionErrorPx": 0.0
+    },
+    "isotropic3dSurfaceMesh": {
+      "vertices": [
+        {
+          "id": "brow_mid",
+          "px": [
+            640.0,
+            432.28
+          ],
+          "xyzIsotropicIpd": [
+            0.0,
+            -1.5188,
+            0.32
+          ]
+        },
+        {
+          "id": "right_eye",
+          "px": [
+            490.67,
+            629.33
+          ],
+          "xyzIsotropicIpd": [
+            -0.4983,
+            -0.8613,
+            0.24
+          ]
+        },
+        {
+          "id": "left_eye",
+          "px": [
+            789.33,
+            604.44
+          ],
+          "xyzIsotropicIpd": [
+            0.4983,
+            -0.9443,
+            0.24
+          ]
+        },
+        {
+          "id": "nose_tip",
+          "px": [
+            657.07,
+            842.0
+          ],
+          "xyzIsotropicIpd": [
+            0.057,
+            -0.1516,
+            0.52
+          ]
+        },
+        {
+          "id": "right_malar",
+          "px": [
+            244.0,
+            740.7
+          ],
+          "xyzIsotropicIpd": [
+            -1.3213,
+            -0.4896,
+            0.3
+          ]
+        },
+        {
+          "id": "left_malar",
+          "px": [
+            1035.0,
+            740.7
+          ],
+          "xyzIsotropicIpd": [
+            1.318,
+            -0.4896,
+            0.3
+          ]
+        },
+        {
+          "id": "right_commissure",
+          "px": [
+            556.34,
+            974.0
+          ],
+          "xyzIsotropicIpd": [
+            -0.2792,
+            0.2888,
+            0.28
+          ]
+        },
+        {
+          "id": "left_commissure",
+          "px": [
+            784.1,
+            974.0
+          ],
+          "xyzIsotropicIpd": [
+            0.4808,
+            0.2888,
+            0.28
+          ]
+        },
+        {
+          "id": "right_gonion",
+          "px": [
+            299.37,
+            988.72
+          ],
+          "xyzIsotropicIpd": [
+            -1.1366,
+            0.3379,
+            -0.18
+          ]
+        },
+        {
+          "id": "left_gonion",
+          "px": [
+            979.63,
+            988.72
+          ],
+          "xyzIsotropicIpd": [
+            1.1333,
+            0.3379,
+            -0.18
+          ]
+        },
+        {
+          "id": "right_jowl",
+          "px": [
+            498.34,
+            1142.21
+          ],
+          "xyzIsotropicIpd": [
+            -0.4727,
+            0.8501,
+            0.1
+          ]
+        },
+        {
+          "id": "left_jowl",
+          "px": [
+            903.08,
+            1091.52
+          ],
+          "xyzIsotropicIpd": [
+            0.8778,
+            0.6809,
+            0.1
+          ]
+        },
+        {
+          "id": "menton",
+          "px": [
+            684.8,
+            1158.0
+          ],
+          "xyzIsotropicIpd": [
+            0.1495,
+            0.9028,
+            0.36
+          ]
+        },
+        {
+          "id": "submental",
+          "px": [
+            684.8,
+            1255.73
+          ],
+          "xyzIsotropicIpd": [
+            0.1495,
+            1.2289,
+            -0.12
+          ]
+        }
+      ],
+      "triangles": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          3,
+          2
+        ],
+        [
+          1,
+          4,
+          3
+        ],
+        [
+          2,
+          3,
+          5
+        ],
+        [
+          4,
+          6,
+          3
+        ],
+        [
+          5,
+          3,
+          7
+        ],
+        [
+          4,
+          8,
+          6
+        ],
+        [
+          5,
+          7,
+          9
+        ],
+        [
+          8,
+          10,
+          6
+        ],
+        [
+          9,
+          7,
+          11
+        ],
+        [
+          6,
+          10,
+          12
+        ],
+        [
+          7,
+          12,
+          11
+        ],
+        [
+          3,
+          6,
+          7
+        ],
+        [
+          6,
+          12,
+          7
+        ],
+        [
+          10,
+          13,
+          12
+        ],
+        [
+          11,
+          12,
+          13
+        ]
+      ],
+      "recommendedDefaultView": "2D_FAITHFUL_PHOTO_OVERLAY",
+      "honest3dLimitationNotice": "Single-camera 2D photographs cannot measure true volumetric Z-depth or sub-SMAS tissue thickness. This 3D wireframe is an aspect-locked isotropic surface relief projection (f_x = f_y = IPD_px, 0.00% X/Y distortion) anchored directly to the person's 2D landmarks; clinical sagging assessment uses the faithful 2D photograph overlay."
+    }
+  },
+  "mode": "UNIFIED_V2_AND_V6_BENCHMARK_DEMONSTRATION",
+  "modelComparison": {
+    "available": true,
+    "clinicalDisclaimer": "DEMONSTRATION BENCHMARK EVALUATION — V2 grades carry AI_PROVISIONAL_LABEL provenance (88 synthetic portraits); V6 grades carry 17-portrait developer reference provenance (dual-physician claim rater_b = rater_a + 0.2 INVALIDATED). Not a clinical diagnosis.",
+    "v2ConvNeXtTiny": {
+      "eval_mode": "5-Fold ConvNeXt-Tiny Ensemble (unseen subject)",
+      "single_fold_ms": 140.9,
+      "ensemble_5fold_ms": 706.9,
+      "regions": {
+        "cheek_sagging": {
+          "visible_fraction": 1.0,
+          "gradeable_by_v2_visibility": true,
+          "blocked_by_v6_occlusion_gate": false,
+          "predicted_grade_raw": 1,
+          "predicted_grade_logit_adjusted": 1,
+          "unified_grade_with_occlusion_gate": 1,
+          "expected_continuous_grade_0_3": 1.003,
+          "max_probability": 0.9968,
+          "shannon_entropy": 0.0162,
+          "uncertainty_band": "LOW_UNCERTAINTY",
+          "probabilities_grade_0_3": [
+            0.0001,
+            0.9968,
+            0.0029,
+            0.0001
+          ],
+          "ai_provisional_label": 0
+        },
+        "jawline_sagging": {
+          "visible_fraction": 1.0,
+          "gradeable_by_v2_visibility": true,
+          "blocked_by_v6_occlusion_gate": false,
+          "predicted_grade_raw": 1,
+          "predicted_grade_logit_adjusted": 1,
+          "unified_grade_with_occlusion_gate": 1,
+          "expected_continuous_grade_0_3": 1.001,
+          "max_probability": 0.9983,
+          "shannon_entropy": 0.01,
+          "uncertainty_band": "LOW_UNCERTAINTY",
+          "probabilities_grade_0_3": [
+            0.0004,
+            0.9983,
+            0.0012,
+            0.0001
+          ],
+          "ai_provisional_label": 0
+        },
+        "submental_sagging": {
+          "visible_fraction": 1.0,
+          "gradeable_by_v2_visibility": true,
+          "blocked_by_v6_occlusion_gate": false,
+          "predicted_grade_raw": 1,
+          "predicted_grade_logit_adjusted": 1,
+          "unified_grade_with_occlusion_gate": 1,
+          "expected_continuous_grade_0_3": 1.0,
+          "max_probability": 0.9994,
+          "shannon_entropy": 0.0042,
+          "uncertainty_band": "LOW_UNCERTAINTY",
+          "probabilities_grade_0_3": [
+            0.0003,
+            0.9994,
+            0.0003,
+            0.0
+          ],
+          "ai_provisional_label": 0
+        },
+        "neck_sagging": {
+          "visible_fraction": 1.0,
+          "gradeable_by_v2_visibility": true,
+          "blocked_by_v6_occlusion_gate": false,
+          "predicted_grade_raw": 2,
+          "predicted_grade_logit_adjusted": 2,
+          "unified_grade_with_occlusion_gate": 2,
+          "expected_continuous_grade_0_3": 1.999,
+          "max_probability": 0.9599,
+          "shannon_entropy": 0.1485,
+          "uncertainty_band": "LOW_UNCERTAINTY",
+          "probabilities_grade_0_3": [
+            0.0043,
+            0.014,
+            0.9599,
+            0.0218
+          ],
+          "ai_provisional_label": 2
+        }
+      }
+    },
+    "v6S3fdHessianMlp": {
+      "status": "COMPLETED",
+      "inference_ms": 730.7,
+      "quality_gate_passed": true,
+      "failure_codes": [],
+      "warning_codes": [],
+      "jawline_visibility_pct": 100.0,
+      "neck_skin_visibility_pct": 100.0,
+      "shadow_asymmetry_index": 0.036,
+      "composite_sagging_grade_0_4": 0.79,
+      "composite_sagging_score_0_100": 19.8,
+      "croma_jawline_label": "Grade 2 (Mild Sagging / Early Crease)",
+      "mandibular_max_deflection_pct_ipd": 11.0,
+      "regions_10": {
+        "jowl_left": {
+          "supported": true,
+          "detected": true,
+          "severity_0_4": 0.77,
+          "severity_scaled_0_3": 0.58,
+          "clinical_grade_1_5": 2,
+          "clinical_grade_label": "Grade 2 (Mild Sagging / Early Crease)",
+          "ci_95": 0.31,
+          "overlay_suppressed_absent": false,
+          "polygons_count": 1,
+          "active_area_pct": 9.2
+        },
+        "jowl_right": {
+          "supported": true,
+          "detected": true,
+          "severity_0_4": 0.77,
+          "severity_scaled_0_3": 0.58,
+          "clinical_grade_1_5": 2,
+          "clinical_grade_label": "Grade 2 (Mild Sagging / Early Crease)",
+          "ci_95": 0.32,
+          "overlay_suppressed_absent": false,
+          "polygons_count": 1,
+          "active_area_pct": 19.6
+        },
+        "jawline_contour": {
+          "supported": true,
+          "detected": true,
+          "severity_0_4": 0.8,
+          "severity_scaled_0_3": 0.6,
+          "clinical_grade_1_5": 2,
+          "clinical_grade_label": "Grade 2 (Mild Sagging / Early Crease)",
+          "ci_95": 0.32,
+          "overlay_suppressed_absent": false,
+          "polygons_count": 2,
+          "active_area_pct": 17.1
+        },
+        "lower_cheek_left": {
+          "supported": true,
+          "detected": false,
+          "severity_0_4": 0.65,
+          "severity_scaled_0_3": 0.49,
+          "clinical_grade_1_5": 2,
+          "clinical_grade_label": "Grade 2 (Mild Sagging / Early Crease)",
+          "ci_95": 0.32,
+          "overlay_suppressed_absent": true,
+          "polygons_count": 0,
+          "active_area_pct": 0.0
+        },
+        "lower_cheek_right": {
+          "supported": true,
+          "detected": false,
+          "severity_0_4": 0.65,
+          "severity_scaled_0_3": 0.49,
+          "clinical_grade_1_5": 2,
+          "clinical_grade_label": "Grade 2 (Mild Sagging / Early Crease)",
+          "ci_95": 0.32,
+          "overlay_suppressed_absent": true,
+          "polygons_count": 0,
+          "active_area_pct": 0.0
+        },
+        "nasolabial_left": {
+          "supported": true,
+          "detected": true,
+          "severity_0_4": 0.91,
+          "severity_scaled_0_3": 0.68,
+          "clinical_grade_1_5": 2,
+          "clinical_grade_label": "Grade 2 (Mild Sagging / Early Crease)",
+          "ci_95": 0.32,
+          "overlay_suppressed_absent": false,
+          "polygons_count": 1,
+          "active_area_pct": 8.9
+        },
+        "nasolabial_right": {
+          "supported": true,
+          "detected": true,
+          "severity_0_4": 0.91,
+          "severity_scaled_0_3": 0.68,
+          "clinical_grade_1_5": 2,
+          "clinical_grade_label": "Grade 2 (Mild Sagging / Early Crease)",
+          "ci_95": 0.32,
+          "overlay_suppressed_absent": false,
+          "polygons_count": 1,
+          "active_area_pct": 19.3
+        },
+        "marionette_left": {
+          "supported": true,
+          "detected": true,
+          "severity_0_4": 0.79,
+          "severity_scaled_0_3": 0.59,
+          "clinical_grade_1_5": 2,
+          "clinical_grade_label": "Grade 2 (Mild Sagging / Early Crease)",
+          "ci_95": 0.32,
+          "overlay_suppressed_absent": false,
+          "polygons_count": 1,
+          "active_area_pct": 6.8
+        },
+        "marionette_right": {
+          "supported": true,
+          "detected": true,
+          "severity_0_4": 0.79,
+          "severity_scaled_0_3": 0.59,
+          "clinical_grade_1_5": 2,
+          "clinical_grade_label": "Grade 2 (Mild Sagging / Early Crease)",
+          "ci_95": 0.31,
+          "overlay_suppressed_absent": false,
+          "polygons_count": 1,
+          "active_area_pct": 11.0
+        },
+        "submental_neck": {
+          "supported": true,
+          "detected": false,
+          "severity_0_4": 0.72,
+          "severity_scaled_0_3": 0.54,
+          "clinical_grade_1_5": 2,
+          "clinical_grade_label": "Grade 2 (Mild Sagging / Early Crease)",
+          "ci_95": 0.32,
+          "overlay_suppressed_absent": true,
+          "polygons_count": 0,
+          "active_area_pct": 0.0
+        }
+      },
+      "hardcoded_v6_reference_entry_present": false
+    }
+  }
+}
