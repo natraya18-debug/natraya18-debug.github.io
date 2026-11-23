@@ -3183,11 +3183,11 @@ body.master-stage-open .intrarat-master-stage {
   .chrome-header {
     height: auto !important;
     min-height: 56px !important;
-    padding: 6px 10px !important;
+    padding: 5px 8px !important;
     align-items: center !important;
     flex-wrap: wrap !important;
-    gap: 6px !important;
-    background: rgba(255, 255, 255, 0.96) !important;
+    gap: 4px !important;
+    background: rgba(255, 255, 255, 0.97) !important;
     backdrop-filter: blur(12px) !important;
   }
   .nav-right-cluster {
@@ -3196,7 +3196,7 @@ body.master-stage-open .intrarat-master-stage {
   }
   .master-page-ribbon {
     display: grid !important;
-    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
     width: 100% !important;
     max-width: 100% !important;
     border-radius: 12px !important;
@@ -3209,15 +3209,17 @@ body.master-stage-open .intrarat-master-stage {
     width: 100% !important;
     text-align: center !important;
     justify-content: center !important;
-    font-size: 8.5px !important;
-    padding: 4px 2px !important;
+    font-size: 9px !important;
+    padding: 4px 4px !important;
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
     margin: 0 !important;
   }
-  .master-page-stage {
-    padding-top: 108px !important;
+  .intrarat-master-stage {
+    padding-top: 132px !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
   }
 }
 
