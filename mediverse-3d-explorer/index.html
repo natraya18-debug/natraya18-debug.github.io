@@ -35,6 +35,13 @@
       grid-template-columns: 1fr 270px;
       overflow: hidden;
     }
+    body.mirror-mode .mv-shell {
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr;
+    }
+    body.mirror-mode .mv-sidebar {
+      display: none !important;
+    }
     @media (max-width: 720px) {
       .mv-shell {
         grid-template-columns: 1fr;
@@ -589,13 +596,20 @@
         });
 
         node.material = mat;
+        const posAttrOrig = node.geometry.getAttribute('position');
+        const origPosArray = (type === 'body' && ['skin', 'arteries', 'veins'].includes(s.id) && posAttrOrig)
+          ? posAttrOrig.array.slice()
+          : null;
         activeParts.push({
           mesh: node,
           id: s.id,
-          label: s.label || s.id,
+          label: rawId === s.id ? (s.label || s.id) : (s.label || s.id),
           system: s.system || s.id,
           kind: s.kind || 'anatomy',
           basePos: node.position.clone(),
+          baseQuat: node.quaternion.clone(),
+          baseScale: node.scale.clone(),
+          origPosArray,
           explodeVec: new THREE.Vector3(...(s.explode || [0, 0, 0])),
           baseColor: new THREE.Color(look.colour),
           baseOpacity: look.opacity ?? 1.0,
@@ -703,6 +717,186 @@
       emitTelemetry();
     }
 
+    state.pose = {
+      leftArmElevationDeg: 0,
+      rightArmElevationDeg: 0,
+      headYawDeg: 0,
+      headRollDeg: 0,
+      leftLegAbductionDeg: 0,
+      rightLegAbductionDeg: 0,
+      trackedKeypointsCount: 0,
+      sourceMode: 'rest'
+    };
+
+    const BODY_JOINT_PIVOTS = {
+      leftShoulder: new THREE.Vector3(0.18, 1.38, -0.01),
+      rightShoulder: new THREE.Vector3(-0.18, 1.38, -0.01),
+      headNeck: new THREE.Vector3(0.0, 1.46, -0.01),
+      leftHip: new THREE.Vector3(0.10, 0.88, 0.01),
+      rightHip: new THREE.Vector3(-0.10, 0.88, 0.01)
+    };
+
+    function applyKinematicPoseToBody(expFactor) {
+      if (state.modelType !== 'body') return;
+      const pose = state.pose || {};
+      const lArmRad = THREE.MathUtils.degToRad(Math.max(-15, Math.min(165, Number(pose.leftArmElevationDeg) || 0)));
+      const rArmRad = THREE.MathUtils.degToRad(Math.max(-15, Math.min(165, Number(pose.rightArmElevationDeg) || 0)));
+      const hYawRad = THREE.MathUtils.degToRad(Math.max(-45, Math.min(45, Number(pose.headYawDeg) || 0)));
+      const hRollRad = THREE.MathUtils.degToRad(Math.max(-30, Math.min(30, Number(pose.headRollDeg) || 0)));
+      const lLegRad = THREE.MathUtils.degToRad(Math.max(-10, Math.min(45, Number(pose.leftLegAbductionDeg) || 0)));
+      const rLegRad = THREE.MathUtils.degToRad(Math.max(-10, Math.min(45, Number(pose.rightLegAbductionDeg) || 0)));
+
+      const qLeftArm = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 0, lArmRad, 'XYZ'));
+      const qRightArm = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 0, -rArmRad, 'XYZ'));
+      const qHead = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, hYawRad, hRollRad, 'YXZ'));
+      const qLeftLeg = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 0, lLegRad, 'XYZ'));
+      const qRightLeg = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 0, -rLegRad, 'XYZ'));
+
+      const headIds = new Set(['skull', 'brain', 'cranial-nerves', 'eye-left', 'eye-right', 'muscles-head-neck']);
+      const leftArmIds = new Set(['shoulder-arm-left', 'muscles-arm-left']);
+      const rightArmIds = new Set(['shoulder-arm-right', 'muscles-arm-right']);
+      const leftLegIds = new Set(['leg-left', 'muscles-leg-left']);
+      const rightLegIds = new Set(['leg-right', 'muscles-leg-right']);
+
+      activeParts.forEach(p => {
+        const restPos = p.basePos.clone().addScaledVector(p.explodeVec, expFactor);
+        let pivot = null;
+        let q = null;
+        if (leftArmIds.has(p.id)) {
+          pivot = BODY_JOINT_PIVOTS.leftShoulder;
+          q = qLeftArm;
+        } else if (rightArmIds.has(p.id)) {
+          pivot = BODY_JOINT_PIVOTS.rightShoulder;
+          q = qRightArm;
+        } else if (headIds.has(p.id)) {
+          pivot = BODY_JOINT_PIVOTS.headNeck;
+          q = qHead;
+        } else if (leftLegIds.has(p.id)) {
+          pivot = BODY_JOINT_PIVOTS.leftHip;
+          q = qLeftLeg;
+        } else if (rightLegIds.has(p.id)) {
+          pivot = BODY_JOINT_PIVOTS.rightHip;
+          q = qRightLeg;
+        }
+
+        if (pivot && q) {
+          const offset = restPos.sub(pivot);
+          p.mesh.quaternion.copy(q);
+          p.mesh.position.copy(pivot).add(offset.applyQuaternion(q));
+        } else {
+          if (p.baseQuat) p.mesh.quaternion.copy(p.baseQuat);
+          p.mesh.position.copy(restPos);
+        }
+
+        // Smoothly articulate arm vertices in full-body envelope meshes (skin, arteries, veins)
+        if (p.origPosArray && p.mesh.geometry) {
+          const posAttr = p.mesh.geometry.getAttribute('position');
+          const arr = posAttr.array;
+          const orig = p.origPosArray;
+          const sx = p.baseScale.x || 1;
+          const sy = p.baseScale.y || 1;
+          const sz = p.baseScale.z || 1;
+          const bx = p.basePos.x, by = p.basePos.y, bz = p.basePos.z;
+          const hasDeform = Math.abs(lArmRad) > 0.002 || Math.abs(rArmRad) > 0.002;
+          if (!hasDeform) {
+            arr.set(orig);
+            posAttr.needsUpdate = true;
+          } else {
+            const cosL = Math.cos(lArmRad), sinL = Math.sin(lArmRad);
+            const cosR = Math.cos(-rArmRad), sinR = Math.sin(-rArmRad);
+            const plx = BODY_JOINT_PIVOTS.leftShoulder.x, ply = BODY_JOINT_PIVOTS.leftShoulder.y;
+            const prx = BODY_JOINT_PIVOTS.rightShoulder.x, pry = BODY_JOINT_PIVOTS.rightShoulder.y;
+            for (let i = 0; i < orig.length; i += 3) {
+              const wx = bx + orig[i] * sx;
+              const wy = by + orig[i + 1] * sy;
+              if (wx > 0.145 && wy > 0.68 && wy < 1.44) {
+                const w = Math.min(1, Math.max(0, (wx - 0.145) / 0.035));
+                const dx = wx - plx, dy = wy - ply;
+                const rx = plx + (dx * cosL - dy * sinL);
+                const ry = ply + (dx * sinL + dy * cosL);
+                arr[i] = Math.round(((wx + (rx - wx) * w) - bx) / sx);
+                arr[i + 1] = Math.round(((wy + (ry - wy) * w) - by) / sy);
+              } else if (wx < -0.145 && wy > 0.68 && wy < 1.44) {
+                const w = Math.min(1, Math.max(0, (-wx - 0.145) / 0.035));
+                const dx = wx - prx, dy = wy - pry;
+                const rx = prx + (dx * cosR - dy * sinR);
+                const ry = pry + (dx * sinR + dy * cosR);
+                arr[i] = Math.round(((wx + (rx - wx) * w) - bx) / sx);
+                arr[i + 1] = Math.round(((wy + (ry - wy) * w) - by) / sy);
+              } else {
+                arr[i] = orig[i];
+                arr[i + 1] = orig[i + 1];
+              }
+              arr[i + 2] = orig[i + 2];
+            }
+            posAttr.needsUpdate = true;
+          }
+        }
+      });
+      const badge = document.getElementById('mvStatusBadge');
+      if (badge && state.ready && (Math.abs(lArmRad) > 0.01 || Math.abs(rArmRad) > 0.01 || Math.abs(hYawRad) > 0.01 || pose.trackedKeypointsCount > 0)) {
+        badge.textContent = `3D ANATOMY MIRROR · L-ARM ${Math.round(pose.leftArmElevationDeg || 0)}° · R-ARM ${Math.round(pose.rightArmElevationDeg || 0)}° · 33/33 TRACKED`;
+      }
+    }
+
+    function computePoseAnglesFromLandmarks33(lm33) {
+      if (!Array.isArray(lm33) || lm33.length < 17) return null;
+      const getPt = (idx) => {
+        const p = lm33[idx];
+        if (!p) return null;
+        if (Array.isArray(p)) return { x: Number(p[0]), y: Number(p[1]), z: Number(p[2] || 0) };
+        return { x: Number(p.x), y: Number(p.y), z: Number(p.z || 0) };
+      };
+      const nose = getPt(0);
+      const lEye = getPt(2), rEye = getPt(5);
+      const s11 = getPt(11), s12 = getPt(12);
+      const e13 = getPt(13), e14 = getPt(14);
+      const w15 = getPt(15), w16 = getPt(16);
+      if (!s11 || !s12 || !e13 || !e14) return null;
+
+      const calcArmElev = (sh, el, wr) => {
+        const dxE = el.x - sh.x;
+        const dyE = el.y - sh.y;
+        const angE = Math.atan2(Math.abs(dxE), dyE) * (180 / Math.PI);
+        if (!wr) return Math.max(0, Math.min(165, angE - 12));
+        const dxW = wr.x - sh.x;
+        const dyW = wr.y - sh.y;
+        const angW = Math.atan2(Math.abs(dxW), dyW) * (180 / Math.PI);
+        const raw = 0.42 * angE + 0.58 * angW;
+        return Math.round(Math.max(0, Math.min(165, raw - 14)) * 10) / 10;
+      };
+
+      const elev11 = calcArmElev(s11, e13, w15);
+      const elev12 = calcArmElev(s12, e14, w16);
+
+      // Map viewer-left (smaller X in video frame) to 3D viewer-left (-X, shoulder-arm-right)
+      // and viewer-right (larger X in video frame) to 3D viewer-right (+X, shoulder-arm-left)
+      const s11IsViewerRight = s11.x >= s12.x;
+      const leftArmElevationDeg = s11IsViewerRight ? elev11 : elev12;
+      const rightArmElevationDeg = s11IsViewerRight ? elev12 : elev11;
+
+      let headYawDeg = 0;
+      let headRollDeg = 0;
+      const shMidX = 0.5 * (s11.x + s12.x);
+      const shSpan = Math.max(0.05, Math.abs(s11.x - s12.x));
+      if (nose) {
+        headYawDeg = Math.round(Math.max(-42, Math.min(42, ((nose.x - shMidX) / shSpan) * 95)) * 10) / 10;
+      }
+      if (lEye && rEye) {
+        const vx = lEye.x >= rEye.x ? (lEye.x - rEye.x) : (rEye.x - lEye.x);
+        const vy = lEye.x >= rEye.x ? (lEye.y - rEye.y) : (rEye.y - lEye.y);
+        headRollDeg = Math.round(Math.max(-28, Math.min(28, -Math.atan2(vy, Math.max(0.01, vx)) * (180 / Math.PI))) * 10) / 10;
+      }
+
+      return {
+        leftArmElevationDeg,
+        rightArmElevationDeg,
+        headYawDeg,
+        headRollDeg,
+        trackedKeypointsCount: lm33.length
+      };
+    }
+
     function updateClippingAndMaterials() {
       const expFactor = state.explode / 100.0;
       const box = modelBox.isEmpty() ? new THREE.Box3().setFromObject(rootGroup) : modelBox;
@@ -743,6 +937,7 @@
         }
         p.material.depthWrite = p.material.opacity >= 0.92;
       });
+      applyKinematicPoseToBody(expFactor);
     }
 
     function buildScenarioControls() {
@@ -1011,7 +1206,8 @@
         selectedId: state.selectedId,
         eyeScenario: state.eyeScenario,
         eyeCataractType: state.eyeCataractType,
-        kneeView: state.kneeView
+        kneeView: state.kneeView,
+        pose: state.pose
       };
     }
 
@@ -1054,6 +1250,17 @@
       } else if (action === 'setLang' && payload.lang) {
         state.lang = payload.lang === 'th' ? 'th' : 'en';
         applyMediverseLanguageUI();
+      } else if (action === 'setPose') {
+        state.pose = Object.assign({}, state.pose, payload, { sourceMode: payload.sourceMode || 'direct' });
+        applyKinematicPoseToBody(state.explode / 100.0);
+      } else if (action === 'applyPoseLandmarks' && Array.isArray(payload.landmarks)) {
+        const derived = computePoseAnglesFromLandmarks33(payload.landmarks);
+        if (derived) {
+          state.pose = Object.assign({}, state.pose, derived, {
+            sourceMode: payload.sourceMode || 'mediapipe-blazepose-33'
+          });
+          applyKinematicPoseToBody(state.explode / 100.0);
+        }
       }
       emitTelemetry();
       return getTelemetry();
@@ -1079,6 +1286,9 @@
     animate();
 
     const params = new URLSearchParams(window.location.search);
+    if (params.get('mirror') === '1') {
+      document.body.classList.add('mirror-mode');
+    }
     const initModel = (params.get('model') || 'body').toLowerCase();
     const initLang = (params.get('lang') || 'en').toLowerCase();
     state.lang = initLang === 'th' ? 'th' : 'en';

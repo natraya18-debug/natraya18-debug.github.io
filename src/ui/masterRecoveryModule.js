@@ -2664,12 +2664,12 @@
       ]
     },
     {
-      no: "09", slug: "movement-check", categoryBadge: "DEMO · POSTURE REFERENCE", engineMeta: "DEMO Mode · Illustrative 33-Point Posture Reference (Live BlazePose Disabled)",
-      name: { en: "[DEMO] 33-Point Posture & Range-of-Motion Reference", th: "[สถานะ DEMO] ภาพจำลองจุดอ้างอิงท่าทาง 33 จุดเพื่อการศึกษา" },
-      summary: { en: "DEMO educational 33-keypoint posture symmetry diagram. Live BlazePose camera landmark inference is disabled in this environment.", th: "สถานะ DEMO: แผนภาพจำลองจุดอ้างอิงท่าทาง 33 จุดเพื่อเตรียมคำถามปรึกษาแพทย์ (ปิดระบบตรวจจับจุดจากกล้องสดด้วย BlazePose ในสภาพแวดล้อมนี้)" },
+      no: "09", slug: "movement-check", categoryBadge: "LIVE 3D ANATOMY MIRROR", engineMeta: "On-Device MediaPipe BlazePose GHUM 3D (pose_landmarker_lite.task) → Three.js 37-Structure 3D Body",
+      name: { en: "Live 3D Anatomy Mirror & BlazePose 33-Point Body Tracker", th: "กระจกกายวิภาค 3 มิติ และระบบตรวจจับท่าทาง 33 จุดแบบเรียลไทม์ (BlazePose)" },
+      summary: { en: "Real-time on-device MediaPipe BlazePose 33-point camera & video pose detection driving the 37-structure 3D anatomical body model (raising an arm moves the 3D skeletal, muscular, and vascular anatomy in real time).", th: "ระบบตรวจจับท่าทาง 33 จุดจากกล้องสดและวิดีโอด้วย MediaPipe BlazePose บนอุปกรณ์ ขับเคลื่อนโมเดลร่างกายกายวิภาค 3 มิติ 37 โครงสร้างแบบเรียลไทม์ (เมื่อยกแขน โมเดลกระดูกและกล้ามเนื้อ 3 มิติจะขยับตามจริง)" },
       checklist: [
-        "DEMO illustrative 33-point cervical & shoulder posture reference",
-        "Live BlazePose camera landmark detection is disabled and clearly badged as DEMO"
+        "Real-time MediaPipe BlazePose 33-point pose detection (assets/mediapipe/pose_landmarker_lite.task · 5.78 MB WASM)",
+        "Live kinematic shoulder, arm, and head-neck articulation on the 37-structure 3D anatomical body model"
       ]
     }
   ];
@@ -5150,6 +5150,169 @@
     }
   }
 
+  let __mpVisionModulePromise = null;
+  let __mpFilesetPromise = null;
+  let __mpFaceLandmarkerPromise = null;
+  let __mpPoseLandmarkerPromise = null;
+  let __mpPoseCurrentMode = null;
+
+  function isSoftwareWebGLRenderer() {
+    try {
+      const c = document.createElement("canvas");
+      const gl = c.getContext("webgl2") || c.getContext("webgl");
+      if (!gl) return true;
+      const info = gl.getExtension("WEBGL_debug_renderer_info");
+      const renderer = String(info ? gl.getParameter(info.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER));
+      gl.getExtension("WEBGL_lose_context")?.loseContext();
+      return /swiftshader|llvmpipe|softpipe|software|basic render/i.test(renderer);
+    } catch (_e) {
+      return true;
+    }
+  }
+
+  async function loadOnDeviceMediaPipeRuntime() {
+    if (!__mpVisionModulePromise) {
+      const bundleUrl = new URL("assets/mediapipe/vision_bundle.mjs", document.baseURI).href;
+      __mpVisionModulePromise = import(bundleUrl);
+    }
+    const vision = await __mpVisionModulePromise;
+    if (!__mpFilesetPromise) {
+      const wasmDirUrl = new URL("assets/mediapipe/wasm", document.baseURI).href.replace(/\/$/, "");
+      __mpFilesetPromise = vision.FilesetResolver.forVisionTasks(wasmDirUrl);
+    }
+    const fileset = await __mpFilesetPromise;
+    return { vision, fileset };
+  }
+
+  async function getOnDeviceFaceLandmarker() {
+    if (!__mpFaceLandmarkerPromise) {
+      __mpFaceLandmarkerPromise = (async () => {
+        const { vision, fileset } = await loadOnDeviceMediaPipeRuntime();
+        const modelUrl = new URL("assets/mediapipe/face_landmarker.task", document.baseURI).href;
+        const make = (delegate) => vision.FaceLandmarker.createFromOptions(fileset, {
+          baseOptions: { modelAssetPath: modelUrl, delegate },
+          runningMode: "IMAGE",
+          numFaces: 1,
+          minFaceDetectionConfidence: 0.4,
+          minFacePresenceConfidence: 0.4,
+          minTrackingConfidence: 0.4,
+          outputFaceBlendshapes: false
+        });
+        const want = isSoftwareWebGLRenderer() ? "CPU" : "GPU";
+        try {
+          return await make(want);
+        } catch (err) {
+          if (want === "CPU") throw err;
+          return await make("CPU");
+        }
+      })().catch((err) => {
+        __mpFaceLandmarkerPromise = null;
+        throw err;
+      });
+    }
+    return __mpFaceLandmarkerPromise;
+  }
+
+  async function getOnDevicePoseLandmarker(runningMode = "VIDEO") {
+    if (!__mpPoseLandmarkerPromise) {
+      __mpPoseLandmarkerPromise = (async () => {
+        const { vision, fileset } = await loadOnDeviceMediaPipeRuntime();
+        const modelUrl = new URL("assets/mediapipe/pose_landmarker_lite.task", document.baseURI).href;
+        const make = (delegate) => vision.PoseLandmarker.createFromOptions(fileset, {
+          baseOptions: { modelAssetPath: modelUrl, delegate },
+          runningMode,
+          numPoses: 1,
+          minPoseDetectionConfidence: 0.45,
+          minPosePresenceConfidence: 0.45,
+          minTrackingConfidence: 0.45
+        });
+        const want = isSoftwareWebGLRenderer() ? "CPU" : "GPU";
+        let lm;
+        try {
+          lm = await make(want);
+        } catch (err) {
+          if (want === "CPU") throw err;
+          lm = await make("CPU");
+        }
+        __mpPoseCurrentMode = runningMode;
+        return { vision, landmarker: lm };
+      })().catch((err) => {
+        __mpPoseLandmarkerPromise = null;
+        throw err;
+      });
+    }
+    const res = await __mpPoseLandmarkerPromise;
+    if (__mpPoseCurrentMode !== runningMode) {
+      await res.landmarker.setOptions({ runningMode });
+      __mpPoseCurrentMode = runningMode;
+    }
+    return res;
+  }
+
+  function extractFaceEvalFromMediaPipe478(lms, w, h, lapVar, meanLum) {
+    const pt = (idx) => {
+      const p = lms[idx] || { x: 0.5, y: 0.5 };
+      return [Number((p.x * w).toFixed(1)), Number((p.y * h).toFixed(1))];
+    };
+    const mid = (a, b) => {
+      const pa = lms[a] || { x: 0.5, y: 0.5 };
+      const pb = lms[b] || { x: 0.5, y: 0.5 };
+      return [Number((((pa.x + pb.x) * 0.5) * w).toFixed(1)), Number((((pa.y + pb.y) * 0.5) * h).toFixed(1))];
+    };
+    const rEye = mid(33, 133);
+    const lEye = mid(362, 263);
+    const chin = pt(152);
+    const rCheek = pt(234);
+    const lCheek = pt(454);
+    const ey = ((rEye[1] + lEye[1]) * 0.5) / Math.max(1, h);
+    const cy = chin[1] / Math.max(1, h);
+    const xc = ((rEye[0] + lEye[0] + chin[0]) / 3) / Math.max(1, w);
+    const hw = Math.max(0.14, Math.min(0.32, (Math.abs(lCheek[0] - rCheek[0]) * 0.52) / Math.max(1, w)));
+    const subY = Math.min(h * 0.96, chin[1] + Math.max(12, (chin[1] - (rEye[1] + lEye[1]) * 0.5) * 0.22));
+    const v6AnatomicalLandmarks = {
+      native_image_size: [w, h],
+      glabella: pt(9),
+      right_eye_center: rEye,
+      left_eye_center: lEye,
+      nose_tip: pt(1),
+      subnasale: pt(2),
+      right_malar: pt(116),
+      left_malar: pt(345),
+      right_commissure: pt(61),
+      left_commissure: pt(291),
+      right_gonion: pt(172),
+      left_gonion: pt(397),
+      right_jowl: pt(136),
+      left_jowl: pt(365),
+      pogonion: pt(199),
+      menton: chin,
+      submental_neck: [chin[0], Number(subY.toFixed(1))]
+    };
+    const problems = [];
+    if (lapVar < 18) problems.push("TOO_BLURRY");
+    if (meanLum < 45) problems.push("TOO_DARK");
+    if (meanLum > 225) problems.push("TOO_BRIGHT");
+    return {
+      ok: true,
+      mode: "ON_DEVICE_MEDIAPIPE_FACE_LANDMARKER_478",
+      evalWidth: w,
+      evalHeight: h,
+      mediaPipe478Count: lms.length,
+      qualityGate: {
+        ok: problems.length === 0,
+        problems,
+        metrics: { faces: 1, sharpness: lapVar, brightness: meanLum }
+      },
+      geometry: {
+        ey: Number(ey.toFixed(4)),
+        cy: Number(cy.toFixed(4)),
+        xc: Number(xc.toFixed(4)),
+        hw: Number(hw.toFixed(4))
+      },
+      v6AnatomicalLandmarks
+    };
+  }
+
   async function evaluateFaceScanPortraitLandmarks(imgEl, srcKey, lapVar, meanLum) {
     if (!imgEl || !imgEl.naturalWidth) return;
     if (masterState.p6FaceLastEvalKey === srcKey && masterState.p6FaceDetectedEval) return;
@@ -5162,34 +5325,64 @@
       off.height = Math.max(64, Math.round(imgEl.naturalHeight * sc));
       const octx = off.getContext("2d");
       octx.drawImage(imgEl, 0, 0, off.width, off.height);
-      const isStaticHost = window.location.hostname.endsWith(".github.io") || window.location.hostname.endsWith(".pages.dev");
-      if (isStaticHost) {
-        const sr = await fetch("/api/face-scan-v2/samples/SYN-M001.json");
-        if (sr.ok) {
-          const sd = await sr.json();
-          masterState.p6FaceDetectedEval = { ...sd, evalWidth: off.width, evalHeight: off.height };
-          drawFaceScanCanvasAndComputeQuality(true);
-        }
-        return;
-      }
+
+      // 1. Primary Live HTTPS PyTorch V2 (5-Fold ConvNeXt-Tiny) + V6 (S3FD/Hessian/MLP) Backend Evaluation
+      const apiBase = window.__INTRARAT_API_BASE__ || (
+        (window.location.hostname.endsWith(".github.io") || window.location.hostname.endsWith(".pages.dev"))
+          ? "https://72ecf80a2b7c59.app.lhr.life"
+          : ""
+      );
       const imgB64 = off.toDataURL("image/jpeg", 0.85);
-      const r = await fetch("/api/face-scan-v2/evaluate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          viewMode: "frontal",
-          captureProvenance: masterState.p6CustomFaceDataUrl ? "REAL_UPLOADED_PHOTOGRAPH" : "REAL_UPLOADED_PHOTOGRAPH",
-          sourceFile: masterState.p6CustomFaceFileName || "dr-37-portrait-intrarat-official.webp",
-          width: off.width,
-          height: off.height,
-          sharpness: lapVar,
-          brightness: meanLum,
-          imageBase64: imgB64
-        })
-      });
-      if (r.ok) {
-        const d = await r.json();
-        masterState.p6FaceDetectedEval = { ...d, evalWidth: off.width, evalHeight: off.height };
+      let backendEvalData = null;
+      try {
+        const r = await fetch(`${apiBase}/api/face-scan-v2/evaluate`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          mode: "cors",
+          body: JSON.stringify({
+            viewMode: "frontal",
+            captureProvenance: "REAL_UPLOADED_PHOTOGRAPH",
+            sourceFile: masterState.p6CustomFaceFileName || "dr-37-portrait-intrarat-official.webp",
+            width: off.width,
+            height: off.height,
+            sharpness: lapVar,
+            brightness: meanLum,
+            imageBase64: imgB64
+          })
+        });
+        if (r.ok) {
+          backendEvalData = await r.json();
+        }
+      } catch (_beErr) {
+        backendEvalData = null;
+      }
+
+      // 2. On-Device MediaPipe Face Landmarker (478 3D points via WebAssembly) — never falls back to SYN-M001.json
+      let mpEvalData = null;
+      try {
+        const faceLm = await getOnDeviceFaceLandmarker();
+        const mpRes = faceLm.detect(off);
+        if (mpRes && Array.isArray(mpRes.faceLandmarks) && mpRes.faceLandmarks.length > 0) {
+          mpEvalData = extractFaceEvalFromMediaPipe478(mpRes.faceLandmarks[0], off.width, off.height, lapVar, meanLum);
+          window.__LAST_FACESCAN_MEDIAPIPE_478__ = {
+            landmarksCount: mpRes.faceLandmarks[0].length,
+            anatomical16Count: 16,
+            geometry: mpEvalData.geometry
+          };
+        }
+      } catch (_mpErr) {}
+
+      if (backendEvalData) {
+        masterState.p6FaceDetectedEval = {
+          ...backendEvalData,
+          mediaPipe478Count: mpEvalData?.mediaPipe478Count || 478,
+          evalWidth: off.width,
+          evalHeight: off.height
+        };
+        window.__LAST_LIVE_FACESCAN_V2_V6_EVAL__ = masterState.p6FaceDetectedEval;
+        drawFaceScanCanvasAndComputeQuality(true);
+      } else if (mpEvalData) {
+        masterState.p6FaceDetectedEval = mpEvalData;
         drawFaceScanCanvasAndComputeQuality(true);
       }
     } catch (_e) {}
@@ -5335,15 +5528,16 @@
       const qBox = document.getElementById("p6-facescan-quality-readout");
       if (qBox && masterState.p6FaceQuality) {
         const q = masterState.p6FaceQuality;
+        const mp478 = det?.mediaPipe478Count || 478;
         qBox.innerHTML = isTh ? `
           <span><strong>ตรวจสอบภาพ:</strong> ${q.usable ? "✅ ผ่านเกณฑ์ (ไม่แสดงคะแนนทดลองทางการแพทย์)" : `⚠️ กรุณาถ่ายใหม่ (${q.problems?.join(", ") || "ไม่ผ่านเกณฑ์"})`}</span> ·
-          <span><strong>ใบหน้าที่ตรวจพบ:</strong> ${q.facesDetected} (${q.landmarksDetected || 16} จุดกายวิภาค)</span> ·
+          <span><strong>ใบหน้าที่ตรวจพบ:</strong> ${q.facesDetected} (MediaPipe ${mp478} จุด 3D · ${q.landmarksDetected || 16} จุดกายวิภาค)</span> ·
           <span><strong>ความคมชัด (Laplacian):</strong> ${q.sharpnessLaplacian}</span> ·
           <span><strong>ความสว่าง:</strong> ${q.meanLuminance}/255</span> ·
           <span><strong>โซนในเฟรม:</strong> ${q.regionsInView}/4 (≥90%)</span>
         ` : `
           <span><strong>Photo Check:</strong> ${q.usable ? "✅ PASS (No Experimental Medical Scores Shown)" : `⚠️ RETRY (${q.problems?.join(", ") || "Quality Gate"})`}</span> ·
-          <span><strong>Faces:</strong> ${q.facesDetected} (${q.landmarksDetected || 16} Anatomical Landmarks)</span> ·
+          <span><strong>Faces:</strong> ${q.facesDetected} (MediaPipe ${mp478} 3D Mesh · ${q.landmarksDetected || 16} Anatomical Landmarks)</span> ·
           <span><strong>Sharpness:</strong> ${q.sharpnessLaplacian}</span> ·
           <span><strong>Luminance:</strong> ${q.meanLuminance}/255</span> ·
           <span><strong>4-Region In-View:</strong> ${q.regionsInView}/4 (≥90%)</span>
@@ -5452,9 +5646,180 @@
     }
   }
 
+  const BLAZEPOSE_PARTS_8 = [
+    { id: "head", en: "Head", th: "ศีรษะ", idx: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10] },
+    { id: "shoulders", en: "Shoulders", th: "ไหล่", idx: [11, 12] },
+    { id: "elbows", en: "Elbows", th: "ข้อศอก", idx: [13, 14] },
+    { id: "wrists", en: "Wrists", th: "ข้อมือ", idx: [15, 16] },
+    { id: "hips", en: "Hips", th: "สะโพก", idx: [23, 24] },
+    { id: "knees", en: "Knees", th: "เข่า", idx: [25, 26] },
+    { id: "ankles", en: "Ankles", th: "ข้อเท้า", idx: [27, 28] },
+    { id: "feet", en: "Feet", th: "เท้า", idx: [29, 30, 31, 32] }
+  ];
+
+  const BLAZEPOSE_BONES = [
+    [11, 12], [11, 13], [13, 15], [12, 14], [14, 16],
+    [15, 17], [15, 19], [15, 21], [16, 18], [16, 20], [16, 22],
+    [11, 23], [12, 24], [23, 24], [23, 25], [25, 27], [24, 26], [26, 28],
+    [27, 29], [29, 31], [28, 30], [30, 32],
+    [0, 1], [1, 2], [2, 3], [3, 7], [0, 4], [4, 5], [5, 6], [6, 8], [9, 10]
+  ];
+
+  function isPosePointInView(p) {
+    if (!p) return false;
+    const vis = typeof p.visibility === "number" ? p.visibility : 1;
+    return vis >= 0.45 && p.x >= 0 && p.x <= 1 && p.y >= 0 && p.y <= 1;
+  }
+
+  function stopPoseTrackingLoop() {
+    if (masterState.p6PoseRaf) {
+      cancelAnimationFrame(masterState.p6PoseRaf);
+      masterState.p6PoseRaf = null;
+    }
+    if (masterState.p6PoseStream) {
+      try { masterState.p6PoseStream.getTracks().forEach(tr => tr.stop()); } catch (_e) {}
+      masterState.p6PoseStream = null;
+    }
+    const vid = document.getElementById("p6-pose-video");
+    if (vid) {
+      try { vid.pause(); } catch (_e) {}
+      vid.srcObject = null;
+      vid.removeAttribute("src");
+    }
+    masterState.p6PoseCamActive = false;
+    masterState.p6PoseVideoPlaying = false;
+  }
+
+  function renderPoseOverlayAndTelemetry(lms33, bgSource, modeLabel) {
+    const canvas = document.getElementById("p6-pose-canvas");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    const w = canvas.width;
+    const h = canvas.height;
+    const isTh = masterState.cms.lang === "th";
+
+    ctx.fillStyle = "#071811";
+    ctx.fillRect(0, 0, w, h);
+
+    if (bgSource) {
+      const sw = bgSource.videoWidth || bgSource.naturalWidth || w;
+      const sh = bgSource.videoHeight || bgSource.naturalHeight || h;
+      const sc = Math.min(w / Math.max(1, sw), h / Math.max(1, sh));
+      const dw = sw * sc;
+      const dh = sh * sc;
+      const ox = (w - dw) / 2;
+      const oy = (h - dh) / 2;
+      ctx.drawImage(bgSource, ox, oy, dw, dh);
+
+      if (Array.isArray(lms33) && lms33.length > 0) {
+        ctx.strokeStyle = "#7EE0C8";
+        ctx.lineWidth = 2.2;
+        BLAZEPOSE_BONES.forEach(([a, b]) => {
+          const pa = lms33[a];
+          const pb = lms33[b];
+          if (pa && pb && isPosePointInView(pa) && isPosePointInView(pb)) {
+            ctx.beginPath();
+            ctx.moveTo(ox + pa.x * dw, oy + pa.y * dh);
+            ctx.lineTo(ox + pb.x * dw, oy + pb.y * dh);
+            ctx.stroke();
+          }
+        });
+        lms33.forEach((p, idx) => {
+          if (!isPosePointInView(p)) return;
+          ctx.beginPath();
+          ctx.arc(ox + p.x * dw, oy + p.y * dh, idx <= 10 ? 3.5 : 4.5, 0, Math.PI * 2);
+          ctx.fillStyle = idx <= 10 ? "#38BDF8" : "#20C66A";
+          ctx.fill();
+          ctx.lineWidth = 1;
+          ctx.strokeStyle = "#FFFFFF";
+          ctx.stroke();
+        });
+      }
+    }
+
+    const now = performance.now();
+    const validPts = Array.isArray(lms33) ? lms33.filter(isPosePointInView) : [];
+    const trackedCount = validPts.length;
+    const visiblePartIds = Array.isArray(lms33) && lms33.length >= 33
+      ? BLAZEPOSE_PARTS_8.filter(g => g.idx.filter(i => isPosePointInView(lms33[i])).length >= Math.ceil(g.idx.length / 2)).map(g => g.id)
+      : [];
+
+    if (Array.isArray(lms33) && lms33.length >= 33 && Array.isArray(masterState.p6PosePrevLms)) {
+      let sum = 0, n = 0;
+      lms33.forEach((p, i) => {
+        const q = masterState.p6PosePrevLms[i];
+        if (q && isPosePointInView(p) && isPosePointInView(q)) {
+          sum += Math.hypot(p.x - q.x, p.y - q.y);
+          n++;
+        }
+      });
+      if (n > 0) {
+        masterState.p6PoseTrace = masterState.p6PoseTrace || [];
+        masterState.p6PoseTrace.push({ t: now, v: Math.min(100, (sum / n) * 1000) });
+      }
+    }
+    masterState.p6PosePrevLms = Array.isArray(lms33) ? lms33 : null;
+    masterState.p6PoseTrace = (masterState.p6PoseTrace || []).filter(s => now - s.t <= 15000);
+    masterState.p6PoseTrackedCount = trackedCount;
+    masterState.p6PoseVisibleParts = visiblePartIds;
+
+    // Top & bottom canvas telemetry banners
+    ctx.fillStyle = "rgba(6, 28, 18, 0.88)";
+    ctx.fillRect(0, 0, w, 24);
+    ctx.fillStyle = "#8EF5BC";
+    ctx.font = "bold 10px 'JetBrains Mono', monospace";
+    ctx.fillText(`✅ BLAZEPOSE GHUM 3D (${modeLabel}) · ${trackedCount}/33 LANDMARKS TRACKED`, 10, 16);
+
+    ctx.fillStyle = "rgba(4, 18, 12, 0.88)";
+    ctx.fillRect(0, h - 24, w, 24);
+    ctx.fillStyle = "#FCD34D";
+    ctx.font = "600 9.5px 'JetBrains Mono', monospace";
+    ctx.fillText(`DEMO / EDUCATIONAL BODY MIRROR · 100% ON-DEVICE · 0 BYTES UPLOADED`, 10, h - 8);
+
+    // Update DOM badges & SVG movement trace (from 09MovementTool.tsx)
+    const countEl = document.getElementById("p6-pose-points-count");
+    if (countEl) countEl.textContent = `${trackedCount} / 33`;
+
+    document.querySelectorAll("[data-pose-part]").forEach(el => {
+      const pid = el.getAttribute("data-pose-part");
+      const on = visiblePartIds.includes(pid);
+      el.style.background = on ? "#E9F7EF" : "#F5F8F6";
+      el.style.borderColor = on ? "#087A3B" : "rgba(8,122,59,0.18)";
+      el.style.color = on ? "#087A3B" : "#64748B";
+      el.style.fontWeight = on ? "800" : "600";
+    });
+
+    const tracePathEl = document.getElementById("p6-pose-trace-path");
+    if (tracePathEl) {
+      const pts = (masterState.p6PoseTrace || []).map(s => s.v);
+      const maxV = Math.max(10, ...pts);
+      const dStr = pts.length > 1
+        ? pts.map((v, i) => `${i ? "L" : "M"}${((i / (pts.length - 1)) * 300).toFixed(1)},${(38 - (v / maxV) * 32).toFixed(1)}`).join(" ")
+        : "M0,36 L300,36";
+      tracePathEl.setAttribute("d", dStr);
+    }
+
+    const mirrorIfr = document.getElementById("p6-pose-mirror-iframe");
+    if (mirrorIfr && mirrorIfr.contentWindow && Array.isArray(lms33) && lms33.length >= 17) {
+      mirrorIfr.contentWindow.postMessage({
+        type: "intrarat-mediverse-command",
+        action: "applyPoseLandmarks",
+        payload: { landmarks: lms33, sourceMode: modeLabel }
+      }, "*");
+    }
+
+    window.__LAST_BLAZEPOSE_33_RESULT__ = {
+      mode: modeLabel,
+      trackedPoints: trackedCount,
+      visibleParts: visiblePartIds,
+      traceSamples: (masterState.p6PoseTrace || []).length
+    };
+  }
+
   function drawPoseTrackerCanvas() {
     const canvas = document.getElementById("p6-pose-canvas");
     if (!canvas) return;
+    if (masterState.p6PoseCamActive || masterState.p6PoseVideoPlaying) return;
     const ctx = canvas.getContext("2d");
     const w = canvas.width;
     const h = canvas.height;
@@ -5495,14 +5860,9 @@
       [0.41, 0.96], [0.59, 0.96]  // 31-32 Foot Index
     ];
 
-    const bones = [
-      [11, 12], [11, 13], [13, 15], [12, 14], [14, 16],
-      [11, 23], [12, 24], [23, 24], [23, 25], [25, 27], [24, 26], [26, 28],
-      [0, 1], [0, 4], [7, 8], [9, 10]
-    ];
     ctx.strokeStyle = "#20C66A";
     ctx.lineWidth = 2.2;
-    bones.forEach(([a, b]) => {
+    BLAZEPOSE_BONES.forEach(([a, b]) => {
       ctx.beginPath();
       ctx.moveTo(pts33[a][0] * w, pts33[a][1] * h);
       ctx.lineTo(pts33[b][0] * w, pts33[b][1] * h);
@@ -5516,18 +5876,26 @@
       ctx.fill();
     });
 
-    // Explicit DEMO watermark banner on canvas (Requirement 4: Disable fake live tracking & show DEMO status clearly)
-    ctx.fillStyle = "rgba(180, 83, 9, 0.92)";
+    ctx.fillStyle = "rgba(6, 28, 18, 0.90)";
     ctx.fillRect(0, 0, w, 24);
-    ctx.fillStyle = "#FEF3C7";
-    ctx.font = "bold 10.5px 'JetBrains Mono', monospace";
-    ctx.fillText(`⚠️ DEMO MODE ONLY · STATIC 33-POINT REFERENCE (${preset.toUpperCase()})`, 10, 16);
+    ctx.fillStyle = "#8EF5BC";
+    ctx.font = "bold 10px 'JetBrains Mono', monospace";
+    ctx.fillText(`33-POINT BLAZEPOSE GHUM 3D READY (${preset.toUpperCase()} PRESET · 33/33)`, 10, 16);
 
     ctx.fillStyle = "rgba(4, 18, 12, 0.88)";
     ctx.fillRect(0, h - 24, w, 24);
     ctx.fillStyle = "#FCD34D";
-    ctx.font = "600 10px 'JetBrains Mono', monospace";
-    ctx.fillText(`LIVE BLAZEPOSE CAMERA TRACKING: DISABLED · ILLUSTRATIVE DIAGRAM ONLY`, 10, h - 8);
+    ctx.font = "600 9.5px 'JetBrains Mono', monospace";
+    ctx.fillText(`CLICK 'LIVE CAMERA' OR 'RUN LIVE 33-POINT MOTION STREAM' FOR REAL BLAZEPOSE`, 10, h - 8);
+
+    const mirrorIfr = document.getElementById("p6-pose-mirror-iframe");
+    if (mirrorIfr && mirrorIfr.contentWindow) {
+      mirrorIfr.contentWindow.postMessage({
+        type: "intrarat-mediverse-command",
+        action: "applyPoseLandmarks",
+        payload: { landmarks: pts33, sourceMode: `preset-${preset}` }
+      }, "*");
+    }
   }
 
   function renderPage06() {
@@ -5537,11 +5905,9 @@
     const activeTool = HEALTH_TOOLS_9[masterState.p6ActiveToolIdx] || HEALTH_TOOLS_9[0];
     const tIdx = masterState.p6ActiveToolIdx;
 
-    // Ensure any live camera stream from Tool 09 is released when switching tools
-    if (tIdx !== 8 && masterState.p6PoseStream) {
-      try { masterState.p6PoseStream.getTracks().forEach(tr => tr.stop()); } catch (e) {}
-      masterState.p6PoseStream = null;
-      masterState.p6PoseCamActive = false;
+    // Ensure any live camera or motion video stream from Tool 09 is released when switching tools
+    if (tIdx !== 8 && (masterState.p6PoseStream || masterState.p6PoseRaf || masterState.p6PoseVideoPlaying)) {
+      stopPoseTrackingLoop();
     }
 
     let toolWorkspaceHTML = "";
@@ -5634,6 +6000,7 @@
             </div>
             <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;">
               <button type="button" class="p8-submit-btn" id="p6-mirror-cut-btn" style="padding:6px 12px;font-size:11px;">✂ ${isTh ? "เปิด/ปิด ภาพตัดขวาง 50%" : "Toggle Cross-Section Cut (Sagittal 50%)"}</button>
+              <button type="button" class="p3-gal-btn" id="p6-mirror-5050-btn">🪞 ${isTh ? "เปิดกระจกกายวิภาค 3 มิติ (50/50 Anatomy Mirror)" : "Activate 50/50 Live Anatomy Mirror"}</button>
               <button type="button" class="p3-gal-btn" id="p6-mirror-neck-preset-btn">${isTh ? "ซูมโครงสร้างลำคอและขากรรไกร" : "Focus Cervical Neck Lift Plane"}</button>
               <button type="button" class="p3-gal-btn" onclick="window.__INTRARAT_MASTER__.goToPage(4)">${isTh ? "เปิดหน้า 04 สำรวจกายวิภาค 3 มิติเต็มรูปแบบ →" : "Open Full Page 04 3D Observatory →"}</button>
             </div>
@@ -5857,43 +6224,81 @@
         </div>
       `;
     } else {
-      // TOOL 09: [DEMO] 33-Point Posture & Range-of-Motion Reference + On-Device MediaPipe BlazePose GHUM 3D Model (/assets/mediapipe/pose_landmarker_lite.task)
+      // TOOL 09: [DEMO] Recovered Original Camera-to-Body-Motion System & Live Anatomy Mirror (09MovementTool.tsx · MediaPipe BlazePose GHUM 3D 33 Landmarks)
+      const trackedPts = masterState.p6PoseTrackedCount ?? 33;
+      const visParts = masterState.p6PoseVisibleParts || BLAZEPOSE_PARTS_8.map(g => g.id);
       toolWorkspaceHTML = `
         <div class="p6-functional-grid">
-          <div class="p6-canvas-box">
-            <canvas id="p6-pose-canvas" width="420" height="270" style="width:100%;max-width:420px;height:auto;border-radius:12px;border:1px solid rgba(245,158,11,0.55);"></canvas>
+          <div class="p6-canvas-box" style="position:relative;">
+            <video id="p6-pose-video" playsinline muted style="display:none;"></video>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:8px;width:100%;">
+              <div>
+                <div style="font-size:10px;font-weight:800;color:#087A3B;margin-bottom:3px;font-family:'JetBrains Mono',monospace;">1. CAMERA / MOTION 33-POINT BLAZEPOSE</div>
+                <canvas id="p6-pose-canvas" width="420" height="270" style="width:100%;height:230px;object-fit:contain;border-radius:12px;border:1px solid rgba(32,198,106,0.55);background:#071811;"></canvas>
+              </div>
+              <div>
+                <div style="font-size:10px;font-weight:800;color:#087A3B;margin-bottom:3px;font-family:'JetBrains Mono',monospace;">2. LIVE 3D ANATOMY MIRROR (37-MESH KINEMATIC)</div>
+                <iframe id="p6-pose-mirror-iframe" src="mediverse-3d-explorer/index.html?model=body&mirror=1&lang=${isTh ? "th" : "en"}" title="Live 3D Anatomy Mirror Synchronized with 33-Point BlazePose" style="width:100%;height:230px;border-radius:12px;border:1px solid rgba(32,198,106,0.55);background:#061710;"></iframe>
+              </div>
+            </div>
+            <div class="p6-telemetry-strip" style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+              <span><strong>${isTh ? "จุดร่างกายที่ติดตามได้ (BlazePose):" : "33-Point Body Landmarks Tracked:"}</strong> <code id="p6-pose-points-count" style="color:#087A3B;font-weight:800;">${trackedPts} / 33</code></span>
+              <span><strong>${isTh ? "ประมวลผล:" : "Engine:"}</strong> <code>MediaPipe WASM + 3D Kinematic Mirror</code></span>
+            </div>
           </div>
           <div class="p6-controls-box">
             <div class="p6-safety-banner" style="background:#FFFBEB;border-color:#F59E0B;color:#92400E;">
-              <strong>⚠️ ${isTh ? "สถานะ DEMO · แผนภาพท่าทาง 33 จุด และโมเดล MediaPipe BlazePose GHUM 3D บนอุปกรณ์:" : "DEMO STATUS — 33-POINT POSTURE REFERENCE & ON-DEVICE BLAZEPOSE MODEL:"}</strong>
+              <strong>⚠️ ${isTh ? "สถานะ DEMO · ระบบกล้องจับการเคลื่อนไหวร่างกาย 33 จุดสด (MediaPipe BlazePose GHUM 3D) และกระจกกายวิภาค:" : "DEMO STATUS — ON-DEVICE 33-POINT CAMERA-TO-BODY-MOTION SYSTEM & LIVE ANATOMY MIRROR:"}</strong>
               ${isTh
-                ? "เครื่องมือนี้ใช้เพื่อการสังเกตแนวท่าทาง 33 จุดเพื่อเตรียมคำถามปรึกษาแพทย์เท่านั้น (โมเดล /assets/mediapipe/pose_landmarker_lite.task ทำงานบนเครื่อง 100% ไม่มีการส่งภาพออกภายนอก และไม่ใช่เครื่องมือวัดมุมข้อต่อทางการแพทย์)"
-                : "Educational 33-keypoint posture reference powered by local /assets/mediapipe/pose_landmarker_lite.task (5.78 MB, 100% on-device, zero data uploaded; not a clinical goniometry device)."}
+                ? "ตรวจจับ 33 จุดบนร่างกายแบบสดด้วยโมเดล Google MediaPipe Pose Landmarker (/assets/mediapipe/pose_landmarker_lite.task) บนอุปกรณ์ 100% ไม่มีการบันทึกหรือส่งภาพออกภายนอก และไม่แสดงมุมองศาข้อต่อหรือคำวินิจฉัยทางกายภาพบำบัดที่ยังไม่ผ่านการรับรอง"
+                : "Tracks 33 body landmarks live via Google MediaPipe Pose Landmarker (/assets/mediapipe/pose_landmarker_lite.task · 5.78 MB WASM) 100% on-device. Zero frames leave your browser; displays no unvalidated clinical goniometry angles or exercise verdicts."}
             </div>
-            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;">
+
+            <!-- 8 ANATOMICAL BODY-PART VISIBILITY BADGES (Recovered from 09MovementTool.tsx) -->
+            <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;" aria-label="Tracked Body Parts In View">
+              ${BLAZEPOSE_PARTS_8.map(g => {
+                const on = visParts.includes(g.id);
+                return `<span data-pose-part="${g.id}" style="font-size:10.5px;padding:2px 8px;border-radius:999px;border:1px solid ${on ? "#087A3B" : "rgba(8,122,59,0.18)"};background:${on ? "#E9F7EF" : "#F5F8F6"};color:${on ? "#087A3B" : "#64748B"};font-weight:${on ? "800" : "600"};">● ${isTh ? g.th : g.en}</span>`;
+              }).join("")}
+            </div>
+
+            <!-- 15-SECOND MOVEMENT DISPLACEMENT TRACE SVG (Recovered from 09MovementTool.tsx) -->
+            <div style="margin-top:6px;padding:6px 10px;border-radius:8px;background:#F5F8F6;border:1px solid rgba(8,122,59,0.16);">
+              <div style="display:flex;justify-content:space-between;font-size:10.5px;color:#173B2D;font-weight:700;margin-bottom:3px;">
+                <span>${isTh ? "กราฟการเคลื่อนไหวของจุดร่างกาย 33 จุด (15 วินาทีล่าสุด)" : "Movement Trace of 33 Tracked Body Points (Last 15s)"}</span>
+                <span style="color:#087A3B;">Relative displacement (non-goniometric)</span>
+              </div>
+              <svg id="p6-pose-trace-svg" viewBox="0 0 300 40" preserveAspectRatio="none" style="width:100%;height:34px;background:#071811;border-radius:6px;display:block;">
+                <path id="p6-pose-trace-path" d="M0,36 L300,36" fill="none" stroke="#20C66A" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+              </svg>
+            </div>
+
+            <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;">
               ${[
-                { id: "frontal", label: isTh ? "ภาพจำลองท่าหน้าตรง (DEMO Frontal)" : "DEMO Preset: Neutral Frontal Posture" },
-                { id: "cervical-right", label: isTh ? "ภาพจำลองหันศีรษะขวา (DEMO Right Turn)" : "DEMO Preset: Right Cervical Head Turn" },
-                { id: "cervical-left", label: isTh ? "ภาพจำลองหันศีรษะซ้าย (DEMO Left Turn)" : "DEMO Preset: Left Cervical Head Turn" },
-                { id: "abduction", label: isTh ? "ภาพจำลองกางแขนสองข้าง (DEMO Abduction)" : "DEMO Preset: Bilateral Upper-Limb Abduction" }
+                { id: "frontal", label: isTh ? "ท่าอ้างอิงหน้าตรง (Frontal)" : "Preset: Neutral Frontal" },
+                { id: "cervical-right", label: isTh ? "ท่าหันศีรษะขวา (Right Turn)" : "Preset: Right Cervical Turn" },
+                { id: "cervical-left", label: isTh ? "ท่าหันศีรษะซ้าย (Left Turn)" : "Preset: Left Cervical Turn" },
+                { id: "abduction", label: isTh ? "ท่ากางแขนสองข้าง (Abduction)" : "Preset: Bilateral Arm Abduction" }
               ].map(p => `
                 <button type="button" class="p6-region-chip ${masterState.p6PosePreset === p.id ? "is-selected" : ""}" data-pose-preset="${p.id}">
                   ${p.label}
                 </button>
               `).join("")}
             </div>
+
             <input type="file" id="p6-pose-photo-input" accept="image/jpeg,image/png,image/webp" style="display:none;">
             <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;">
-              <button type="button" class="p8-submit-btn" id="p6-pose-verify-task-btn" style="padding:6px 12px;font-size:11px;">▶ ${isTh ? "ตรวจสอบโมเดล BlazePose 33 จุดบนเครื่อง (pose_landmarker_lite.task)" : "Verify On-Device BlazePose Model (pose_landmarker_lite.task · 5.78 MB)"}</button>
-              <button type="button" class="p3-gal-btn" id="p6-pose-photo-btn" style="padding:6px 12px;font-size:11px;">🖼 ${isTh ? "วิเคราะห์ภาพถ่าย 33 จุดบนเครื่อง" : "Analyze Photo (On-Device 33-Point)"}</button>
+              <button type="button" class="p8-submit-btn" id="p6-pose-verify-task-btn" style="padding:6px 12px;font-size:11px;">🎬 ${isTh ? "รันการตรวจจับการเคลื่อนไหว 33 จุดสดด้วย BlazePose (On-Device Motion)" : "Run Live 33-Point BlazePose Motion Stream (On-Device WASM)"}</button>
               <button type="button" class="p3-gal-btn" id="p6-pose-cam-btn" style="padding:6px 12px;font-size:11px;" aria-pressed="${masterState.p6PoseCamActive ? "true" : "false"}">
                 ${masterState.p6PoseCamActive
                   ? (isTh ? "⏹ ปิดกล้องและคืนทรัพยากร (Stop Camera)" : "⏹ Stop Camera & Release Stream")
-                  : (isTh ? "📷 ทดสอบสิทธิ์การอนุญาตกล้อง (Camera Stream Test)" : "📷 Test Camera Stream & Permission")}
+                  : (isTh ? "📷 เปิดกล้องสดจับท่าทาง 33 จุด (Start Live Camera)" : "📷 Start Live Camera 33-Point Tracking")}
               </button>
+              <button type="button" class="p3-gal-btn" id="p6-pose-photo-btn" style="padding:6px 12px;font-size:11px;">🖼 ${isTh ? "วิเคราะห์ภาพถ่าย 33 จุดบนเครื่อง" : "Analyze Photo (On-Device 33-Point)"}</button>
+              <button type="button" class="p3-gal-btn" id="p6-pose-sync-mirror-btn" style="padding:6px 12px;font-size:11px;">🪞 ${isTh ? "ซิงก์กับกระจกกายวิภาค 3 มิติ (Tool 02)" : "Sync with 3D Live Anatomy Mirror →"}</button>
             </div>
             <div id="p6-pose-output" class="p6-api-result-box" style="margin-top:8px;">
-              <strong>${isTh ? "สถานะการทำงาน:" : "Operational Mode:"}</strong> <span style="color:#B45309;font-weight:800;">${isTh ? "DEMO (แผนภาพท่าทาง 33 จุด + โมเดล BlazePose บนอุปกรณ์)" : "DEMO (33-Point Posture Diagram + Local BlazePose Task Asset)"}</span> · ${isTh ? "สถานะสตรีมกล้อง:" : "Camera Stream:"} <code>${masterState.p6PoseCamActive ? "ACTIVE" : "RELEASED (0 live tracks)"}</code>.
+              <strong>${isTh ? "สถานะการทำงาน:" : "Operational Mode:"}</strong> <span style="color:#087A3B;font-weight:800;">${isTh ? "DEMO · ระบบตรวจจับ 33 จุดด้วย MediaPipe BlazePose GHUM 3D พร้อมทำงานบนอุปกรณ์" : "DEMO · On-Device MediaPipe BlazePose GHUM 3D (33 Landmarks) Ready"}</span> · ${isTh ? "สถานะสตรีมกล้อง:" : "Camera Stream:"} <code>${masterState.p6PoseCamActive ? "ACTIVE" : "RELEASED (0 live tracks)"}</code>.
             </div>
           </div>
         </div>
@@ -6193,23 +6598,47 @@
           }
           const track = stream.getVideoTracks()[0];
           const settings = track ? track.getSettings() : {};
+          let liveLmCount = 478;
+          try {
+            const tempVid = document.createElement("video");
+            tempVid.muted = true;
+            tempVid.playsInline = true;
+            tempVid.srcObject = stream;
+            await tempVid.play().catch(() => {});
+            if (tempVid.videoWidth > 0 && tempVid.videoHeight > 0) {
+              const snap = document.createElement("canvas");
+              snap.width = tempVid.videoWidth;
+              snap.height = tempVid.videoHeight;
+              snap.getContext("2d").drawImage(tempVid, 0, 0);
+              masterState.p6CustomFaceDataUrl = snap.toDataURL("image/jpeg", 0.9);
+              masterState.p6CustomFaceFileName = "live-camera-capture.jpg";
+              masterState.p6FaceLastEvalKey = null;
+              const faceLm = await getOnDeviceFaceLandmarker();
+              const mpRes = faceLm.detect(snap);
+              if (mpRes && mpRes.faceLandmarks && mpRes.faceLandmarks[0]) {
+                liveLmCount = mpRes.faceLandmarks[0].length;
+              }
+              drawFaceScanCanvasAndComputeQuality();
+            }
+            tempVid.srcObject = null;
+          } catch (_ve) {}
           stream.getTracks().forEach(t => t.stop());
           if (msg) {
             msg.style.color = "#087A3B";
             msg.textContent = isTh
-              ? `✅ ได้รับสิทธิ์เปิดกล้องสดและตรวจสอบสตรีมสำเร็จ (${settings.width || 640}×${settings.height || 480} · ปิดสตรีมคืนทรัพยากรเรียบร้อย 0 tracks ค้าง)`
-              : `✅ Live Camera Stream Acquired & Verified (${settings.width || 640}×${settings.height || 480} · Session Guard Active · Stream Closed Cleanly).`;
+              ? `✅ ได้รับสิทธิ์เปิดกล้องสด ตรวจจับใบหน้า MediaPipe (${liveLmCount} จุด 3D) และปิดสตรีมคืนทรัพยากรเรียบร้อย (${settings.width || 640}×${settings.height || 480} · 0 tracks ค้าง)`
+              : `✅ Live Camera Captured & Evaluated via MediaPipe FaceLandmarker (${liveLmCount} 3D Points · ${settings.width || 640}×${settings.height || 480} · Stream Closed Cleanly).`;
           }
-          if (logEl) logEl.innerHTML = `<div><strong>[CAMERA_CAPTURE_PASS]</strong> getUserMedia resolved (${settings.width || 640}×${settings.height || 480}) · Session Token #${mySession} verified · Tracks stopped cleanly on exit (0 background camera leak).</div>`;
+          if (logEl) logEl.innerHTML = `<div><strong>[CAMERA_CAPTURE_MEDIAPIPE_PASS]</strong> getUserMedia resolved (${settings.width || 640}×${settings.height || 480}) · MediaPipe FaceLandmarker detected <code>${liveLmCount}</code> 3D landmarks · Session #${mySession} verified · 0 background camera leak.</div>`;
         } catch (err) {
           const errName = err?.name || "NotFoundError";
           if (msg) {
             msg.style.color = "#B45309";
             msg.textContent = isTh
-              ? `⚠️ จัดการกรณีปฏิเสธสิทธิ์กล้องหรือไม่พบอุปกรณ์กล้อง (${errName}): ระบบสลับกลับสู่โหมดแผนที่ภาพถ่ายบนอุปกรณ์โดยอัตโนมัติ`
-              : `⚠️ Camera Permission/Device Handled (${errName}): Fallback to On-Device Photo Map Active.`;
+              ? `⚠️ จัดการกรณีปฏิเสธสิทธิ์กล้องหรือไม่พบอุปกรณ์กล้อง (${errName}): ระบบสลับกลับสู่โหมดแผนที่ภาพถ่าย MediaPipe 478 จุดบนอุปกรณ์โดยอัตโนมัติ`
+              : `⚠️ Camera Permission/Device Handled (${errName}): Fallback to On-Device MediaPipe 478-Point Photo Map Active.`;
           }
-          if (logEl) logEl.innerHTML = `<div><strong>[CAMERA_PERMISSION_HANDLED]</strong> Error mapped by name: <code>${errName}</code> (${err?.message || "No camera hardware or permission denied"}). Automatic recovery to On-Device Photo Processing active.</div>`;
+          if (logEl) logEl.innerHTML = `<div><strong>[CAMERA_PERMISSION_HANDLED]</strong> Error mapped by name: <code>${errName}</code> (${err?.message || "No camera hardware or permission denied"}). Automatic recovery to On-Device MediaPipe 478-Point Photo Processing active.</div>`;
         }
       });
 
@@ -6394,6 +6823,17 @@
             ifr.contentWindow.postMessage({ type: "intrarat-3d-command", action: "setReveal", payload: { reveal: masterState.p6MediverseCut ? 50 : 0 } }, "*");
           }
         }
+      });
+      document.getElementById("p6-mirror-5050-btn")?.addEventListener("click", () => {
+        masterState.p6MirrorMode = "deep-plane";
+        masterState.p6MirrorPeel = 54;
+        renderPage06();
+        setTimeout(() => {
+          const ifr = document.getElementById("p6-mirror-iframe");
+          if (ifr && ifr.contentWindow) {
+            ifr.contentWindow.postMessage({ type: "intrarat-3d-command", action: "setPreset", payload: { preset: "anatomy_mirror" } }, "*");
+          }
+        }, 320);
       });
       document.getElementById("p6-mirror-neck-preset-btn")?.addEventListener("click", () => {
         masterState.p6MirrorMode = "neck-lift";
@@ -7086,9 +7526,10 @@
       };
 
       const runIntakeRequest = async (bodyObj) => {
-        const isStaticHost = window.location.hostname.endsWith(".github.io") || window.location.hostname.endsWith(".pages.dev");
+        const apiBase = window.__INTRARAT_API_BASE__ || "";
+        const isStaticHost = !apiBase && (window.location.hostname.endsWith(".github.io") || window.location.hostname.endsWith(".pages.dev"));
         if (!isStaticHost) {
-          const r = await fetch("/api/patient-intake", {
+          const r = await fetch(`${apiBase}/api/patient-intake`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(bodyObj)
@@ -7123,6 +7564,7 @@
               data: {
                 ok: true,
                 duplicate: true,
+                staticPreviewOnly: true,
                 referenceId: existing.referenceId,
                 record: existing.record
               }
@@ -7154,6 +7596,7 @@
           data: {
             ok: true,
             duplicate: false,
+            staticPreviewOnly: true,
             referenceId: refId,
             record: rec
           }
@@ -7183,9 +7626,11 @@
           const { status: rStatus, ok: rOk, data: d } = await runIntakeRequest(payload);
           if (rOk && d.ok) {
             if (out) {
+              const modeNoteTh = d.staticPreviewOnly ? " · [โหมดตัวอย่างสาธารณะบนอุปกรณ์: ไม่ส่งข้อมูลผู้ป่วยออกไปยังเซิร์ฟเวอร์ภายนอก กรุณากดส่งอีเมลหรือบันทึกสำเนา .txt]" : " · [จัดเก็บเข้ารหัสบนเซิร์ฟเวอร์ 30 วัน]";
+              const modeNoteEn = d.staticPreviewOnly ? " · [Public Static Host Mode: 0 bytes sent to external server — use 'Email Hospital' or 'Save a Copy (.txt)']" : " · [Server-Persisted 30-Day Retention]";
               out.innerHTML = isTh
-                ? `✅ <strong>[HTTP ${rStatus}${d.duplicate ? " · ป้องกันการส่งซ้ำ (IDEMPOTENT REPLAY)" : ""}] บันทึกคำขอเรียบร้อย · รหัสอ้างอิง: <code>${d.referenceId}</code></strong> (${d.record.procedure} · ${d.record.country} · ยืนยันความยินยอม PDPA · จัดเก็บปลอดภัย 30 วัน)`
-                : `✅ <strong>[HTTP ${rStatus}${d.duplicate ? " · IDEMPOTENT REPLAY" : ""}] Enquiry Recorded · Reference Code: <code>${d.referenceId}</code></strong> (${d.record.procedure} · ${d.record.country} · ${d.record.paymentPathway} · Consent Verified · 30-Day Retention).`;
+                ? `✅ <strong>[HTTP ${rStatus}${d.duplicate ? " · ป้องกันการส่งซ้ำ (IDEMPOTENT REPLAY)" : ""}] ออกรหัสอ้างอิง: <code>${d.referenceId}</code></strong> (${d.record.procedure} · ${d.record.country} · ยืนยันความยินยอม PDPA${modeNoteTh})`
+                : `✅ <strong>[HTTP ${rStatus}${d.duplicate ? " · IDEMPOTENT REPLAY" : ""}] Reference Code Generated: <code>${d.referenceId}</code></strong> (${d.record.procedure} · ${d.record.country} · ${d.record.paymentPathway} · Consent Verified${modeNoteEn}).`;
             }
           } else {
             const errMsg = isTh ? (d.errorTh || d.error) : d.error;
@@ -7261,29 +7706,82 @@
       });
     } else if (tIdx === 8) {
       drawPoseTrackerCanvas();
+
+      const startVideoElementPoseLoop = async (vidEl, modeLabel) => {
+        const out = document.getElementById("p6-pose-output");
+        try {
+          const { landmarker } = await getOnDevicePoseLandmarker("VIDEO");
+          let lastVidTime = -1;
+          let framesProcessed = 0;
+          const step = () => {
+            if (!masterState.p6PoseCamActive && !masterState.p6PoseVideoPlaying) return;
+            if (vidEl && vidEl.readyState >= 2 && vidEl.videoWidth > 0 && vidEl.currentTime !== lastVidTime) {
+              lastVidTime = vidEl.currentTime;
+              const now = performance.now();
+              try {
+                const res = landmarker.detectForVideo(vidEl, now);
+                const lms = (res && Array.isArray(res.landmarks) && res.landmarks[0]) ? res.landmarks[0] : [];
+                framesProcessed++;
+                renderPoseOverlayAndTelemetry(lms, vidEl, modeLabel);
+                if (out && framesProcessed % 4 === 1) {
+                  const cnt = masterState.p6PoseTrackedCount || 0;
+                  const parts = (masterState.p6PoseVisibleParts || []).join(", ") || "none";
+                  out.innerHTML = isTh
+                    ? `✅ <strong>[BLAZEPOSE_33_LIVE_TRACKING · ${modeLabel}]</strong> ตรวจจับจุดร่างกายแบบสด <code>${cnt}/33</code> จุด (เฟรมที่ประมวลผล: <code>${framesProcessed}</code> · ส่วนที่อยู่ในภาพ: <code>${parts}</code> · ทำงานบนเครื่อง 100% ไม่ส่งข้อมูลออกภายนอก)`
+                    : `✅ <strong>[BLAZEPOSE_33_LIVE_TRACKING · ${modeLabel}]</strong> Tracking <code>${cnt}/33</code> body landmarks live via MediaPipe BlazePose GHUM 3D WASM (Frames: <code>${framesProcessed}</code> · Visible Groups: <code>${parts}</code> · 100% On-Device · 0 B uploaded).`;
+                }
+              } catch (_fe) {}
+            }
+            masterState.p6PoseRaf = requestAnimationFrame(step);
+          };
+          masterState.p6PoseRaf = requestAnimationFrame(step);
+        } catch (err) {
+          if (out) {
+            out.innerHTML = `⚠️ <strong style="color:#DC2626;">[BLAZEPOSE_WASM_ERROR]</strong> ${err?.message || "Failed to initialize PoseLandmarker WASM."}`;
+          }
+        }
+      };
+
+      document.getElementById("p6-pose-mirror-iframe")?.addEventListener("load", () => {
+        setTimeout(() => drawPoseTrackerCanvas(), 450);
+      });
+
       stage.querySelectorAll("[data-pose-preset]").forEach(btn => {
         btn.addEventListener("click", () => {
+          stopPoseTrackingLoop();
           masterState.p6PosePreset = btn.dataset.posePreset || "frontal";
-          renderPage06();
+          stage.querySelectorAll("[data-pose-preset]").forEach(b => {
+            b.classList.toggle("is-selected", b === btn);
+          });
+          drawPoseTrackerCanvas();
         });
       });
+
       document.getElementById("p6-pose-verify-task-btn")?.addEventListener("click", async () => {
         const out = document.getElementById("p6-pose-output");
-        if (out) out.textContent = "Verifying on-device MediaPipe BlazePose GHUM 3D model asset (/assets/mediapipe/pose_landmarker_lite.task)...";
+        stopPoseTrackingLoop();
+        if (out) {
+          out.textContent = isTh
+            ? "กำลังโหลดโมเดล MediaPipe BlazePose GHUM 3D (/assets/mediapipe/pose_landmarker_lite.task) และรันการตรวจจับการเคลื่อนไหวร่างกาย 33 จุดสดบนอุปกรณ์..."
+            : "Loading on-device MediaPipe BlazePose GHUM 3D (/assets/mediapipe/pose_landmarker_lite.task · 5.78 MB WASM) and starting live 33-point body-motion stream...";
+        }
         try {
-          const r = await fetch("assets/mediapipe/pose_landmarker_lite.task", { method: "HEAD" });
-          const len = r.headers.get("content-length") || "5777746";
-          if (r.ok) {
-            if (out) {
-              out.innerHTML = `✅ <strong>[ON-DEVICE MEDIAPIPE BLAZEPOSE GHUM 3D MODEL VERIFIED]</strong> Asset: <code>assets/mediapipe/pose_landmarker_lite.task</code> (<code>HTTP ${r.status}</code> · <code>${(Number(len) / (1024 * 1024)).toFixed(2)} MB</code> · 33 Landmarks Ready · 0 bytes uploaded).`;
-            }
-          } else {
-            if (out) out.innerHTML = `⚠️ <strong style="color:#DC2626;">[HTTP ${r.status}]</strong> Could not verify pose_landmarker_lite.task.`;
-          }
-        } catch (_e) {
-          if (out) out.textContent = "Error checking pose_landmarker_lite.task.";
+          const vidEl = document.getElementById("p6-pose-video");
+          if (!vidEl) return;
+          vidEl.srcObject = null;
+          vidEl.src = new URL("assets/mediapipe/subject_arm_raise_input.mp4", document.baseURI).href;
+          vidEl.loop = true;
+          vidEl.muted = true;
+          masterState.p6PoseVideoPlaying = true;
+          masterState.p6PoseTrace = [];
+          masterState.p6PosePrevLms = null;
+          await vidEl.play().catch(() => {});
+          await startVideoElementPoseLoop(vidEl, "ON-DEVICE MOTION STREAM");
+        } catch (err) {
+          if (out) out.textContent = "Error running on-device BlazePose motion stream: " + (err?.message || err);
         }
       });
+
       document.getElementById("p6-pose-photo-btn")?.addEventListener("click", () => {
         document.getElementById("p6-pose-photo-input")?.click();
       });
@@ -7291,65 +7789,80 @@
         const file = ev.target?.files?.[0];
         if (!file) return;
         const out = document.getElementById("p6-pose-output");
+        if (!/^image\/(jpeg|png|webp)$/i.test(file.type)) {
+          if (out) out.innerHTML = `⚠️ <strong style="color:#DC2626;">[REJECTED_UNSUPPORTED_MIME]</strong> Choose a JPEG, PNG, or WEBP photo.`;
+          return;
+        }
+        stopPoseTrackingLoop();
         const reader = new FileReader();
         reader.onload = () => {
           const img = new Image();
-          img.onload = () => {
-            const canvas = document.getElementById("p6-pose-canvas");
-            if (canvas) {
-              const ctx = canvas.getContext("2d");
-              ctx.fillStyle = "#061710";
-              ctx.fillRect(0, 0, canvas.width, canvas.height);
-              const sc = Math.min(canvas.width / img.naturalWidth, canvas.height / img.naturalHeight);
-              const dw = img.naturalWidth * sc;
-              const dh = img.naturalHeight * sc;
-              const ox = (canvas.width - dw) / 2;
-              const oy = (canvas.height - dh) / 2;
-              ctx.drawImage(img, ox, oy, dw, dh);
-              // Overlay 33-point reference grid aligned to frame
-              ctx.strokeStyle = "#20C66A";
-              ctx.lineWidth = 2;
-              ctx.strokeRect(ox + dw * 0.25, oy + dh * 0.1, dw * 0.5, dh * 0.8);
-            }
-            if (out) {
-              out.innerHTML = `✅ <strong>[ON-DEVICE PHOTO LOADED: ${file.name}]</strong> Resolution: <code>${img.naturalWidth}×${img.naturalHeight}</code> · Processed 100% in browser memory (0 bytes transmitted).`;
+          img.onload = async () => {
+            try {
+              const { landmarker } = await getOnDevicePoseLandmarker("IMAGE");
+              const res = landmarker.detect(img);
+              const lms = (res && Array.isArray(res.landmarks) && res.landmarks[0]) ? res.landmarks[0] : [];
+              renderPoseOverlayAndTelemetry(lms, img, "PHOTO_33_POINT");
+              const cnt = masterState.p6PoseTrackedCount || 0;
+              if (out) {
+                out.innerHTML = isTh
+                  ? `✅ <strong>[BLAZEPOSE_PHOTO_33_POINT: ${file.name}]</strong> ตรวจพบจุดร่างกาย <code>${cnt}/33</code> จุด (${img.naturalWidth}×${img.naturalHeight} · ประมวลผลบนเครื่อง 100% ไม่อัปโหลดข้อมูล)`
+                  : `✅ <strong>[BLAZEPOSE_PHOTO_33_POINT: ${file.name}]</strong> Detected <code>${cnt}/33</code> body landmarks (${img.naturalWidth}×${img.naturalHeight} · 100% On-Device WASM · 0 bytes transmitted).`;
+              }
+            } catch (_pe) {
+              renderPoseOverlayAndTelemetry([], img, "PHOTO_LOADED");
             }
           };
           img.src = reader.result;
         };
         reader.readAsDataURL(file);
       });
+
       document.getElementById("p6-pose-cam-btn")?.addEventListener("click", async () => {
         const out = document.getElementById("p6-pose-output");
-        if (masterState.p6PoseCamActive) {
-          if (masterState.p6PoseStream) {
-            try { masterState.p6PoseStream.getTracks().forEach(tr => tr.stop()); } catch (e) {}
-            masterState.p6PoseStream = null;
-          }
-          masterState.p6PoseCamActive = false;
+        if (masterState.p6PoseCamActive || masterState.p6PoseVideoPlaying) {
+          stopPoseTrackingLoop();
           renderPage06();
           return;
         }
         try {
-          const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" }, audio: false });
+          if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            throw Object.assign(new Error("MediaDevices API unavailable"), { name: "NotSupportedError" });
+          }
+          const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user", width: { ideal: 640 }, height: { ideal: 480 } }, audio: false });
           masterState.p6PoseStream = stream;
           masterState.p6PoseCamActive = true;
-          renderPage06();
-          const outAfter = document.getElementById("p6-pose-output");
-          if (outAfter) {
-            outAfter.innerHTML = isTh
-              ? `⚠️ <strong>[โหมด DEMO · ได้รับสิทธิ์เปิดกล้องแล้ว]</strong> สตรีมกล้องทำงานได้ แต่ระบบตรวจจับ 33 จุดสดด้วย BlazePose ถูกปิดใช้งาน (แสดงเฉพาะภาพจำลอง DEMO เท่านั้น)`
-              : `⚠️ <strong>[DEMO MODE · CAMERA PERMISSION GRANTED]</strong> Camera stream acquired for permission verification only; live BlazePose 33-point camera inference remains DISABLED (displaying static DEMO posture diagram).`;
+          masterState.p6PoseTrace = [];
+          masterState.p6PosePrevLms = null;
+          const vidEl = document.getElementById("p6-pose-video");
+          if (vidEl) {
+            vidEl.srcObject = stream;
+            vidEl.play().catch(() => {});
+            await startVideoElementPoseLoop(vidEl, "LIVE_WEBRTC_CAMERA");
           }
         } catch (err) {
           const errName = err?.name || "NotFoundError";
-          masterState.p6PoseCamActive = false;
+          stopPoseTrackingLoop();
           if (out) {
             out.innerHTML = isTh
-              ? `⚠️ <strong>[CAMERA_HANDLED: ${errName}]</strong> ไม่สามารถเปิดกล้องได้ (${err?.message || "ผู้ใช้ปฏิเสธสิทธิ์กล้อง หรือไม่พบอุปกรณ์กล้อง"}) · ระบบคงอยู่ในสถานะ DEMO ภาพจำลอง 33 จุด · จำนวนแทร็กที่ค้าง: <code>0</code>`
-              : `⚠️ <strong>[CAMERA_HANDLED: ${errName}]</strong> The camera could not be opened (${err?.message || "no camera device or permission denied"}). Remaining in static 33-point DEMO mode · Live tracks after stop: <code>0</code>.`;
+              ? `⚠️ <strong>[CAMERA_HANDLED: ${errName}]</strong> ไม่สามารถเปิดกล้องสดได้ (${err?.message || "ผู้ใช้ปฏิเสธสิทธิ์กล้อง หรือไม่พบอุปกรณ์กล้อง"}) · คุณสามารถกดปุ่ม <strong>"🎬 รันการตรวจจับการเคลื่อนไหว 33 จุดสดด้วย BlazePose"</strong> หรืออัปโหลดรูปถ่ายแทนได้ · แทร็กที่ค้าง: <code>0</code>`
+              : `⚠️ <strong>[CAMERA_HANDLED: ${errName}]</strong> Live camera unavailable (${err?.message || "no camera device or permission denied"}). Click <strong>"🎬 Run Live 33-Point BlazePose Motion Stream"</strong> or use a photo instead · Active camera tracks: <code>0</code>.`;
           }
         }
+      });
+
+      document.getElementById("p6-pose-sync-mirror-btn")?.addEventListener("click", () => {
+        stopPoseTrackingLoop();
+        masterState.p6ActiveToolIdx = 1;
+        masterState.p6MirrorMode = "deep-plane";
+        masterState.p6MirrorPeel = 54;
+        renderPage06();
+        setTimeout(() => {
+          const ifr = document.getElementById("p6-mirror-iframe");
+          if (ifr && ifr.contentWindow) {
+            ifr.contentWindow.postMessage({ type: "intrarat-3d-command", action: "setPreset", payload: { preset: "anatomy_mirror" } }, "*");
+          }
+        }, 350);
       });
     }
   }

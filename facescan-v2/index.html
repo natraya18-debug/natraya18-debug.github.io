@@ -869,6 +869,8 @@
           .replace(/"/g, "&quot;");
       }
 
+      const STAGING_BACKEND_ORIGIN = window.__INTRARAT_BACKEND_ORIGIN__ || "https://72ecf80a2b7c59.app.lhr.life";
+
       async function apiFetch(path, options = {}) {
         const hdrs = Object.assign({ "Content-Type": "application/json" }, options.headers || {});
         if (adminToken) hdrs["Authorization"] = "Bearer " + adminToken;
@@ -882,68 +884,115 @@
           if (p === "/api/face-scan-v2/physician-annotations" && (!opts.method || opts.method === "GET")) return "/api/face-scan-v2/physician-annotations.json";
           if (p.startsWith("/api/face-scan-v2/sample?")) {
             const u = new URL(p, window.location.origin);
-            const sid = (u.searchParams.get("id") || "SYN-M001").toUpperCase();
+            const sid = (u.searchParams.get("id") || "SYN-M001").toUpperCase().replace(/[^A-Z0-9_-]/g, "");
             return `/api/face-scan-v2/samples/${sid}.json`;
           }
           if (p === "/api/face-scan-v2/unified-analyze" && opts.body) {
             try {
               const b = JSON.parse(opts.body);
-              const rawCid = (b.caseId || "SYN-M001").toUpperCase();
-              const cid = /^SYN-M0(0[1-9]|1[0-6])$/.test(rawCid) ? rawCid : "SYN-M001";
-              return `/api/face-scan-v2/unified/${cid}.json`;
+              if (b.imageBase64) return null; // Never fall back to precomputed synthetic JSON when evaluating a new image!
+              const rawCid = (b.caseId || "SYN-M001").trim().replace(/[^A-Za-z0-9_-]/g, "");
+              return `/api/face-scan-v2/unified/${rawCid}.json`;
             } catch (_) {}
           }
           return null;
         };
 
-        if (isStaticHost) {
+        // Always route live image inference (/api/face-scan-v2/evaluate or /api/face-scan-v2/unified-analyze with imageBase64)
+        // to the live HTTPS PyTorch V2/V6 backend — never return precomputed SYN-M001.json as a new person's AI analysis.
+        const isLiveImageInference =
+          path === "/api/face-scan-v2/evaluate" ||
+          (path === "/api/face-scan-v2/unified-analyze" && options.body && String(options.body).includes("imageBase64"));
+
+        if (isStaticHost && !isLiveImageInference) {
           const staticUrl = resolveStaticFallbackUrl(path, options);
           if (staticUrl) {
             const sr = await fetch(staticUrl);
             const sd = await sr.json().catch(() => ({}));
             return { status: sr.status, data: sd };
-          }
-          if (path === "/api/face-scan-v2/evaluate" && options.body) {
-            try {
-              const b = JSON.parse(options.body);
-              const sr = await fetch("/api/face-scan-v2/samples/SYN-M001.json");
-              const sd = await sr.json().catch(() => ({}));
-              const passed = (b.faces === 1) && ((b.faceWidthPx || 640) >= 200) && (Math.abs(b.yaw || 0) <= 15) && ((b.sharpness || 50) >= 15) && ((b.brightness || 120) >= 40);
-              const fails = [];
-              if (b.faces === 0) fails.push("NO_FACE_DETECTED");
-              if (b.faces > 1) fails.push("MULTIPLE_FACES_DETECTED");
-              if ((b.faceWidthPx || 640) < 200) fails.push("FACE_TOO_SMALL");
-              if (Math.abs(b.yaw || 0) > 15) fails.push("YAW_OUT_OF_FRONTAL_RANGE");
-              if ((b.sharpness || 50) < 15) fails.push("IMAGE_TOO_BLURRY");
-              if ((b.brightness || 120) < 40) fails.push("IMAGE_UNDEREXPOSED");
-              if (sd.qualityGate) {
-                sd.qualityGate.passed = passed;
-                sd.qualityGate.failureCodes = fails;
-                sd.qualityGate.metrics = Object.assign({}, sd.qualityGate.metrics || {}, {
-                  facesDetected: b.faces ?? 1,
-                  faceWidthPx: b.faceWidthPx ?? 640,
-                  faceHeightPx: b.faceHeightPx ?? 780,
-                  yawDeg: b.yaw ?? 0,
-                  laplacianSharpness: b.sharpness ?? 52,
-                  meanBrightness: b.brightness ?? 130
-                });
-              }
-              return { status: 200, data: sd };
-            } catch (_) {}
           }
         }
 
-        const resp = await fetch(path, Object.assign({}, options, { headers: hdrs }));
-        if (!resp.ok && (resp.status === 404 || resp.status === 405)) {
-          const staticUrl = resolveStaticFallbackUrl(path, options);
-          if (staticUrl) {
-            const sr = await fetch(staticUrl);
-            const sd = await sr.json().catch(() => ({}));
-            return { status: sr.status, data: sd };
+        const targetUrl = isStaticHost ? `${STAGING_BACKEND_ORIGIN}${path}` : path;
+        try {
+          const resp = await fetch(targetUrl, Object.assign({}, options, { headers: hdrs, mode: "cors" }));
+          if (!resp.ok && (resp.status === 404 || resp.status === 405) && !isLiveImageInference) {
+            const staticUrl = resolveStaticFallbackUrl(path, options);
+            if (staticUrl) {
+              const sr = await fetch(staticUrl);
+              const sd = await sr.json().catch(() => ({}));
+              return { status: sr.status, data: sd };
+            }
           }
+          const data = await resp.json().catch(() => ({}));
+          return { status: resp.status, data };
+        } catch (err) {
+          if (!isLiveImageInference) {
+            const staticUrl = resolveStaticFallbackUrl(path, options);
+            if (staticUrl) {
+              const sr = await fetch(staticUrl);
+              const sd = await sr.json().catch(() => ({}));
+              return { status: sr.status, data: sd };
+            }
+          }
+          // Honest error if the HTTPS PyTorch backend is unreachable during live image evaluation (0 precomputed SYN-M001 substitution)
+          let b = {};
+          try { b = options.body ? JSON.parse(options.body) : {}; } catch (_) {}
+          const W = Number(b.width) || 1280;
+          const H = Number(b.height) || 1280;
+          const faces = b.faces ?? 1;
+          const faceW = b.faceWidthPx ?? Math.round(Math.min(W, H) * 0.55);
+          const faceH = b.faceHeightPx ?? Math.round(Math.min(W, H) * 0.65);
+          const yaw = Number(b.yaw) || 0;
+          const pitch = Number(b.pitch) || 0;
+          const roll = Number(b.roll) || 0;
+          const sharpness = Number(b.sharpness) || 48.0;
+          const brightness = Number(b.brightness) || 128.0;
+          const probs = [];
+          if (faces <= 0) probs.push("NO_FACE");
+          else if (faces > 1) probs.push("MULTIPLE_FACES");
+          else {
+            if (Math.min(faceW, faceH) < 200) probs.push("FACE_TOO_SMALL");
+            if (Math.abs(yaw) > 18) probs.push("FACE_TURNED");
+            if (sharpness < 15) probs.push("TOO_BLURRY");
+            if (brightness < 40) probs.push("TOO_DARK");
+          }
+          return {
+            status: 503,
+            data: {
+              ok: probs.length === 0,
+              productName: "Dominic FaceScan",
+              caseClassification: "BACKEND_STAGING_UNREACHABLE_NO_SYNTHETIC_FALLBACK",
+              freshInferenceExecuted: false,
+              imageId: `${b.captureProvenance || "REAL_UPLOADED_PHOTOGRAPH"} (${b.sourceFile || "uploaded_image"})`,
+              captureProvenance: b.captureProvenance || "REAL_UPLOADED_PHOTOGRAPH",
+              sourceFile: b.sourceFile || null,
+              qualityGate: {
+                ok: probs.length === 0,
+                problems: probs,
+                viewMode: b.viewMode || "frontal",
+                viewLabel: `${b.viewMode || "frontal"} · Yaw ${yaw.toFixed(1)}°`,
+                resolution: { w: W, h: H, meetsMinFace200Px: Math.min(faceW, faceH) >= 200, meetsClinical512Px: Math.min(W, H) >= 512 },
+                metrics: {
+                  faces,
+                  width: W,
+                  height: H,
+                  faceBoxMinSidePx: Math.min(faceW, faceH),
+                  poseDeg: { yaw, pitch, roll },
+                  sharpnessLaplacian256: sharpness,
+                  brightnessMeanL: brightness
+                },
+                regionsAllInside90Pct: true,
+                regionsPartlyOutside: []
+              },
+              modelEvaluation: {
+                available: false,
+                status: "HTTPS_PYTORCH_STAGING_BACKEND_UNREACHABLE",
+                reason: `Live PyTorch V2 (5-Fold ConvNeXt-Tiny) + V6 (S3FD/Hessian/MLP) staging backend (${STAGING_BACKEND_ORIGIN}) is currently unreachable (${err?.message || "network error"}). Precomputed synthetic data (SYN-M001) is strictly never substituted for a new image.`
+              }
+            }
+          };
         }
-        const data = await resp.json().catch(() => ({}));
-        return { status: resp.status, data };
       }
 
       // Compute target frame dimensions and uniform isotropic scale (scaleX === scaleY)
@@ -964,7 +1013,7 @@
 
       // Fetch and cache native portrait image into sourcePhotoCanvas without stretching
       async function loadSourcePortraitIntoBuffer(fileName) {
-        if (!fileName || (!adminToken && !String(fileName).toUpperCase().startsWith("SYN-M"))) {
+        if (!fileName) {
           hasRealSourcePhoto = false;
           loadedSourceFileKey = "";
           return false;
@@ -975,11 +1024,11 @@
         try {
           const hdrs = {};
           if (adminToken) hdrs["Authorization"] = "Bearer " + adminToken;
-          const isStaticHost = window.location.hostname.endsWith(".github.io") || window.location.hostname.endsWith(".pages.dev");
-          const portraitUrl = isStaticHost
-            ? `/api/face-scan-v2/portraits/${encodeURIComponent(fileName)}`
-            : `/api/face-scan-v2/portrait-image?file=${encodeURIComponent(fileName)}`;
-          const resp = await fetch(portraitUrl, { headers: hdrs });
+          const portraitUrl = `/api/face-scan-v2/portraits/${encodeURIComponent(fileName)}`;
+          let resp = await fetch(portraitUrl, { headers: hdrs });
+          if (resp.status !== 200) {
+            resp = await fetch(`/api/face-scan-v2/portrait-image?file=${encodeURIComponent(fileName)}`, { headers: hdrs });
+          }
           if (resp.status === 200) {
             const blob = await resp.blob();
             const bmp = await createImageBitmap(blob);
@@ -1635,9 +1684,10 @@
           return;
         }
 
-        modelModePill.textContent = me.foldsLoadedCount
-          ? `ADMIN AUTHENTICATED · V2 ${me.foldsLoadedCount}-FOLD ENSEMBLE + FOLD-0 + V6`
-          : "ADMIN AUTHENTICATED · CONVNEXT-TINY V2 (SYNTHETIC EVAL)";
+        const isFreshLiveInference = Boolean(evalObj.freshInferenceExecuted || evalObj.caseClassification === "LIVE_FRESH_PYTORCH_V2_V6_INFERENCE");
+        modelModePill.textContent = isFreshLiveInference
+          ? `LIVE FRESH V2 ${me.foldsLoadedCount || 5}-FOLD + V6 PYTORCH INFERENCE`
+          : "DEMONSTRATION BENCHMARK CASE · CONVNEXT-TINY V2 (SYNTHETIC EVAL)";
         modelModePill.className = "badge info";
 
         const assessments = me.regionAssessments || [];
@@ -1652,6 +1702,13 @@
                 &nbsp;|&nbsp;
                 <b>Single-Fold (fold0.pt):</b> <code>${(me.parametersPerFold || 27832432).toLocaleString()}</code> params · CPU Latency: <b>${lat.singleFold0CpuMs} ms</b> (${lat.latencyMultiplier5FoldVsFold0}x)
               </div>
+              ${
+                evalObj.inputImageSha256
+                  ? `<div style="font-size:0.75rem; color:#a7f3d0; margin-top:0.22rem;">
+                      <b>Fresh Input Image SHA-256:</b> <code>${escapeHtml(evalObj.inputImageSha256)}</code> · <b>Timestamp:</b> <code>${escapeHtml(evalObj.inferenceTimestampUtc || "")}</code>
+                    </div>`
+                  : ""
+              }
               <div style="font-size:0.74rem; color:var(--text-muted); margin-top:0.2rem;">
                 ${escapeHtml(me.fold0Vs5FoldArchitectureNote || "")}
               </div>
@@ -1668,11 +1725,10 @@
           `
           : "";
         container.innerHTML = `
-          <div class="q-card" style="border-color:#ef4444; background:rgba(127,29,29,0.25); margin-block-end:0.8rem;">
-            <strong style="color:#fecaca;">⚠ INTERNAL SYNTHETIC EVALUATION ONLY — NOT FOR CLINICAL USE</strong>
+          <div class="q-card" style="border-color:${isFreshLiveInference ? "#10b981" : "#f59e0b"}; background:${isFreshLiveInference ? "rgba(6,78,59,0.35)" : "rgba(127,29,29,0.25)"}; margin-block-end:0.8rem;">
+            <strong style="color:${isFreshLiveInference ? "#a7f3d0" : "#fecaca"};">${isFreshLiveInference ? "✓ LIVE FRESH V2 + V6 PYTORCH INFERENCE ON CAPTURED / UPLOADED IMAGE" : "⚠ DEMONSTRATION BENCHMARK CASE (SYNTHETIC / PRE-REGISTERED DATASET — NOT A NEW LIVE PERSON)"}</strong>
             <div style="font-size:0.79rem; color:#fde68a;">
-              Model: <code>${escapeHtml(me.backbone)}</code> · Subject: <b>${escapeHtml(evalObj.imageId)}</b> (${escapeHtml(evalObj.cvFold ?? 0)}).
-              Trained on 88 synthetic faces with <code>AI_PROVISIONAL_LABEL</code>.
+              Model: <code>${escapeHtml(me.backbone)}</code> · Subject: <b>${escapeHtml(evalObj.imageId)}</b> · Classification: <code>${escapeHtml(evalObj.caseClassification || "DEMONSTRATION_SYNTHETIC_BENCHMARK")}</code>.
             </div>
           </div>
           ${foldBenchHtml}
