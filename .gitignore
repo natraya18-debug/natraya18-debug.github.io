@@ -1,0 +1,15 @@
+server/
+db/
+crm/
+owner-review/
+tools/
+shared-data/*.sqlite3
+shared-data/*.db
+shared-data/*.enc
+shared-data/*.jsonl
+shared-data/*INTERNAL*
+shared-data/patient-intake-log.json
+*.pyc
+__pycache__/
+.env*
+shared-data/physician_facescan_annotations.json

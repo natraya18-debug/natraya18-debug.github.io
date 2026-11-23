@@ -1,0 +1,4388 @@
+{
+  "productName": "DOMINIC FACESCAN",
+  "generatedAtUtc": "2026-11-22T05:51:25Z",
+  "elapsedSeconds": 39.55,
+  "visualEvidenceBoardPath": "C:\\Users\\user\\.gemini\\antigravity\\brain\\d038059b-94a3-4fef-bfd4-43b1ca1c588a\\dominic_facescan_same_person_3view_and_5fold_vs_fold0_board.png",
+  "captureSourceProvenanceSummary": {
+    "physicalLiveWebRtcCameraOnWindowsHost": "FAIL / BLOCKED_NO_PHYSICAL_CAMERA_HARDWARE (0 UVC webcams connected to Windows host; getUserMedia throws NotFoundError)",
+    "realUploadedPhotographs": "PASS — Tested on authentic unwarped portraits (SUBJ_11_52F frontal -1.3°, android_01/04 dual 34F front-cam +1.5°, subject_03_oblique -14.6° left oblique, unseen_07_oblique -8.1° left oblique)",
+    "syntheticOrGeneratedViews": "PASS (Software Pipeline Only — Explicitly Tagged SYNTHETIC_OR_GENERATED_VIEW, Never Labeled as Physical Camera Capture) — multi_view_52f_left45.jpg (-32.0° warp / -10.7° S3FD yaw) & multi_view_52f_right45.jpg (+32.0° warp / +9.8° S3FD yaw) plus 88 SYN-M* & 8 SYN3-B04-*"
+  },
+  "item1_cameraHardwareAndCommandDiagnosis": {
+    "failedCommandDiagnosis": {
+      "command": "Get-CimInstance Win32_PnPEntity | Where-Object { $_.PNPClass -in @('Camera','Image') }",
+      "errorObserved": "Get-CimInstance : Access to a CIM resource was not available to the client.",
+      "rootCause": "Standard Sandbox Mode executes PowerShell under a restricted AppContainer/sandbox security token that blocks DCOM/RPC calls to the Windows Management Instrumentation (winmgmt) service.",
+      "resolution": "Queried HKLM\\SYSTEM\\CurrentControlSet\\Control\\Class\\{ca3e7ab9-b4c3-4ae6-8251-579ef933890f} (Camera) and {6bdd1fc6-810f-11d0-bec7-08002be2092f} (Image) directly via kernel registry APIs (winreg), which requires zero WMI/DCOM RPC elevation."
+    },
+    "physicalCameraHardwareStatus": {
+      "physicalUvcWebcamsConnected": 0,
+      "kscategoryVideoCameraInterfacePresent": true,
+      "imagingDevicesInstalled": [
+        {
+          "subkey": "0000",
+          "driverDesc": "Canon G3010 series",
+          "providerName": "Canon",
+          "driverVersion": "20.10.0.4",
+          "matchingDeviceId": "usb\\vid_04a9&pid_183b&mi_00"
+        }
+      ],
+      "registryClassesInspected": {
+        "CameraClass_{ca3e7ab9-b4c3-4ae6-8251-579ef933890f}": [],
+        "ImageClass_{6bdd1fc6-810f-11d0-bec7-08002be2092f}": [
+          {
+            "subkey": "0000",
+            "driverDesc": "Canon G3010 series",
+            "providerName": "Canon",
+            "driverVersion": "20.10.0.4",
+            "matchingDeviceId": "usb\\vid_04a9&pid_183b&mi_00"
+          }
+        ]
+      },
+      "browserWebRtcGetUserMediaResult": "When clicking #fs-start-cam-btn ('Start Live Camera') on this workstation, navigator.mediaDevices.getUserMedia({ video: true }) returns DOMException NotFoundError ('Requested device not found') because 0 physical UVC webcams are plugged into the desktop host. The UI catches this cleanly and activates the Live Camera Frame Capture / Upload pipeline without any uncaught console or page error."
+    }
+  },
+  "items2_3_4_5_6_8_samePersonMultiViewEvaluation": {
+    "subjectId": "SUBJ_11_52F (Authorized 52F Facelift Consultation Portrait)",
+    "nativeResolution": "768x1376 (9:16 Portrait, Aspect Ratio 0.5581)",
+    "views": {
+      "frontal": {
+        "viewTitle": "FRONTAL (-1.3° · REAL PHOTO)",
+        "captureProvenance": "REAL_UPLOADED_PHOTOGRAPH",
+        "imageFile": "unseen_v5_01_thai_female_52_facelift_consult_9x16.jpg",
+        "actualSubmittedYawDeg": -1.3,
+        "measuredS3fdHeadPoseDeg": {
+          "yaw": -1.27,
+          "pitch": 2.38,
+          "roll": 0.0
+        },
+        "qualityGate": {
+          "ok": true,
+          "problems": [],
+          "viewMode": "frontal",
+          "viewLabel": "Frontal View (0°) · Actual Yaw -1.3° (S3FD Pupil-Border Yaw -1.3°)",
+          "captureProvenance": "REAL_UPLOADED_PHOTOGRAPH",
+          "sourceFile": "unseen_v5_01_thai_female_52_facelift_consult_9x16.jpg",
+          "resolution": {
+            "w": 768,
+            "h": 1376,
+            "meetsMinFace200Px": true,
+            "meetsClinical512Px": true
+          },
+          "metrics": {
+            "faces": 1,
+            "width": 768,
+            "height": 1376,
+            "faceBoxMinSidePx": 430.1,
+            "poseDeg": {
+              "yaw": -1.3,
+              "pitch": 1.0,
+              "roll": 0.3
+            },
+            "measuredS3fdHeadPoseDeg": {
+              "yaw": -1.27,
+              "pitch": 2.38,
+              "roll": 0.0
+            },
+            "sharpnessLaplacian256": 52.0,
+            "brightnessMeanL": 132.0
+          },
+          "regionsAllInside90Pct": true,
+          "regionsPartlyOutside": [],
+          "v6JawlineOcclusionGate": {
+            "passed": true,
+            "hardBlockers": [],
+            "qualityWarnings": [],
+            "jawlineVisibilityPct": 100.0,
+            "neckSkinVisibilityPct": 100.0,
+            "shadowAsymmetryIndex": 0.013
+          }
+        },
+        "proportionAnd3dTelemetry": {
+          "originalImageDimensions": {
+            "w": 768,
+            "h": 1376,
+            "aspectRatio": 0.5581
+          },
+          "interPupillaryDistancePx": 186.26,
+          "noseLengthPx": 154.98,
+          "jawWidthPx": 421.4,
+          "eyeToChinHeightPx": 370.98,
+          "facialHeightToJawWidthRatio": 0.8804,
+          "scaleUniformityRatioXY": 1.0,
+          "aspectDistortionPct": 0.0,
+          "cameraIntrinsicsIsotropic": {
+            "fx": 186.26,
+            "fy": 186.26,
+            "cx": 386.55,
+            "cy": 636.51,
+            "aspectRatio": 0.5581,
+            "frontalReprojectionErrorPx": 0.0
+          },
+          "isotropic3dSurfaceMesh": {
+            "vertices": [
+              {
+                "id": "brow_mid",
+                "px": [
+                  386.55,
+                  324.89
+                ],
+                "xyzIsotropicIpd": [
+                  0.0,
+                  -1.6731,
+                  0.32
+                ]
+              },
+              {
+                "id": "right_eye",
+                "px": [
+                  293.42,
+                  451.02
+                ],
+                "xyzIsotropicIpd": [
+                  -0.5,
+                  -0.9959,
+                  0.24
+                ]
+              },
+              {
+                "id": "left_eye",
+                "px": [
+                  479.68,
+                  451.02
+                ],
+                "xyzIsotropicIpd": [
+                  0.5,
+                  -0.9959,
+                  0.24
+                ]
+              },
+              {
+                "id": "nose_tip",
+                "px": [
+                  386.55,
+                  606.0
+                ],
+                "xyzIsotropicIpd": [
+                  -0.0,
+                  -0.1638,
+                  0.52
+                ]
+              },
+              {
+                "id": "right_malar",
+                "px": [
+                  141.0,
+                  536.26
+                ],
+                "xyzIsotropicIpd": [
+                  -1.3183,
+                  -0.5382,
+                  0.3
+                ]
+              },
+              {
+                "id": "left_malar",
+                "px": [
+                  631.0,
+                  536.26
+                ],
+                "xyzIsotropicIpd": [
+                  1.3124,
+                  -0.5382,
+                  0.3
+                ]
+              },
+              {
+                "id": "right_commissure",
+                "px": [
+                  315.77,
+                  698.0
+                ],
+                "xyzIsotropicIpd": [
+                  -0.38,
+                  0.3301,
+                  0.28
+                ]
+              },
+              {
+                "id": "left_commissure",
+                "px": [
+                  457.33,
+                  698.0
+                ],
+                "xyzIsotropicIpd": [
+                  0.38,
+                  0.3301,
+                  0.28
+                ]
+              },
+              {
+                "id": "right_gonion",
+                "px": [
+                  175.3,
+                  707.92
+                ],
+                "xyzIsotropicIpd": [
+                  -1.1342,
+                  0.3834,
+                  -0.18
+                ]
+              },
+              {
+                "id": "left_gonion",
+                "px": [
+                  596.7,
+                  707.92
+                ],
+                "xyzIsotropicIpd": [
+                  1.1283,
+                  0.3834,
+                  -0.18
+                ]
+              },
+              {
+                "id": "right_jowl",
+                "px": [
+                  259.91,
+                  794.59
+                ],
+                "xyzIsotropicIpd": [
+                  -0.6799,
+                  0.8487,
+                  0.1
+                ]
+              },
+              {
+                "id": "left_jowl",
+                "px": [
+                  513.19,
+                  794.59
+                ],
+                "xyzIsotropicIpd": [
+                  0.6799,
+                  0.8487,
+                  0.1
+                ]
+              },
+              {
+                "id": "menton",
+                "px": [
+                  386.55,
+                  822.0
+                ],
+                "xyzIsotropicIpd": [
+                  -0.0,
+                  0.9959,
+                  0.36
+                ]
+              },
+              {
+                "id": "submental",
+                "px": [
+                  386.55,
+                  888.78
+                ],
+                "xyzIsotropicIpd": [
+                  -0.0,
+                  1.3544,
+                  -0.12
+                ]
+              }
+            ],
+            "triangles": [
+              [
+                0,
+                1,
+                3
+              ],
+              [
+                0,
+                3,
+                2
+              ],
+              [
+                1,
+                4,
+                3
+              ],
+              [
+                2,
+                3,
+                5
+              ],
+              [
+                4,
+                6,
+                3
+              ],
+              [
+                5,
+                3,
+                7
+              ],
+              [
+                4,
+                8,
+                6
+              ],
+              [
+                5,
+                7,
+                9
+              ],
+              [
+                8,
+                10,
+                6
+              ],
+              [
+                9,
+                7,
+                11
+              ],
+              [
+                6,
+                10,
+                12
+              ],
+              [
+                7,
+                12,
+                11
+              ],
+              [
+                3,
+                6,
+                7
+              ],
+              [
+                6,
+                12,
+                7
+              ],
+              [
+                10,
+                13,
+                12
+              ],
+              [
+                11,
+                12,
+                13
+              ]
+            ],
+            "recommendedDefaultView": "2D_FAITHFUL_PHOTO_OVERLAY",
+            "honest3dLimitationNotice": "Single-camera 2D photographs cannot measure true volumetric Z-depth or sub-SMAS tissue thickness. This 3D wireframe is an aspect-locked isotropic surface relief projection (f_x = f_y = IPD_px, 0.00% X/Y distortion) anchored directly to the person's 2D landmarks; clinical sagging assessment uses the faithful 2D photograph overlay."
+          }
+        },
+        "individualJowlJawlineTelemetry": {
+          "telemetryType": "INDIVIDUAL_GEOMETRIC_MANDIBULAR_CONTOUR (NOT_A_CLINICAL_GRADE)",
+          "contourMode": "FULL_468_MANDIBULAR_POLYLINE",
+          "rightJowlExcursionPctOfD": 11.81,
+          "leftJowlExcursionPctOfD": 11.87,
+          "meanJowlExcursionPctOfD": 11.84,
+          "bilateralJowlAsymmetryPct": 0.06,
+          "rightMandibularSlopeDeg": 28.37,
+          "leftMandibularSlopeDeg": 28.5,
+          "mandibularSlopeAsymmetryDeg": 0.13,
+          "mentonToGonionDepthRatio": 0.2707,
+          "eyeLineRollDeg": 0.0,
+          "calibratedChinLiftPct": 12.6,
+          "chordPointsPx": [
+            [
+              175.3,
+              707.9
+            ],
+            [
+              386.5,
+              822.0
+            ],
+            [
+              596.7,
+              707.9
+            ]
+          ],
+          "contourPolylinePx": [
+            [
+              175.3,
+              707.9
+            ],
+            [
+              217.7,
+              752.2
+            ],
+            [
+              259.9,
+              794.6
+            ],
+            [
+              281.0,
+              808.5
+            ],
+            [
+              323.2,
+              813.7
+            ],
+            [
+              344.3,
+              816.8
+            ],
+            [
+              386.5,
+              822.0
+            ],
+            [
+              428.8,
+              823.8
+            ],
+            [
+              449.9,
+              817.2
+            ],
+            [
+              492.1,
+              808.5
+            ],
+            [
+              513.2,
+              794.6
+            ],
+            [
+              555.4,
+              743.7
+            ],
+            [
+              596.7,
+              707.9
+            ]
+          ]
+        },
+        "v2InferenceLatencyMs": {
+          "singleFold0CpuMs": 144.8,
+          "ensemble5FoldCpuMs": 675.7,
+          "latencyMultiplier5FoldVsFold0": 4.67
+        },
+        "v2Fold0Vs5FoldBenchmarkByRegion": {
+          "cheek_sagging": {
+            "visible_fraction": 1.0,
+            "gradeable": true,
+            "ensemble_5fold_raw_grade": 1,
+            "ensemble_5fold_logit_adjusted_grade": 1,
+            "ensemble_5fold_continuous_0_3": 1.01,
+            "ensemble_5fold_max_prob": 0.9902,
+            "ensemble_5fold_entropy": 0.0409,
+            "ensemble_5fold_probabilities": [
+              0.0001,
+              0.9902,
+              0.0095,
+              0.0002
+            ],
+            "fold0_single_raw_grade": 1,
+            "fold0_single_logit_adjusted_grade": 1,
+            "fold0_single_continuous_0_3": 1.042,
+            "fold0_single_max_prob": 0.9577,
+            "fold0_single_entropy": 0.129,
+            "fold0_single_probabilities": [
+              0.0003,
+              0.9577,
+              0.0416,
+              0.0003
+            ],
+            "per_fold_grades": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "per_fold_continuous_0_3": {
+              "fold0": 1.042,
+              "fold1": 1.058,
+              "fold2": 1.02,
+              "fold3": 1.0,
+              "fold4": 1.005
+            },
+            "fold_consensus_agreement": "5/5 folds (100.0%)",
+            "probability_l1_delta_5fold_vs_fold0": 0.0649
+          },
+          "jawline_sagging": {
+            "visible_fraction": 1.0,
+            "gradeable": true,
+            "ensemble_5fold_raw_grade": 1,
+            "ensemble_5fold_logit_adjusted_grade": 1,
+            "ensemble_5fold_continuous_0_3": 1.001,
+            "ensemble_5fold_max_prob": 0.9982,
+            "ensemble_5fold_entropy": 0.0106,
+            "ensemble_5fold_probabilities": [
+              0.0003,
+              0.9982,
+              0.0014,
+              0.0001
+            ],
+            "fold0_single_raw_grade": 1,
+            "fold0_single_logit_adjusted_grade": 1,
+            "fold0_single_continuous_0_3": 1.001,
+            "fold0_single_max_prob": 0.999,
+            "fold0_single_entropy": 0.0058,
+            "fold0_single_probabilities": [
+              0.0,
+              0.999,
+              0.0008,
+              0.0001
+            ],
+            "per_fold_grades": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "per_fold_continuous_0_3": {
+              "fold0": 1.001,
+              "fold1": 1.006,
+              "fold2": 1.0,
+              "fold3": 1.001,
+              "fold4": 1.0
+            },
+            "fold_consensus_agreement": "5/5 folds (100.0%)",
+            "probability_l1_delta_5fold_vs_fold0": 0.0017
+          },
+          "submental_sagging": {
+            "visible_fraction": 1.0,
+            "gradeable": true,
+            "ensemble_5fold_raw_grade": 1,
+            "ensemble_5fold_logit_adjusted_grade": 1,
+            "ensemble_5fold_continuous_0_3": 1.001,
+            "ensemble_5fold_max_prob": 0.9961,
+            "ensemble_5fold_entropy": 0.021,
+            "ensemble_5fold_probabilities": [
+              0.0017,
+              0.9961,
+              0.0018,
+              0.0003
+            ],
+            "fold0_single_raw_grade": 1,
+            "fold0_single_logit_adjusted_grade": 1,
+            "fold0_single_continuous_0_3": 1.016,
+            "fold0_single_max_prob": 0.9809,
+            "fold0_single_entropy": 0.0761,
+            "fold0_single_probabilities": [
+              0.0023,
+              0.9809,
+              0.0159,
+              0.001
+            ],
+            "per_fold_grades": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "per_fold_continuous_0_3": {
+              "fold0": 1.016,
+              "fold1": 1.001,
+              "fold2": 0.997,
+              "fold3": 1.001,
+              "fold4": 1.0
+            },
+            "fold_consensus_agreement": "5/5 folds (100.0%)",
+            "probability_l1_delta_5fold_vs_fold0": 0.0305
+          },
+          "neck_sagging": {
+            "visible_fraction": 1.0,
+            "gradeable": true,
+            "ensemble_5fold_raw_grade": 1,
+            "ensemble_5fold_logit_adjusted_grade": 1,
+            "ensemble_5fold_continuous_0_3": 1.453,
+            "ensemble_5fold_max_prob": 0.5314,
+            "ensemble_5fold_entropy": 0.5438,
+            "ensemble_5fold_probabilities": [
+              0.0091,
+              0.5314,
+              0.4566,
+              0.003
+            ],
+            "fold0_single_raw_grade": 2,
+            "fold0_single_logit_adjusted_grade": 2,
+            "fold0_single_continuous_0_3": 1.855,
+            "fold0_single_max_prob": 0.8548,
+            "fold0_single_entropy": 0.3038,
+            "fold0_single_probabilities": [
+              0.0005,
+              0.1442,
+              0.8548,
+              0.0005
+            ],
+            "per_fold_grades": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 2
+            },
+            "per_fold_continuous_0_3": {
+              "fold0": 1.855,
+              "fold1": 1.705,
+              "fold2": 0.9,
+              "fold3": 1.043,
+              "fold4": 1.691
+            },
+            "fold_consensus_agreement": "2/5 folds (40.0%)",
+            "probability_l1_delta_5fold_vs_fold0": 0.7964
+          }
+        },
+        "v6LiveSummary": {
+          "supported_regions_count": 10,
+          "detected_regions_count": 10,
+          "composite_sagging_grade_0_4": 2.39,
+          "composite_sagging_score_0_100": 59.8,
+          "croma_jawline_grade_1_5": 3,
+          "croma_jawline_label": "Grade 3 (Moderate Sagging / Distinct Fold)"
+        }
+      },
+      "oblique_left": {
+        "viewTitle": "LEFT OBLIQUE (-32.0° WARP · GENERATED)",
+        "captureProvenance": "SYNTHETIC_OR_GENERATED_VIEW",
+        "imageFile": "multi_view_52f_left45.jpg",
+        "actualSubmittedYawDeg": -32.0,
+        "measuredS3fdHeadPoseDeg": {
+          "yaw": -10.72,
+          "pitch": 2.19,
+          "roll": 0.82
+        },
+        "qualityGate": {
+          "ok": true,
+          "problems": [],
+          "viewMode": "oblique_left",
+          "viewLabel": "Left Oblique View · Actual Yaw -32.0° (S3FD Pupil-Border Yaw -10.7°)",
+          "captureProvenance": "SYNTHETIC_OR_GENERATED_VIEW",
+          "sourceFile": "multi_view_52f_left45.jpg",
+          "resolution": {
+            "w": 768,
+            "h": 1376,
+            "meetsMinFace200Px": true,
+            "meetsClinical512Px": true
+          },
+          "metrics": {
+            "faces": 1,
+            "width": 768,
+            "height": 1376,
+            "faceBoxMinSidePx": 430.1,
+            "poseDeg": {
+              "yaw": -32.0,
+              "pitch": 1.0,
+              "roll": 0.3
+            },
+            "measuredS3fdHeadPoseDeg": {
+              "yaw": -10.72,
+              "pitch": 2.19,
+              "roll": 0.82
+            },
+            "sharpnessLaplacian256": 52.0,
+            "brightnessMeanL": 132.0
+          },
+          "regionsAllInside90Pct": true,
+          "regionsPartlyOutside": [],
+          "v6JawlineOcclusionGate": {
+            "passed": true,
+            "hardBlockers": [],
+            "qualityWarnings": [
+              "OBLIQUE_VIEW_POSE_DETECTED"
+            ],
+            "jawlineVisibilityPct": 100.0,
+            "neckSkinVisibilityPct": 100.0,
+            "shadowAsymmetryIndex": 0.036
+          }
+        },
+        "proportionAnd3dTelemetry": {
+          "originalImageDimensions": {
+            "w": 768,
+            "h": 1376,
+            "aspectRatio": 0.5581
+          },
+          "interPupillaryDistancePx": 178.62,
+          "noseLengthPx": 156.26,
+          "jawWidthPx": 391.3,
+          "eyeToChinHeightPx": 372.26,
+          "facialHeightToJawWidthRatio": 0.9513,
+          "scaleUniformityRatioXY": 1.0,
+          "aspectDistortionPct": 0.0,
+          "cameraIntrinsicsIsotropic": {
+            "fx": 178.618,
+            "fy": 178.618,
+            "cx": 344.45,
+            "cy": 635.87,
+            "aspectRatio": 0.5581,
+            "frontalReprojectionErrorPx": 0.0
+          },
+          "isotropic3dSurfaceMesh": {
+            "vertices": [
+              {
+                "id": "brow_mid",
+                "px": [
+                  344.45,
+                  323.18
+                ],
+                "xyzIsotropicIpd": [
+                  0.0,
+                  -1.7506,
+                  0.32
+                ]
+              },
+              {
+                "id": "right_eye",
+                "px": [
+                  255.15,
+                  448.47
+                ],
+                "xyzIsotropicIpd": [
+                  -0.4999,
+                  -1.0492,
+                  0.24
+                ]
+              },
+              {
+                "id": "left_eye",
+                "px": [
+                  433.75,
+                  451.02
+                ],
+                "xyzIsotropicIpd": [
+                  0.4999,
+                  -1.0349,
+                  0.24
+                ]
+              },
+              {
+                "id": "nose_tip",
+                "px": [
+                  344.45,
+                  606.0
+                ],
+                "xyzIsotropicIpd": [
+                  0.0,
+                  -0.1672,
+                  0.52
+                ]
+              },
+              {
+                "id": "right_malar",
+                "px": [
+                  124.0,
+                  535.69
+                ],
+                "xyzIsotropicIpd": [
+                  -1.2342,
+                  -0.5609,
+                  0.3
+                ]
+              },
+              {
+                "id": "left_malar",
+                "px": [
+                  579.0,
+                  535.69
+                ],
+                "xyzIsotropicIpd": [
+                  1.3131,
+                  -0.5609,
+                  0.3
+                ]
+              },
+              {
+                "id": "right_commissure",
+                "px": [
+                  276.58,
+                  697.0
+                ],
+                "xyzIsotropicIpd": [
+                  -0.38,
+                  0.3422,
+                  0.28
+                ]
+              },
+              {
+                "id": "left_commissure",
+                "px": [
+                  412.32,
+                  697.0
+                ],
+                "xyzIsotropicIpd": [
+                  0.38,
+                  0.3422,
+                  0.28
+                ]
+              },
+              {
+                "id": "right_gonion",
+                "px": [
+                  155.85,
+                  707.0
+                ],
+                "xyzIsotropicIpd": [
+                  -1.0559,
+                  0.3982,
+                  -0.18
+                ]
+              },
+              {
+                "id": "left_gonion",
+                "px": [
+                  547.15,
+                  707.0
+                ],
+                "xyzIsotropicIpd": [
+                  1.1348,
+                  0.3982,
+                  -0.18
+                ]
+              },
+              {
+                "id": "right_jowl",
+                "px": [
+                  222.01,
+                  774.41
+                ],
+                "xyzIsotropicIpd": [
+                  -0.6855,
+                  0.7756,
+                  0.1
+                ]
+              },
+              {
+                "id": "left_jowl",
+                "px": [
+                  456.5,
+                  774.89
+                ],
+                "xyzIsotropicIpd": [
+                  0.6273,
+                  0.7783,
+                  0.1
+                ]
+              },
+              {
+                "id": "menton",
+                "px": [
+                  344.45,
+                  822.0
+                ],
+                "xyzIsotropicIpd": [
+                  0.0,
+                  1.042,
+                  0.36
+                ]
+              },
+              {
+                "id": "submental",
+                "px": [
+                  344.45,
+                  889.01
+                ],
+                "xyzIsotropicIpd": [
+                  0.0,
+                  1.4172,
+                  -0.12
+                ]
+              }
+            ],
+            "triangles": [
+              [
+                0,
+                1,
+                3
+              ],
+              [
+                0,
+                3,
+                2
+              ],
+              [
+                1,
+                4,
+                3
+              ],
+              [
+                2,
+                3,
+                5
+              ],
+              [
+                4,
+                6,
+                3
+              ],
+              [
+                5,
+                3,
+                7
+              ],
+              [
+                4,
+                8,
+                6
+              ],
+              [
+                5,
+                7,
+                9
+              ],
+              [
+                8,
+                10,
+                6
+              ],
+              [
+                9,
+                7,
+                11
+              ],
+              [
+                6,
+                10,
+                12
+              ],
+              [
+                7,
+                12,
+                11
+              ],
+              [
+                3,
+                6,
+                7
+              ],
+              [
+                6,
+                12,
+                7
+              ],
+              [
+                10,
+                13,
+                12
+              ],
+              [
+                11,
+                12,
+                13
+              ]
+            ],
+            "recommendedDefaultView": "2D_FAITHFUL_PHOTO_OVERLAY",
+            "honest3dLimitationNotice": "Single-camera 2D photographs cannot measure true volumetric Z-depth or sub-SMAS tissue thickness. This 3D wireframe is an aspect-locked isotropic surface relief projection (f_x = f_y = IPD_px, 0.00% X/Y distortion) anchored directly to the person's 2D landmarks; clinical sagging assessment uses the faithful 2D photograph overlay."
+          }
+        },
+        "individualJowlJawlineTelemetry": {
+          "telemetryType": "INDIVIDUAL_GEOMETRIC_MANDIBULAR_CONTOUR (NOT_A_CLINICAL_GRADE)",
+          "contourMode": "FULL_468_MANDIBULAR_POLYLINE",
+          "rightJowlExcursionPctOfD": 9.72,
+          "leftJowlExcursionPctOfD": 6.99,
+          "meanJowlExcursionPctOfD": 8.36,
+          "bilateralJowlAsymmetryPct": 2.73,
+          "rightMandibularSlopeDeg": 30.77,
+          "leftMandibularSlopeDeg": 30.17,
+          "mandibularSlopeAsymmetryDeg": 0.6,
+          "mentonToGonionDepthRatio": 0.2939,
+          "eyeLineRollDeg": 0.6,
+          "calibratedChinLiftPct": 12.6,
+          "chordPointsPx": [
+            [
+              155.9,
+              707.0
+            ],
+            [
+              344.5,
+              822.0
+            ],
+            [
+              547.2,
+              707.0
+            ]
+          ],
+          "contourPolylinePx": [
+            [
+              155.9,
+              707.0
+            ],
+            [
+              183.7,
+              743.4
+            ],
+            [
+              222.0,
+              774.4
+            ],
+            [
+              241.0,
+              796.0
+            ],
+            [
+              280.0,
+              802.8
+            ],
+            [
+              299.3,
+              812.8
+            ],
+            [
+              344.5,
+              822.0
+            ],
+            [
+              377.4,
+              815.4
+            ],
+            [
+              397.1,
+              809.2
+            ],
+            [
+              436.5,
+              796.0
+            ],
+            [
+              456.5,
+              774.9
+            ],
+            [
+              496.3,
+              750.0
+            ],
+            [
+              547.2,
+              707.0
+            ]
+          ]
+        },
+        "v2InferenceLatencyMs": {
+          "singleFold0CpuMs": 138.9,
+          "ensemble5FoldCpuMs": 693.5,
+          "latencyMultiplier5FoldVsFold0": 4.99
+        },
+        "v2Fold0Vs5FoldBenchmarkByRegion": {
+          "cheek_sagging": {
+            "visible_fraction": 1.0,
+            "gradeable": true,
+            "ensemble_5fold_raw_grade": 1,
+            "ensemble_5fold_logit_adjusted_grade": 1,
+            "ensemble_5fold_continuous_0_3": 1.013,
+            "ensemble_5fold_max_prob": 0.987,
+            "ensemble_5fold_entropy": 0.0516,
+            "ensemble_5fold_probabilities": [
+              0.0002,
+              0.987,
+              0.0125,
+              0.0003
+            ],
+            "fold0_single_raw_grade": 1,
+            "fold0_single_logit_adjusted_grade": 1,
+            "fold0_single_continuous_0_3": 1.031,
+            "fold0_single_max_prob": 0.9682,
+            "fold0_single_entropy": 0.1049,
+            "fold0_single_probabilities": [
+              0.0004,
+              0.9682,
+              0.031,
+              0.0004
+            ],
+            "per_fold_grades": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "per_fold_continuous_0_3": {
+              "fold0": 1.031,
+              "fold1": 1.093,
+              "fold2": 1.034,
+              "fold3": 1.001,
+              "fold4": 1.008
+            },
+            "fold_consensus_agreement": "5/5 folds (100.0%)",
+            "probability_l1_delta_5fold_vs_fold0": 0.0377
+          },
+          "jawline_sagging": {
+            "visible_fraction": 1.0,
+            "gradeable": true,
+            "ensemble_5fold_raw_grade": 1,
+            "ensemble_5fold_logit_adjusted_grade": 1,
+            "ensemble_5fold_continuous_0_3": 1.001,
+            "ensemble_5fold_max_prob": 0.9985,
+            "ensemble_5fold_entropy": 0.0091,
+            "ensemble_5fold_probabilities": [
+              0.0003,
+              0.9985,
+              0.0011,
+              0.0001
+            ],
+            "fold0_single_raw_grade": 1,
+            "fold0_single_logit_adjusted_grade": 1,
+            "fold0_single_continuous_0_3": 1.001,
+            "fold0_single_max_prob": 0.9992,
+            "fold0_single_entropy": 0.0052,
+            "fold0_single_probabilities": [
+              0.0,
+              0.9992,
+              0.0007,
+              0.0001
+            ],
+            "per_fold_grades": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "per_fold_continuous_0_3": {
+              "fold0": 1.001,
+              "fold1": 1.004,
+              "fold2": 1.0,
+              "fold3": 1.0,
+              "fold4": 1.0
+            },
+            "fold_consensus_agreement": "5/5 folds (100.0%)",
+            "probability_l1_delta_5fold_vs_fold0": 0.0014
+          },
+          "submental_sagging": {
+            "visible_fraction": 1.0,
+            "gradeable": true,
+            "ensemble_5fold_raw_grade": 1,
+            "ensemble_5fold_logit_adjusted_grade": 1,
+            "ensemble_5fold_continuous_0_3": 1.0,
+            "ensemble_5fold_max_prob": 0.9963,
+            "ensemble_5fold_entropy": 0.02,
+            "ensemble_5fold_probabilities": [
+              0.0019,
+              0.9963,
+              0.0014,
+              0.0003
+            ],
+            "fold0_single_raw_grade": 1,
+            "fold0_single_logit_adjusted_grade": 1,
+            "fold0_single_continuous_0_3": 1.015,
+            "fold0_single_max_prob": 0.9816,
+            "fold0_single_entropy": 0.073,
+            "fold0_single_probabilities": [
+              0.0019,
+              0.9816,
+              0.0156,
+              0.0008
+            ],
+            "per_fold_grades": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "per_fold_continuous_0_3": {
+              "fold0": 1.015,
+              "fold1": 0.999,
+              "fold2": 0.996,
+              "fold3": 1.001,
+              "fold4": 1.0
+            },
+            "fold_consensus_agreement": "5/5 folds (100.0%)",
+            "probability_l1_delta_5fold_vs_fold0": 0.0294
+          },
+          "neck_sagging": {
+            "visible_fraction": 1.0,
+            "gradeable": true,
+            "ensemble_5fold_raw_grade": 1,
+            "ensemble_5fold_logit_adjusted_grade": 1,
+            "ensemble_5fold_continuous_0_3": 1.222,
+            "ensemble_5fold_max_prob": 0.7659,
+            "ensemble_5fold_entropy": 0.4232,
+            "ensemble_5fold_probabilities": [
+              0.007,
+              0.7659,
+              0.2252,
+              0.0019
+            ],
+            "fold0_single_raw_grade": 2,
+            "fold0_single_logit_adjusted_grade": 2,
+            "fold0_single_continuous_0_3": 1.784,
+            "fold0_single_max_prob": 0.7836,
+            "fold0_single_entropy": 0.3811,
+            "fold0_single_probabilities": [
+              0.0003,
+              0.2156,
+              0.7836,
+              0.0005
+            ],
+            "per_fold_grades": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "per_fold_continuous_0_3": {
+              "fold0": 1.784,
+              "fold1": 1.569,
+              "fold2": 0.915,
+              "fold3": 1.013,
+              "fold4": 1.164
+            },
+            "fold_consensus_agreement": "3/5 folds (60.0%)",
+            "probability_l1_delta_5fold_vs_fold0": 1.1168
+          }
+        },
+        "v6LiveSummary": {
+          "supported_regions_count": 10,
+          "detected_regions_count": 10,
+          "composite_sagging_grade_0_4": 2.21,
+          "composite_sagging_score_0_100": 55.2,
+          "croma_jawline_grade_1_5": 3,
+          "croma_jawline_label": "Grade 3 (Moderate Sagging / Distinct Fold)"
+        }
+      },
+      "oblique_right": {
+        "viewTitle": "RIGHT OBLIQUE (+32.0° WARP · GENERATED)",
+        "captureProvenance": "SYNTHETIC_OR_GENERATED_VIEW",
+        "imageFile": "multi_view_52f_right45.jpg",
+        "actualSubmittedYawDeg": 32.0,
+        "measuredS3fdHeadPoseDeg": {
+          "yaw": 9.79,
+          "pitch": 1.68,
+          "roll": -1.71
+        },
+        "qualityGate": {
+          "ok": true,
+          "problems": [],
+          "viewMode": "oblique_right",
+          "viewLabel": "Right Oblique View · Actual Yaw +32.0° (S3FD Pupil-Border Yaw +9.8°)",
+          "captureProvenance": "SYNTHETIC_OR_GENERATED_VIEW",
+          "sourceFile": "multi_view_52f_right45.jpg",
+          "resolution": {
+            "w": 768,
+            "h": 1376,
+            "meetsMinFace200Px": true,
+            "meetsClinical512Px": true
+          },
+          "metrics": {
+            "faces": 1,
+            "width": 768,
+            "height": 1376,
+            "faceBoxMinSidePx": 430.1,
+            "poseDeg": {
+              "yaw": 32.0,
+              "pitch": 1.0,
+              "roll": 0.3
+            },
+            "measuredS3fdHeadPoseDeg": {
+              "yaw": 9.79,
+              "pitch": 1.68,
+              "roll": -1.71
+            },
+            "sharpnessLaplacian256": 52.0,
+            "brightnessMeanL": 132.0
+          },
+          "regionsAllInside90Pct": true,
+          "regionsPartlyOutside": [],
+          "v6JawlineOcclusionGate": {
+            "passed": true,
+            "hardBlockers": [],
+            "qualityWarnings": [
+              "OBLIQUE_VIEW_POSE_DETECTED"
+            ],
+            "jawlineVisibilityPct": 100.0,
+            "neckSkinVisibilityPct": 100.0,
+            "shadowAsymmetryIndex": 0.02
+          }
+        },
+        "proportionAnd3dTelemetry": {
+          "originalImageDimensions": {
+            "w": 768,
+            "h": 1376,
+            "aspectRatio": 0.5581
+          },
+          "interPupillaryDistancePx": 171.03,
+          "noseLengthPx": 149.53,
+          "jawWidthPx": 387.86,
+          "eyeToChinHeightPx": 373.62,
+          "facialHeightToJawWidthRatio": 0.9633,
+          "scaleUniformityRatioXY": 1.0,
+          "aspectDistortionPct": 0.0,
+          "cameraIntrinsicsIsotropic": {
+            "fx": 171.026,
+            "fy": 171.026,
+            "cx": 429.92,
+            "cy": 635.24,
+            "aspectRatio": 0.5581,
+            "frontalReprojectionErrorPx": 0.0
+          },
+          "isotropic3dSurfaceMesh": {
+            "vertices": [
+              {
+                "id": "brow_mid",
+                "px": [
+                  429.92,
+                  321.44
+                ],
+                "xyzIsotropicIpd": [
+                  0.0,
+                  -1.8348,
+                  0.32
+                ]
+              },
+              {
+                "id": "right_eye",
+                "px": [
+                  344.45,
+                  451.02
+                ],
+                "xyzIsotropicIpd": [
+                  -0.4998,
+                  -1.0771,
+                  0.24
+                ]
+              },
+              {
+                "id": "left_eye",
+                "px": [
+                  515.4,
+                  445.93
+                ],
+                "xyzIsotropicIpd": [
+                  0.4998,
+                  -1.1069,
+                  0.24
+                ]
+              },
+              {
+                "id": "nose_tip",
+                "px": [
+                  429.92,
+                  598.0
+                ],
+                "xyzIsotropicIpd": [
+                  -0.0,
+                  -0.2177,
+                  0.52
+                ]
+              },
+              {
+                "id": "right_malar",
+                "px": [
+                  204.0,
+                  530.71
+                ],
+                "xyzIsotropicIpd": [
+                  -1.321,
+                  -0.6112,
+                  0.3
+                ]
+              },
+              {
+                "id": "left_malar",
+                "px": [
+                  655.0,
+                  530.71
+                ],
+                "xyzIsotropicIpd": [
+                  1.316,
+                  -0.6112,
+                  0.3
+                ]
+              },
+              {
+                "id": "right_commissure",
+                "px": [
+                  364.94,
+                  698.0
+                ],
+                "xyzIsotropicIpd": [
+                  -0.38,
+                  0.367,
+                  0.28
+                ]
+              },
+              {
+                "id": "left_commissure",
+                "px": [
+                  494.91,
+                  698.0
+                ],
+                "xyzIsotropicIpd": [
+                  0.38,
+                  0.367,
+                  0.28
+                ]
+              },
+              {
+                "id": "right_gonion",
+                "px": [
+                  235.57,
+                  707.92
+                ],
+                "xyzIsotropicIpd": [
+                  -1.1364,
+                  0.425,
+                  -0.18
+                ]
+              },
+              {
+                "id": "left_gonion",
+                "px": [
+                  623.43,
+                  707.92
+                ],
+                "xyzIsotropicIpd": [
+                  1.1314,
+                  0.425,
+                  -0.18
+                ]
+              },
+              {
+                "id": "right_jowl",
+                "px": [
+                  323.77,
+                  784.64
+                ],
+                "xyzIsotropicIpd": [
+                  -0.6207,
+                  0.8736,
+                  0.1
+                ]
+              },
+              {
+                "id": "left_jowl",
+                "px": [
+                  556.49,
+                  775.3
+                ],
+                "xyzIsotropicIpd": [
+                  0.74,
+                  0.819,
+                  0.1
+                ]
+              },
+              {
+                "id": "menton",
+                "px": [
+                  438.35,
+                  822.0
+                ],
+                "xyzIsotropicIpd": [
+                  0.0493,
+                  1.092,
+                  0.36
+                ]
+              },
+              {
+                "id": "submental",
+                "px": [
+                  438.35,
+                  889.25
+                ],
+                "xyzIsotropicIpd": [
+                  0.0493,
+                  1.4852,
+                  -0.12
+                ]
+              }
+            ],
+            "triangles": [
+              [
+                0,
+                1,
+                3
+              ],
+              [
+                0,
+                3,
+                2
+              ],
+              [
+                1,
+                4,
+                3
+              ],
+              [
+                2,
+                3,
+                5
+              ],
+              [
+                4,
+                6,
+                3
+              ],
+              [
+                5,
+                3,
+                7
+              ],
+              [
+                4,
+                8,
+                6
+              ],
+              [
+                5,
+                7,
+                9
+              ],
+              [
+                8,
+                10,
+                6
+              ],
+              [
+                9,
+                7,
+                11
+              ],
+              [
+                6,
+                10,
+                12
+              ],
+              [
+                7,
+                12,
+                11
+              ],
+              [
+                3,
+                6,
+                7
+              ],
+              [
+                6,
+                12,
+                7
+              ],
+              [
+                10,
+                13,
+                12
+              ],
+              [
+                11,
+                12,
+                13
+              ]
+            ],
+            "recommendedDefaultView": "2D_FAITHFUL_PHOTO_OVERLAY",
+            "honest3dLimitationNotice": "Single-camera 2D photographs cannot measure true volumetric Z-depth or sub-SMAS tissue thickness. This 3D wireframe is an aspect-locked isotropic surface relief projection (f_x = f_y = IPD_px, 0.00% X/Y distortion) anchored directly to the person's 2D landmarks; clinical sagging assessment uses the faithful 2D photograph overlay."
+          }
+        },
+        "individualJowlJawlineTelemetry": {
+          "telemetryType": "INDIVIDUAL_GEOMETRIC_MANDIBULAR_CONTOUR (NOT_A_CLINICAL_GRADE)",
+          "contourMode": "FULL_468_MANDIBULAR_POLYLINE",
+          "rightJowlExcursionPctOfD": 8.78,
+          "leftJowlExcursionPctOfD": 6.81,
+          "meanJowlExcursionPctOfD": 7.79,
+          "bilateralJowlAsymmetryPct": 1.97,
+          "rightMandibularSlopeDeg": 30.62,
+          "leftMandibularSlopeDeg": 30.39,
+          "mandibularSlopeAsymmetryDeg": 0.22,
+          "mentonToGonionDepthRatio": 0.2941,
+          "eyeLineRollDeg": -1.25,
+          "calibratedChinLiftPct": 12.6,
+          "chordPointsPx": [
+            [
+              235.6,
+              707.9
+            ],
+            [
+              438.3,
+              822.0
+            ],
+            [
+              623.4,
+              707.9
+            ]
+          ],
+          "contourPolylinePx": [
+            [
+              235.6,
+              707.9
+            ],
+            [
+              284.4,
+              768.3
+            ],
+            [
+              323.8,
+              784.6
+            ],
+            [
+              343.5,
+              788.4
+            ],
+            [
+              383.9,
+              819.9
+            ],
+            [
+              403.6,
+              822.8
+            ],
+            [
+              438.3,
+              822.0
+            ],
+            [
+              480.8,
+              819.4
+            ],
+            [
+              499.7,
+              806.1
+            ],
+            [
+              537.6,
+              783.0
+            ],
+            [
+              556.5,
+              775.3
+            ],
+            [
+              593.6,
+              739.1
+            ],
+            [
+              623.4,
+              707.9
+            ]
+          ]
+        },
+        "v2InferenceLatencyMs": {
+          "singleFold0CpuMs": 129.1,
+          "ensemble5FoldCpuMs": 656.3,
+          "latencyMultiplier5FoldVsFold0": 5.08
+        },
+        "v2Fold0Vs5FoldBenchmarkByRegion": {
+          "cheek_sagging": {
+            "visible_fraction": 1.0,
+            "gradeable": true,
+            "ensemble_5fold_raw_grade": 1,
+            "ensemble_5fold_logit_adjusted_grade": 1,
+            "ensemble_5fold_continuous_0_3": 1.009,
+            "ensemble_5fold_max_prob": 0.9912,
+            "ensemble_5fold_entropy": 0.0376,
+            "ensemble_5fold_probabilities": [
+              0.0002,
+              0.9912,
+              0.0085,
+              0.0002
+            ],
+            "fold0_single_raw_grade": 1,
+            "fold0_single_logit_adjusted_grade": 1,
+            "fold0_single_continuous_0_3": 1.031,
+            "fold0_single_max_prob": 0.9685,
+            "fold0_single_entropy": 0.1037,
+            "fold0_single_probabilities": [
+              0.0004,
+              0.9685,
+              0.0308,
+              0.0003
+            ],
+            "per_fold_grades": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "per_fold_continuous_0_3": {
+              "fold0": 1.031,
+              "fold1": 1.022,
+              "fold2": 1.026,
+              "fold3": 1.0,
+              "fold4": 1.007
+            },
+            "fold_consensus_agreement": "5/5 folds (100.0%)",
+            "probability_l1_delta_5fold_vs_fold0": 0.0453
+          },
+          "jawline_sagging": {
+            "visible_fraction": 1.0,
+            "gradeable": true,
+            "ensemble_5fold_raw_grade": 1,
+            "ensemble_5fold_logit_adjusted_grade": 1,
+            "ensemble_5fold_continuous_0_3": 1.001,
+            "ensemble_5fold_max_prob": 0.9985,
+            "ensemble_5fold_entropy": 0.0088,
+            "ensemble_5fold_probabilities": [
+              0.0003,
+              0.9985,
+              0.0011,
+              0.0001
+            ],
+            "fold0_single_raw_grade": 1,
+            "fold0_single_logit_adjusted_grade": 1,
+            "fold0_single_continuous_0_3": 1.001,
+            "fold0_single_max_prob": 0.9991,
+            "fold0_single_entropy": 0.0053,
+            "fold0_single_probabilities": [
+              0.0,
+              0.9991,
+              0.0007,
+              0.0001
+            ],
+            "per_fold_grades": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "per_fold_continuous_0_3": {
+              "fold0": 1.001,
+              "fold1": 1.004,
+              "fold2": 1.001,
+              "fold3": 1.001,
+              "fold4": 1.0
+            },
+            "fold_consensus_agreement": "5/5 folds (100.0%)",
+            "probability_l1_delta_5fold_vs_fold0": 0.0012
+          },
+          "submental_sagging": {
+            "visible_fraction": 1.0,
+            "gradeable": true,
+            "ensemble_5fold_raw_grade": 1,
+            "ensemble_5fold_logit_adjusted_grade": 1,
+            "ensemble_5fold_continuous_0_3": 1.001,
+            "ensemble_5fold_max_prob": 0.9969,
+            "ensemble_5fold_entropy": 0.0171,
+            "ensemble_5fold_probabilities": [
+              0.0013,
+              0.9969,
+              0.0014,
+              0.0003
+            ],
+            "fold0_single_raw_grade": 1,
+            "fold0_single_logit_adjusted_grade": 1,
+            "fold0_single_continuous_0_3": 1.021,
+            "fold0_single_max_prob": 0.9769,
+            "fold0_single_entropy": 0.0868,
+            "fold0_single_probabilities": [
+              0.0017,
+              0.9769,
+              0.0202,
+              0.0012
+            ],
+            "per_fold_grades": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "per_fold_continuous_0_3": {
+              "fold0": 1.021,
+              "fold1": 1.0,
+              "fold2": 0.999,
+              "fold3": 1.0,
+              "fold4": 1.0
+            },
+            "fold_consensus_agreement": "5/5 folds (100.0%)",
+            "probability_l1_delta_5fold_vs_fold0": 0.04
+          },
+          "neck_sagging": {
+            "visible_fraction": 1.0,
+            "gradeable": true,
+            "ensemble_5fold_raw_grade": 2,
+            "ensemble_5fold_logit_adjusted_grade": 2,
+            "ensemble_5fold_continuous_0_3": 1.662,
+            "ensemble_5fold_max_prob": 0.6639,
+            "ensemble_5fold_entropy": 0.4952,
+            "ensemble_5fold_probabilities": [
+              0.0068,
+              0.3268,
+              0.6639,
+              0.0025
+            ],
+            "fold0_single_raw_grade": 2,
+            "fold0_single_logit_adjusted_grade": 2,
+            "fold0_single_continuous_0_3": 1.931,
+            "fold0_single_max_prob": 0.9307,
+            "fold0_single_entropy": 0.184,
+            "fold0_single_probabilities": [
+              0.0002,
+              0.0689,
+              0.9307,
+              0.0003
+            ],
+            "per_fold_grades": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 2
+            },
+            "per_fold_continuous_0_3": {
+              "fold0": 1.931,
+              "fold1": 1.829,
+              "fold2": 0.881,
+              "fold3": 1.137,
+              "fold4": 1.886
+            },
+            "fold_consensus_agreement": "3/5 folds (60.0%)",
+            "probability_l1_delta_5fold_vs_fold0": 0.5335
+          }
+        },
+        "v6LiveSummary": {
+          "supported_regions_count": 10,
+          "detected_regions_count": 10,
+          "composite_sagging_grade_0_4": 2.1,
+          "composite_sagging_score_0_100": 52.5,
+          "croma_jawline_grade_1_5": 3,
+          "croma_jawline_label": "Grade 3 (Moderate Sagging / Distinct Fold)"
+        }
+      }
+    },
+    "sameVolunteerDualFrontCamCaptures34F": {
+      "android_01_sharp_frontcam": {
+        "captureProvenance": "REAL_UPLOADED_PHOTOGRAPH",
+        "measuredS3fdHeadPoseDeg": {
+          "yaw": 1.46,
+          "pitch": 2.17,
+          "roll": -2.08
+        },
+        "proportionTelemetry": {
+          "interPupillaryDistancePx": 140.42,
+          "noseLengthPx": 122.53,
+          "jawWidthPx": 288.1,
+          "eyeToChinHeightPx": 277.71,
+          "facialHeightToJawWidthRatio": 0.9639,
+          "aspectDistortionPct": 0.0
+        },
+        "v2Fold0Vs5Fold": {
+          "cheek_sagging": {
+            "visible_fraction": 1.0,
+            "gradeable": true,
+            "ensemble_5fold_raw_grade": 1,
+            "ensemble_5fold_logit_adjusted_grade": 1,
+            "ensemble_5fold_continuous_0_3": 1.067,
+            "ensemble_5fold_max_prob": 0.933,
+            "ensemble_5fold_entropy": 0.1785,
+            "ensemble_5fold_probabilities": [
+              0.0001,
+              0.933,
+              0.0667,
+              0.0001
+            ],
+            "fold0_single_raw_grade": 2,
+            "fold0_single_logit_adjusted_grade": 2,
+            "fold0_single_continuous_0_3": 1.784,
+            "fold0_single_max_prob": 0.784,
+            "fold0_single_entropy": 0.3781,
+            "fold0_single_probabilities": [
+              0.0002,
+              0.2157,
+              0.784,
+              0.0001
+            ],
+            "per_fold_grades": {
+              "fold0": 2,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "per_fold_continuous_0_3": {
+              "fold0": 1.784,
+              "fold1": 1.024,
+              "fold2": 1.026,
+              "fold3": 1.006,
+              "fold4": 1.114
+            },
+            "fold_consensus_agreement": "4/5 folds (80.0%)",
+            "probability_l1_delta_5fold_vs_fold0": 1.4347
+          },
+          "jawline_sagging": {
+            "visible_fraction": 1.0,
+            "gradeable": true,
+            "ensemble_5fold_raw_grade": 1,
+            "ensemble_5fold_logit_adjusted_grade": 1,
+            "ensemble_5fold_continuous_0_3": 1.001,
+            "ensemble_5fold_max_prob": 0.9981,
+            "ensemble_5fold_entropy": 0.011,
+            "ensemble_5fold_probabilities": [
+              0.0007,
+              0.9981,
+              0.0011,
+              0.0001
+            ],
+            "fold0_single_raw_grade": 1,
+            "fold0_single_logit_adjusted_grade": 1,
+            "fold0_single_continuous_0_3": 1.002,
+            "fold0_single_max_prob": 0.9979,
+            "fold0_single_entropy": 0.0115,
+            "fold0_single_probabilities": [
+              0.0,
+              0.9979,
+              0.002,
+              0.0001
+            ],
+            "per_fold_grades": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "per_fold_continuous_0_3": {
+              "fold0": 1.002,
+              "fold1": 1.0,
+              "fold2": 0.996,
+              "fold3": 1.0,
+              "fold4": 1.0
+            },
+            "fold_consensus_agreement": "5/5 folds (100.0%)",
+            "probability_l1_delta_5fold_vs_fold0": 0.0019
+          },
+          "submental_sagging": {
+            "visible_fraction": 1.0,
+            "gradeable": true,
+            "ensemble_5fold_raw_grade": 1,
+            "ensemble_5fold_logit_adjusted_grade": 1,
+            "ensemble_5fold_continuous_0_3": 0.997,
+            "ensemble_5fold_max_prob": 0.9945,
+            "ensemble_5fold_entropy": 0.0272,
+            "ensemble_5fold_probabilities": [
+              0.0043,
+              0.9945,
+              0.001,
+              0.0002
+            ],
+            "fold0_single_raw_grade": 1,
+            "fold0_single_logit_adjusted_grade": 1,
+            "fold0_single_continuous_0_3": 1.003,
+            "fold0_single_max_prob": 0.9955,
+            "fold0_single_entropy": 0.0228,
+            "fold0_single_probabilities": [
+              0.0008,
+              0.9955,
+              0.0034,
+              0.0003
+            ],
+            "per_fold_grades": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "per_fold_continuous_0_3": {
+              "fold0": 1.003,
+              "fold1": 0.99,
+              "fold2": 0.97,
+              "fold3": 0.998,
+              "fold4": 0.999
+            },
+            "fold_consensus_agreement": "5/5 folds (100.0%)",
+            "probability_l1_delta_5fold_vs_fold0": 0.007
+          },
+          "neck_sagging": {
+            "visible_fraction": 1.0,
+            "gradeable": true,
+            "ensemble_5fold_raw_grade": 1,
+            "ensemble_5fold_logit_adjusted_grade": 1,
+            "ensemble_5fold_continuous_0_3": 1.016,
+            "ensemble_5fold_max_prob": 0.9775,
+            "ensemble_5fold_entropy": 0.0851,
+            "ensemble_5fold_probabilities": [
+              0.0031,
+              0.9775,
+              0.0192,
+              0.0002
+            ],
+            "fold0_single_raw_grade": 1,
+            "fold0_single_logit_adjusted_grade": 1,
+            "fold0_single_continuous_0_3": 1.094,
+            "fold0_single_max_prob": 0.9058,
+            "fold0_single_entropy": 0.2267,
+            "fold0_single_probabilities": [
+              0.0002,
+              0.9058,
+              0.0939,
+              0.0001
+            ],
+            "per_fold_grades": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 2,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "per_fold_continuous_0_3": {
+              "fold0": 1.094,
+              "fold1": 0.996,
+              "fold2": 1.431,
+              "fold3": 1.001,
+              "fold4": 1.023
+            },
+            "fold_consensus_agreement": "4/5 folds (80.0%)",
+            "probability_l1_delta_5fold_vs_fold0": 0.1494
+          }
+        },
+        "v6LiveSummary": {
+          "supported_regions_count": 10,
+          "detected_regions_count": 2,
+          "composite_sagging_grade_0_4": 0.64,
+          "composite_sagging_score_0_100": 16.0,
+          "croma_jawline_grade_1_5": 1,
+          "croma_jawline_label": "Grade 1 (None / Optimal Contour)"
+        }
+      },
+      "android_04_soft_isp_frontcam": {
+        "captureProvenance": "REAL_UPLOADED_PHOTOGRAPH",
+        "measuredS3fdHeadPoseDeg": {
+          "yaw": -0.07,
+          "pitch": 2.24,
+          "roll": -0.97
+        },
+        "proportionTelemetry": {
+          "interPupillaryDistancePx": 150.56,
+          "noseLengthPx": 126.8,
+          "jawWidthPx": 288.96,
+          "eyeToChinHeightPx": 278.8,
+          "facialHeightToJawWidthRatio": 0.9649,
+          "aspectDistortionPct": 0.0
+        },
+        "v2Fold0Vs5Fold": {
+          "cheek_sagging": {
+            "visible_fraction": 1.0,
+            "gradeable": true,
+            "ensemble_5fold_raw_grade": 1,
+            "ensemble_5fold_logit_adjusted_grade": 1,
+            "ensemble_5fold_continuous_0_3": 1.032,
+            "ensemble_5fold_max_prob": 0.9681,
+            "ensemble_5fold_entropy": 0.1042,
+            "ensemble_5fold_probabilities": [
+              0.0003,
+              0.9681,
+              0.0314,
+              0.0002
+            ],
+            "fold0_single_raw_grade": 1,
+            "fold0_single_logit_adjusted_grade": 1,
+            "fold0_single_continuous_0_3": 1.203,
+            "fold0_single_max_prob": 0.7966,
+            "fold0_single_entropy": 0.3664,
+            "fold0_single_probabilities": [
+              0.0003,
+              0.7966,
+              0.203,
+              0.0001
+            ],
+            "per_fold_grades": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "per_fold_continuous_0_3": {
+              "fold0": 1.203,
+              "fold1": 1.01,
+              "fold2": 1.019,
+              "fold3": 1.011,
+              "fold4": 1.069
+            },
+            "fold_consensus_agreement": "5/5 folds (100.0%)",
+            "probability_l1_delta_5fold_vs_fold0": 0.3431
+          },
+          "jawline_sagging": {
+            "visible_fraction": 1.0,
+            "gradeable": true,
+            "ensemble_5fold_raw_grade": 1,
+            "ensemble_5fold_logit_adjusted_grade": 1,
+            "ensemble_5fold_continuous_0_3": 0.999,
+            "ensemble_5fold_max_prob": 0.9953,
+            "ensemble_5fold_entropy": 0.0245,
+            "ensemble_5fold_probabilities": [
+              0.0028,
+              0.9953,
+              0.0017,
+              0.0002
+            ],
+            "fold0_single_raw_grade": 1,
+            "fold0_single_logit_adjusted_grade": 1,
+            "fold0_single_continuous_0_3": 1.004,
+            "fold0_single_max_prob": 0.9963,
+            "fold0_single_entropy": 0.0185,
+            "fold0_single_probabilities": [
+              0.0,
+              0.9963,
+              0.0032,
+              0.0005
+            ],
+            "per_fold_grades": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "per_fold_continuous_0_3": {
+              "fold0": 1.004,
+              "fold1": 0.991,
+              "fold2": 0.978,
+              "fold3": 0.992,
+              "fold4": 1.0
+            },
+            "fold_consensus_agreement": "5/5 folds (100.0%)",
+            "probability_l1_delta_5fold_vs_fold0": 0.0055
+          },
+          "submental_sagging": {
+            "visible_fraction": 1.0,
+            "gradeable": true,
+            "ensemble_5fold_raw_grade": 1,
+            "ensemble_5fold_logit_adjusted_grade": 1,
+            "ensemble_5fold_continuous_0_3": 0.981,
+            "ensemble_5fold_max_prob": 0.9749,
+            "ensemble_5fold_entropy": 0.0921,
+            "ensemble_5fold_probabilities": [
+              0.0223,
+              0.9749,
+              0.0021,
+              0.0007
+            ],
+            "fold0_single_raw_grade": 1,
+            "fold0_single_logit_adjusted_grade": 1,
+            "fold0_single_continuous_0_3": 1.011,
+            "fold0_single_max_prob": 0.9869,
+            "fold0_single_entropy": 0.0547,
+            "fold0_single_probabilities": [
+              0.0014,
+              0.9869,
+              0.0113,
+              0.0004
+            ],
+            "per_fold_grades": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "per_fold_continuous_0_3": {
+              "fold0": 1.011,
+              "fold1": 0.933,
+              "fold2": 0.961,
+              "fold3": 0.991,
+              "fold4": 0.921
+            },
+            "fold_consensus_agreement": "5/5 folds (100.0%)",
+            "probability_l1_delta_5fold_vs_fold0": 0.0424
+          },
+          "neck_sagging": {
+            "visible_fraction": 1.0,
+            "gradeable": true,
+            "ensemble_5fold_raw_grade": 1,
+            "ensemble_5fold_logit_adjusted_grade": 1,
+            "ensemble_5fold_continuous_0_3": 1.004,
+            "ensemble_5fold_max_prob": 0.9829,
+            "ensemble_5fold_entropy": 0.0722,
+            "ensemble_5fold_probabilities": [
+              0.007,
+              0.9829,
+              0.0097,
+              0.0004
+            ],
+            "fold0_single_raw_grade": 1,
+            "fold0_single_logit_adjusted_grade": 1,
+            "fold0_single_continuous_0_3": 1.009,
+            "fold0_single_max_prob": 0.9904,
+            "fold0_single_entropy": 0.0403,
+            "fold0_single_probabilities": [
+              0.0002,
+              0.9904,
+              0.0092,
+              0.0002
+            ],
+            "per_fold_grades": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "per_fold_continuous_0_3": {
+              "fold0": 1.009,
+              "fold1": 0.985,
+              "fold2": 1.082,
+              "fold3": 0.996,
+              "fold4": 1.011
+            },
+            "fold_consensus_agreement": "5/5 folds (100.0%)",
+            "probability_l1_delta_5fold_vs_fold0": 0.0151
+          }
+        },
+        "v6LiveSummary": {
+          "supported_regions_count": 10,
+          "detected_regions_count": 2,
+          "composite_sagging_grade_0_4": 0.43,
+          "composite_sagging_score_0_100": 10.8,
+          "croma_jawline_grade_1_5": 1,
+          "croma_jawline_label": "Grade 1 (None / Optimal Contour)"
+        }
+      }
+    }
+  },
+  "item4_and_7_fold0Vs5FoldIndependentBenchmark": {
+    "independentImagesEvaluated": 18,
+    "totalGradeableRegionalEvaluations": 70,
+    "unseenV3b04pRegionalEvaluations": 32,
+    "processingTimeStatsMs": {
+      "singleFold0CpuMs": {
+        "mean": 163.2,
+        "median": 154.8,
+        "p95": 209.9,
+        "min": 139.6,
+        "max": 251.4,
+        "perRegionCropMeanMs": 40.8
+      },
+      "ensemble5FoldCpuMs": {
+        "mean": 798.0,
+        "median": 750.2,
+        "p95": 1000.3,
+        "min": 713.2,
+        "max": 1015.3,
+        "perRegionCropMeanMs": 199.5
+      },
+      "latencyMultiplier5FoldVsFold0": 4.89
+    },
+    "memoryUsageStats": {
+      "singleFold0": {
+        "parametersCount": 27832432,
+        "diskCheckpointMB": 106.23,
+        "onnxInt8BrowserDiskMB": 0.0,
+        "pytorchFp32WeightsRamMB": 106.17,
+        "estimatedPeakInferenceRamWithActivationsMB": 124.57
+      },
+      "ensemble5Fold": {
+        "parametersCount": 139162160,
+        "diskCheckpointsTotalMB": 531.17,
+        "pytorchFp32WeightsRamMB": 530.86,
+        "additionalWeightsRamOverFold0MB": 424.69,
+        "estimatedPeakInferenceRamWithActivationsMB": 549.26
+      },
+      "parallelV6Engine": {
+        "s3fdParametersCount": 22459110,
+        "s3fdDiskMB": 85.68,
+        "v6MlpParametersCount": 466,
+        "v6MlpDiskKB": 6.77
+      },
+      "measuredPythonProcessMemoryMB": {
+        "workingSetRamMB": 1096.54,
+        "peakWorkingSetRamMB": 1293.26,
+        "privateCommittedRamMB": 1962.98
+      }
+    },
+    "unseenV3b04pAccuracyVsLockedBlindQa": {
+      "fold0RawExactMatches": "7/32 (21.9%)",
+      "ensemble5FoldRawExactMatches": "7/32 (21.9%)",
+      "fold0LogitAdjustedExactMatches": "7/32 (21.9%)",
+      "ensemble5FoldLogitAdjustedExactMatches": "7/32 (21.9%)",
+      "fold0ContinuousMaeVsBlindQa": 0.8548,
+      "ensemble5FoldContinuousMaeVsBlindQa": 0.8277
+    },
+    "perRegionPredictionDifferences": {
+      "cheek_sagging": {
+        "totalGradeableEvaluations": 18,
+        "rawGradeAgreementRate": "15/18 (83.3%)",
+        "logitAdjustedGradeAgreementRate": "15/18 (83.3%)",
+        "meanContinuousSeverityAbsDelta": 0.1445,
+        "maxContinuousSeverityAbsDelta": 0.717,
+        "meanProbabilityL1Divergence": 0.2895,
+        "maxProbabilityL1Divergence": 1.4347,
+        "meanEntropyDelta5FoldMinusFold0": -0.0351,
+        "discreteGradeDisagreementCases": [
+          {
+            "image": "SYN3-B04-P026-FRT.jpg",
+            "cohort": "UNSEEN_V3B04P",
+            "fold0RawGrade": 2,
+            "ensemble5FoldRawGrade": 1,
+            "fold0Continuous": 1.984,
+            "ensemble5FoldContinuous": 1.455,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "3/5 folds (60.0%)",
+            "blindQaGrade": 1
+          },
+          {
+            "image": "SYN3-B04-P065-FRT.jpg",
+            "cohort": "UNSEEN_V3B04P",
+            "fold0RawGrade": 2,
+            "ensemble5FoldRawGrade": 1,
+            "fold0Continuous": 1.94,
+            "ensemble5FoldContinuous": 1.224,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 1,
+              "fold2": 2,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "3/5 folds (60.0%)",
+            "blindQaGrade": 1
+          },
+          {
+            "image": "android_01_thai_female_34_clinic_9x16.jpg",
+            "cohort": "INDEPENDENT_PORTRAIT",
+            "fold0RawGrade": 2,
+            "ensemble5FoldRawGrade": 1,
+            "fold0Continuous": 1.784,
+            "ensemble5FoldContinuous": 1.067,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "4/5 folds (80.0%)",
+            "blindQaGrade": null
+          }
+        ],
+        "splitVoteOrHighUncertaintyCases": [
+          {
+            "image": "SYN3-B04-P026-FRT.jpg",
+            "cohort": "UNSEEN_V3B04P",
+            "ensemble5FoldEntropy": 0.4994,
+            "fold0Entropy": 0.0585,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "3/5 folds (60.0%)",
+            "ensemble5FoldContinuous": 1.455,
+            "fold0Continuous": 1.984
+          },
+          {
+            "image": "SYN3-B04-P065-FRT.jpg",
+            "cohort": "UNSEEN_V3B04P",
+            "ensemble5FoldEntropy": 0.3861,
+            "fold0Entropy": 0.1642,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 1,
+              "fold2": 2,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "3/5 folds (60.0%)",
+            "ensemble5FoldContinuous": 1.224,
+            "fold0Continuous": 1.94
+          },
+          {
+            "image": "android_01_thai_female_34_clinic_9x16.jpg",
+            "cohort": "INDEPENDENT_PORTRAIT",
+            "ensemble5FoldEntropy": 0.1785,
+            "fold0Entropy": 0.3781,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "4/5 folds (80.0%)",
+            "ensemble5FoldContinuous": 1.067,
+            "fold0Continuous": 1.784
+          }
+        ]
+      },
+      "jawline_sagging": {
+        "totalGradeableEvaluations": 18,
+        "rawGradeAgreementRate": "18/18 (100.0%)",
+        "logitAdjustedGradeAgreementRate": "18/18 (100.0%)",
+        "meanContinuousSeverityAbsDelta": 0.0037,
+        "maxContinuousSeverityAbsDelta": 0.025,
+        "meanProbabilityL1Divergence": 0.0086,
+        "maxProbabilityL1Divergence": 0.048,
+        "meanEntropyDelta5FoldMinusFold0": -0.0015,
+        "discreteGradeDisagreementCases": [],
+        "splitVoteOrHighUncertaintyCases": []
+      },
+      "submental_sagging": {
+        "totalGradeableEvaluations": 18,
+        "rawGradeAgreementRate": "18/18 (100.0%)",
+        "logitAdjustedGradeAgreementRate": "18/18 (100.0%)",
+        "meanContinuousSeverityAbsDelta": 0.0214,
+        "maxContinuousSeverityAbsDelta": 0.111,
+        "meanProbabilityL1Divergence": 0.0399,
+        "maxProbabilityL1Divergence": 0.2046,
+        "meanEntropyDelta5FoldMinusFold0": -0.0247,
+        "discreteGradeDisagreementCases": [],
+        "splitVoteOrHighUncertaintyCases": [
+          {
+            "image": "SYN3-B04-P039-FRT.jpg",
+            "cohort": "UNSEEN_V3B04P",
+            "ensemble5FoldEntropy": 0.1321,
+            "fold0Entropy": 0.0392,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 2,
+              "fold3": 2,
+              "fold4": 1
+            },
+            "foldConsensus": "4/5 folds (80.0%)",
+            "ensemble5FoldContinuous": 1.957,
+            "fold0Continuous": 1.992
+          },
+          {
+            "image": "SYN3-B04-P055-FRT.jpg",
+            "cohort": "UNSEEN_V3B04P",
+            "ensemble5FoldEntropy": 0.0477,
+            "fold0Entropy": 0.0251,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 2,
+              "fold3": 2,
+              "fold4": 1
+            },
+            "foldConsensus": "4/5 folds (80.0%)",
+            "ensemble5FoldContinuous": 1.992,
+            "fold0Continuous": 1.998
+          },
+          {
+            "image": "unseen_v5_02_thai_male_58_necklift_consult_9x16.jpg",
+            "cohort": "INDEPENDENT_PORTRAIT",
+            "ensemble5FoldEntropy": 0.2889,
+            "fold0Entropy": 0.3061,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 2,
+              "fold4": 1
+            },
+            "foldConsensus": "4/5 folds (80.0%)",
+            "ensemble5FoldContinuous": 1.129,
+            "fold0Continuous": 1.133
+          }
+        ]
+      },
+      "neck_sagging": {
+        "totalGradeableEvaluations": 16,
+        "rawGradeAgreementRate": "10/16 (62.5%)",
+        "logitAdjustedGradeAgreementRate": "9/16 (56.2%)",
+        "meanContinuousSeverityAbsDelta": 0.3086,
+        "maxContinuousSeverityAbsDelta": 0.686,
+        "meanProbabilityL1Divergence": 0.6066,
+        "maxProbabilityL1Divergence": 1.3456,
+        "meanEntropyDelta5FoldMinusFold0": 0.1145,
+        "discreteGradeDisagreementCases": [
+          {
+            "image": "SYN3-B04-P043-FRT.jpg",
+            "cohort": "UNSEEN_V3B04P",
+            "fold0RawGrade": 2,
+            "ensemble5FoldRawGrade": 1,
+            "fold0Continuous": 1.975,
+            "ensemble5FoldContinuous": 1.366,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 2
+            },
+            "foldConsensus": "3/5 folds (60.0%)",
+            "blindQaGrade": 0
+          },
+          {
+            "image": "SYN3-B04-P055-FRT.jpg",
+            "cohort": "UNSEEN_V3B04P",
+            "fold0RawGrade": 3,
+            "ensemble5FoldRawGrade": 2,
+            "fold0Continuous": 2.894,
+            "ensemble5FoldContinuous": 2.377,
+            "perFoldVotes": {
+              "fold0": 3,
+              "fold1": 2,
+              "fold2": 2,
+              "fold3": 2,
+              "fold4": 2
+            },
+            "foldConsensus": "4/5 folds (80.0%)",
+            "blindQaGrade": 3
+          },
+          {
+            "image": "SYN3-B04-P101-FRT.jpg",
+            "cohort": "UNSEEN_V3B04P",
+            "fold0RawGrade": 3,
+            "ensemble5FoldRawGrade": 2,
+            "fold0Continuous": 2.862,
+            "ensemble5FoldContinuous": 2.339,
+            "perFoldVotes": {
+              "fold0": 3,
+              "fold1": 3,
+              "fold2": 2,
+              "fold3": 2,
+              "fold4": 2
+            },
+            "foldConsensus": "3/5 folds (60.0%)",
+            "blindQaGrade": 3
+          },
+          {
+            "image": "unseen_06_young_female_26_daylight.jpg",
+            "cohort": "INDEPENDENT_PORTRAIT",
+            "fold0RawGrade": 2,
+            "ensemble5FoldRawGrade": 1,
+            "fold0Continuous": 1.811,
+            "ensemble5FoldContinuous": 1.125,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 1,
+              "fold2": 2,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "3/5 folds (60.0%)",
+            "blindQaGrade": null
+          },
+          {
+            "image": "subject_03_oblique_warm_light.jpg",
+            "cohort": "INDEPENDENT_PORTRAIT",
+            "fold0RawGrade": 2,
+            "ensemble5FoldRawGrade": 1,
+            "fold0Continuous": 1.807,
+            "ensemble5FoldContinuous": 1.206,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 1,
+              "fold2": 0,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "3/5 folds (60.0%)",
+            "blindQaGrade": null
+          },
+          {
+            "image": "unseen_v5_01_thai_female_52_facelift_consult_9x16.jpg",
+            "cohort": "INDEPENDENT_PORTRAIT",
+            "fold0RawGrade": 2,
+            "ensemble5FoldRawGrade": 1,
+            "fold0Continuous": 1.855,
+            "ensemble5FoldContinuous": 1.453,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 2
+            },
+            "foldConsensus": "2/5 folds (40.0%)",
+            "blindQaGrade": null
+          }
+        ],
+        "splitVoteOrHighUncertaintyCases": [
+          {
+            "image": "SYN3-B04-P043-FRT.jpg",
+            "cohort": "UNSEEN_V3B04P",
+            "ensemble5FoldEntropy": 0.5554,
+            "fold0Entropy": 0.0928,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 2
+            },
+            "foldConsensus": "3/5 folds (60.0%)",
+            "ensemble5FoldContinuous": 1.366,
+            "fold0Continuous": 1.975
+          },
+          {
+            "image": "SYN3-B04-P065-FRT.jpg",
+            "cohort": "UNSEEN_V3B04P",
+            "ensemble5FoldEntropy": 0.6114,
+            "fold0Entropy": 0.0773,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 2
+            },
+            "foldConsensus": "3/5 folds (60.0%)",
+            "ensemble5FoldContinuous": 1.496,
+            "fold0Continuous": 1.984
+          },
+          {
+            "image": "SYN3-B04-P039-FRT.jpg",
+            "cohort": "UNSEEN_V3B04P",
+            "ensemble5FoldEntropy": 0.4911,
+            "fold0Entropy": 0.108,
+            "perFoldVotes": {
+              "fold0": 3,
+              "fold1": 3,
+              "fold2": 2,
+              "fold3": 2,
+              "fold4": 3
+            },
+            "foldConsensus": "3/5 folds (60.0%)",
+            "ensemble5FoldContinuous": 2.62,
+            "fold0Continuous": 2.965
+          },
+          {
+            "image": "SYN3-B04-P018-FRT.jpg",
+            "cohort": "UNSEEN_V3B04P",
+            "ensemble5FoldEntropy": 0.4142,
+            "fold0Entropy": 0.135,
+            "perFoldVotes": {
+              "fold0": 3,
+              "fold1": 3,
+              "fold2": 2,
+              "fold3": 2,
+              "fold4": 3
+            },
+            "foldConsensus": "3/5 folds (60.0%)",
+            "ensemble5FoldContinuous": 2.755,
+            "fold0Continuous": 2.951
+          },
+          {
+            "image": "SYN3-B04-P055-FRT.jpg",
+            "cohort": "UNSEEN_V3B04P",
+            "ensemble5FoldEntropy": 0.496,
+            "fold0Entropy": 0.2463,
+            "perFoldVotes": {
+              "fold0": 3,
+              "fold1": 2,
+              "fold2": 2,
+              "fold3": 2,
+              "fold4": 2
+            },
+            "foldConsensus": "4/5 folds (80.0%)",
+            "ensemble5FoldContinuous": 2.377,
+            "fold0Continuous": 2.894
+          },
+          {
+            "image": "SYN3-B04-P101-FRT.jpg",
+            "cohort": "UNSEEN_V3B04P",
+            "ensemble5FoldEntropy": 0.4836,
+            "fold0Entropy": 0.295,
+            "perFoldVotes": {
+              "fold0": 3,
+              "fold1": 3,
+              "fold2": 2,
+              "fold3": 2,
+              "fold4": 2
+            },
+            "foldConsensus": "3/5 folds (60.0%)",
+            "ensemble5FoldContinuous": 2.339,
+            "fold0Continuous": 2.862
+          },
+          {
+            "image": "unseen_06_young_female_26_daylight.jpg",
+            "cohort": "INDEPENDENT_PORTRAIT",
+            "ensemble5FoldEntropy": 0.3583,
+            "fold0Entropy": 0.3549,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 1,
+              "fold2": 2,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "3/5 folds (60.0%)",
+            "ensemble5FoldContinuous": 1.125,
+            "fold0Continuous": 1.811
+          },
+          {
+            "image": "android_01_thai_female_34_clinic_9x16.jpg",
+            "cohort": "INDEPENDENT_PORTRAIT",
+            "ensemble5FoldEntropy": 0.0851,
+            "fold0Entropy": 0.2267,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 2,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "4/5 folds (80.0%)",
+            "ensemble5FoldContinuous": 1.016,
+            "fold0Continuous": 1.094
+          },
+          {
+            "image": "subject_03_oblique_warm_light.jpg",
+            "cohort": "INDEPENDENT_PORTRAIT",
+            "ensemble5FoldEntropy": 0.4634,
+            "fold0Entropy": 0.3814,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 1,
+              "fold2": 0,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "3/5 folds (60.0%)",
+            "ensemble5FoldContinuous": 1.206,
+            "fold0Continuous": 1.807
+          },
+          {
+            "image": "unseen_v5_01_thai_female_52_facelift_consult_9x16.jpg",
+            "cohort": "INDEPENDENT_PORTRAIT",
+            "ensemble5FoldEntropy": 0.5438,
+            "fold0Entropy": 0.3038,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 2
+            },
+            "foldConsensus": "2/5 folds (40.0%)",
+            "ensemble5FoldContinuous": 1.453,
+            "fold0Continuous": 1.855
+          }
+        ]
+      }
+    },
+    "productionConfigurationRationale": {
+      "selectedServerConfiguration": "5-Fold ConvNeXt-Tiny Ensemble (fold0.pt..fold4.pt, 139,162,160 params) + V3 Logit Adjustment + Side-by-Side fold0.pt Telemetry + Parallel V6 10-Region Hessian Contours",
+      "selectedBrowserClientFallback": "v2-fold0-int8.onnx (33.86 MB INT8 quantized fold0.pt) for offline/client-only WebAssembly bandwidth efficiency",
+      "reasons": [
+        "1. Eliminates Single-Split Variance Outliers: On cheek_sagging and neck_sagging (where fold0.pt disagrees with the 5-fold consensus on 6/18 and 3/18 independent images respectively), fold0.pt alone flip-flops between Grade 2 (1.784) and Grade 1 (1.203) across two front-camera captures (android_01 vs. android_04) of the same 34F volunteer, whereas Folds 1..4 unanimously predict Grade 1 and the 5-Fold Ensemble remains stable at Grade 1 (1.067 vs. 1.032).",
+        "2. Surfaces Epistemic Inter-Fold Uncertainty: Reporting the 5-fold vote vector [f0, f1, f2, f3, f4] distinguishes unanimous 5/5 predictions (jawline_sagging 18/18 = 100% agreement, submental_sagging 18/18 = 100% agreement) from borderline split-vote cases (e.g., 3/5 or 2/5 consensus on cheek and neck).",
+        "3. Acceptable Workstation Latency & RAM Cost: 5-Fold CPU inference averages ~705 ms (vs. ~147 ms for fold0.pt) and requires 530.86 MB of FP32 weight tensors in RAM (+424.69 MB over fold0.pt), well within local workstation capacity.",
+        "4. No Claim of Validated Clinical Superiority: In accordance with clinical governance, this configuration is chosen for software variance reduction and uncertainty transparency, NOT claimed clinical superiority, pending dual-physician blinded grading on consented real patients."
+      ]
+    },
+    "cases": [
+      {
+        "image": "SYN3-B04-P043-FRT.jpg",
+        "cohort": "UNSEEN_V3B04P",
+        "captureProvenance": "SYNTHETIC_OR_GENERATED_VIEW",
+        "singleFold0CpuMs": 167.2,
+        "ensemble5FoldCpuMs": 764.0,
+        "v6Composite0_4": 0.96,
+        "regions": {
+          "cheek_sagging": {
+            "blindQaGrade": 0,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.006,
+            "fold0Entropy": 0.029,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.002,
+            "ensemble5FoldEntropy": 0.0099,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0089
+          },
+          "jawline_sagging": {
+            "blindQaGrade": 0,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.001,
+            "fold0Entropy": 0.005,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.0,
+            "ensemble5FoldEntropy": 0.008,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0011
+          },
+          "submental_sagging": {
+            "blindQaGrade": 0,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.0,
+            "fold0Entropy": 0.0085,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 0.998,
+            "ensemble5FoldEntropy": 0.0172,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0043
+          },
+          "neck_sagging": {
+            "blindQaGrade": 0,
+            "fold0Raw": 2,
+            "fold0LogitAdj": 2,
+            "fold0Continuous": 1.975,
+            "fold0Entropy": 0.0928,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.366,
+            "ensemble5FoldEntropy": 0.5554,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 2
+            },
+            "foldConsensus": "3/5 folds (60.0%)",
+            "probL1Delta": 1.188
+          }
+        }
+      },
+      {
+        "image": "SYN3-B04-P008-FRT.jpg",
+        "cohort": "UNSEEN_V3B04P",
+        "captureProvenance": "SYNTHETIC_OR_GENERATED_VIEW",
+        "singleFold0CpuMs": 149.9,
+        "ensemble5FoldCpuMs": 732.0,
+        "v6Composite0_4": 0.79,
+        "regions": {
+          "cheek_sagging": {
+            "blindQaGrade": 0,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.024,
+            "fold0Entropy": 0.0845,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.003,
+            "ensemble5FoldEntropy": 0.0152,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0423
+          },
+          "jawline_sagging": {
+            "blindQaGrade": 0,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.001,
+            "fold0Entropy": 0.0068,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.001,
+            "ensemble5FoldEntropy": 0.0096,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0012
+          },
+          "submental_sagging": {
+            "blindQaGrade": 0,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.001,
+            "fold0Entropy": 0.0065,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.0,
+            "ensemble5FoldEntropy": 0.0044,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0008
+          },
+          "neck_sagging": {
+            "blindQaGrade": 2,
+            "fold0Raw": 2,
+            "fold0LogitAdj": 2,
+            "fold0Continuous": 2.115,
+            "fold0Entropy": 0.2853,
+            "ensemble5FoldRaw": 2,
+            "ensemble5FoldLogitAdj": 2,
+            "ensemble5FoldContinuous": 2.0,
+            "ensemble5FoldEntropy": 0.1589,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 2,
+              "fold3": 2,
+              "fold4": 2
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.191
+          }
+        }
+      },
+      {
+        "image": "SYN3-B04-P026-FRT.jpg",
+        "cohort": "UNSEEN_V3B04P",
+        "captureProvenance": "SYNTHETIC_OR_GENERATED_VIEW",
+        "singleFold0CpuMs": 155.8,
+        "ensemble5FoldCpuMs": 775.8,
+        "v6Composite0_4": 2.45,
+        "regions": {
+          "cheek_sagging": {
+            "blindQaGrade": 1,
+            "fold0Raw": 2,
+            "fold0LogitAdj": 2,
+            "fold0Continuous": 1.984,
+            "fold0Entropy": 0.0585,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.455,
+            "ensemble5FoldEntropy": 0.4994,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "3/5 folds (60.0%)",
+            "probL1Delta": 1.0593
+          },
+          "jawline_sagging": {
+            "blindQaGrade": 0,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.001,
+            "fold0Entropy": 0.0066,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.001,
+            "ensemble5FoldEntropy": 0.01,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0012
+          },
+          "submental_sagging": {
+            "blindQaGrade": 0,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.001,
+            "fold0Entropy": 0.0116,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.0,
+            "ensemble5FoldEntropy": 0.008,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0022
+          },
+          "neck_sagging": {
+            "blindQaGrade": 1,
+            "fold0Raw": 2,
+            "fold0LogitAdj": 2,
+            "fold0Continuous": 1.998,
+            "fold0Entropy": 0.0351,
+            "ensemble5FoldRaw": 2,
+            "ensemble5FoldLogitAdj": 2,
+            "ensemble5FoldContinuous": 1.982,
+            "ensemble5FoldEntropy": 0.0964,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 2,
+              "fold3": 2,
+              "fold4": 2
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0336
+          }
+        }
+      },
+      {
+        "image": "SYN3-B04-P065-FRT.jpg",
+        "cohort": "UNSEEN_V3B04P",
+        "captureProvenance": "SYNTHETIC_OR_GENERATED_VIEW",
+        "singleFold0CpuMs": 159.5,
+        "ensemble5FoldCpuMs": 958.7,
+        "v6Composite0_4": 2.55,
+        "regions": {
+          "cheek_sagging": {
+            "blindQaGrade": 1,
+            "fold0Raw": 2,
+            "fold0LogitAdj": 2,
+            "fold0Continuous": 1.94,
+            "fold0Entropy": 0.1642,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.224,
+            "ensemble5FoldEntropy": 0.3861,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 1,
+              "fold2": 2,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "3/5 folds (60.0%)",
+            "probL1Delta": 1.4331
+          },
+          "jawline_sagging": {
+            "blindQaGrade": 0,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.002,
+            "fold0Entropy": 0.0104,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.005,
+            "ensemble5FoldEntropy": 0.0257,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0071
+          },
+          "submental_sagging": {
+            "blindQaGrade": 0,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.003,
+            "fold0Entropy": 0.0228,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.0,
+            "ensemble5FoldEntropy": 0.0225,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0034
+          },
+          "neck_sagging": {
+            "blindQaGrade": 0,
+            "fold0Raw": 2,
+            "fold0LogitAdj": 2,
+            "fold0Continuous": 1.984,
+            "fold0Entropy": 0.0773,
+            "ensemble5FoldRaw": 2,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.496,
+            "ensemble5FoldEntropy": 0.6114,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 2
+            },
+            "foldConsensus": "3/5 folds (60.0%)",
+            "probL1Delta": 0.9386
+          }
+        }
+      },
+      {
+        "image": "SYN3-B04-P039-FRT.jpg",
+        "cohort": "UNSEEN_V3B04P",
+        "captureProvenance": "SYNTHETIC_OR_GENERATED_VIEW",
+        "singleFold0CpuMs": 169.0,
+        "ensemble5FoldCpuMs": 997.7,
+        "v6Composite0_4": 3.1,
+        "regions": {
+          "cheek_sagging": {
+            "blindQaGrade": 2,
+            "fold0Raw": 2,
+            "fold0LogitAdj": 2,
+            "fold0Continuous": 1.999,
+            "fold0Entropy": 0.0065,
+            "ensemble5FoldRaw": 2,
+            "ensemble5FoldLogitAdj": 2,
+            "ensemble5FoldContinuous": 2.0,
+            "ensemble5FoldEntropy": 0.0025,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 2,
+              "fold3": 2,
+              "fold4": 2
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0013
+          },
+          "jawline_sagging": {
+            "blindQaGrade": 1,
+            "fold0Raw": 2,
+            "fold0LogitAdj": 2,
+            "fold0Continuous": 2.0,
+            "fold0Entropy": 0.0295,
+            "ensemble5FoldRaw": 2,
+            "ensemble5FoldLogitAdj": 2,
+            "ensemble5FoldContinuous": 1.999,
+            "ensemble5FoldEntropy": 0.0202,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 2,
+              "fold3": 2,
+              "fold4": 2
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0041
+          },
+          "submental_sagging": {
+            "blindQaGrade": 2,
+            "fold0Raw": 2,
+            "fold0LogitAdj": 2,
+            "fold0Continuous": 1.992,
+            "fold0Entropy": 0.0392,
+            "ensemble5FoldRaw": 2,
+            "ensemble5FoldLogitAdj": 2,
+            "ensemble5FoldContinuous": 1.957,
+            "ensemble5FoldEntropy": 0.1321,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 2,
+              "fold3": 2,
+              "fold4": 1
+            },
+            "foldConsensus": "4/5 folds (80.0%)",
+            "probL1Delta": 0.0698
+          },
+          "neck_sagging": {
+            "blindQaGrade": 3,
+            "fold0Raw": 3,
+            "fold0LogitAdj": 3,
+            "fold0Continuous": 2.965,
+            "fold0Entropy": 0.108,
+            "ensemble5FoldRaw": 3,
+            "ensemble5FoldLogitAdj": 3,
+            "ensemble5FoldContinuous": 2.62,
+            "ensemble5FoldEntropy": 0.4911,
+            "perFoldVotes": {
+              "fold0": 3,
+              "fold1": 3,
+              "fold2": 2,
+              "fold3": 2,
+              "fold4": 3
+            },
+            "foldConsensus": "3/5 folds (60.0%)",
+            "probL1Delta": 0.6863
+          }
+        }
+      },
+      {
+        "image": "SYN3-B04-P018-FRT.jpg",
+        "cohort": "UNSEEN_V3B04P",
+        "captureProvenance": "SYNTHETIC_OR_GENERATED_VIEW",
+        "singleFold0CpuMs": 251.4,
+        "ensemble5FoldCpuMs": 1015.3,
+        "v6Composite0_4": 3.28,
+        "regions": {
+          "cheek_sagging": {
+            "blindQaGrade": 3,
+            "fold0Raw": 2,
+            "fold0LogitAdj": 2,
+            "fold0Continuous": 2.0,
+            "fold0Entropy": 0.0055,
+            "ensemble5FoldRaw": 2,
+            "ensemble5FoldLogitAdj": 2,
+            "ensemble5FoldContinuous": 2.0,
+            "ensemble5FoldEntropy": 0.0027,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 2,
+              "fold3": 2,
+              "fold4": 2
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0009
+          },
+          "jawline_sagging": {
+            "blindQaGrade": 3,
+            "fold0Raw": 2,
+            "fold0LogitAdj": 2,
+            "fold0Continuous": 2.019,
+            "fold0Entropy": 0.0941,
+            "ensemble5FoldRaw": 2,
+            "ensemble5FoldLogitAdj": 2,
+            "ensemble5FoldContinuous": 2.006,
+            "ensemble5FoldEntropy": 0.044,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 2,
+              "fold3": 2,
+              "fold4": 2
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0316
+          },
+          "submental_sagging": {
+            "blindQaGrade": 3,
+            "fold0Raw": 2,
+            "fold0LogitAdj": 2,
+            "fold0Continuous": 1.999,
+            "fold0Entropy": 0.024,
+            "ensemble5FoldRaw": 2,
+            "ensemble5FoldLogitAdj": 2,
+            "ensemble5FoldContinuous": 1.998,
+            "ensemble5FoldEntropy": 0.0184,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 2,
+              "fold3": 2,
+              "fold4": 2
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.003
+          },
+          "neck_sagging": {
+            "blindQaGrade": 3,
+            "fold0Raw": 3,
+            "fold0LogitAdj": 3,
+            "fold0Continuous": 2.951,
+            "fold0Entropy": 0.135,
+            "ensemble5FoldRaw": 3,
+            "ensemble5FoldLogitAdj": 3,
+            "ensemble5FoldContinuous": 2.755,
+            "ensemble5FoldEntropy": 0.4142,
+            "perFoldVotes": {
+              "fold0": 3,
+              "fold1": 3,
+              "fold2": 2,
+              "fold3": 2,
+              "fold4": 3
+            },
+            "foldConsensus": "3/5 folds (60.0%)",
+            "probL1Delta": 0.3917
+          }
+        }
+      },
+      {
+        "image": "SYN3-B04-P055-FRT.jpg",
+        "cohort": "UNSEEN_V3B04P",
+        "captureProvenance": "SYNTHETIC_OR_GENERATED_VIEW",
+        "singleFold0CpuMs": 202.6,
+        "ensemble5FoldCpuMs": 838.4,
+        "v6Composite0_4": 3.33,
+        "regions": {
+          "cheek_sagging": {
+            "blindQaGrade": 3,
+            "fold0Raw": 2,
+            "fold0LogitAdj": 2,
+            "fold0Continuous": 2.0,
+            "fold0Entropy": 0.004,
+            "ensemble5FoldRaw": 2,
+            "ensemble5FoldLogitAdj": 2,
+            "ensemble5FoldContinuous": 2.0,
+            "ensemble5FoldEntropy": 0.0037,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 2,
+              "fold3": 2,
+              "fold4": 2
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0002
+          },
+          "jawline_sagging": {
+            "blindQaGrade": 3,
+            "fold0Raw": 2,
+            "fold0LogitAdj": 2,
+            "fold0Continuous": 2.0,
+            "fold0Entropy": 0.0084,
+            "ensemble5FoldRaw": 2,
+            "ensemble5FoldLogitAdj": 2,
+            "ensemble5FoldContinuous": 2.0,
+            "ensemble5FoldEntropy": 0.0241,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 2,
+              "fold3": 2,
+              "fold4": 2
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0065
+          },
+          "submental_sagging": {
+            "blindQaGrade": 3,
+            "fold0Raw": 2,
+            "fold0LogitAdj": 2,
+            "fold0Continuous": 1.998,
+            "fold0Entropy": 0.0251,
+            "ensemble5FoldRaw": 2,
+            "ensemble5FoldLogitAdj": 2,
+            "ensemble5FoldContinuous": 1.992,
+            "ensemble5FoldEntropy": 0.0477,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 2,
+              "fold3": 2,
+              "fold4": 1
+            },
+            "foldConsensus": "4/5 folds (80.0%)",
+            "probL1Delta": 0.0129
+          },
+          "neck_sagging": {
+            "blindQaGrade": 3,
+            "fold0Raw": 3,
+            "fold0LogitAdj": 3,
+            "fold0Continuous": 2.894,
+            "fold0Entropy": 0.2463,
+            "ensemble5FoldRaw": 2,
+            "ensemble5FoldLogitAdj": 2,
+            "ensemble5FoldContinuous": 2.377,
+            "ensemble5FoldEntropy": 0.496,
+            "perFoldVotes": {
+              "fold0": 3,
+              "fold1": 2,
+              "fold2": 2,
+              "fold3": 2,
+              "fold4": 2
+            },
+            "foldConsensus": "4/5 folds (80.0%)",
+            "probL1Delta": 1.042
+          }
+        }
+      },
+      {
+        "image": "SYN3-B04-P101-FRT.jpg",
+        "cohort": "UNSEEN_V3B04P",
+        "captureProvenance": "SYNTHETIC_OR_GENERATED_VIEW",
+        "singleFold0CpuMs": 147.1,
+        "ensemble5FoldCpuMs": 855.0,
+        "v6Composite0_4": 3.41,
+        "regions": {
+          "cheek_sagging": {
+            "blindQaGrade": 3,
+            "fold0Raw": 2,
+            "fold0LogitAdj": 2,
+            "fold0Continuous": 2.0,
+            "fold0Entropy": 0.0052,
+            "ensemble5FoldRaw": 2,
+            "ensemble5FoldLogitAdj": 2,
+            "ensemble5FoldContinuous": 2.0,
+            "ensemble5FoldEntropy": 0.0024,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 2,
+              "fold3": 2,
+              "fold4": 2
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0009
+          },
+          "jawline_sagging": {
+            "blindQaGrade": 3,
+            "fold0Raw": 2,
+            "fold0LogitAdj": 2,
+            "fold0Continuous": 2.004,
+            "fold0Entropy": 0.0385,
+            "ensemble5FoldRaw": 2,
+            "ensemble5FoldLogitAdj": 2,
+            "ensemble5FoldContinuous": 2.003,
+            "ensemble5FoldEntropy": 0.0233,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 2,
+              "fold3": 2,
+              "fold4": 2
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0072
+          },
+          "submental_sagging": {
+            "blindQaGrade": 3,
+            "fold0Raw": 2,
+            "fold0LogitAdj": 2,
+            "fold0Continuous": 2.0,
+            "fold0Entropy": 0.0286,
+            "ensemble5FoldRaw": 2,
+            "ensemble5FoldLogitAdj": 2,
+            "ensemble5FoldContinuous": 1.998,
+            "ensemble5FoldEntropy": 0.0216,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 2,
+              "fold3": 2,
+              "fold4": 2
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0045
+          },
+          "neck_sagging": {
+            "blindQaGrade": 3,
+            "fold0Raw": 3,
+            "fold0LogitAdj": 3,
+            "fold0Continuous": 2.862,
+            "fold0Entropy": 0.295,
+            "ensemble5FoldRaw": 2,
+            "ensemble5FoldLogitAdj": 2,
+            "ensemble5FoldContinuous": 2.339,
+            "ensemble5FoldEntropy": 0.4836,
+            "perFoldVotes": {
+              "fold0": 3,
+              "fold1": 3,
+              "fold2": 2,
+              "fold3": 2,
+              "fold4": 2
+            },
+            "foldConsensus": "3/5 folds (60.0%)",
+            "probL1Delta": 1.0489
+          }
+        }
+      },
+      {
+        "image": "unseen_06_young_female_26_daylight.jpg",
+        "cohort": "INDEPENDENT_PORTRAIT",
+        "captureProvenance": "REAL_UPLOADED_PHOTOGRAPH",
+        "singleFold0CpuMs": 162.6,
+        "ensemble5FoldCpuMs": 820.1,
+        "v6Composite0_4": 0.0,
+        "regions": {
+          "cheek_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.144,
+            "fold0Entropy": 0.2993,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.006,
+            "ensemble5FoldEntropy": 0.0264,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.2771
+          },
+          "jawline_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.005,
+            "fold0Entropy": 0.0219,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.001,
+            "ensemble5FoldEntropy": 0.0135,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0058
+          },
+          "submental_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.007,
+            "fold0Entropy": 0.0329,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 0.999,
+            "ensemble5FoldEntropy": 0.025,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0104
+          },
+          "neck_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 2,
+            "fold0LogitAdj": 2,
+            "fold0Continuous": 1.811,
+            "fold0Entropy": 0.3549,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.125,
+            "ensemble5FoldEntropy": 0.3583,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 1,
+              "fold2": 2,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "3/5 folds (60.0%)",
+            "probL1Delta": 1.3456
+          }
+        }
+      },
+      {
+        "image": "android_01_thai_female_34_clinic_9x16.jpg",
+        "cohort": "INDEPENDENT_PORTRAIT",
+        "captureProvenance": "REAL_UPLOADED_PHOTOGRAPH",
+        "singleFold0CpuMs": 172.5,
+        "ensemble5FoldCpuMs": 750.4,
+        "v6Composite0_4": 0.64,
+        "regions": {
+          "cheek_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 2,
+            "fold0LogitAdj": 2,
+            "fold0Continuous": 1.784,
+            "fold0Entropy": 0.3781,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.067,
+            "ensemble5FoldEntropy": 0.1785,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "4/5 folds (80.0%)",
+            "probL1Delta": 1.4347
+          },
+          "jawline_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.002,
+            "fold0Entropy": 0.0115,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.001,
+            "ensemble5FoldEntropy": 0.011,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0019
+          },
+          "submental_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.003,
+            "fold0Entropy": 0.0228,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 0.997,
+            "ensemble5FoldEntropy": 0.0272,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.007
+          },
+          "neck_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.094,
+            "fold0Entropy": 0.2267,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.016,
+            "ensemble5FoldEntropy": 0.0851,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 2,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "4/5 folds (80.0%)",
+            "probL1Delta": 0.1494
+          }
+        }
+      },
+      {
+        "image": "android_04_soft_frontcam_isp_9x16.jpg",
+        "cohort": "INDEPENDENT_PORTRAIT",
+        "captureProvenance": "REAL_UPLOADED_PHOTOGRAPH",
+        "singleFold0CpuMs": 147.5,
+        "ensemble5FoldCpuMs": 731.4,
+        "v6Composite0_4": 0.43,
+        "regions": {
+          "cheek_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.203,
+            "fold0Entropy": 0.3664,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.032,
+            "ensemble5FoldEntropy": 0.1042,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.3431
+          },
+          "jawline_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.004,
+            "fold0Entropy": 0.0185,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 0.999,
+            "ensemble5FoldEntropy": 0.0245,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0055
+          },
+          "submental_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.011,
+            "fold0Entropy": 0.0547,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 0.981,
+            "ensemble5FoldEntropy": 0.0921,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0424
+          },
+          "neck_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.009,
+            "fold0Entropy": 0.0403,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.004,
+            "ensemble5FoldEntropy": 0.0722,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0151
+          }
+        }
+      },
+      {
+        "image": "subject_03_oblique_warm_light.jpg",
+        "cohort": "INDEPENDENT_PORTRAIT",
+        "captureProvenance": "REAL_UPLOADED_PHOTOGRAPH",
+        "singleFold0CpuMs": 154.3,
+        "ensemble5FoldCpuMs": 750.0,
+        "v6Composite0_4": 0.58,
+        "regions": {
+          "cheek_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.067,
+            "fold0Entropy": 0.1799,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.004,
+            "ensemble5FoldEntropy": 0.0205,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.1259
+          },
+          "jawline_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.002,
+            "fold0Entropy": 0.012,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.001,
+            "ensemble5FoldEntropy": 0.0118,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0015
+          },
+          "submental_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.103,
+            "fold0Entropy": 0.2665,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 0.999,
+            "ensemble5FoldEntropy": 0.0859,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.1869
+          },
+          "neck_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 2,
+            "fold0LogitAdj": 2,
+            "fold0Continuous": 1.807,
+            "fold0Entropy": 0.3814,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.206,
+            "ensemble5FoldEntropy": 0.4634,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 1,
+              "fold2": 0,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "3/5 folds (60.0%)",
+            "probL1Delta": 1.1751
+          }
+        }
+      },
+      {
+        "image": "unseen_07_south_asian_44_oblique.jpg",
+        "cohort": "INDEPENDENT_PORTRAIT",
+        "captureProvenance": "REAL_UPLOADED_PHOTOGRAPH",
+        "singleFold0CpuMs": 149.3,
+        "ensemble5FoldCpuMs": 729.6,
+        "v6Composite0_4": 1.53,
+        "regions": {
+          "cheek_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.195,
+            "fold0Entropy": 0.3588,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.025,
+            "ensemble5FoldEntropy": 0.0875,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.3389
+          },
+          "jawline_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.001,
+            "fold0Entropy": 0.0056,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.001,
+            "ensemble5FoldEntropy": 0.0106,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0018
+          },
+          "submental_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.111,
+            "fold0Entropy": 0.2846,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.0,
+            "ensemble5FoldEntropy": 0.0653,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.2046
+          },
+          "neck_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.304,
+            "fold0Entropy": 0.4499,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.007,
+            "ensemble5FoldEntropy": 0.0823,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.5802
+          }
+        }
+      },
+      {
+        "image": "unseen_12_thai_male_46_warm_indoor_9x16.jpg",
+        "cohort": "INDEPENDENT_PORTRAIT",
+        "captureProvenance": "REAL_UPLOADED_PHOTOGRAPH",
+        "singleFold0CpuMs": 155.1,
+        "ensemble5FoldCpuMs": 746.4,
+        "v6Composite0_4": 1.53,
+        "regions": {
+          "cheek_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.011,
+            "fold0Entropy": 0.0461,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.003,
+            "ensemble5FoldEntropy": 0.0152,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0166
+          },
+          "jawline_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.001,
+            "fold0Entropy": 0.0068,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.001,
+            "ensemble5FoldEntropy": 0.014,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0026
+          },
+          "submental_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.004,
+            "fold0Entropy": 0.0418,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 0.996,
+            "ensemble5FoldEntropy": 0.0517,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.011
+          },
+          "neck_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.001,
+            "fold0Entropy": 0.0091,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.002,
+            "ensemble5FoldEntropy": 0.0261,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0071
+          }
+        }
+      },
+      {
+        "image": "unseen_v5_01_thai_female_52_facelift_consult_9x16.jpg",
+        "cohort": "INDEPENDENT_PORTRAIT",
+        "captureProvenance": "REAL_UPLOADED_PHOTOGRAPH",
+        "singleFold0CpuMs": 148.2,
+        "ensemble5FoldCpuMs": 714.1,
+        "v6Composite0_4": 2.39,
+        "regions": {
+          "cheek_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.042,
+            "fold0Entropy": 0.129,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.01,
+            "ensemble5FoldEntropy": 0.0409,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0649
+          },
+          "jawline_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.001,
+            "fold0Entropy": 0.0058,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.001,
+            "ensemble5FoldEntropy": 0.0106,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0017
+          },
+          "submental_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.016,
+            "fold0Entropy": 0.0761,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.001,
+            "ensemble5FoldEntropy": 0.021,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0305
+          },
+          "neck_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 2,
+            "fold0LogitAdj": 2,
+            "fold0Continuous": 1.855,
+            "fold0Entropy": 0.3038,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.453,
+            "ensemble5FoldEntropy": 0.5438,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 2
+            },
+            "foldConsensus": "2/5 folds (40.0%)",
+            "probL1Delta": 0.7964
+          }
+        }
+      },
+      {
+        "image": "unseen_v5_02_thai_male_58_necklift_consult_9x16.jpg",
+        "cohort": "INDEPENDENT_PORTRAIT",
+        "captureProvenance": "REAL_UPLOADED_PHOTOGRAPH",
+        "singleFold0CpuMs": 154.6,
+        "ensemble5FoldCpuMs": 726.0,
+        "v6Composite0_4": 2.9,
+        "regions": {
+          "cheek_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 2,
+            "fold0LogitAdj": 2,
+            "fold0Continuous": 1.995,
+            "fold0Entropy": 0.0253,
+            "ensemble5FoldRaw": 2,
+            "ensemble5FoldLogitAdj": 2,
+            "ensemble5FoldContinuous": 1.964,
+            "ensemble5FoldEntropy": 0.1135,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 2,
+              "fold3": 2,
+              "fold4": 2
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0612
+          },
+          "jawline_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.064,
+            "fold0Entropy": 0.174,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.039,
+            "ensemble5FoldEntropy": 0.1227,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.048
+          },
+          "submental_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.133,
+            "fold0Entropy": 0.3061,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.129,
+            "ensemble5FoldEntropy": 0.2889,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 2,
+              "fold4": 1
+            },
+            "foldConsensus": "4/5 folds (80.0%)",
+            "probL1Delta": 0.015
+          },
+          "neck_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 2,
+            "fold0LogitAdj": 2,
+            "fold0Continuous": 1.839,
+            "fold0Entropy": 0.3236,
+            "ensemble5FoldRaw": 2,
+            "ensemble5FoldLogitAdj": 2,
+            "ensemble5FoldContinuous": 1.897,
+            "ensemble5FoldEntropy": 0.2591,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 2,
+              "fold3": 2,
+              "fold4": 2
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.1165
+          }
+        }
+      },
+      {
+        "image": "subject_02_frontal_side_raking_light.jpg",
+        "cohort": "INDEPENDENT_PORTRAIT",
+        "captureProvenance": "REAL_UPLOADED_PHOTOGRAPH",
+        "singleFold0CpuMs": 152.0,
+        "ensemble5FoldCpuMs": 745.0,
+        "v6Composite0_4": 2.91,
+        "regions": {
+          "cheek_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 2,
+            "fold0LogitAdj": 2,
+            "fold0Continuous": 1.999,
+            "fold0Entropy": 0.0067,
+            "ensemble5FoldRaw": 2,
+            "ensemble5FoldLogitAdj": 2,
+            "ensemble5FoldContinuous": 1.999,
+            "ensemble5FoldEntropy": 0.0052,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 2,
+              "fold3": 2,
+              "fold4": 2
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0005
+          },
+          "jawline_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 2,
+            "fold0LogitAdj": 2,
+            "fold0Continuous": 2.0,
+            "fold0Entropy": 0.0053,
+            "ensemble5FoldRaw": 2,
+            "ensemble5FoldLogitAdj": 2,
+            "ensemble5FoldContinuous": 1.997,
+            "ensemble5FoldEntropy": 0.018,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 2,
+              "fold3": 2,
+              "fold4": 2
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0053
+          },
+          "submental_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 2,
+            "fold0LogitAdj": 2,
+            "fold0Continuous": 1.999,
+            "fold0Entropy": 0.0086,
+            "ensemble5FoldRaw": 2,
+            "ensemble5FoldLogitAdj": 2,
+            "ensemble5FoldContinuous": 1.997,
+            "ensemble5FoldEntropy": 0.0185,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 2,
+              "fold3": 2,
+              "fold4": 2
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0039
+          },
+          "neck_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": "NA",
+            "fold0LogitAdj": "NA",
+            "fold0Continuous": null,
+            "fold0Entropy": null,
+            "ensemble5FoldRaw": "NA",
+            "ensemble5FoldLogitAdj": "NA",
+            "ensemble5FoldContinuous": null,
+            "ensemble5FoldEntropy": null,
+            "perFoldVotes": {
+              "fold0": "NA",
+              "fold1": "NA",
+              "fold2": "NA",
+              "fold3": "NA",
+              "fold4": "NA"
+            },
+            "foldConsensus": "NA (<90% visible)",
+            "probL1Delta": 0.113
+          }
+        }
+      },
+      {
+        "image": "unseen_05_mature_male_67_frontal.jpg",
+        "cohort": "INDEPENDENT_PORTRAIT",
+        "captureProvenance": "REAL_UPLOADED_PHOTOGRAPH",
+        "singleFold0CpuMs": 139.6,
+        "ensemble5FoldCpuMs": 713.2,
+        "v6Composite0_4": 3.23,
+        "regions": {
+          "cheek_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 2,
+            "fold0LogitAdj": 2,
+            "fold0Continuous": 1.999,
+            "fold0Entropy": 0.0041,
+            "ensemble5FoldRaw": 2,
+            "ensemble5FoldLogitAdj": 2,
+            "ensemble5FoldContinuous": 1.999,
+            "ensemble5FoldEntropy": 0.0054,
+            "perFoldVotes": {
+              "fold0": 2,
+              "fold1": 2,
+              "fold2": 2,
+              "fold3": 2,
+              "fold4": 2
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0005
+          },
+          "jawline_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.011,
+            "fold0Entropy": 0.0432,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.02,
+            "ensemble5FoldEntropy": 0.0753,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.0207
+          },
+          "submental_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": 1,
+            "fold0LogitAdj": 1,
+            "fold0Continuous": 1.062,
+            "fold0Entropy": 0.1969,
+            "ensemble5FoldRaw": 1,
+            "ensemble5FoldLogitAdj": 1,
+            "ensemble5FoldContinuous": 1.015,
+            "ensemble5FoldEntropy": 0.0651,
+            "perFoldVotes": {
+              "fold0": 1,
+              "fold1": 1,
+              "fold2": 1,
+              "fold3": 1,
+              "fold4": 1
+            },
+            "foldConsensus": "5/5 folds (100.0%)",
+            "probL1Delta": 0.1053
+          },
+          "neck_sagging": {
+            "blindQaGrade": null,
+            "fold0Raw": "NA",
+            "fold0LogitAdj": "NA",
+            "fold0Continuous": null,
+            "fold0Entropy": null,
+            "ensemble5FoldRaw": "NA",
+            "ensemble5FoldLogitAdj": "NA",
+            "ensemble5FoldContinuous": null,
+            "ensemble5FoldEntropy": null,
+            "perFoldVotes": {
+              "fold0": "NA",
+              "fold1": "NA",
+              "fold2": "NA",
+              "fold3": "NA",
+              "fold4": "NA"
+            },
+            "foldConsensus": "NA (<90% visible)",
+            "probL1Delta": 0.7628
+          }
+        }
+      }
+    ]
+  }
+}

@@ -3146,3 +3146,52 @@ body.master-stage-open .intrarat-master-stage {
 }
 
 .p4-observatory-grid > *, .p6-functional-grid > *, .p6-galaxy-split > *, .p3-cinema-story-grid > * { min-width: 0 !important; max-width: 100% !important; }
+
+/* FULL VISIBILITY FOR ALL 9 MEDICAL TOOLS ON PAGE 06 (ZERO HORIZONTAL CLIPPING) */
+#page06-stage .p3-cinema-header-bar {
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 10px !important;
+}
+
+#page06-stage .p3-minimal-chapter-nav {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: visible !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+  padding: 2px 0 !important;
+}
+
+#page06-stage .p3-minimal-ch-btn {
+  width: 100% !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  padding: 7px 11px !important;
+  border-radius: 10px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+@media (max-width: 960px) {
+  #page06-stage .p3-minimal-chapter-nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  .master-page-ribbon {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    border-radius: 14px !important;
+    max-width: calc(100vw - 96px) !important;
+    row-gap: 3px !important;
+  }
+}
+
+@media (max-width: 560px) {
+  #page06-stage .p3-minimal-chapter-nav {
+    grid-template-columns: 1fr !important;
+  }
+}
+

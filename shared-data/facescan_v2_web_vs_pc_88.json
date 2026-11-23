@@ -1,0 +1,52 @@
+{
+ "local_next_start": {
+  "url": "http://127.0.0.1:3000/international/face-scan-v2",
+  "images_run": 88,
+  "phase_result": 88,
+  "same_grade_as_PC_pytorch_fp32": "350/352",
+  "max_abs_prob_diff_vs_PC": 0.052,
+  "first_model_load_ms": 1426,
+  "crop_ms_median": 126,
+  "inference_ms_median": 1408,
+  "inference_ms_p90": 1508,
+  "customer_sagging_row": [
+   "blocked"
+  ],
+  "post_requests": 0,
+  "page_errors": 0,
+  "unlisted_file_reaches_V2": false,
+  "pc_reference": "V2 fold0 PyTorch fp32 CPU",
+  "pc_ms_per_image_median": 144
+ },
+ "vercel_preview": {
+  "url": "https://intrarat-international-qq7p3fz04-nat-b285.vercel.app/international/face-scan-v2",
+  "images_run": 88,
+  "phase_result": 88,
+  "same_grade_as_PC_pytorch_fp32": "350/352",
+  "max_abs_prob_diff_vs_PC": 0.052,
+  "first_model_load_ms": 2441,
+  "crop_ms_median": 126,
+  "inference_ms_median": 1456,
+  "inference_ms_p90": 1584,
+  "customer_sagging_row": [
+   "blocked"
+  ],
+  "post_requests": 0,
+  "page_errors": 0,
+  "unlisted_file_reaches_V2": false,
+  "pc_reference": "V2 fold0 PyTorch fp32 CPU",
+  "pc_ms_per_image_median": 141
+ },
+ "about": "INTERNAL TEST ONLY. Facial Sagging AI V2 fold-0 (SYNTHETIC_EXPERIMENT_ONLY) int8 ONNX on the device (onnxruntime-web WASM, 1 thread) vs the same model in PyTorch fp32 on the owner PC (CPU), same 88 synthetic images, same region geometry. Browser: Playwright Chromium 390x844 on a cloud container CPU, not a phone. Numbers only; no images.",
+ "camera_check_vercel": {
+  "note": "camera photo of a synthetic face (fake camera)",
+  "internal_panel": 0,
+  "model_downloaded": false,
+  "post_requests": 0,
+  "customer_sagging_row": "blocked"
+ },
+ "onnx_vs_pytorch_container": {
+  "fp32": "352/352 same grade, max prob diff 0.0 (111.4 MB)",
+  "int8_MatMul_dynamic": "349/352 same grade, max prob diff 0.049 (33.9 MB)"
+ }
+}

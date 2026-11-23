@@ -1,0 +1,3158 @@
+{
+ "input": "regions",
+ "design": "5-fold cross-validation grouped by synthetic identity; every image is tested exactly once by a model that never saw that identity; fixed epochs (no checkpoint selection); class weights from the training fold only",
+ "n_images": 88,
+ "epochs": 25,
+ "minutes": 5.52,
+ "folds": [
+  {
+   "fold": 0,
+   "n_train": 70,
+   "n_test": 18,
+   "train_loss_first_last": [
+    1.3015,
+    0.0641
+   ],
+   "train_label_counts": {
+    "cheek_sagging": [
+     0,
+     15,
+     55,
+     0
+    ],
+    "jawline_sagging": [
+     0,
+     22,
+     39,
+     7
+    ],
+    "submental_sagging": [
+     2,
+     21,
+     39,
+     5
+    ],
+    "neck_sagging": [
+     0,
+     10,
+     42,
+     16
+    ]
+   }
+  },
+  {
+   "fold": 1,
+   "n_train": 70,
+   "n_test": 18,
+   "train_loss_first_last": [
+    1.3664,
+    0.0836
+   ],
+   "train_label_counts": {
+    "cheek_sagging": [
+     0,
+     16,
+     54,
+     0
+    ],
+    "jawline_sagging": [
+     1,
+     22,
+     37,
+     7
+    ],
+    "submental_sagging": [
+     3,
+     25,
+     32,
+     6
+    ],
+    "neck_sagging": [
+     1,
+     12,
+     39,
+     16
+    ]
+   }
+  },
+  {
+   "fold": 2,
+   "n_train": 71,
+   "n_test": 17,
+   "train_loss_first_last": [
+    1.2399,
+    0.0744
+   ],
+   "train_label_counts": {
+    "cheek_sagging": [
+     0,
+     15,
+     56,
+     0
+    ],
+    "jawline_sagging": [
+     1,
+     21,
+     39,
+     8
+    ],
+    "submental_sagging": [
+     2,
+     24,
+     35,
+     7
+    ],
+    "neck_sagging": [
+     1,
+     10,
+     44,
+     13
+    ]
+   }
+  },
+  {
+   "fold": 3,
+   "n_train": 71,
+   "n_test": 17,
+   "train_loss_first_last": [
+    1.371,
+    0.0901
+   ],
+   "train_label_counts": {
+    "cheek_sagging": [
+     0,
+     15,
+     56,
+     0
+    ],
+    "jawline_sagging": [
+     1,
+     19,
+     41,
+     8
+    ],
+    "submental_sagging": [
+     2,
+     22,
+     39,
+     6
+    ],
+    "neck_sagging": [
+     1,
+     11,
+     43,
+     14
+    ]
+   }
+  },
+  {
+   "fold": 4,
+   "n_train": 70,
+   "n_test": 18,
+   "train_loss_first_last": [
+    1.3264,
+    0.0512
+   ],
+   "train_label_counts": {
+    "cheek_sagging": [
+     0,
+     19,
+     51,
+     0
+    ],
+    "jawline_sagging": [
+     1,
+     24,
+     32,
+     10
+    ],
+    "submental_sagging": [
+     3,
+     24,
+     31,
+     8
+    ],
+    "neck_sagging": [
+     1,
+     13,
+     40,
+     13
+    ]
+   }
+  }
+ ],
+ "model": {
+  "cheek_sagging": {
+   "n": 88,
+   "acc": 0.784,
+   "within1": 1.0,
+   "mae": 0.216,
+   "qwk": 0.326,
+   "distinct_predicted_grades": [
+    1,
+    2
+   ],
+   "confusion_true_rows_pred_cols": [
+    [
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     8,
+     12,
+     0
+    ],
+    [
+     0,
+     7,
+     61,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "per_class": {
+    "0": {
+     "support": 0,
+     "predicted": 0,
+     "recall": null,
+     "precision": null
+    },
+    "1": {
+     "support": 20,
+     "predicted": 15,
+     "recall": 0.4,
+     "precision": 0.533
+    },
+    "2": {
+     "support": 68,
+     "predicted": 73,
+     "recall": 0.897,
+     "precision": 0.836
+    },
+    "3": {
+     "support": 0,
+     "predicted": 0,
+     "recall": null,
+     "precision": null
+    }
+   }
+  },
+  "jawline_sagging": {
+   "n": 85,
+   "acc": 0.659,
+   "within1": 1.0,
+   "mae": 0.341,
+   "qwk": 0.602,
+   "distinct_predicted_grades": [
+    1,
+    2,
+    3
+   ],
+   "confusion_true_rows_pred_cols": [
+    [
+     0,
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     18,
+     9,
+     0
+    ],
+    [
+     0,
+     10,
+     32,
+     5
+    ],
+    [
+     0,
+     0,
+     4,
+     6
+    ]
+   ],
+   "per_class": {
+    "0": {
+     "support": 1,
+     "predicted": 0,
+     "recall": 0.0,
+     "precision": null
+    },
+    "1": {
+     "support": 27,
+     "predicted": 29,
+     "recall": 0.667,
+     "precision": 0.621
+    },
+    "2": {
+     "support": 47,
+     "predicted": 45,
+     "recall": 0.681,
+     "precision": 0.711
+    },
+    "3": {
+     "support": 10,
+     "predicted": 11,
+     "recall": 0.6,
+     "precision": 0.545
+    }
+   }
+  },
+  "submental_sagging": {
+   "n": 84,
+   "acc": 0.798,
+   "within1": 0.988,
+   "mae": 0.214,
+   "qwk": 0.729,
+   "distinct_predicted_grades": [
+    1,
+    2,
+    3
+   ],
+   "confusion_true_rows_pred_cols": [
+    [
+     0,
+     2,
+     1,
+     0
+    ],
+    [
+     0,
+     25,
+     4,
+     0
+    ],
+    [
+     0,
+     6,
+     36,
+     2
+    ],
+    [
+     0,
+     0,
+     2,
+     6
+    ]
+   ],
+   "per_class": {
+    "0": {
+     "support": 3,
+     "predicted": 0,
+     "recall": 0.0,
+     "precision": null
+    },
+    "1": {
+     "support": 29,
+     "predicted": 33,
+     "recall": 0.862,
+     "precision": 0.758
+    },
+    "2": {
+     "support": 44,
+     "predicted": 43,
+     "recall": 0.818,
+     "precision": 0.837
+    },
+    "3": {
+     "support": 8,
+     "predicted": 8,
+     "recall": 0.75,
+     "precision": 0.75
+    }
+   }
+  },
+  "neck_sagging": {
+   "n": 85,
+   "acc": 0.788,
+   "within1": 0.988,
+   "mae": 0.224,
+   "qwk": 0.719,
+   "distinct_predicted_grades": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "confusion_true_rows_pred_cols": [
+    [
+     0,
+     1,
+     0,
+     0
+    ],
+    [
+     1,
+     8,
+     5,
+     0
+    ],
+    [
+     1,
+     3,
+     44,
+     4
+    ],
+    [
+     0,
+     0,
+     3,
+     15
+    ]
+   ],
+   "per_class": {
+    "0": {
+     "support": 1,
+     "predicted": 2,
+     "recall": 0.0,
+     "precision": 0.0
+    },
+    "1": {
+     "support": 14,
+     "predicted": 12,
+     "recall": 0.571,
+     "precision": 0.667
+    },
+    "2": {
+     "support": 52,
+     "predicted": 52,
+     "recall": 0.846,
+     "precision": 0.846
+    },
+    "3": {
+     "support": 18,
+     "predicted": 19,
+     "recall": 0.833,
+     "precision": 0.789
+    }
+   }
+  }
+ },
+ "majority_baseline": {
+  "cheek_sagging": {
+   "n": 88,
+   "acc": 0.773,
+   "within1": 1.0,
+   "mae": 0.227,
+   "qwk": 0.0,
+   "distinct_predicted_grades": [
+    2
+   ],
+   "confusion_true_rows_pred_cols": [
+    [
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     20,
+     0
+    ],
+    [
+     0,
+     0,
+     68,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "per_class": {
+    "0": {
+     "support": 0,
+     "predicted": 0,
+     "recall": null,
+     "precision": null
+    },
+    "1": {
+     "support": 20,
+     "predicted": 0,
+     "recall": 0.0,
+     "precision": null
+    },
+    "2": {
+     "support": 68,
+     "predicted": 88,
+     "recall": 1.0,
+     "precision": 0.773
+    },
+    "3": {
+     "support": 0,
+     "predicted": 0,
+     "recall": null,
+     "precision": null
+    }
+   }
+  },
+  "jawline_sagging": {
+   "n": 85,
+   "acc": 0.553,
+   "within1": 0.988,
+   "mae": 0.459,
+   "qwk": 0.0,
+   "distinct_predicted_grades": [
+    2
+   ],
+   "confusion_true_rows_pred_cols": [
+    [
+     0,
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     27,
+     0
+    ],
+    [
+     0,
+     0,
+     47,
+     0
+    ],
+    [
+     0,
+     0,
+     10,
+     0
+    ]
+   ],
+   "per_class": {
+    "0": {
+     "support": 1,
+     "predicted": 0,
+     "recall": 0.0,
+     "precision": null
+    },
+    "1": {
+     "support": 27,
+     "predicted": 0,
+     "recall": 0.0,
+     "precision": null
+    },
+    "2": {
+     "support": 47,
+     "predicted": 85,
+     "recall": 1.0,
+     "precision": 0.553
+    },
+    "3": {
+     "support": 10,
+     "predicted": 0,
+     "recall": 0.0,
+     "precision": null
+    }
+   }
+  },
+  "submental_sagging": {
+   "n": 84,
+   "acc": 0.524,
+   "within1": 0.964,
+   "mae": 0.512,
+   "qwk": 0.0,
+   "distinct_predicted_grades": [
+    2
+   ],
+   "confusion_true_rows_pred_cols": [
+    [
+     0,
+     0,
+     3,
+     0
+    ],
+    [
+     0,
+     0,
+     29,
+     0
+    ],
+    [
+     0,
+     0,
+     44,
+     0
+    ],
+    [
+     0,
+     0,
+     8,
+     0
+    ]
+   ],
+   "per_class": {
+    "0": {
+     "support": 3,
+     "predicted": 0,
+     "recall": 0.0,
+     "precision": null
+    },
+    "1": {
+     "support": 29,
+     "predicted": 0,
+     "recall": 0.0,
+     "precision": null
+    },
+    "2": {
+     "support": 44,
+     "predicted": 84,
+     "recall": 1.0,
+     "precision": 0.524
+    },
+    "3": {
+     "support": 8,
+     "predicted": 0,
+     "recall": 0.0,
+     "precision": null
+    }
+   }
+  },
+  "neck_sagging": {
+   "n": 85,
+   "acc": 0.612,
+   "within1": 0.988,
+   "mae": 0.4,
+   "qwk": 0.0,
+   "distinct_predicted_grades": [
+    2
+   ],
+   "confusion_true_rows_pred_cols": [
+    [
+     0,
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     14,
+     0
+    ],
+    [
+     0,
+     0,
+     52,
+     0
+    ],
+    [
+     0,
+     0,
+     18,
+     0
+    ]
+   ],
+   "per_class": {
+    "0": {
+     "support": 1,
+     "predicted": 0,
+     "recall": 0.0,
+     "precision": null
+    },
+    "1": {
+     "support": 14,
+     "predicted": 0,
+     "recall": 0.0,
+     "precision": null
+    },
+    "2": {
+     "support": 52,
+     "predicted": 85,
+     "recall": 1.0,
+     "precision": 0.612
+    },
+    "3": {
+     "support": 18,
+     "predicted": 0,
+     "recall": 0.0,
+     "precision": null
+    }
+   }
+  }
+ },
+ "oof_predictions": [
+  {
+   "image": "SYN-M002.jpg",
+   "true": [
+    2,
+    3,
+    3,
+    2
+   ],
+   "pred": [
+    2,
+    2,
+    3,
+    2
+   ],
+   "conf": [
+    1.0,
+    0.82,
+    0.58,
+    0.99
+   ],
+   "fold": 0,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M004.jpg",
+   "true": [
+    2,
+    2,
+    1,
+    2
+   ],
+   "pred": [
+    2,
+    2,
+    2,
+    3
+   ],
+   "conf": [
+    0.99,
+    1.0,
+    1.0,
+    0.99
+   ],
+   "fold": 0,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M011.jpg",
+   "true": [
+    2,
+    3,
+    3,
+    2
+   ],
+   "pred": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "conf": [
+    1.0,
+    0.59,
+    0.57,
+    1.0
+   ],
+   "fold": 0,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M016.jpg",
+   "true": [
+    1,
+    null,
+    null,
+    null
+   ],
+   "pred": [
+    2,
+    2,
+    3,
+    2
+   ],
+   "conf": [
+    0.99,
+    0.88,
+    0.54,
+    0.97
+   ],
+   "fold": 0,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M017.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "pred": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "conf": [
+    1.0,
+    0.88,
+    0.98,
+    1.0
+   ],
+   "fold": 0,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M020.jpg",
+   "true": [
+    2,
+    3,
+    3,
+    2
+   ],
+   "pred": [
+    2,
+    3,
+    3,
+    2
+   ],
+   "conf": [
+    1.0,
+    0.99,
+    0.99,
+    1.0
+   ],
+   "fold": 0,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M022.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    3
+   ],
+   "pred": [
+    2,
+    2,
+    2,
+    3
+   ],
+   "conf": [
+    1.0,
+    0.99,
+    1.0,
+    1.0
+   ],
+   "fold": 0,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M028.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    3
+   ],
+   "pred": [
+    2,
+    2,
+    2,
+    3
+   ],
+   "conf": [
+    1.0,
+    1.0,
+    0.99,
+    0.97
+   ],
+   "fold": 0,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M029.jpg",
+   "true": [
+    2,
+    2,
+    1,
+    2
+   ],
+   "pred": [
+    2,
+    2,
+    2,
+    3
+   ],
+   "conf": [
+    0.98,
+    0.99,
+    1.0,
+    0.84
+   ],
+   "fold": 0,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M048.jpg",
+   "true": [
+    1,
+    1,
+    1,
+    1
+   ],
+   "pred": [
+    1,
+    1,
+    1,
+    1
+   ],
+   "conf": [
+    0.98,
+    1.0,
+    0.97,
+    0.66
+   ],
+   "fold": 0,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M050.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    1
+   ],
+   "pred": [
+    1,
+    2,
+    2,
+    2
+   ],
+   "conf": [
+    0.67,
+    0.53,
+    1.0,
+    0.74
+   ],
+   "fold": 0,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M057.jpg",
+   "true": [
+    2,
+    1,
+    1,
+    2
+   ],
+   "pred": [
+    2,
+    1,
+    1,
+    2
+   ],
+   "conf": [
+    0.97,
+    1.0,
+    0.99,
+    1.0
+   ],
+   "fold": 0,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M058.jpg",
+   "true": [
+    1,
+    1,
+    1,
+    1
+   ],
+   "pred": [
+    2,
+    1,
+    1,
+    2
+   ],
+   "conf": [
+    0.99,
+    0.98,
+    0.71,
+    0.76
+   ],
+   "fold": 0,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M061.jpg",
+   "true": [
+    2,
+    2,
+    1,
+    2
+   ],
+   "pred": [
+    2,
+    1,
+    1,
+    2
+   ],
+   "conf": [
+    1.0,
+    0.99,
+    1.0,
+    0.99
+   ],
+   "fold": 0,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M069.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "pred": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "conf": [
+    1.0,
+    1.0,
+    0.98,
+    1.0
+   ],
+   "fold": 0,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M073.jpg",
+   "true": [
+    1,
+    0,
+    0,
+    0
+   ],
+   "pred": [
+    1,
+    1,
+    1,
+    1
+   ],
+   "conf": [
+    0.98,
+    1.0,
+    0.96,
+    0.91
+   ],
+   "fold": 0,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M086.jpg",
+   "true": [
+    1,
+    1,
+    1,
+    1
+   ],
+   "pred": [
+    1,
+    1,
+    1,
+    2
+   ],
+   "conf": [
+    0.92,
+    1.0,
+    0.93,
+    0.97
+   ],
+   "fold": 0,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M088.jpg",
+   "true": [
+    2,
+    1,
+    1,
+    2
+   ],
+   "pred": [
+    2,
+    1,
+    1,
+    2
+   ],
+   "conf": [
+    1.0,
+    0.97,
+    0.99,
+    0.99
+   ],
+   "fold": 0,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M001.jpg",
+   "true": [
+    2,
+    3,
+    3,
+    2
+   ],
+   "pred": [
+    2,
+    3,
+    3,
+    2
+   ],
+   "conf": [
+    1.0,
+    0.99,
+    0.92,
+    1.0
+   ],
+   "fold": 1,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M008.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "pred": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "conf": [
+    1.0,
+    0.95,
+    0.94,
+    0.99
+   ],
+   "fold": 1,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M012.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "pred": [
+    2,
+    3,
+    2,
+    2
+   ],
+   "conf": [
+    1.0,
+    0.79,
+    0.74,
+    1.0
+   ],
+   "fold": 1,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M014.jpg",
+   "true": [
+    2,
+    1,
+    1,
+    2
+   ],
+   "pred": [
+    2,
+    2,
+    1,
+    2
+   ],
+   "conf": [
+    0.98,
+    0.64,
+    0.97,
+    0.96
+   ],
+   "fold": 1,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M019.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    3
+   ],
+   "pred": [
+    2,
+    2,
+    2,
+    3
+   ],
+   "conf": [
+    1.0,
+    1.0,
+    0.99,
+    0.99
+   ],
+   "fold": 1,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M025.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "pred": [
+    2,
+    3,
+    3,
+    2
+   ],
+   "conf": [
+    1.0,
+    1.0,
+    0.97,
+    0.98
+   ],
+   "fold": 1,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M026.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "pred": [
+    2,
+    3,
+    2,
+    2
+   ],
+   "conf": [
+    1.0,
+    0.9,
+    0.87,
+    0.99
+   ],
+   "fold": 1,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M039.jpg",
+   "true": [
+    2,
+    3,
+    2,
+    2
+   ],
+   "pred": [
+    2,
+    3,
+    2,
+    2
+   ],
+   "conf": [
+    1.0,
+    0.82,
+    0.84,
+    0.99
+   ],
+   "fold": 1,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M046.jpg",
+   "true": [
+    2,
+    3,
+    3,
+    2
+   ],
+   "pred": [
+    2,
+    3,
+    3,
+    2
+   ],
+   "conf": [
+    1.0,
+    0.55,
+    0.93,
+    1.0
+   ],
+   "fold": 1,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M047.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "pred": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "conf": [
+    1.0,
+    1.0,
+    0.96,
+    0.98
+   ],
+   "fold": 1,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M049.jpg",
+   "true": [
+    1,
+    1,
+    1,
+    1
+   ],
+   "pred": [
+    2,
+    2,
+    1,
+    0
+   ],
+   "conf": [
+    1.0,
+    0.98,
+    0.99,
+    0.67
+   ],
+   "fold": 1,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M055.jpg",
+   "true": [
+    2,
+    1,
+    1,
+    2
+   ],
+   "pred": [
+    2,
+    2,
+    1,
+    2
+   ],
+   "conf": [
+    1.0,
+    0.97,
+    1.0,
+    0.85
+   ],
+   "fold": 1,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M060.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "pred": [
+    2,
+    2,
+    1,
+    2
+   ],
+   "conf": [
+    1.0,
+    0.97,
+    0.97,
+    0.91
+   ],
+   "fold": 1,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M071.jpg",
+   "true": [
+    1,
+    1,
+    1,
+    2
+   ],
+   "pred": [
+    2,
+    1,
+    1,
+    2
+   ],
+   "conf": [
+    1.0,
+    0.61,
+    1.0,
+    0.99
+   ],
+   "fold": 1,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M075.jpg",
+   "true": [
+    1,
+    1,
+    2,
+    1
+   ],
+   "pred": [
+    2,
+    2,
+    2,
+    1
+   ],
+   "conf": [
+    0.95,
+    0.75,
+    0.95,
+    1.0
+   ],
+   "fold": 1,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M076.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "pred": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "conf": [
+    1.0,
+    0.98,
+    1.0,
+    1.0
+   ],
+   "fold": 1,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M080.jpg",
+   "true": [
+    1,
+    2,
+    2,
+    null
+   ],
+   "pred": [
+    2,
+    2,
+    1,
+    1
+   ],
+   "conf": [
+    0.98,
+    0.95,
+    0.96,
+    0.99
+   ],
+   "fold": 1,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M081.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    3
+   ],
+   "pred": [
+    2,
+    2,
+    2,
+    3
+   ],
+   "conf": [
+    1.0,
+    1.0,
+    0.98,
+    1.0
+   ],
+   "fold": 1,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M005.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    3
+   ],
+   "pred": [
+    2,
+    2,
+    2,
+    3
+   ],
+   "conf": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "fold": 2,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M009.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    3
+   ],
+   "pred": [
+    2,
+    2,
+    2,
+    3
+   ],
+   "conf": [
+    1.0,
+    1.0,
+    0.99,
+    0.99
+   ],
+   "fold": 2,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M013.jpg",
+   "true": [
+    2,
+    null,
+    null,
+    2
+   ],
+   "pred": [
+    1,
+    3,
+    2,
+    2
+   ],
+   "conf": [
+    0.99,
+    0.55,
+    0.45,
+    1.0
+   ],
+   "fold": 2,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M018.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    3
+   ],
+   "pred": [
+    1,
+    1,
+    1,
+    3
+   ],
+   "conf": [
+    0.58,
+    0.98,
+    1.0,
+    0.84
+   ],
+   "fold": 2,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M021.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "pred": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "conf": [
+    1.0,
+    1.0,
+    0.99,
+    1.0
+   ],
+   "fold": 2,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M027.jpg",
+   "true": [
+    2,
+    3,
+    2,
+    2
+   ],
+   "pred": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "conf": [
+    1.0,
+    0.99,
+    0.99,
+    0.68
+   ],
+   "fold": 2,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M031.jpg",
+   "true": [
+    2,
+    3,
+    3,
+    2
+   ],
+   "pred": [
+    2,
+    3,
+    2,
+    2
+   ],
+   "conf": [
+    0.99,
+    0.57,
+    0.64,
+    0.99
+   ],
+   "fold": 2,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M032.jpg",
+   "true": [
+    1,
+    1,
+    0,
+    1
+   ],
+   "pred": [
+    1,
+    1,
+    2,
+    2
+   ],
+   "conf": [
+    0.54,
+    0.83,
+    0.57,
+    1.0
+   ],
+   "fold": 2,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M035.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    3
+   ],
+   "pred": [
+    2,
+    2,
+    2,
+    3
+   ],
+   "conf": [
+    1.0,
+    1.0,
+    0.99,
+    1.0
+   ],
+   "fold": 2,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M040.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "pred": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "conf": [
+    1.0,
+    0.99,
+    0.99,
+    0.98
+   ],
+   "fold": 2,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M044.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    3
+   ],
+   "pred": [
+    2,
+    2,
+    2,
+    3
+   ],
+   "conf": [
+    1.0,
+    1.0,
+    0.92,
+    0.99
+   ],
+   "fold": 2,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M053.jpg",
+   "true": [
+    2,
+    1,
+    1,
+    2
+   ],
+   "pred": [
+    2,
+    1,
+    1,
+    2
+   ],
+   "conf": [
+    1.0,
+    0.94,
+    0.99,
+    0.99
+   ],
+   "fold": 2,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M054.jpg",
+   "true": [
+    1,
+    1,
+    1,
+    1
+   ],
+   "pred": [
+    1,
+    1,
+    1,
+    1
+   ],
+   "conf": [
+    0.94,
+    1.0,
+    0.98,
+    0.82
+   ],
+   "fold": 2,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M056.jpg",
+   "true": [
+    1,
+    1,
+    1,
+    2
+   ],
+   "pred": [
+    2,
+    1,
+    1,
+    0
+   ],
+   "conf": [
+    1.0,
+    0.83,
+    1.0,
+    0.86
+   ],
+   "fold": 2,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M068.jpg",
+   "true": [
+    1,
+    1,
+    1,
+    1
+   ],
+   "pred": [
+    2,
+    1,
+    1,
+    2
+   ],
+   "conf": [
+    0.65,
+    0.99,
+    1.0,
+    0.91
+   ],
+   "fold": 2,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M082.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    1
+   ],
+   "pred": [
+    1,
+    1,
+    2,
+    1
+   ],
+   "conf": [
+    0.93,
+    0.79,
+    0.8,
+    0.98
+   ],
+   "fold": 2,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M084.jpg",
+   "true": [
+    1,
+    1,
+    1,
+    2
+   ],
+   "pred": [
+    1,
+    1,
+    1,
+    2
+   ],
+   "conf": [
+    0.63,
+    1.0,
+    1.0,
+    0.8
+   ],
+   "fold": 2,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M003.jpg",
+   "true": [
+    2,
+    3,
+    3,
+    2
+   ],
+   "pred": [
+    2,
+    3,
+    3,
+    2
+   ],
+   "conf": [
+    1.0,
+    0.97,
+    1.0,
+    0.98
+   ],
+   "fold": 3,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M007.jpg",
+   "true": [
+    1,
+    1,
+    1,
+    2
+   ],
+   "pred": [
+    1,
+    1,
+    1,
+    2
+   ],
+   "conf": [
+    0.76,
+    1.0,
+    0.99,
+    1.0
+   ],
+   "fold": 3,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M010.jpg",
+   "true": [
+    2,
+    1,
+    1,
+    3
+   ],
+   "pred": [
+    2,
+    2,
+    1,
+    3
+   ],
+   "conf": [
+    1.0,
+    0.99,
+    0.95,
+    0.85
+   ],
+   "fold": 3,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M024.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    3
+   ],
+   "pred": [
+    2,
+    2,
+    2,
+    3
+   ],
+   "conf": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "fold": 3,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M034.jpg",
+   "true": [
+    1,
+    1,
+    1,
+    2
+   ],
+   "pred": [
+    1,
+    2,
+    1,
+    3
+   ],
+   "conf": [
+    0.96,
+    0.82,
+    0.79,
+    0.49
+   ],
+   "fold": 3,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M036.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "pred": [
+    2,
+    3,
+    3,
+    2
+   ],
+   "conf": [
+    1.0,
+    0.96,
+    0.99,
+    0.99
+   ],
+   "fold": 3,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M037.jpg",
+   "true": [
+    2,
+    2,
+    null,
+    3
+   ],
+   "pred": [
+    2,
+    1,
+    2,
+    3
+   ],
+   "conf": [
+    1.0,
+    0.75,
+    0.89,
+    0.99
+   ],
+   "fold": 3,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M038.jpg",
+   "true": [
+    2,
+    3,
+    3,
+    2
+   ],
+   "pred": [
+    2,
+    2,
+    3,
+    2
+   ],
+   "conf": [
+    1.0,
+    0.84,
+    0.66,
+    1.0
+   ],
+   "fold": 3,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M045.jpg",
+   "true": [
+    2,
+    1,
+    1,
+    2
+   ],
+   "pred": [
+    2,
+    2,
+    1,
+    3
+   ],
+   "conf": [
+    1.0,
+    0.96,
+    0.88,
+    0.91
+   ],
+   "fold": 3,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M059.jpg",
+   "true": [
+    1,
+    2,
+    2,
+    1
+   ],
+   "pred": [
+    2,
+    2,
+    2,
+    1
+   ],
+   "conf": [
+    0.99,
+    0.99,
+    1.0,
+    1.0
+   ],
+   "fold": 3,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M062.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "pred": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "conf": [
+    0.99,
+    0.99,
+    0.93,
+    0.72
+   ],
+   "fold": 3,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M064.jpg",
+   "true": [
+    1,
+    null,
+    null,
+    null
+   ],
+   "pred": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "conf": [
+    0.86,
+    0.87,
+    0.98,
+    0.96
+   ],
+   "fold": 3,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M066.jpg",
+   "true": [
+    2,
+    1,
+    1,
+    2
+   ],
+   "pred": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "conf": [
+    0.77,
+    1.0,
+    0.81,
+    1.0
+   ],
+   "fold": 3,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M067.jpg",
+   "true": [
+    2,
+    1,
+    1,
+    2
+   ],
+   "pred": [
+    1,
+    1,
+    1,
+    1
+   ],
+   "conf": [
+    1.0,
+    1.0,
+    1.0,
+    0.99
+   ],
+   "fold": 3,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M072.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    3
+   ],
+   "pred": [
+    2,
+    2,
+    2,
+    3
+   ],
+   "conf": [
+    1.0,
+    0.99,
+    0.66,
+    1.0
+   ],
+   "fold": 3,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M074.jpg",
+   "true": [
+    2,
+    1,
+    1,
+    1
+   ],
+   "pred": [
+    1,
+    1,
+    1,
+    1
+   ],
+   "conf": [
+    0.98,
+    0.99,
+    0.94,
+    1.0
+   ],
+   "fold": 3,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M087.jpg",
+   "true": [
+    1,
+    1,
+    0,
+    1
+   ],
+   "pred": [
+    2,
+    1,
+    1,
+    1
+   ],
+   "conf": [
+    1.0,
+    1.0,
+    0.99,
+    1.0
+   ],
+   "fold": 3,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M006.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    3
+   ],
+   "pred": [
+    2,
+    2,
+    2,
+    3
+   ],
+   "conf": [
+    1.0,
+    0.99,
+    0.99,
+    0.89
+   ],
+   "fold": 4,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M015.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    3
+   ],
+   "pred": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "conf": [
+    1.0,
+    1.0,
+    0.74,
+    0.54
+   ],
+   "fold": 4,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M023.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    3
+   ],
+   "pred": [
+    2,
+    2,
+    1,
+    3
+   ],
+   "conf": [
+    1.0,
+    1.0,
+    0.59,
+    0.67
+   ],
+   "fold": 4,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M030.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    3
+   ],
+   "pred": [
+    2,
+    1,
+    1,
+    2
+   ],
+   "conf": [
+    1.0,
+    0.99,
+    0.9,
+    0.91
+   ],
+   "fold": 4,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M033.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    3
+   ],
+   "pred": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "conf": [
+    1.0,
+    0.99,
+    0.95,
+    0.64
+   ],
+   "fold": 4,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M041.jpg",
+   "true": [
+    1,
+    1,
+    1,
+    2
+   ],
+   "pred": [
+    2,
+    2,
+    1,
+    2
+   ],
+   "conf": [
+    1.0,
+    0.73,
+    1.0,
+    1.0
+   ],
+   "fold": 4,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M042.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "pred": [
+    2,
+    3,
+    2,
+    2
+   ],
+   "conf": [
+    1.0,
+    0.59,
+    0.98,
+    1.0
+   ],
+   "fold": 4,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M043.jpg",
+   "true": [
+    2,
+    1,
+    1,
+    2
+   ],
+   "pred": [
+    2,
+    1,
+    1,
+    2
+   ],
+   "conf": [
+    1.0,
+    0.95,
+    0.96,
+    1.0
+   ],
+   "fold": 4,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M051.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "pred": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "conf": [
+    1.0,
+    0.99,
+    0.97,
+    1.0
+   ],
+   "fold": 4,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M052.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "pred": [
+    2,
+    2,
+    2,
+    1
+   ],
+   "conf": [
+    1.0,
+    0.98,
+    1.0,
+    0.99
+   ],
+   "fold": 4,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M063.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "pred": [
+    2,
+    1,
+    2,
+    1
+   ],
+   "conf": [
+    0.89,
+    0.91,
+    0.93,
+    0.97
+   ],
+   "fold": 4,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M065.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    1
+   ],
+   "pred": [
+    1,
+    2,
+    2,
+    1
+   ],
+   "conf": [
+    1.0,
+    0.85,
+    0.86,
+    0.97
+   ],
+   "fold": 4,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M070.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "pred": [
+    2,
+    1,
+    2,
+    2
+   ],
+   "conf": [
+    1.0,
+    0.86,
+    0.74,
+    0.82
+   ],
+   "fold": 4,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M077.jpg",
+   "true": [
+    2,
+    2,
+    1,
+    2
+   ],
+   "pred": [
+    2,
+    1,
+    1,
+    2
+   ],
+   "conf": [
+    0.99,
+    1.0,
+    1.0,
+    0.71
+   ],
+   "fold": 4,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M078.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "pred": [
+    2,
+    1,
+    1,
+    2
+   ],
+   "conf": [
+    1.0,
+    0.76,
+    1.0,
+    0.98
+   ],
+   "fold": 4,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M079.jpg",
+   "true": [
+    2,
+    1,
+    1,
+    2
+   ],
+   "pred": [
+    2,
+    1,
+    1,
+    2
+   ],
+   "conf": [
+    0.96,
+    0.94,
+    1.0,
+    0.86
+   ],
+   "fold": 4,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M083.jpg",
+   "true": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "pred": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "conf": [
+    1.0,
+    1.0,
+    0.99,
+    0.99
+   ],
+   "fold": 4,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  {
+   "image": "SYN-M085.jpg",
+   "true": [
+    2,
+    2,
+    1,
+    2
+   ],
+   "pred": [
+    2,
+    1,
+    2,
+    2
+   ],
+   "conf": [
+    0.99,
+    0.76,
+    0.99,
+    0.98
+   ],
+   "fold": 4,
+   "baseline": [
+    2,
+    2,
+    2,
+    2
+   ]
+  }
+ ]
+}

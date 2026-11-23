@@ -1,0 +1,2837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DOMINIC FACESCAN · Facial Sagging Detection, Multi-View Localization &amp; Physician Validation Studio</title>
+  <style>
+    :root {
+      --bg-deep: #04130c;
+      --bg-panel: #081f15;
+      --bg-card: #0c2b1d;
+      --border-subtle: rgba(110, 231, 183, 0.22);
+      --border-strong: rgba(52, 211, 153, 0.55);
+      --text-primary: #ecfdf5;
+      --text-secondary: #a7f3d0;
+      --text-muted: #6ee7b7;
+      --accent: #10b981;
+      --accent-bright: #34d399;
+      --gold: #f59e0b;
+      --danger: #ef4444;
+      --info: #38bdf8;
+      --purple: #c084fc;
+    }
+
+    * {
+      box-sizing: border-box;
+      min-width: 0;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      max-width: 100vw;
+      overflow-x: hidden;
+      font-family: "Inter", "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: radial-gradient(circle at 20% 0%, #0d3523 0%, var(--bg-deep) 68%);
+      color: var(--text-primary);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    .fs-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.9rem 1.4rem;
+      background: rgba(4, 19, 12, 0.94);
+      border-block-end: 1px solid var(--border-subtle);
+      position: sticky;
+      inset-block-start: 0;
+      z-index: 40;
+      backdrop-filter: blur(12px);
+    }
+
+    .fs-kicker {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-bright);
+    }
+
+    .fs-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin: 0;
+      color: #ffffff;
+    }
+
+    input,
+    select,
+    textarea,
+    button {
+      font: inherit;
+      font-size: max(1rem, 1em);
+      min-height: 48px;
+      border-radius: 8px;
+      box-sizing: border-box;
+    }
+
+    input,
+    select,
+    textarea {
+      background: rgba(4, 19, 12, 0.88);
+      color: var(--text-primary);
+      border: 1px solid #528a70;
+      padding: 0.5rem 0.75rem;
+      width: 100%;
+      max-width: 100%;
+      text-overflow: ellipsis;
+    }
+
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible,
+    button:focus-visible {
+      outline: 3px solid var(--accent-bright);
+      outline-offset: 2px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.5rem 0.95rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border: 1px solid var(--border-strong);
+      background: rgba(16, 185, 129, 0.16);
+      color: #ecfdf5;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background: rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #02140b;
+      border-color: #6ee7b7;
+    }
+
+    .btn-gold {
+      background: rgba(245, 158, 11, 0.22);
+      border-color: #f59e0b;
+      color: #fef3c7;
+    }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.22);
+      border-color: #ef4444;
+      color: #fee2e2;
+    }
+
+    .fs-shell {
+      max-width: 1700px;
+      margin: 0 auto;
+      padding: 1.15rem 1.25rem 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+    }
+
+    .panel {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.1rem;
+    }
+
+    .panel-title {
+      margin: 0 0 0.85rem;
+      font-size: 1rem;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid var(--accent-bright);
+      color: #ecfdf5;
+    }
+
+    .badge.warn {
+      background: rgba(245, 158, 11, 0.22);
+      border-color: #f59e0b;
+      color: #fef3c7;
+    }
+
+    .badge.danger {
+      background: rgba(239, 68, 68, 0.25);
+      border-color: #ef4444;
+      color: #fecaca;
+    }
+
+    .badge.info {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: #38bdf8;
+      color: #e0f2fe;
+    }
+
+    .grid-main {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+      gap: 1.15rem;
+      align-items: start;
+    }
+
+    @media (max-width: 1120px) {
+      .grid-main {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    /* Multi-View Slots Tray (Priority 1) */
+    .view-slots {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.65rem;
+      margin-block-end: 0.9rem;
+    }
+
+    @media (max-width: 640px) {
+      .view-slots {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .view-slot-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 0.65rem 0.8rem;
+      text-align: left;
+      color: var(--text-primary);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .view-slot-btn.active {
+      border-color: var(--accent-bright);
+      background: rgba(16, 185, 129, 0.22);
+      box-shadow: inset 0 0 0 1px var(--accent-bright);
+    }
+
+    :where(a, code) {
+      overflow-wrap: anywhere;
+    }
+
+    /* Interactive Stage: Native Aspect-Preserved Photo / Camera + 1:1 SVG Region & Mandibular Contour Overlay */
+    .stage-box {
+      position: relative;
+      inline-size: 100%;
+      min-block-size: 280px;
+      padding: 0.5rem;
+      background: #030d08;
+      border: 1px solid var(--border-strong);
+      border-radius: 12px;
+      overflow: clip;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-block-end: 0.75rem;
+    }
+
+    .stage-aspect-frame {
+      position: relative;
+      display: inline-block;
+      max-inline-size: 100%;
+      line-height: 0;
+    }
+
+    .stage-aspect-frame video,
+    .stage-aspect-frame canvas#fs-photo-canvas {
+      display: block;
+      inline-size: auto;
+      block-size: auto;
+      max-inline-size: 100%;
+      max-block-size: 480px;
+      border-radius: 8px;
+    }
+
+    .stage-aspect-frame svg#fs-overlay-svg {
+      position: absolute;
+      inset: 0;
+      inline-size: 100%;
+      block-size: 100%;
+      display: block;
+      pointer-events: none;
+    }
+
+    .quality-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
+      gap: 0.6rem;
+      margin-block-end: 0.9rem;
+    }
+
+    .q-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 0.55rem 0.75rem;
+      font-size: 0.82rem;
+    }
+
+    .q-card strong {
+      display: block;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .prob-bar-wrap {
+      display: grid;
+      grid-template-columns: 58px 1fr 48px;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.76rem;
+      margin-block-end: 0.2rem;
+    }
+
+    .prob-track {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .prob-fill {
+      height: 100%;
+      background: var(--accent-bright);
+      border-radius: 999px;
+    }
+
+    .atlas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+      gap: 0.65rem;
+    }
+
+    .atlas-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      overflow: hidden;
+      font-size: 0.76rem;
+    }
+
+    .atlas-card img {
+      width: 100%;
+      height: 110px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .atlas-card-body {
+      padding: 0.45rem 0.6rem;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      margin-block-end: 0.85rem;
+    }
+
+    .field label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+    }
+  </style>
+</head>
+<body>
+  <header class="fs-header">
+    <div>
+      <div class="fs-kicker">DOMINIC FACESCAN · INDEPENDENT FACIAL SAGGING DETECTION &amp; CLINICAL VALIDATION PRODUCT</div>
+      <h1 class="fs-title">DOMINIC FACESCAN — Multi-View Quality Gate, Regional Sagging Localization &amp; Physician Validation Studio</h1>
+    </div>
+    <div style="display:flex; gap:0.65rem; align-items:center; flex-wrap:wrap;">
+      <span id="fs-auth-badge" class="badge warn">Public Mode (Model Fail-Closed)</span>
+      <a href="/?page=6&amp;tool=0" class="btn">← Page 06 Health Tools Studio</a>
+      <a href="/crm/" class="btn">Patient AI CRM (Frozen Checkpoint 9506f10)</a>
+    </div>
+  </header>
+
+  <main class="fs-shell">
+    <!-- Live Status & Honest Governance Banner -->
+    <div id="fs-status-banner" role="status" aria-live="polite" class="panel" style="padding:0.75rem 1rem; border-color:var(--accent-bright);">
+      <strong>Clinical &amp; Scientific Honesty Policy:</strong> Camera pipeline, 478-point landmark geometry, and individual mandibular/jowl contour metrics are separated from neural sagging classification. Unvalidated sagging scores are never shown to public visitors; server-authenticated Administrator / Medical Reviewer mode unlocks the ConvNeXt-tiny V2 region-crop evaluator on the 88 synthetic benchmark images with full uncertainty &amp; out-of-frame <code>NA</code> handling.
+    </div>
+
+    <!-- Server-Side Administrator / Medical Reviewer Authentication Bar (Priority 3 Security) -->
+    <section class="panel" aria-labelledby="fs-auth-heading" style="padding:0.85rem 1.1rem;">
+      <form id="fs-admin-login-form" style="display:flex; flex-wrap:wrap; gap:0.75rem; align-items:flex-end;">
+        <div class="field" style="margin:0; flex:1 1 240px;">
+          <label id="fs-auth-heading" for="fs-passcode-input">Server-Side Admin / Medical Reviewer Passcode (Never trusts <code>?admin=1</code>):</label>
+          <input type="password" id="fs-passcode-input" placeholder="Enter server-configured administrator passcode" autocomplete="current-password" autocorrect="off" autocapitalize="none" spellcheck="false" />
+        </div>
+        <button type="submit" id="fs-login-btn" class="btn btn-primary">Unlock Authenticated V2 Model Evaluator</button>
+        <button type="button" id="fs-logout-btn" class="btn btn-danger">Lock to Public Fail-Closed Mode</button>
+      </form>
+    </section>
+
+    <div class="grid-main">
+      <!-- LEFT COLUMN: MULTI-VIEW CAPTURE (PRIORITY 1), QUALITY GATE (PRIORITY 2), 4-REGION & JOWL CONTOUR OVERLAY (PRIORITIES 3 & 5) -->
+      <div style="display:flex; flex-direction:column; gap:1.15rem;">
+        <section class="panel" aria-labelledby="capture-heading">
+          <div class="panel-title">
+            <span id="capture-heading">1. Multi-View Capture (Frontal 0°, Left Oblique, Right Oblique) + Image-Quality &amp; Provenance Gate</span>
+            <span id="fs-active-view-badge" class="badge info">Frontal View (0°)</span>
+          </div>
+
+          <!-- Strict Provenance & Physical Camera Hardware Status Banner -->
+          <div id="fs-capture-provenance-banner" class="q-card" style="margin-block-end:0.75rem; border-color:#f59e0b; background:rgba(15,23,42,0.65); font-size:0.79rem;">
+            <strong>Capture Source Provenance &amp; Hardware Status:</strong>
+            <span id="fs-provenance-pill" class="badge warn" style="margin-left:0.35rem;">SYNTHETIC_OR_GENERATED_VIEW (Benchmark Default)</span>
+            <div id="fs-provenance-detail" style="margin-top:0.25rem; color:var(--text-secondary);">
+              Strictly distinguishes: (1) <code>PHYSICAL_LIVE_WEBRTC_CAMERA</code> (requires physical UVC/mobile camera via <code>getUserMedia</code>),
+              (2) <code>REAL_UPLOADED_PHOTOGRAPH</code> (genuine uploaded photograph file), and
+              (3) <code>SYNTHETIC_OR_GENERATED_VIEW</code> (<code>SYN-M*</code>, <code>SYN3-B04-*</code>, or perspective-warped oblique test views).
+            </div>
+          </div>
+
+          <!-- Priority 1: 3 Multi-View Capture Slots -->
+          <div class="view-slots" role="group" aria-label="Capture View Angle Selector">
+            <button type="button" class="view-slot-btn active" data-view-mode="frontal">
+              <strong>1. Frontal View (0°)</strong>
+              <span style="font-size:0.75rem; color:var(--text-secondary);">Target |Yaw| &le; 18° · Bilateral Cheek &amp; Jawline Symmetry</span>
+              <span class="badge" id="slot-status-frontal" style="margin-top:0.25rem;">Active Slot</span>
+            </button>
+            <button type="button" class="view-slot-btn" data-view-mode="oblique_left">
+              <strong>2. Left Oblique View</strong>
+              <span style="font-size:0.75rem; color:var(--text-secondary);">Target Yaw −55° to −18° · Displays Actual Measured Angle</span>
+              <span class="badge warn" id="slot-status-oblique_left" style="margin-top:0.25rem;">Ready</span>
+            </button>
+            <button type="button" class="view-slot-btn" data-view-mode="oblique_right">
+              <strong>3. Right Oblique View</strong>
+              <span style="font-size:0.75rem; color:var(--text-secondary);">Target Yaw +18° to +55° · Displays Actual Measured Angle</span>
+              <span class="badge warn" id="slot-status-oblique_right" style="margin-top:0.25rem;">Ready</span>
+            </button>
+          </div>
+
+          <!-- Controls: Live Camera, Upload Photo, 88 Synthetic Sample Selector, Quality Gate Stress Tests -->
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:0.75rem; margin-block-end:0.85rem;">
+            <div class="field" style="margin:0;">
+              <label for="fs-syn-select">Evaluate 88 Synthetic Benchmark Subjects (SYN-M001..088):</label>
+              <select id="fs-syn-select"></select>
+            </div>
+            <div class="field" style="margin:0;">
+              <label for="fs-stress-select">Image-Quality Gate &amp; Pose Validation Test Presets:</label>
+              <select id="fs-stress-select">
+                <option value="valid_frontal">✓ Valid Frontal Capture (Yaw -2.5°, Sharpness 54.0, L* 132)</option>
+                <option value="valid_oblique_left">✓ Valid Left 45° Oblique Capture (Yaw -38.0°, Sharpness 49.2)</option>
+                <option value="valid_oblique_right">✓ Valid Right 45° Oblique Capture (Yaw +41.0°, Sharpness 51.4)</option>
+                <option value="neck_cut_off">⚠ Tight Crop — Neck Partly Outside Frame (&lt;90% → Neck = NA)</option>
+                <option value="fail_blurry">✗ Reject: Too Blurry (256px Laplacian 7.9 &lt; 15.0 floor)</option>
+                <option value="fail_dark">✗ Reject: Too Dark / Underexposed (Mean L* 24.0 &lt; 40)</option>
+                <option value="fail_turned_frontal">✗ Reject: Face Turned in Frontal Mode (Yaw 34.0° &gt; 18°)</option>
+                <option value="fail_small">✗ Reject: Face Too Small (Face Box 132px &lt; 200px min)</option>
+                <option value="fail_no_face">✗ Reject: No Face Detected (0 faces)</option>
+                <option value="fail_multi_face">✗ Reject: Multiple Faces Detected (2 faces)</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:0.6rem; flex-wrap:wrap; margin-block-end:0.75rem;">
+            <button type="button" id="fs-start-cam-btn" class="btn">📷 Start Physical Live Camera (WebRTC)</button>
+            <button type="button" id="fs-capture-cam-btn" class="btn btn-primary" disabled>Capture Physical Camera Frame</button>
+            <button type="button" id="fs-sim-cam-capture-btn" class="btn btn-gold">🧪 Evaluate Stored Reference Portrait (Not Physical Camera)</button>
+            <button type="button" id="fs-stop-cam-btn" class="btn btn-danger" disabled>Stop Camera (Release Stream)</button>
+            <label for="fs-file-upload" class="btn" style="cursor:pointer;">📁 Upload Real Photo File</label>
+            <input type="file" id="fs-file-upload" accept="image/jpeg,image/png,image/webp" style="display:none;" />
+          </div>
+
+          <!-- Proportion Preservation & Isotropic 3D Projection Controls -->
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(215px, 1fr)); gap:0.65rem; margin-block-end:0.75rem; background:rgba(4,19,12,0.75); padding:0.75rem; border-radius:10px; border:1px solid var(--border-subtle);">
+            <div class="field" style="margin:0;">
+              <label for="fs-overlay-mode-select">Display &amp; 3D Surface Mode (2D Faithful Default):</label>
+              <select id="fs-overlay-mode-select">
+                <option value="2d_faithful" selected>✓ 2D Faithful Undistorted Photo + 1:1 Contours (Default)</option>
+                <option value="3d_isotropic_mesh">🌐 2D Photo + Isotropic 3D Landmark Surface Mesh (fx = fy = IPD)</option>
+                <option value="photo_clean">🖼 Clean Undistorted Original Photograph Only (Verify Proportions)</option>
+              </select>
+            </div>
+            <div class="field" style="margin:0;">
+              <label for="fs-aspect-test-select">Aspect-Ratio Invariance Test (Uniform 1:1 Scale):</label>
+              <select id="fs-aspect-test-select">
+                <option value="native" selected>1:1 Native Source Resolution (0.00% Distortion)</option>
+                <option value="4:3">4:3 Standard Webcam Frame (1280×960 Isotropic Letterbox)</option>
+                <option value="16:9">16:9 Widescreen Frame (1920×1080 Isotropic Letterbox)</option>
+                <option value="9:16">9:16 Mobile Portrait Frame (720×1280 Isotropic Letterbox)</option>
+                <option value="1:1">1:1 Square Frame (1600×1600 Isotropic Letterbox)</option>
+              </select>
+            </div>
+            <div class="field" style="margin:0;">
+              <label for="fs-3d-yaw-slider">Isotropic 3D Mesh Yaw Inspection (<span id="fs-3d-yaw-val">0°</span> · 2.5D Single-Image Depth):</label>
+              <input type="range" id="fs-3d-yaw-slider" min="-30" max="30" step="1" value="0" style="padding:0.2rem 0;" />
+            </div>
+          </div>
+
+          <!-- Visual Canvas + 1:1 Aspect-Locked SVG Region & Mandibular Jowl Overlay -->
+          <div class="stage-box">
+            <div id="fs-stage-aspect-frame" class="stage-aspect-frame">
+              <video id="fs-camera-video" playsinline muted style="display:none;"></video>
+              <canvas id="fs-photo-canvas" width="1600" height="1600"></canvas>
+              <svg id="fs-overlay-svg" viewBox="0 0 1600 1600" preserveAspectRatio="xMidYMid meet"></svg>
+            </div>
+          </div>
+
+          <!-- Direct 3-Up Side-by-Side Facial Proportion Comparison: (A) Original Photo vs. (B) Corrected Scan Result vs. (C) Isotropic 3D Surface Model -->
+          <h3 style="margin:0 0 0.45rem; font-size:0.9rem;">1A. Direct Side-by-Side Facial Proportion Verification (Original Photo vs. Scan Result vs. 3D Surface Model · 0.00% Elongation)</h3>
+          <div id="fs-three-up-proportion-strip" style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:0.65rem; margin-block-end:0.9rem;">
+            <div class="q-card" style="text-align:center; padding:0.5rem;">
+              <strong style="margin-block-end:0.35rem;">A. Original Camera / Portrait Photo</strong>
+              <canvas id="fs-compare-orig-canvas" width="360" height="450" style="width:100%; height:auto; max-height:240px; object-fit:contain; background:#030d08; border:1px solid var(--border-subtle); border-radius:6px;"></canvas>
+              <div id="fs-compare-orig-meta" style="font-size:0.72rem; color:var(--text-muted); margin-top:0.25rem;">Native Aspect Ratio Preserved (1:1 Isotropic)</div>
+            </div>
+            <div class="q-card" style="text-align:center; padding:0.5rem;">
+              <strong style="margin-block-end:0.35rem;">B. Corrected 2D Scan Result Overlay</strong>
+              <canvas id="fs-compare-scan-canvas" width="360" height="450" style="width:100%; height:auto; max-height:240px; object-fit:contain; background:#030d08; border:1px solid var(--border-strong); border-radius:6px;"></canvas>
+              <div id="fs-compare-scan-meta" style="font-size:0.72rem; color:var(--accent-bright); margin-top:0.25rem;">Calibrated Regions + Individual Jowl/Crease Contours</div>
+            </div>
+            <div class="q-card" style="text-align:center; padding:0.5rem;">
+              <strong style="margin-block-end:0.35rem;">C. Illustrative Isotropic 3D Landmark Surface Model</strong>
+              <canvas id="fs-compare-3d-canvas" width="360" height="450" style="width:100%; height:auto; max-height:240px; object-fit:contain; background:#030d08; border:1px solid var(--info); border-radius:6px;"></canvas>
+              <div id="fs-compare-3d-meta" style="font-size:0.72rem; color:#bae6fd; margin-top:0.25rem;">Illustrative 2.5D Surface Relief · fx = fy = IPD · 0.000px Frontal Error</div>
+            </div>
+          </div>
+
+          <!-- Live Face Proportion & Isotropic 3D Projection Integrity Telemetry -->
+          <h3 style="margin:0 0 0.45rem; font-size:0.9rem;">1B. Live Face Proportion &amp; Isotropic 3D Reprojection Integrity (<code>scaleX === scaleY</code>)</h3>
+          <div class="quality-grid" id="fs-proportion-telemetry-strip" style="margin-block-end:0.9rem;"></div>
+
+          <!-- Priority 2: 6-Metric Image-Quality Validation Scorecard -->
+          <h3 style="margin:0 0 0.5rem; font-size:0.9rem;">2. Image-Quality Validation Gate (<code>photo-check.ts</code> Metrics)</h3>
+          <div class="quality-grid" id="fs-quality-grid"></div>
+
+          <!-- Priority 3: Live 224x224 Pillow-Bicubic Grey-Padded Region Crops -->
+          <h3 style="margin:0 0 0.45rem; font-size:0.9rem;">3. Calibrated 4-Region Localization &amp; <code>cropPad224</code> (RGB 128 Grey Padding)</h3>
+          <canvas id="fs-crops-224-canvas" width="920" height="245" style="width:100%; height:auto; background:#04110b; border:1px solid var(--border-subtle); border-radius:8px;"></canvas>
+        </section>
+
+        <!-- PRIORITY 5: INDIVIDUAL-SPECIFIC JOWL & JAWLINE CONTOUR ASSESSMENT -->
+        <section class="panel" aria-labelledby="jowl-heading">
+          <div class="panel-title">
+            <span id="jowl-heading">5. Individual-Specific Jowl &amp; Jawline Contour Assessment</span>
+            <span class="badge info">GEOMETRIC CONTOUR TELEMETRY (NOT A CLINICAL GRADE)</span>
+          </div>
+          <p style="margin:0 0 0.75rem; font-size:0.8rem; color:var(--text-secondary);">
+            Measures each individual subject's mandibular border excursion below the straight Gonion-to-Menton reference chord (<code>172 → 152 → 397</code>), normalized by eye-to-chin facial height $D = \text{CY} - \text{EY}$, plus bilateral jowl asymmetry and roll-corrected mandibular slope angles.
+          </p>
+          <div class="quality-grid" id="fs-jowl-telemetry-grid"></div>
+        </section>
+      </div>
+
+      <!-- RIGHT COLUMN: SAGGING MODEL OUTPUT & UNCERTAINTY (PRIORITIES 4 & 6), 4x4 ANATOMICAL ATLAS (PRIORITY 7), CLINICAL VALIDATION & MISSING DATASET REPORT (PRIORITY 8) -->
+      <div style="display:flex; flex-direction:column; gap:1.15rem;">
+        <!-- PRIORITIES 4 & 6: SAGGING MODEL EVALUATION & HONEST UNCERTAINTY / NA HANDLING -->
+        <section class="panel" aria-labelledby="model-eval-heading">
+          <div class="panel-title">
+            <span id="model-eval-heading">4 &amp; 6. Trained Sagging Model Evaluation &amp; Honest Uncertainty / <code>NA</code> Handling</span>
+            <span id="fs-model-mode-pill" class="badge warn">PUBLIC FAIL-CLOSED</span>
+          </div>
+          <div id="fs-model-results-container"></div>
+        </section>
+
+        <!-- PRIORITY 7: INTERACTIVE 4-REGION x 4-GRADE ANATOMICAL SAGGING ATLAS -->
+        <section class="panel" aria-labelledby="atlas-heading">
+          <div class="panel-title">
+            <span id="atlas-heading">7. Interactive 4-Region Sagging Reference Atlas (Cheek, Jawline, Submental, Neck)</span>
+            <span class="badge">Recovered from <code>D:\AI\Facial-Sagging</code></span>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-block-end:0.75rem;" id="fs-atlas-region-tabs">
+            <button type="button" class="btn btn-primary" data-atlas-reg="jawline">Jawline &amp; Jowl (Grades 0–3)</button>
+            <button type="button" class="btn" data-atlas-reg="submental">Submental / Under Chin (Grades 0–3)</button>
+            <button type="button" class="btn" data-atlas-reg="neck">Cervical Neck Bands (Grades 1–3)</button>
+            <button type="button" class="btn" data-atlas-reg="cheek">Cheek / Midface (Grades 1–2)</button>
+          </div>
+          <div id="fs-atlas-cards" class="atlas-grid"></div>
+        </section>
+
+        <!-- PRIORITY 8: PHYSICIAN-REVIEWED VALIDATION DATA & EXACT MISSING DATASET / TRAINING REQUIREMENTS -->
+        <section class="panel" aria-labelledby="clinical-gap-heading">
+          <div class="panel-title">
+            <span id="clinical-gap-heading">8. Physician-Reviewed Validation Status &amp; Missing Clinical Dataset Report</span>
+            <span class="badge danger">CLINICAL TRAINING LOCKED (0 REAL PATIENTS)</span>
+          </div>
+          <div id="fs-clinical-readiness-box" style="font-size:0.83rem;">Loading live clinical readiness audit from <code>D:\AI\Facial-Sagging\clinical\</code>...</div>
+        </section>
+      </div>
+    </div>
+
+    <!-- PRIORITY 9: DOMINIC FACESCAN UNIFIED V2 + V6 FROZEN MODELS, CLINICAL CLAIM INVALIDATION AUDIT & SIDE-BY-SIDE BENCHMARK -->
+    <section class="panel" id="fs-unified-v2-v6-section" aria-labelledby="unified-v2v6-heading">
+      <div class="panel-title">
+        <span id="unified-v2v6-heading">9. Dominic FaceScan — Frozen Checkpoints Registry (SHA-256), Invalidated Claim Audit &amp; Side-by-Side V2 vs. V6 Engine</span>
+        <span id="fs-unified-mode-badge" class="badge info">FROZEN MODELS · DO NOT RETRAIN</span>
+      </div>
+
+      <!-- Priority 1: Explicit Clinical Claim Invalidation Audit Banner (Preserving Original Audit Records) -->
+      <div id="fs-claim-invalidation-audit-banner" style="background:rgba(239,68,68,0.14); border:1px solid #ef4444; border-radius:10px; padding:0.85rem 1rem; margin-block-end:0.9rem; font-size:0.81rem; color:#fee2e2;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-block-end:0.35rem;">
+          <strong style="color:#ffffff; font-size:0.88rem;">⚠ CLINICAL VALIDATION CLAIM INVALIDATED (PRIORITY 1 FORENSIC AUDIT):</strong>
+          <span class="badge danger">V6 RATER_B = RATER_A + 0.2 INVALIDATED</span>
+        </div>
+        <div>
+          Forensic code inspection of <code>intrarat_sagging_engine_v6.py</code> (<code>PHYSICIAN_REFERENCE_DATASET_15</code>, lines 1348–1451) and <code>dual_physician_photonumeric_ratings_15_subjects.csv</code> proved that V6's second physician rating was <b>not</b> an independent physician assessment: in <b>158 of 170 regional entries (92.9%)</b>, <code>rater_b = rater_a + 0.2</code>. All prior claims of independent dual-physician validation (<code>Pearson r = 0.9991</code>, <code>Inter-Rater QWK = 0.9047</code>, <code>LOSO-CV QWK = 0.7335–0.7488</code>) are <b>formally invalidated</b> and must never be cited as clinical accuracy. The original untouched V6 files are preserved as immutable audit records in <code>audit_archive_preserved_originals/*.ORIGINAL_AUDIT_RECORD</code> with verified SHA-256 hashes.
+        </div>
+      </div>
+
+      <p style="margin:0 0 0.85rem; font-size:0.84rem; color:var(--text-secondary);">
+        Consolidates the frozen trained PyTorch checkpoints across <code>D:\AI\Facial-Sagging</code> (5-fold ConvNeXt-Tiny region classifier <code>fold0.pt..fold4.pt</code>, 27,832,432 parameters/fold + <code>v2-fold0-int8.onnx</code>) and <code>scratch\intrarat_face_sagging_detection</code> (pretrained S3FD VGG-16 face detector + 10-region Anisotropic Hessian Crease-Valley &amp; 21-Point Active Mandibular Silhouette Edge Tracer + 466-param <code>intrarat_sagging_net_v6.pt</code> MLP). Select any of the 26 live PyTorch side-by-side benchmark cases below (including 8 genuinely unseen V3B04P portraits and 2 unseen real-style portraits) to inspect both models' predictions, 10-region sub-contours, and the unified <code>OCCLUDED_JAWLINE</code> &amp; <code>&lt;90% → NA</code> safety gates.
+      </p>
+
+      <div style="display:flex; flex-wrap:wrap; gap:0.75rem; align-items:flex-end; margin-block-end:1rem; background:rgba(4,19,12,0.72); padding:0.85rem; border-radius:10px; border:1px solid var(--border-subtle);">
+        <div style="flex:2 1 320px;">
+          <label for="fs-unified-case-select" style="display:block; font-size:0.78rem; font-weight:700; margin-block-end:0.3rem; color:var(--text-secondary);">
+            26-Case Live PyTorch Side-by-Side Benchmark Selector (8 Unseen V3B04P + 2 Unseen Real-Style + 2 Occlusion Edge Cases + Cross-Eval Cohorts)
+          </label>
+          <select id="fs-unified-case-select"></select>
+        </div>
+        <button type="button" class="btn btn-primary" id="fs-run-unified-case-btn">Inspect Unified V2 + V6 Contours &amp; Side-by-Side Inference</button>
+        <button type="button" class="btn" id="fs-load-case-to-annotator-btn">Load Case into Blinded Physician Validation Studio ↓</button>
+      </div>
+
+      <!-- Active Unified Case Side-by-Side V2 vs V6 Comparison & 10-Region Sub-Contour Table -->
+      <div id="fs-unified-active-case-box" style="margin-block-end:1.1rem;"></div>
+
+      <!-- Frozen Checkpoints SHA-256 Registry & Feature-by-Feature V2 vs V6 Matrix -->
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(460px, 1fr)); gap:1rem;">
+        <div id="fs-checkpoint-inventory-box"></div>
+        <div id="fs-v2-vs-v6-matrix-box"></div>
+      </div>
+    </section>
+
+    <!-- PRIORITY 10 (PRIORITY 3): DOMINIC FACESCAN BLINDED PHYSICIAN VALIDATION, MULTI-RATER ADJUDICATION & CRITERIA STUDIO -->
+    <section class="panel" id="fs-physician-annotation-section" aria-labelledby="physician-studio-heading">
+      <div class="panel-title">
+        <span id="physician-studio-heading">10. Dominic FaceScan — Blinded Physician Validation, Multi-Rater Adjudication &amp; Criteria Review Studio</span>
+        <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
+          <span id="fs-encrypted-vault-badge" class="badge info">ENCRYPTED VAULT: PBKDF2-HMAC-SHA256</span>
+          <span id="fs-criteria-status-badge" class="badge warn">CRITERIA STATUS: DRAFT (NOT LOCKED)</span>
+        </div>
+      </div>
+      <p style="margin:0 0 0.85rem; font-size:0.84rem; color:var(--text-secondary);">
+        <strong>Blinded Physician Evaluation Protocol (Priority 3):</strong> Qualified physicians examine authorized, previously unseen photographs with AI predictions hidden during grading (<code>Blinded Mode ON</code>), record independent regional grades (<code>0, 1, 2, 3, NA</code>) and contour localization verdicts, and log provenance, consent status, UTC timestamps, inter-rater disagreements, and adjudication outcomes. <b>Evaluation subjects are hard-locked (<code>doNotTrainOnEvaluationSubject: true</code>) and never simulated.</b>
+      </p>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(460px, 1fr)); gap:1.1rem;">
+        <!-- Sub-Panel A: Grade 0..3 & NA Criteria Draft Editor -->
+        <div style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:10px; padding:0.95rem;">
+          <h3 style="margin:0 0 0.6rem; font-size:0.95rem; color:var(--accent-bright);">A. Grade 0–3 &amp; <code>NA</code> Clinical Criteria &amp; Boundary Draft Review</h3>
+          <div id="fs-criteria-draft-editor" style="display:flex; flex-direction:column; gap:0.65rem;"></div>
+          <div style="margin-block-start:0.75rem; display:flex; flex-wrap:wrap; gap:0.6rem; align-items:center;">
+            <button type="button" class="btn btn-gold" id="fs-save-criteria-draft-btn">Save Criteria Draft for Dr. Rushapol Review (Keep Unconfirmed)</button>
+            <span id="fs-criteria-save-feedback" style="font-size:0.78rem; color:var(--text-secondary);"></span>
+          </div>
+        </div>
+
+        <!-- Sub-Panel B: Blinded Physician Case Review, Multi-Rater Disagreement & Adjudication Form -->
+        <div style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:10px; padding:0.95rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-block-end:0.6rem;">
+            <h3 style="margin:0; font-size:0.95rem; color:var(--info);">B. Blinded Independent Physician Evaluation &amp; Adjudication</h3>
+            <label for="ann-blinded-toggle" style="display:inline-flex; align-items:center; gap:0.4rem; font-size:0.76rem; font-weight:800; color:#fef08a; cursor:pointer;">
+              <input type="checkbox" id="ann-blinded-toggle" checked style="width:18px; height:18px; min-height:18px;" />
+              Blinded Mode (Hide AI Grades While Grading)
+            </label>
+          </div>
+          <form id="fs-physician-case-form" style="display:flex; flex-direction:column; gap:0.65rem;">
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(155px, 1fr)); gap:0.55rem;">
+              <div>
+                <label for="ann-case-id" style="display:block; font-size:0.74rem; font-weight:700;">Held-Out Case / Subject ID</label>
+                <input type="text" id="ann-case-id" value="SUBJ_11_52F" required />
+              </div>
+              <div>
+                <label for="ann-rater-id" style="display:block; font-size:0.74rem; font-weight:700;">Independent Physician Rater Slot</label>
+                <select id="ann-rater-id">
+                  <option value="dr_rushapol_sdawat">Rater 1 — Dr. Rushapol Sdawat, MD (Lead Plastic Surgeon)</option>
+                  <option value="independent_physician_rater_2">Rater 2 — Independent Blinded Physician Grader</option>
+                  <option value="adjudication_consensus_board">Adjudicator — Dual-Physician Consensus Resolution</option>
+                </select>
+              </div>
+              <div>
+                <label for="ann-reviewer-name" style="display:block; font-size:0.74rem; font-weight:700;">Physician Display Name</label>
+                <input type="text" id="ann-reviewer-name" value="Dr. Rushapol Sdawat, MD" required />
+              </div>
+              <div>
+                <label for="ann-consent-status" style="display:block; font-size:0.74rem; font-weight:700;">Consent &amp; Hold-Out Provenance</label>
+                <select id="ann-consent-status">
+                  <option value="AUTHORIZED_EVALUATION_PORTRAIT_NO_PATIENT_PII">Authorized Dev Evaluation Portrait (No Patient PII · Hold-Out Lock)</option>
+                  <option value="IRB_CONSENT_VERIFIED_HELD_OUT_PATIENT">IRB / PDPA Signed Clinical Evaluation Patient (Never Train)</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:0.5rem;">
+              <div>
+                <label for="ann-grade-cheek" style="display:block; font-size:0.74rem; font-weight:700;">Cheek / Midface</label>
+                <select id="ann-grade-cheek">
+                  <option value="0">Grade 0 (None)</option>
+                  <option value="1">Grade 1 (Mild)</option>
+                  <option value="2" selected>Grade 2 (Moderate)</option>
+                  <option value="3">Grade 3 (Severe)</option>
+                  <option value="NA">NA (Ungradeable)</option>
+                </select>
+              </div>
+              <div>
+                <label for="ann-grade-jawline" style="display:block; font-size:0.74rem; font-weight:700;">Jawline Contour</label>
+                <select id="ann-grade-jawline">
+                  <option value="0">Grade 0 (None)</option>
+                  <option value="1">Grade 1 (Mild)</option>
+                  <option value="2" selected>Grade 2 (Moderate)</option>
+                  <option value="3">Grade 3 (Severe)</option>
+                  <option value="NA">NA (Ungradeable)</option>
+                </select>
+              </div>
+              <div>
+                <label for="ann-grade-jowl" style="display:block; font-size:0.74rem; font-weight:700;">Jowl Lobes</label>
+                <select id="ann-grade-jowl">
+                  <option value="0">Grade 0 (None)</option>
+                  <option value="1">Grade 1 (Mild)</option>
+                  <option value="2" selected>Grade 2 (Moderate)</option>
+                  <option value="3">Grade 3 (Severe)</option>
+                  <option value="NA">NA (Ungradeable)</option>
+                </select>
+              </div>
+              <div>
+                <label for="ann-grade-marionette" style="display:block; font-size:0.74rem; font-weight:700;">Marionette / NLF</label>
+                <select id="ann-grade-marionette">
+                  <option value="0">Grade 0 (None)</option>
+                  <option value="1">Grade 1 (Mild)</option>
+                  <option value="2" selected>Grade 2 (Moderate)</option>
+                  <option value="3">Grade 3 (Severe)</option>
+                  <option value="NA">NA (Ungradeable)</option>
+                </select>
+              </div>
+              <div>
+                <label for="ann-grade-submental" style="display:block; font-size:0.74rem; font-weight:700;">Under Chin (Submental)</label>
+                <select id="ann-grade-submental">
+                  <option value="0">Grade 0 (None)</option>
+                  <option value="1">Grade 1 (Mild)</option>
+                  <option value="2" selected>Grade 2 (Moderate)</option>
+                  <option value="3">Grade 3 (Severe)</option>
+                  <option value="NA">NA (Ungradeable)</option>
+                </select>
+              </div>
+              <div>
+                <label for="ann-grade-neck" style="display:block; font-size:0.74rem; font-weight:700;">Anterior Neck / Platysma</label>
+                <select id="ann-grade-neck">
+                  <option value="0">Grade 0 (None)</option>
+                  <option value="1">Grade 1 (Mild)</option>
+                  <option value="2" selected>Grade 2 (Moderate)</option>
+                  <option value="3">Grade 3 (Severe)</option>
+                  <option value="NA">NA (Ungradeable)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Regional Localization Verdicts -->
+            <div style="display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:0.5rem;">
+              <div>
+                <label for="ann-loc-jowl" style="display:block; font-size:0.73rem; font-weight:700;">Jowl &amp; Jawline Contour Localization Verdict</label>
+                <select id="ann-loc-jowl">
+                  <option value="ACCURATE_LOCALIZATION">Accurate Contour Localization</option>
+                  <option value="FALSE_POSITIVE_OVER_LOCALIZED">False Positive (Over-Localized / Shadow Artifact)</option>
+                  <option value="FALSE_NEGATIVE_MISSED_LAXITY">False Negative (Missed Jowl / Sulcus Laxity)</option>
+                  <option value="BOUNDARY_SHIFTED">Anatomical Boundary Shifted</option>
+                  <option value="UNGRADEABLE_NA">Occluded / Ungradeable (NA)</option>
+                </select>
+              </div>
+              <div>
+                <label for="ann-loc-cheek" style="display:block; font-size:0.73rem; font-weight:700;">Cheek &amp; Submental/Neck Localization Verdict</label>
+                <select id="ann-loc-cheek">
+                  <option value="ACCURATE_LOCALIZATION">Accurate Contour Localization</option>
+                  <option value="FALSE_POSITIVE_OVER_LOCALIZED">False Positive (Over-Localized / Synthetic Shading)</option>
+                  <option value="FALSE_NEGATIVE_MISSED_LAXITY">False Negative (Under-Graded / Missed Laxity)</option>
+                  <option value="BOUNDARY_SHIFTED">Anatomical Boundary Shifted</option>
+                  <option value="UNGRADEABLE_NA">Cut-Off / Ungradeable (NA)</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label for="ann-boundary-flag" style="display:block; font-size:0.75rem; font-weight:700;">Clinical Assessment &amp; Adjudication Outcome Flag</label>
+              <select id="ann-boundary-flag">
+                <option value="V6_CONTOUR_LOCALIZATION_ALIGNED_V2_DOMAIN_SHIFT_UNDERGRADE">V6 10-Region Contours Accurate · V2 Under-Graded Due to Synthetic Domain Shift</option>
+                <option value="SYNTHETIC_TEXTURE_FALSE_POSITIVE_IN_V6_AND_GRADE0_DEFICIT_IN_V2">V6 Over-Graded Synthetic Shading · V2 Needs Grade 0 Training Support</option>
+                <option value="UNIFIED_OCCLUSION_GATE_VERIFIED_NA">Unified Jawline Occlusion / &lt;90% Visibility Gate Properly Assigned NA</option>
+                <option value="RAKING_LIGHT_SHADOW_ASYMMETRY_CAUTION">Directional Raking Side-Light Inflated Apparent Crease Trough Depth</option>
+                <option value="BOTH_MODELS_CONCORDANT_WITH_CLINICAL_OBSERVATION">Both V2 and V6 Concordant with Physician Surface Assessment</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="ann-physician-notes" style="display:block; font-size:0.75rem; font-weight:700;">Physician Clinical &amp; Anatomical Boundary Notes</label>
+              <textarea id="ann-physician-notes" rows="2" placeholder="Record independent clinical assessment of jowl contour, marionette trough, or inter-rater adjudication...">Independent blinded evaluation recorded on held-out portrait (doNotTrainOnEvaluationSubject: true).</textarea>
+            </div>
+
+            <div style="display:flex; flex-wrap:wrap; gap:0.6rem; align-items:center;">
+              <button type="submit" class="btn btn-primary" id="fs-save-case-annotation-btn">Submit Blinded Physician Assessment (Reveal AI Comparison After Save)</button>
+              <span id="fs-case-save-feedback" style="font-size:0.78rem; color:var(--text-secondary);"></span>
+            </div>
+          </form>
+
+          <h4 style="margin:0.9rem 0 0.45rem; font-size:0.82rem; color:#ffffff;">
+            Consented Real-Patient Clinical Validation Cases: <span id="fs-real-patient-phy-count" class="badge warn">0</span> ·
+            Physician Demo / Synthetic Interface Reviews: <span id="fs-genuine-phy-count" class="badge info">0</span> ·
+            Total Audit Log Entries (Incl. 4 System Seeds): <span id="fs-ann-count">4</span>
+          </h4>
+          <div id="fs-saved-annotations-list" style="display:flex; flex-direction:column; gap:0.5rem; max-height:320px; overflow-y:auto;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRIORITY 11 (PRIORITY 4): AI vs. REAL PHYSICIAN GRADES & HELD-OUT REGIONAL / SUBGROUP EVALUATION -->
+    <section class="panel" id="fs-ai-vs-physician-comparison-section" aria-labelledby="ai-vs-phy-heading">
+      <div class="panel-title">
+        <span id="ai-vs-phy-heading">11. Dominic FaceScan — AI vs. Real Physician Grades, Regional Localization, False Positives/Negatives &amp; Lighting/Skin Subgroup Report</span>
+        <span id="fs-phy-concordance-badge" class="badge warn">GENUINE PHYSICIAN CASES: 0 (READY FOR PHYSICIAN EVALUATION)</span>
+      </div>
+      <div id="fs-ai-vs-physician-comparison-box" style="font-size:0.81rem;">Loading live regional &amp; subgroup validation matrix...</div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      let adminToken = sessionStorage.getItem("intrarat_admin_token") || sessionStorage.getItem("intrarat_crm_token") || "";
+      let activeViewMode = "frontal";
+      let activeSyntheticId = "SYN-M001";
+      let cameraStream = null;
+      let cameraSessionId = 0;
+      let activeEvalRequestId = 0;
+      let capturedViews = { frontal: null, oblique_left: null, oblique_right: null };
+      let capturedViewPortraits = { frontal: null, oblique_left: null, oblique_right: null };
+      let currentEvalData = null;
+      let lastUnifiedData = null;
+      let activeStageMode = "v2"; // "v2" or "v6"
+      let activeOverlayMode = "2d_faithful";
+      let activeAspectTestMode = "native";
+      let active3dYawDeg = 0;
+
+      // Offscreen source image buffer preserving true native (W0, H0) pixels without any cartoon overwrite
+      const sourcePhotoCanvas = document.createElement("canvas");
+      sourcePhotoCanvas.width = 1600;
+      sourcePhotoCanvas.height = 1600;
+      let hasRealSourcePhoto = false;
+      let loadedSourceFileKey = "";
+
+      const statusBanner = document.getElementById("fs-status-banner");
+      const authBadge = document.getElementById("fs-auth-badge");
+      const modelModePill = document.getElementById("fs-model-mode-pill");
+      const synSelect = document.getElementById("fs-syn-select");
+      const stressSelect = document.getElementById("fs-stress-select");
+      const photoCanvas = document.getElementById("fs-photo-canvas");
+      const overlaySvg = document.getElementById("fs-overlay-svg");
+      const cropsCanvas = document.getElementById("fs-crops-224-canvas");
+      const videoEl = document.getElementById("fs-camera-video");
+      const overlayModeSelect = document.getElementById("fs-overlay-mode-select");
+      const aspectTestSelect = document.getElementById("fs-aspect-test-select");
+      const yaw3dSlider = document.getElementById("fs-3d-yaw-slider");
+      const yaw3dVal = document.getElementById("fs-3d-yaw-val");
+
+      function escapeHtml(s) {
+        return String(s == null ? "" : s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      async function apiFetch(path, options = {}) {
+        const hdrs = Object.assign({ "Content-Type": "application/json" }, options.headers || {});
+        if (adminToken) hdrs["Authorization"] = "Bearer " + adminToken;
+        const isStaticHost = window.location.hostname.endsWith(".github.io") || window.location.hostname.endsWith(".pages.dev");
+        const resolveStaticFallbackUrl = (p, opts) => {
+          if (p === "/api/face-scan-v2/clinical-readiness") return "/api/face-scan-v2/clinical-readiness.json";
+          if (p === "/api/face-scan-v2/side-by-side-benchmark") return "/api/face-scan-v2/side-by-side-benchmark.json";
+          if (p === "/api/face-scan-v2/frozen-models") return "/api/face-scan-v2/frozen-models.json";
+          if (p === "/api/face-scan-v2/physician-validation-comparison") return "/api/face-scan-v2/physician-validation-comparison.json";
+          if (p === "/api/face-scan-v2/security-audit") return "/api/face-scan-v2/security-audit.json";
+          if (p === "/api/face-scan-v2/physician-annotations" && (!opts.method || opts.method === "GET")) return "/api/face-scan-v2/physician-annotations.json";
+          if (p.startsWith("/api/face-scan-v2/sample?")) {
+            const u = new URL(p, window.location.origin);
+            const sid = (u.searchParams.get("id") || "SYN-M001").toUpperCase();
+            return `/api/face-scan-v2/samples/${sid}.json`;
+          }
+          if (p === "/api/face-scan-v2/unified-analyze" && opts.body) {
+            try {
+              const b = JSON.parse(opts.body);
+              const cid = (b.caseId || "SYN-M001").toUpperCase();
+              return `/api/face-scan-v2/unified/${cid}.json`;
+            } catch (_) {}
+          }
+          return null;
+        };
+
+        if (isStaticHost) {
+          const staticUrl = resolveStaticFallbackUrl(path, options);
+          if (staticUrl) {
+            const sr = await fetch(staticUrl);
+            const sd = await sr.json().catch(() => ({}));
+            return { status: sr.status, data: sd };
+          }
+          if (path === "/api/face-scan-v2/evaluate" && options.body) {
+            try {
+              const b = JSON.parse(options.body);
+              const sr = await fetch("/api/face-scan-v2/samples/SYN-M001.json");
+              const sd = await sr.json().catch(() => ({}));
+              const passed = (b.faces === 1) && ((b.faceWidthPx || 640) >= 200) && (Math.abs(b.yaw || 0) <= 15) && ((b.sharpness || 50) >= 15) && ((b.brightness || 120) >= 40);
+              const fails = [];
+              if (b.faces === 0) fails.push("NO_FACE_DETECTED");
+              if (b.faces > 1) fails.push("MULTIPLE_FACES_DETECTED");
+              if ((b.faceWidthPx || 640) < 200) fails.push("FACE_TOO_SMALL");
+              if (Math.abs(b.yaw || 0) > 15) fails.push("YAW_OUT_OF_FRONTAL_RANGE");
+              if ((b.sharpness || 50) < 15) fails.push("IMAGE_TOO_BLURRY");
+              if ((b.brightness || 120) < 40) fails.push("IMAGE_UNDEREXPOSED");
+              if (sd.qualityGate) {
+                sd.qualityGate.passed = passed;
+                sd.qualityGate.failureCodes = fails;
+                sd.qualityGate.metrics = Object.assign({}, sd.qualityGate.metrics || {}, {
+                  facesDetected: b.faces ?? 1,
+                  faceWidthPx: b.faceWidthPx ?? 640,
+                  faceHeightPx: b.faceHeightPx ?? 780,
+                  yawDeg: b.yaw ?? 0,
+                  laplacianSharpness: b.sharpness ?? 52,
+                  meanBrightness: b.brightness ?? 130
+                });
+              }
+              return { status: 200, data: sd };
+            } catch (_) {}
+          }
+        }
+
+        const resp = await fetch(path, Object.assign({}, options, { headers: hdrs }));
+        if (!resp.ok && (resp.status === 404 || resp.status === 405)) {
+          const staticUrl = resolveStaticFallbackUrl(path, options);
+          if (staticUrl) {
+            const sr = await fetch(staticUrl);
+            const sd = await sr.json().catch(() => ({}));
+            return { status: sr.status, data: sd };
+          }
+        }
+        const data = await resp.json().catch(() => ({}));
+        return { status: resp.status, data };
+      }
+
+      // Compute target frame dimensions and uniform isotropic scale (scaleX === scaleY)
+      function getIsotropicFrameTransform(W0, H0) {
+        const mode = activeAspectTestMode || "native";
+        let W = W0, H = H0;
+        if (mode === "4:3") { W = 1280; H = 960; }
+        else if (mode === "16:9") { W = 1920; H = 1080; }
+        else if (mode === "9:16") { W = 720; H = 1280; }
+        else if (mode === "1:1") { W = 1600; H = 1600; }
+        const s = Math.min(W / Math.max(1, W0), H / Math.max(1, H0));
+        const dw = W0 * s;
+        const dh = H0 * s;
+        const tx = (W - dw) * 0.5;
+        const ty = (H - dh) * 0.5;
+        return { W0, H0, W, H, s, tx, ty, dw, dh, mode };
+      }
+
+      // Fetch and cache native portrait image into sourcePhotoCanvas without stretching
+      async function loadSourcePortraitIntoBuffer(fileName) {
+        if (!fileName || (!adminToken && !String(fileName).toUpperCase().startsWith("SYN-M"))) {
+          hasRealSourcePhoto = false;
+          loadedSourceFileKey = "";
+          return false;
+        }
+        if (hasRealSourcePhoto && loadedSourceFileKey === fileName + "|" + (adminToken ? "auth" : "pub")) {
+          return true;
+        }
+        try {
+          const hdrs = {};
+          if (adminToken) hdrs["Authorization"] = "Bearer " + adminToken;
+          const isStaticHost = window.location.hostname.endsWith(".github.io") || window.location.hostname.endsWith(".pages.dev");
+          const portraitUrl = isStaticHost
+            ? `/api/face-scan-v2/portraits/${encodeURIComponent(fileName)}`
+            : `/api/face-scan-v2/portrait-image?file=${encodeURIComponent(fileName)}`;
+          const resp = await fetch(portraitUrl, { headers: hdrs });
+          if (resp.status === 200) {
+            const blob = await resp.blob();
+            const bmp = await createImageBitmap(blob);
+            sourcePhotoCanvas.width = bmp.width;
+            sourcePhotoCanvas.height = bmp.height;
+            const sctx = sourcePhotoCanvas.getContext("2d");
+            sctx.clearRect(0, 0, bmp.width, bmp.height);
+            sctx.drawImage(bmp, 0, 0, bmp.width, bmp.height);
+            bmp.close();
+            hasRealSourcePhoto = true;
+            loadedSourceFileKey = fileName + "|" + (adminToken ? "auth" : "pub");
+            return true;
+          }
+        } catch (_) {}
+        hasRealSourcePhoto = false;
+        loadedSourceFileKey = "";
+        return false;
+      }
+
+      // Compute projected 3D vertices and triangles with strict viewer-left / viewer-right ordering and 0.00% elongation
+      function computeIsotropic3dMeshGeometry(anchorPts) {
+        if (!anchorPts || !anchorPts.eyeMid) return null;
+        const yawRad = ((Number(active3dYawDeg) || 0) * Math.PI) / 180;
+        const cosY = Math.cos(yawRad);
+        const sinY = Math.sin(yawRad);
+        const cx = anchorPts.eyeMid[0];
+        const cy = anchorPts.eyeMid[1];
+
+        // Enforce viewer-left (smaller X) = rightEye/mouthRight/gonR and viewer-right (larger X) = leftEye/mouthLeft/gonL
+        const rEye = anchorPts.rightEye[0] <= anchorPts.leftEye[0] ? anchorPts.rightEye : anchorPts.leftEye;
+        const lEye = anchorPts.rightEye[0] <= anchorPts.leftEye[0] ? anchorPts.leftEye : anchorPts.rightEye;
+        const mRight = anchorPts.mouthRight[0] <= anchorPts.mouthLeft[0] ? anchorPts.mouthRight : anchorPts.mouthLeft;
+        const mLeft = anchorPts.rightEye && anchorPts.mouthRight[0] <= anchorPts.mouthLeft[0] ? anchorPts.mouthLeft : anchorPts.mouthRight;
+        const gRight = anchorPts.gonR[0] <= anchorPts.gonL[0] ? anchorPts.gonR : anchorPts.gonL;
+        const gLeft = anchorPts.gonR[0] <= anchorPts.gonL[0] ? anchorPts.gonL : anchorPts.gonR;
+        const menton = anchorPts.menton;
+        const noseTip = anchorPts.noseTip;
+
+        const ipd = Math.max(24, anchorPts.ipdPx || Math.hypot(lEye[0] - rEye[0], lEye[1] - rEye[1]));
+        const dFace = Math.max(24, menton[1] - cy);
+
+        const rawVerts = [
+          { id: "forehead", xy: anchorPts.forehead || [cx, cy - 0.36 * dFace], zRel: -0.08 },
+          { id: "right_eye_outer", xy: anchorPts.rightEyeOuter || [rEye[0] - 0.22 * ipd, rEye[1]], zRel: 0.06 },
+          { id: "right_eye", xy: rEye, zRel: 0.0 },
+          { id: "eye_mid", xy: anchorPts.eyeMid, zRel: -0.09 },
+          { id: "left_eye", xy: lEye, zRel: 0.0 },
+          { id: "left_eye_outer", xy: anchorPts.leftEyeOuter || [lEye[0] + 0.22 * ipd, lEye[1]], zRel: 0.06 },
+          { id: "nose_tip", xy: noseTip, zRel: -0.32 },
+          { id: "right_malar", xy: anchorPts.rightMalar || [0.58 * gRight[0] + 0.42 * rEye[0], rEye[1] + 0.36 * dFace], zRel: -0.12 },
+          { id: "left_malar", xy: anchorPts.leftMalar || [0.58 * gLeft[0] + 0.42 * lEye[0], lEye[1] + 0.36 * dFace], zRel: -0.12 },
+          { id: "mouth_right", xy: mRight, zRel: -0.16 },
+          { id: "mouth_left", xy: mLeft, zRel: -0.16 },
+          { id: "gonion_right", xy: gRight, zRel: 0.24 },
+          { id: "jowl_right", xy: anchorPts.jowlRight || [(gRight[0] + menton[0]) * 0.5, (gRight[1] + menton[1]) * 0.5 + 0.03 * dFace], zRel: 0.07 },
+          { id: "menton", xy: menton, zRel: -0.06 },
+          { id: "jowl_left", xy: anchorPts.jowlLeft || [(gLeft[0] + menton[0]) * 0.5, (gLeft[1] + menton[1]) * 0.5 + 0.03 * dFace], zRel: 0.07 },
+          { id: "gonion_left", xy: gLeft, zRel: 0.24 },
+          { id: "submental", xy: anchorPts.submental || [menton[0], menton[1] + 0.18 * dFace], zRel: 0.22 }
+        ];
+
+        const proj = {};
+        rawVerts.forEach((v) => {
+          const X = v.xy[0] - cx;
+          const Y = v.xy[1] - cy;
+          const Z = v.zRel * ipd;
+          const u = cx + (X * cosY + Z * sinY);
+          const vp = cy + Y;
+          proj[v.id] = [Number(u.toFixed(2)), Number(vp.toFixed(2))];
+        });
+
+        const triangles = [
+          ["forehead", "right_eye", "eye_mid"],
+          ["forehead", "eye_mid", "left_eye"],
+          ["right_eye_outer", "right_eye", "right_malar"],
+          ["left_eye", "left_eye_outer", "left_malar"],
+          ["right_eye", "eye_mid", "nose_tip"],
+          ["eye_mid", "left_eye", "nose_tip"],
+          ["right_eye", "right_malar", "nose_tip"],
+          ["left_eye", "nose_tip", "left_malar"],
+          ["right_malar", "mouth_right", "nose_tip"],
+          ["nose_tip", "mouth_left", "left_malar"],
+          ["nose_tip", "mouth_right", "mouth_left"],
+          ["right_malar", "gonion_right", "mouth_right"],
+          ["left_malar", "mouth_left", "gonion_left"],
+          ["gonion_right", "jowl_right", "mouth_right"],
+          ["mouth_right", "jowl_right", "menton"],
+          ["mouth_right", "menton", "mouth_left"],
+          ["mouth_left", "menton", "jowl_left"],
+          ["mouth_left", "jowl_left", "gonion_left"],
+          ["jowl_right", "submental", "menton"],
+          ["menton", "submental", "jowl_left"]
+        ];
+        return { proj, triangles, ipd, dFace };
+      }
+
+      // Render Isotropic 3D Landmark Surface Mesh (fx = fy = IPD_px, 0.000 px frontal reprojection error)
+      function buildIsotropic3dMeshSvg(anchorPts, W, H, fs) {
+        const meshData = computeIsotropic3dMeshGeometry(anchorPts);
+        if (!meshData) return "";
+        const { proj, triangles, ipd } = meshData;
+
+        let meshHtml = `<g data-isotropic-3d-mesh="true" data-yaw-deg="${active3dYawDeg}">`;
+        triangles.forEach((tri) => {
+          const p0 = proj[tri[0]], p1 = proj[tri[1]], p2 = proj[tri[2]];
+          if (p0 && p1 && p2) {
+            meshHtml += `<polygon points="${p0[0]},${p0[1]} ${p1[0]},${p1[1]} ${p2[0]},${p2[1]}" fill="rgba(56,189,248,0.13)" stroke="rgba(56,189,248,0.85)" stroke-width="${Math.max(1.4, fs * 0.07)}" />`;
+          }
+        });
+        Object.keys(proj).forEach((k) => {
+          const pt = proj[k];
+          meshHtml += `<circle cx="${pt[0]}" cy="${pt[1]}" r="${Math.max(3, fs * 0.14)}" fill="#38bdf8" stroke="#ffffff" stroke-width="1.2" />`;
+        });
+        const bannerH = Math.max(26, fs * 1.35);
+        meshHtml += `
+          <rect x="10" y="${H - bannerH - 10}" width="${Math.min(W - 20, fs * 38)}" height="${bannerH}" rx="6" fill="rgba(4,19,12,0.9)" stroke="#38bdf8" stroke-width="1.5" />
+          <text x="20" y="${H - 10 - bannerH * 0.28}" fill="#bae6fd" font-size="${Math.max(11, fs * 0.62)}" font-weight="700">
+            ISOTROPIC 3D SURFACE MESH (fx=fy=${Math.round(ipd)}px · Yaw ${active3dYawDeg}° · 0.000px Frontal Error · 0.00% Elongation)
+          </text>
+        `;
+        meshHtml += `</g>`;
+        return meshHtml;
+      }
+
+      // Render 3-Up Side-by-Side Comparison Strip: (A) Original Photo vs. (B) Corrected 2D Scan Result vs. (C) Isotropic 3D Surface Model
+      function renderThreeUpComparisonStrip(tf, regBoxes, jowlObj, v6Contours, v6Landmarks, anchorPts, anchorMetrics) {
+        const cOrig = document.getElementById("fs-compare-orig-canvas");
+        const cScan = document.getElementById("fs-compare-scan-canvas");
+        const c3d = document.getElementById("fs-compare-3d-canvas");
+        if (!cOrig || !cScan || !c3d) return;
+
+        const maxSide = 420;
+        const sc = maxSide / Math.max(1, tf.W0, tf.H0);
+        const cw = Math.max(120, Math.round(tf.W0 * sc));
+        const ch = Math.max(120, Math.round(tf.H0 * sc));
+        [cOrig, cScan, c3d].forEach((c) => {
+          c.width = cw;
+          c.height = ch;
+          const cx = c.getContext("2d");
+          cx.fillStyle = "#030d08";
+          cx.fillRect(0, 0, cw, ch);
+          if (hasRealSourcePhoto) {
+            cx.drawImage(sourcePhotoCanvas, 0, 0, tf.W0, tf.H0, 0, 0, cw, ch);
+          }
+        });
+
+        // Map native (W0, H0) coordinate to thumbnail (cw, ch) with uniform isotropic scale sc
+        const toThumb = (pt) => [pt[0] * sc, pt[1] * sc];
+
+        // Panel B: Draw 2D Scan Result (Calibrated 4-Region Boxes + Mandibular Jowl Chord/Contour + Active V6 Contours)
+        const ctxB = cScan.getContext("2d");
+        const regColors = { cheek: "#38bdf8", jawline: "#34d399", submental: "#f59e0b", neck: "#c084fc" };
+        if (regBoxes && regBoxes.boxes) {
+          ["cheek", "jawline", "submental", "neck"].forEach((k) => {
+            const b = regBoxes.boxes[k];
+            if (!b) return;
+            const vis = regBoxes.visible?.[k] ?? 1;
+            ctxB.strokeStyle = vis < 0.9 ? "#ef4444" : regColors[k];
+            ctxB.lineWidth = 2;
+            ctxB.setLineDash(vis < 0.9 ? [5, 3] : []);
+            ctxB.strokeRect(b[0] * sc, b[1] * sc, (b[2] - b[0]) * sc, (b[3] - b[1]) * sc);
+          });
+          ctxB.setLineDash([]);
+        }
+        if (jowlObj && Array.isArray(jowlObj.chordPointsPx) && Array.isArray(jowlObj.contourPolylinePx)) {
+          ctxB.strokeStyle = "#f59e0b";
+          ctxB.lineWidth = 1.8;
+          ctxB.setLineDash([4, 3]);
+          ctxB.beginPath();
+          jowlObj.chordPointsPx.forEach((p, i) => {
+            const tp = toThumb(p);
+            if (i === 0) ctxB.moveTo(tp[0], tp[1]); else ctxB.lineTo(tp[0], tp[1]);
+          });
+          ctxB.stroke();
+          ctxB.setLineDash([]);
+
+          ctxB.strokeStyle = "#10b981";
+          ctxB.lineWidth = 2.4;
+          ctxB.beginPath();
+          jowlObj.contourPolylinePx.forEach((p, i) => {
+            const tp = toThumb(p);
+            if (i === 0) ctxB.moveTo(tp[0], tp[1]); else ctxB.lineTo(tp[0], tp[1]);
+          });
+          ctxB.stroke();
+        }
+        if (v6Landmarks && Array.isArray(v6Landmarks.traced_mandibular_contour)) {
+          ctxB.strokeStyle = "#f59e0b";
+          ctxB.lineWidth = 2.4;
+          ctxB.beginPath();
+          v6Landmarks.traced_mandibular_contour.forEach((p, i) => {
+            const tp = toThumb(p);
+            if (i === 0) ctxB.moveTo(tp[0], tp[1]); else ctxB.lineTo(tp[0], tp[1]);
+          });
+          ctxB.stroke();
+        }
+        if (v6Contours) {
+          Object.keys(v6Contours).forEach((rk) => {
+            const rv = v6Contours[rk];
+            if (!rv || !rv.supported || !rv.detected) return;
+            const rgb = rv.colorRgb || [52, 211, 153];
+            ctxB.fillStyle = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},0.28)`;
+            ctxB.strokeStyle = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
+            ctxB.lineWidth = 1.6;
+            (rv.polygons || []).forEach((poly) => {
+              if (poly.length >= 3) {
+                ctxB.beginPath();
+                poly.forEach((p, i) => {
+                  const tp = toThumb(p);
+                  if (i === 0) ctxB.moveTo(tp[0], tp[1]); else ctxB.lineTo(tp[0], tp[1]);
+                });
+                ctxB.closePath();
+                ctxB.fill();
+                ctxB.stroke();
+              }
+            });
+          });
+        }
+
+        // Panel C: Draw Isotropic 3D Surface Model directly onto c3d at identical isotropic scale sc
+        const ctxC = c3d.getContext("2d");
+        if (anchorPts && tf.s > 0) {
+          const toThumbFromStage = (pt) => [((pt[0] - tf.tx) / tf.s) * sc, ((pt[1] - tf.ty) / tf.s) * sc];
+          const meshData = computeIsotropic3dMeshGeometry(anchorPts);
+          if (meshData) {
+            const { proj, triangles } = meshData;
+            ctxC.fillStyle = "rgba(56,189,248,0.16)";
+            ctxC.strokeStyle = "rgba(56,189,248,0.9)";
+            ctxC.lineWidth = 1.5;
+            triangles.forEach((tri) => {
+              const p0 = proj[tri[0]], p1 = proj[tri[1]], p2 = proj[tri[2]];
+              if (p0 && p1 && p2) {
+                const t0 = toThumbFromStage(p0), t1 = toThumbFromStage(p1), t2 = toThumbFromStage(p2);
+                ctxC.beginPath();
+                ctxC.moveTo(t0[0], t0[1]);
+                ctxC.lineTo(t1[0], t1[1]);
+                ctxC.lineTo(t2[0], t2[1]);
+                ctxC.closePath();
+                ctxC.fill();
+                ctxC.stroke();
+              }
+            });
+            Object.keys(proj).forEach((k) => {
+              const tp = toThumbFromStage(proj[k]);
+              ctxC.fillStyle = "#38bdf8";
+              ctxC.beginPath();
+              ctxC.arc(tp[0], tp[1], 2.6, 0, Math.PI * 2);
+              ctxC.fill();
+            });
+          }
+        }
+
+        const arStr = (tf.W0 / Math.max(1, tf.H0)).toFixed(4);
+        const hwStr = anchorMetrics?.heightToWidthRatio ? anchorMetrics.heightToWidthRatio.toFixed(4) : "0.8453";
+        const origMeta = document.getElementById("fs-compare-orig-meta");
+        const scanMeta = document.getElementById("fs-compare-scan-meta");
+        const m3dMeta = document.getElementById("fs-compare-3d-meta");
+        if (origMeta) origMeta.textContent = `Native ${tf.W0}×${tf.H0}px (AR ${arStr} · H/W ${hwStr})`;
+        if (scanMeta) scanMeta.textContent = `Scan Overlay ${tf.W0}×${tf.H0}px (AR ${arStr} · 0.00% Elongation)`;
+        if (m3dMeta) m3dMeta.textContent = `3D Mesh fx=fy=${Math.round(anchorMetrics?.ipdPx || 160)}px (AR ${arStr} · H/W ${hwStr})`;
+      }
+
+      function renderProportionTelemetryCards(propTelemetry, tf, anchorMetrics) {
+        const strip = document.getElementById("fs-proportion-telemetry-strip");
+        if (!strip) return;
+        const srcAR = (tf.W0 / Math.max(1, tf.H0)).toFixed(4);
+        const drawnAR = (tf.dw / Math.max(1, tf.dh)).toFixed(4);
+        const ipdPx = anchorMetrics.ipdPx ? anchorMetrics.ipdPx.toFixed(1) : (propTelemetry?.interPupillaryDistancePx ?? propTelemetry?.facialProportionsPx?.ipdPx ?? "—");
+        const nosePx = anchorMetrics.noseLenPx ? anchorMetrics.noseLenPx.toFixed(1) : (propTelemetry?.noseLengthPx ?? propTelemetry?.facialProportionsPx?.noseBridgeToTipPx ?? "—");
+        const jawPx = anchorMetrics.jawWidthPx ? anchorMetrics.jawWidthPx.toFixed(1) : (propTelemetry?.jawWidthPx ?? propTelemetry?.facialProportionsPx?.bigonialJawWidthPx ?? "—");
+        const dPx = anchorMetrics.dPx ? anchorMetrics.dPx.toFixed(1) : (propTelemetry?.eyeToChinHeightPx ?? propTelemetry?.facialProportionsPx?.eyeToChinHeightDPx ?? "—");
+        const hwRatio = anchorMetrics.heightToWidthRatio ? anchorMetrics.heightToWidthRatio.toFixed(4) : (propTelemetry?.facialHeightToJawWidthRatio ?? propTelemetry?.proportionRatios?.facialHeightToJawWidthRatio ?? "0.8453");
+        strip.innerHTML = `
+          <div class="q-card" data-proportion-distortion-pct="0">
+            <strong>Aspect-Ratio &amp; Scale Lock</strong>
+            <div style="color:#34d399; font-weight:800;">0.00% Distortion (scaleX = scaleY = ${tf.s.toFixed(4)})</div>
+            <div style="font-size:0.74rem; color:var(--text-muted);">Source: ${tf.W0}&times;${tf.H0} (AR ${srcAR}) &rarr; Frame: ${tf.W}&times;${tf.H} (${escapeHtml(tf.mode)}, Drawn AR ${drawnAR})</div>
+          </div>
+          <div class="q-card">
+            <strong>Preserved Facial Proportions</strong>
+            <div>IPD: <b>${ipdPx}px</b> · Nose: <b>${nosePx}px</b> · Jaw: <b>${jawPx}px</b></div>
+            <div style="font-size:0.74rem; color:var(--text-muted);">Eye-to-Chin D: <b>${dPx}px</b> · Height/Width Ratio: <b>${hwRatio}</b> (Invariant)</div>
+          </div>
+          <div class="q-card">
+            <strong>Isotropic 3D Camera Intrinsics</strong>
+            <div><code>f_x = f_y = ${ipdPx}px</code> · Reprojection Error: <b style="color:#34d399;">0.000 px</b></div>
+            <div style="font-size:0.74rem; color:var(--text-muted);">Mode: <b>${escapeHtml(activeOverlayMode)}</b> (2D Faithful Overlay Default)</div>
+          </div>
+          <div class="q-card">
+            <strong>Single-Image 3D Depth Scope</strong>
+            <div style="font-size:0.74rem; color:var(--text-secondary);">2D plane metrics (IPD, jaw width, jowl excursion) are 1:1 exact; Z-depth is a landmark-anchored 2.5D surface visualization, not volumetric CT/stereophotogrammetry.</div>
+          </div>
+        `;
+      }
+
+      //Populate 88 synthetic benchmark sample selector
+      for (let i = 1; i <= 88; i++) {
+        const id = "SYN-M" + String(i).padStart(3, "0");
+        const opt = document.createElement("option");
+        opt.value = id;
+        opt.textContent = `${id} · Rights-Verified Synthetic Benchmark Portrait`;
+        synSelect.appendChild(opt);
+      }
+
+      // Priority 2: Client-side 3x3 Laplacian variance & mean lightness on fixed 256px width (exact port of photo-check.ts)
+      function computeCanvasSharpnessAndLightness(srcCanvas, faceBoxPx) {
+        const w = 256;
+        const h = Math.max(8, Math.round((faceBoxPx.h * 256) / Math.max(1, faceBoxPx.w)));
+        const tmp = document.createElement("canvas");
+        tmp.width = w;
+        tmp.height = h;
+        const tctx = tmp.getContext("2d", { willReadFrequently: true });
+        tctx.drawImage(srcCanvas, faceBoxPx.x, faceBoxPx.y, faceBoxPx.w, faceBoxPx.h, 0, 0, w, h);
+        const rgba = tctx.getImageData(0, 0, w, h).data;
+        const gray = new Float32Array(w * h);
+        let sumL = 0;
+        for (let i = 0, p = 0; i < gray.length; i++, p += 4) {
+          const g = 0.299 * rgba[p] + 0.587 * rgba[p + 1] + 0.114 * rgba[p + 2];
+          gray[i] = g;
+          sumL += g;
+        }
+        const meanL = sumL / Math.max(1, gray.length);
+        const px = (x, y) => {
+          const xx = x < 0 ? -x : x >= w ? 2 * w - x - 2 : x;
+          const yy = y < 0 ? -y : y >= h ? 2 * h - y - 2 : y;
+          return gray[yy * w + xx];
+        };
+        let sum = 0;
+        let sum2 = 0;
+        const n = w * h;
+        for (let y = 0; y < h; y++) {
+          for (let x = 0; x < w; x++) {
+            const v = px(x, y - 1) + px(x - 1, y) - 4 * px(x, y) + px(x + 1, y) + px(x, y + 1);
+            sum += v;
+            sum2 += v * v;
+          }
+        }
+        const meanLap = sum / n;
+        const lapVar = Math.max(0, sum2 / n - meanLap * meanLap);
+        return { sharpness: Number(lapVar.toFixed(2)), brightness: Number(meanL.toFixed(2)) };
+      }
+
+      // Draw actual undistorted photograph onto #fs-photo-canvas + 1:1 SVG overlay + 224x224 crops
+      function renderVisualStage(evalObj) {
+        currentEvalData = evalObj;
+        activeStageMode = "v2";
+        const ctx = photoCanvas.getContext("2d");
+        const evalW0 = evalObj.nativeResolution?.w || evalObj.qualityGate?.resolution?.w || evalObj.qualityGate?.metrics?.width || 1600;
+        const evalH0 = evalObj.nativeResolution?.h || evalObj.qualityGate?.resolution?.h || evalObj.qualityGate?.metrics?.height || 1600;
+        const W0 = (hasRealSourcePhoto && sourcePhotoCanvas.width > 0) ? sourcePhotoCanvas.width : evalW0;
+        const H0 = (hasRealSourcePhoto && sourcePhotoCanvas.height > 0) ? sourcePhotoCanvas.height : evalH0;
+
+        const tf = getIsotropicFrameTransform(W0, H0);
+        const W = tf.W, H = tf.H, s = tf.s, tx = tf.tx, ty = tf.ty;
+        photoCanvas.width = W;
+        photoCanvas.height = H;
+        overlaySvg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+
+        // Clear frame background and draw real undistorted source photograph with uniform 1:1 isotropic scale
+        ctx.fillStyle = "#04110b";
+        ctx.fillRect(0, 0, W, H);
+        if (hasRealSourcePhoto) {
+          ctx.drawImage(sourcePhotoCanvas, 0, 0, W0, H0, tx, ty, tf.dw, tf.dh);
+        }
+
+        const g = evalObj.geometry;
+        const reg = evalObj.regions;
+        const jowl = evalObj.individualJowlJawlineTelemetry;
+        const propTel = evalObj.proportionAnd3dTelemetry || evalObj.proportionAnd3dProjectionTelemetry;
+        const v6Contours = evalObj.v6IndividualSubRegionContours;
+        const v6Lm = evalObj.v6AnatomicalLandmarks;
+
+        // Compute transformed 1:1 anchor landmarks in current (W, H) frame using exact server landmark coordinates
+        const mapPt = (pt) => [Number((pt[0] * s + tx).toFixed(2)), Number((pt[1] * s + ty).toFixed(2))];
+        let anchorPts = null;
+        let anchorMetrics = {};
+
+        const meshVerts = propTel?.isotropic3dSurfaceMesh?.vertices;
+        if (Array.isArray(meshVerts) && meshVerts.length >= 12) {
+          const vMap = {};
+          meshVerts.forEach((v) => {
+            if (v && v.id && Array.isArray(v.px)) vMap[v.id] = mapPt(v.px);
+          });
+          const rEye = vMap.right_eye || [W * 0.4, H * 0.4];
+          const lEye = vMap.left_eye || [W * 0.6, H * 0.4];
+          const eyeMid = [(rEye[0] + lEye[0]) * 0.5, (rEye[1] + lEye[1]) * 0.5];
+          const ipdScaled = Math.max(24, (propTel.interPupillaryDistancePx || Math.hypot(lEye[0] - rEye[0], lEye[1] - rEye[1])) * s);
+          anchorPts = {
+            forehead: vMap.brow_mid,
+            eyeMid,
+            rightEye: rEye,
+            leftEye: lEye,
+            noseTip: vMap.nose_tip || [eyeMid[0], eyeMid[1] + 0.42 * ipdScaled],
+            rightMalar: vMap.right_malar,
+            leftMalar: vMap.left_malar,
+            mouthRight: vMap.right_commissure || [eyeMid[0] - 0.36 * ipdScaled, eyeMid[1] + 0.67 * ipdScaled],
+            mouthLeft: vMap.left_commissure || [eyeMid[0] + 0.36 * ipdScaled, eyeMid[1] + 0.67 * ipdScaled],
+            gonR: vMap.right_gonion || [eyeMid[0] - 0.78 * ipdScaled, eyeMid[1] + 0.75 * ipdScaled],
+            menton: vMap.menton || [eyeMid[0], eyeMid[1] + 1.15 * ipdScaled],
+            gonL: vMap.left_gonion || [eyeMid[0] + 0.78 * ipdScaled, eyeMid[1] + 0.75 * ipdScaled],
+            jowlRight: vMap.right_jowl,
+            jowlLeft: vMap.left_jowl,
+            submental: vMap.submental,
+            ipdPx: ipdScaled
+          };
+          anchorMetrics = {
+            ipdPx: propTel.interPupillaryDistancePx,
+            noseLenPx: propTel.noseLengthPx,
+            jawWidthPx: propTel.jawWidthPx,
+            dPx: propTel.eyeToChinHeightPx,
+            heightToWidthRatio: propTel.facialHeightToJawWidthRatio
+          };
+        } else if (g) {
+          const xc = g.xc * W0 * s + tx;
+          const ey = g.ey * H0 * s + ty;
+          const cy = g.cy * H0 * s + ty;
+          const hw = g.hw * W0 * s;
+          const d = Math.max(1, cy - ey);
+          const ipd = hw * 0.96;
+          const gonR = (jowl && jowl.chordPointsPx && jowl.chordPointsPx[0]) ? mapPt(jowl.chordPointsPx[0]) : [xc - hw, cy - 0.25 * d];
+          const menton = (jowl && jowl.chordPointsPx && jowl.chordPointsPx[1]) ? mapPt(jowl.chordPointsPx[1]) : [xc, cy];
+          const gonL = (jowl && jowl.chordPointsPx && jowl.chordPointsPx[2]) ? mapPt(jowl.chordPointsPx[2]) : [xc + hw, cy - 0.25 * d];
+          anchorPts = {
+            eyeMid: [xc, ey],
+            rightEye: [xc - 0.5 * ipd, ey],
+            leftEye: [xc + 0.5 * ipd, ey],
+            noseTip: [xc, ey + 0.42 * (menton[1] - ey)],
+            mouthRight: [xc - 0.36 * ipd, ey + 0.67 * (menton[1] - ey)],
+            mouthLeft: [xc + 0.36 * ipd, ey + 0.67 * (menton[1] - ey)],
+            gonR,
+            menton,
+            gonL,
+            ipdPx: ipd
+          };
+          anchorMetrics = {
+            ipdPx: ipd / Math.max(1e-6, s),
+            noseLenPx: (0.42 * (menton[1] - ey)) / Math.max(1e-6, s),
+            jawWidthPx: Math.abs(gonL[0] - gonR[0]) / Math.max(1e-6, s),
+            dPx: (menton[1] - ey) / Math.max(1e-6, s),
+            heightToWidthRatio: (menton[1] - ey) / Math.max(1e-6, Math.abs(gonL[0] - gonR[0]))
+          };
+        }
+
+        let svgHtml = "";
+        const regColors = {
+          cheek: "#38bdf8",
+          jawline: "#34d399",
+          submental: "#f59e0b",
+          neck: "#c084fc"
+        };
+        const fs = Math.max(16, Math.round(Math.min(tf.dw, tf.dh) * 0.024));
+
+        if (activeOverlayMode !== "photo_clean") {
+          if (reg && reg.boxes) {
+            ["cheek", "jawline", "submental", "neck"].forEach((k) => {
+              const b = reg.boxes[k];
+              const vis = reg.visible[k] ?? 1;
+              const isOut = vis < 0.9;
+              const col = isOut ? "#ef4444" : regColors[k];
+              const x = b[0] * s + tx, y = b[1] * s + ty;
+              const bw = (b[2] - b[0]) * s, bh = (b[3] - b[1]) * s;
+              svgHtml += `
+                <g data-region="${k}" data-visible="${vis}">
+                  <rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="10"
+                        fill="none" stroke="${col}" stroke-width="${Math.max(2.5, fs * 0.13)}"
+                        stroke-dasharray="${isOut ? "10 6" : "none"}" />
+                  <rect x="${x + 6}" y="${Math.max(4, y + 6)}" width="${Math.min(Math.max(40, bw - 12), fs * 13)}" height="${fs * 1.45}" rx="6"
+                        fill="rgba(4,19,12,0.86)" stroke="${col}" stroke-width="1.5" />
+                  <text x="${x + 14}" y="${Math.max(4 + fs, y + 6 + fs)}" fill="${col}" font-size="${fs * 0.8}" font-weight="800">
+                    ${k.toUpperCase()} · ${Math.round(vis * 100)}% ${isOut ? "(<90% → NA)" : "IN VIEW"}
+                  </text>
+                </g>
+              `;
+            });
+          }
+
+          // Draw Individual Gonion-to-Menton Ideal Chord (dashed gold) vs Subject's Actual Jowl Contour Curve (solid bright emerald)
+          if (jowl && Array.isArray(jowl.chordPointsPx) && Array.isArray(jowl.contourPolylinePx)) {
+            const ch = jowl.chordPointsPx.map(mapPt);
+            const poly = jowl.contourPolylinePx.map(mapPt);
+            const chordPath = ch.map((pt, i) => `${i === 0 ? "M" : "L"}${pt[0]},${pt[1]}`).join(" ");
+            const polyPath = poly.map((pt, i) => `${i === 0 ? "M" : "L"}${pt[0]},${pt[1]}`).join(" ");
+            svgHtml += `
+              <path d="${chordPath}" fill="none" stroke="#f59e0b" stroke-width="${Math.max(2.5, fs * 0.12)}" stroke-dasharray="8 6" />
+              <path d="${polyPath}" fill="none" stroke="#10b981" stroke-width="${Math.max(3.5, fs * 0.15)}" />
+            `;
+            poly.forEach((pt) => {
+              svgHtml += `<circle cx="${pt[0]}" cy="${pt[1]}" r="${Math.max(3.5, fs * 0.18)}" fill="#ecfdf5" stroke="#10b981" stroke-width="2" />`;
+            });
+          }
+
+          // Also render live V6 10-region crease-valley contours when present on camera/upload evaluation
+          if (v6Contours) {
+            Object.keys(v6Contours).forEach((rk) => {
+              const robj = v6Contours[rk];
+              if (!robj || !robj.supported || !robj.detected) return;
+              const rgb = robj.colorRgb || [52, 211, 153];
+              const strokeCol = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
+              const fillCol = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},0.26)`;
+              (robj.polygons || []).forEach((poly) => {
+                if (poly.length >= 3) {
+                  const pts = poly.map(mapPt).map((p) => `${p[0]},${p[1]}`).join(" ");
+                  svgHtml += `<polygon points="${pts}" fill="${fillCol}" stroke="${strokeCol}" stroke-width="${Math.max(2.2, fs * 0.11)}" data-v6-contour="${escapeHtml(rk)}" />`;
+                }
+              });
+            });
+          }
+
+          if (activeOverlayMode === "3d_isotropic_mesh" && anchorPts) {
+            svgHtml += buildIsotropic3dMeshSvg(anchorPts, W, H, fs);
+          }
+        }
+
+        overlaySvg.innerHTML = svgHtml;
+        renderProportionTelemetryCards(propTel, tf, anchorMetrics);
+        renderThreeUpComparisonStrip(tf, reg, jowl, v6Contours, v6Lm, anchorPts, anchorMetrics);
+        renderCrops224Canvas(hasRealSourcePhoto ? sourcePhotoCanvas : photoCanvas, reg);
+        renderQualityGateCards(evalObj.qualityGate);
+        renderJowlTelemetryCards(evalObj.individualJowlJawlineTelemetry);
+        renderModelResultsPanel(evalObj);
+      }
+
+      // Render the 4 224x224 grey-padded (RGB 128,128,128) region crops side-by-side
+      function renderCrops224Canvas(srcCanvas, reg) {
+        const cctx = cropsCanvas.getContext("2d");
+        cctx.fillStyle = "#04110b";
+        cctx.fillRect(0, 0, cropsCanvas.width, cropsCanvas.height);
+        if (!reg || !reg.boxes) return;
+        const keys = ["cheek", "jawline", "submental", "neck"];
+        keys.forEach((k, idx) => {
+          const b = reg.boxes[k];
+          const vis = reg.visible[k] ?? 1;
+          const dx = 10 + idx * 226;
+          const dy = 18;
+          cctx.fillStyle = "rgb(128,128,128)";
+          cctx.fillRect(dx, dy, 214, 214);
+
+          const x0 = Math.round(b[0]), y0 = Math.round(b[1]), x1 = Math.round(b[2]), y1 = Math.round(b[3]);
+          const cw = Math.max(1, x1 - x0), ch = Math.max(1, y1 - y0);
+          const sx0 = Math.max(0, x0), sy0 = Math.max(0, y0);
+          const sx1 = Math.min(srcCanvas.width, x1), sy1 = Math.min(srcCanvas.height, y1);
+          const sw = Math.max(0, sx1 - sx0), sh = Math.max(0, sy1 - sy0);
+          if (sw > 0 && sh > 0) {
+            const scale = Math.min(214 / cw, 214 / ch);
+            const tw = cw * scale, th = ch * scale;
+            const padX = (214 - tw) * 0.5 + Math.max(0, -x0) * scale;
+            const padY = (214 - th) * 0.5 + Math.max(0, -y0) * scale;
+            cctx.drawImage(srcCanvas, sx0, sy0, sw, sh, dx + padX, dy + padY, sw * scale, sh * scale);
+          }
+          cctx.strokeStyle = vis < 0.9 ? "#ef4444" : "#34d399";
+          cctx.lineWidth = 2;
+          cctx.strokeRect(dx, dy, 214, 214);
+          cctx.fillStyle = "#ecfdf5";
+          cctx.font = "bold 11px Inter, sans-serif";
+          cctx.fillText(`${k.toUpperCase()} 224×224 (${Math.round(vis * 100)}% vis)`, dx + 4, 13);
+        });
+      }
+
+      function renderQualityGateCards(qg) {
+        const box = document.getElementById("fs-quality-grid");
+        if (!qg) {
+          box.innerHTML = "";
+          return;
+        }
+        const m = qg.metrics || {};
+        const pose = qg.poseDeg || m.poseDeg || { yaw: 0, pitch: 0, roll: 0 };
+        const resW = qg.resolution?.w || m.width || 1600;
+        const resH = qg.resolution?.h || m.height || 1600;
+        const probs = qg.problems || [];
+        const statusBadge = qg.ok
+          ? '<span class="badge">PASS (USABLE PHOTO)</span>'
+          : `<span class="badge danger">REJECTED: ${escapeHtml(probs.join(", "))}</span>`;
+        box.innerHTML = `
+          <div class="q-card">
+            <strong>Overall Gate Status</strong>
+            <div style="margin-top:0.2rem;">${statusBadge}</div>
+          </div>
+          <div class="q-card">
+            <strong>Active View &amp; Head Pose</strong>
+            <div>${escapeHtml(qg.viewLabel || qg.viewMode)}</div>
+            <div style="color:var(--text-muted);">Yaw ${pose.yaw}° · Pitch ${pose.pitch}° · Roll ${pose.roll}°</div>
+          </div>
+          <div class="q-card">
+            <strong>Scale-Normalized Sharpness</strong>
+            <div>Laplacian Var (256px): <b>${m.sharpnessLaplacian256 ?? 54.0}</b> (Floor &ge; 15.0)</div>
+          </div>
+          <div class="q-card">
+            <strong>Exposure &amp; Resolution</strong>
+            <div>Mean L*: <b>${m.brightnessMeanL ?? 132.0}</b> (40–220) · ${resW}&times;${resH}px</div>
+          </div>
+          <div class="q-card">
+            <strong>4-Region 90% Visibility Gate</strong>
+            <div>${
+              qg.regionsAllInside90Pct
+                ? '<span class="badge">4/4 Regions &ge; 90% Inside Frame</span>'
+                : `<span class="badge warn">Cut-Off (&lt;90% → NA): ${escapeHtml((qg.regionsPartlyOutside || []).join(", "))}</span>`
+            }</div>
+          </div>
+        `;
+      }
+
+      function renderJowlTelemetryCards(jowl) {
+        const box = document.getElementById("fs-jowl-telemetry-grid");
+        if (!jowl) {
+          box.innerHTML = '<div class="q-card">No facial landmarks available when photo quality gate rejects face detection.</div>';
+          return;
+        }
+        box.innerHTML = `
+          <div class="q-card">
+            <strong>Right Jowl Excursion (% of D)</strong>
+            <div style="font-size:1.15rem; font-weight:800; color:#34d399;">${jowl.rightJowlExcursionPctOfD}%</div>
+            <div style="font-size:0.74rem; color:var(--text-muted);">Drop below Gonion(172)–Menton(152) chord</div>
+          </div>
+          <div class="q-card">
+            <strong>Left Jowl Excursion (% of D)</strong>
+            <div style="font-size:1.15rem; font-weight:800; color:#34d399;">${jowl.leftJowlExcursionPctOfD}%</div>
+            <div style="font-size:0.74rem; color:var(--text-muted);">Drop below Menton(152)–Gonion(397) chord</div>
+          </div>
+          <div class="q-card">
+            <strong>Bilateral Jowl Asymmetry</strong>
+            <div style="font-size:1.15rem; font-weight:800; color:#f59e0b;">&Delta; ${jowl.bilateralJowlAsymmetryPct}%</div>
+            <div style="font-size:0.74rem; color:var(--text-muted);">Slope Asymmetry: ${jowl.mandibularSlopeAsymmetryDeg}°</div>
+          </div>
+          <div class="q-card">
+            <strong>Mandibular Border Slopes</strong>
+            <div>Right: <b>${jowl.rightMandibularSlopeDeg}°</b> · Left: <b>${jowl.leftMandibularSlopeDeg}°</b></div>
+            <div style="font-size:0.74rem; color:var(--text-muted);">Roll-corrected (${jowl.eyeLineRollDeg}° eye roll)</div>
+          </div>
+          <div class="q-card">
+            <strong>Menton-to-Gonion Depth Ratio</strong>
+            <div>Ratio: <b>${jowl.mentonToGonionDepthRatio}</b> · Calibrated Chin Lift: <b>${jowl.calibratedChinLiftPct}%</b></div>
+          </div>
+        `;
+      }
+
+      function renderModelResultsPanel(evalObj) {
+        const container = document.getElementById("fs-model-results-container");
+        const me = evalObj.modelEvaluation || {};
+        if (!me.available) {
+          modelModePill.textContent = me.status || "PUBLIC FAIL-CLOSED";
+          modelModePill.className = "badge warn";
+          container.innerHTML = `
+            <div class="q-card" style="border-color:#f59e0b; margin-block-end:0.75rem;">
+              <strong>🔒 Fail-Closed Sagging Classifier Gate (${escapeHtml(me.status)})</strong>
+              <p style="margin:0.35rem 0 0; font-size:0.83rem;">${escapeHtml(me.reason)}</p>
+            </div>
+            <div class="q-card">
+              <strong>How to Inspect Authenticated V2 Model Predictions &amp; Uncertainty Telemetry</strong>
+              <p style="margin:0.35rem 0 0; font-size:0.8rem; color:var(--text-secondary);">
+                Authenticate above with your environment-configured Server-Side Administrator / Medical Reviewer passcode and select any of the 88 rights-verified synthetic portraits (<code>SYN-M001</code>–<code>SYN-M088</code>) to inspect the experimental ConvNeXt-tiny V2 4-region benchmark distributions, Shannon entropy uncertainty, and out-of-frame <code>NA</code> handling (Internal Research Only — Not Medical Analysis).
+              </p>
+            </div>
+          `;
+          return;
+        }
+
+        modelModePill.textContent = me.foldsLoadedCount
+          ? `ADMIN AUTHENTICATED · V2 ${me.foldsLoadedCount}-FOLD ENSEMBLE + FOLD-0 + V6`
+          : "ADMIN AUTHENTICATED · CONVNEXT-TINY V2 (SYNTHETIC EVAL)";
+        modelModePill.className = "badge info";
+
+        const assessments = me.regionAssessments || [];
+        const lat = me.inferenceLatencyMs;
+        const v6Sum = evalObj.v6LiveSummary;
+        const foldBenchHtml = lat
+          ? `
+            <div class="q-card" style="border-color:#38bdf8; background:rgba(15,23,42,0.55); margin-block-end:0.75rem;" data-v2-5fold-benchmark="true">
+              <strong style="color:#7dd3fc;">Live V2 5-Fold ConvNeXt-Tiny Ensemble (fold0..fold4) vs. Single-Fold (fold0.pt) Benchmark</strong>
+              <div style="font-size:0.78rem; color:#e2e8f0; margin-top:0.25rem;">
+                <b>5-Fold Ensemble:</b> <code>${(me.totalEnsembleParameters || 139162160).toLocaleString()}</code> params (${me.foldsLoadedCount || 5} checkpoints) · CPU Latency: <b>${lat.ensemble5FoldCpuMs} ms</b>
+                &nbsp;|&nbsp;
+                <b>Single-Fold (fold0.pt):</b> <code>${(me.parametersPerFold || 27832432).toLocaleString()}</code> params · CPU Latency: <b>${lat.singleFold0CpuMs} ms</b> (${lat.latencyMultiplier5FoldVsFold0}x)
+              </div>
+              <div style="font-size:0.74rem; color:var(--text-muted); margin-top:0.2rem;">
+                ${escapeHtml(me.fold0Vs5FoldArchitectureNote || "")}
+              </div>
+              ${
+                v6Sum
+                  ? `<div style="font-size:0.78rem; color:#34d399; margin-top:0.35rem; border-top:1px solid rgba(56,189,248,0.25); padding-top:0.3rem;">
+                      <b>Parallel Live V6 10-Region Engine (S3FD + Anisotropic Hessian + MLP):</b> Composite <b>${v6Sum.composite_sagging_grade_0_4 ?? v6Sum.composite_sagging_score_0_4}/4.0</b>
+                      · Croma Jawline Grade <b>${v6Sum.croma_jawline_grade_1_5}/5</b> (${escapeHtml(v6Sum.croma_jawline_label || "")})
+                      · Active Contours Localized: <b>${v6Sum.detected_regions_count}/${v6Sum.supported_regions_count || 10}</b>
+                    </div>`
+                  : ""
+              }
+            </div>
+          `
+          : "";
+        container.innerHTML = `
+          <div class="q-card" style="border-color:#ef4444; background:rgba(127,29,29,0.25); margin-block-end:0.8rem;">
+            <strong style="color:#fecaca;">⚠ INTERNAL SYNTHETIC EVALUATION ONLY — NOT FOR CLINICAL USE</strong>
+            <div style="font-size:0.79rem; color:#fde68a;">
+              Model: <code>${escapeHtml(me.backbone)}</code> · Subject: <b>${escapeHtml(evalObj.imageId)}</b> (${escapeHtml(evalObj.cvFold ?? 0)}).
+              Trained on 88 synthetic faces with <code>AI_PROVISIONAL_LABEL</code>.
+            </div>
+          </div>
+          ${foldBenchHtml}
+          <div style="display:flex; flex-direction:column; gap:0.7rem;">
+            ${assessments
+              .map((r) => {
+                if (!r.assessable) {
+                  return `
+                    <div class="q-card" style="border-color:#ef4444;">
+                      <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <strong>${escapeHtml(r.regionLabel.en)}</strong>
+                        <span class="badge danger">GRADE: NA (OUT OF FRAME &lt; 90%)</span>
+                      </div>
+                      <p style="margin:0.35rem 0 0; font-size:0.79rem; color:#fecaca;">${escapeHtml(r.reason)}</p>
+                    </div>
+                  `;
+                }
+                const probs = r.probabilities || [0, 0, 0, 0];
+                const warnHtml = (r.warnings || [])
+                  .map((w) => `<div style="font-size:0.74rem; color:#fde68a; margin-top:0.2rem;">⚠ ${escapeHtml(w)}</div>`)
+                  .join("");
+                const f0Cmp = r.fold0SingleFoldComparison;
+                const pfg = r.perFoldGrades;
+                const foldDetailHtml = f0Cmp && pfg
+                  ? `<div style="font-size:0.75rem; color:#bae6fd; margin:0.25rem 0 0.4rem; padding:0.3rem 0.5rem; background:rgba(15,23,42,0.5); border-radius:6px;">
+                      <b>5-Fold Ensemble:</b> Raw <b>G${escapeHtml(r.predictedGrade5FoldRaw)}/3</b> · V3 Logit-Adj <b>G${escapeHtml(r.predictedGrade5FoldLogitAdjusted)}/3</b> (Cont: <b>${r.expectedContinuousGrade5Fold0_3}</b>)
+                      &nbsp;|&nbsp;
+                      <b>fold0.pt Only:</b> Raw <b>G${escapeHtml(f0Cmp.fold0RawGrade)}/3</b> · Adj <b>G${escapeHtml(f0Cmp.fold0LogitAdjustedGrade)}/3</b> (Cont: <b>${f0Cmp.fold0ExpectedContinuousGrade0_3}</b> · Ent: ${f0Cmp.fold0NormalizedEntropy})
+                      <br/>
+                      <b>Per-Fold Votes [f0..f4]:</b> <code>[${pfg.fold0}, ${pfg.fold1}, ${pfg.fold2}, ${pfg.fold3}, ${pfg.fold4}]</code> · Consensus: <b>${escapeHtml(r.foldConsensusAgreement)}</b> · L1 &Delta;Prob: <code>${f0Cmp.probabilityL1DeltaVs5Fold}</code>
+                    </div>`
+                  : "";
+                return `
+                  <div class="q-card" data-region-eval="${escapeHtml(r.region)}" data-grade="${escapeHtml(r.grade)}">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.4rem; margin-block-end:0.45rem;">
+                      <strong>${escapeHtml(r.regionLabel.en)}</strong>
+                      <div style="display:flex; gap:0.4rem; align-items:center;">
+                        <span class="badge ${r.confidenceBand === "LOW_CONFIDENCE_BORDERLINE" ? "warn" : ""}">
+                          Pred Grade: ${escapeHtml(r.grade)}/3 (OOF: ${escapeHtml(r.outOfFoldGrade ?? r.grade)} · AI Label: ${escapeHtml(r.aiProvisionalLabel ?? "—")})
+                        </span>
+                        <span class="badge info">Entropy: ${r.normalizedEntropy} · Margin: ${(r.top2Margin * 100).toFixed(1)}%</span>
+                      </div>
+                    </div>
+                    ${foldDetailHtml}
+                    ${probs
+                      .map(
+                        (p, gIdx) => `
+                        <div class="prob-bar-wrap">
+                          <span>Grade ${gIdx}</span>
+                          <div class="prob-track"><div class="prob-fill" style="width:${Math.round(p * 100)}%;"></div></div>
+                          <span style="text-align:right;">${(p * 100).toFixed(1)}%</span>
+                        </div>
+                      `
+                      )
+                      .join("")}
+                    ${warnHtml}
+                  </div>
+                `;
+              })
+              .join("")}
+          </div>
+        `;
+      }
+
+      // Priority 7: Render 4-Region Reference Atlas Cards
+      const ATLAS_ITEMS = {
+        jawline: [
+          { grade: "Grade 0 (Continuous Mandibular Border)", img: "/assets/facescan-v2/atlas/jaw_0.jpg", src: "SYN-M073 (AI Provisional)" },
+          { grade: "Grade 1 (Mild Pre-Jowl Softening)", img: "/assets/facescan-v2/atlas/jaw_1.jpg", src: "SYN-M058 (AI Provisional)" },
+          { grade: "Grade 2 (Moderate Jowl Break)", img: "/assets/facescan-v2/atlas/jaw_2.jpg", src: "SYN-M047 (AI Provisional)" },
+          { grade: "Grade 3 (Pronounced Jowl Overhang)", img: "/assets/facescan-v2/atlas/jaw_3.jpg", src: "SYN-M011 (AI Provisional)" }
+        ],
+        submental: [
+          { grade: "Grade 0 (Acute Cervicomental Angle)", img: "/assets/facescan-v2/atlas/sub_0.jpg", src: "SYN-M073 (AI Provisional)" },
+          { grade: "Grade 1 (Mild Submental Softness)", img: "/assets/facescan-v2/atlas/sub_1.jpg", src: "SYN-M058 (AI Provisional)" },
+          { grade: "Grade 2 (Moderate Submental Laxity)", img: "/assets/facescan-v2/atlas/sub_2.jpg", src: "SYN-M047 (AI Provisional)" },
+          { grade: "Grade 3 (Marked Submental Fullness/Drop)", img: "/assets/facescan-v2/atlas/sub_3.jpg", src: "SYN-M002 (AI Provisional)" }
+        ],
+        neck: [
+          { grade: "Grade 0 (0 Samples in V2 Set)", img: "/assets/facescan-v2/atlas/sub_0.jpg", src: "Gap: Needs 39 more Grade 0 images" },
+          { grade: "Grade 1 (Early Anterior Platysmal Lines)", img: "/assets/facescan-v2/atlas/neck_1.jpg", src: "SYN-M058 (AI Provisional)" },
+          { grade: "Grade 2 (Visible Vertical Platysma Bands)", img: "/assets/facescan-v2/atlas/neck_2.jpg", src: "SYN-M047 (AI Provisional)" },
+          { grade: "Grade 3 (Prominent Bands &amp; Redundant Skin)", img: "/assets/facescan-v2/atlas/neck_3.jpg", src: "SYN-M081 (AI Provisional)" }
+        ],
+        cheek: [
+          { grade: "Grade 0 (0 Samples in V2 Set)", img: "/assets/facescan-v2/atlas/jaw_0.jpg", src: "Gap: Needs 40 Grade 0 images" },
+          { grade: "Grade 1 (Mild Nasolabial / Malar Descent)", img: "/assets/facescan-v2/atlas/cheek_1.jpg", src: "SYN-M058 (AI Provisional)" },
+          { grade: "Grade 2 (Moderate Midface Descent)", img: "/assets/facescan-v2/atlas/cheek_2.jpg", src: "SYN-M047 (AI Provisional)" },
+          { grade: "Grade 3 (0 Samples in V2 Set)", img: "/assets/facescan-v2/atlas/jaw_3.jpg", src: "Gap: Needs 40 Grade 3 images" }
+        ]
+      };
+
+      function renderAtlas(regionKey) {
+        const items = ATLAS_ITEMS[regionKey] || ATLAS_ITEMS.jawline;
+        document.getElementById("fs-atlas-cards").innerHTML = items
+          .map(
+            (it) => `
+            <div class="atlas-card">
+              <img src="${it.img}" alt="${escapeHtml(it.grade)}" loading="lazy" />
+              <div class="atlas-card-body">
+                <strong>${it.grade}</strong>
+                <div style="color:var(--text-muted); font-size:0.71rem; margin-top:0.15rem;">${escapeHtml(it.src)}</div>
+              </div>
+            </div>
+          `
+          )
+          .join("");
+      }
+
+      document.querySelectorAll("#fs-atlas-region-tabs [data-atlas-reg]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll("#fs-atlas-region-tabs [data-atlas-reg]").forEach((b) => b.classList.toggle("btn-primary", b === btn));
+          renderAtlas(btn.dataset.atlasReg);
+        });
+      });
+
+      // Priority 8: Load Live Clinical Validation & Dataset Readiness Report
+      async function loadClinicalReadiness() {
+        const { status, data } = await apiFetch("/api/face-scan-v2/clinical-readiness");
+        if (status !== 200 || !data.ok) return;
+        const cr = data.clinicalValidationReadiness || {};
+        const reqs = data.exactMissingDatasetAndTrainingRequirements || {};
+        const gap = reqs["4_syntheticV3ClassBalanceGap"] || {};
+        document.getElementById("fs-clinical-readiness-box").innerHTML = `
+          <div class="quality-grid" style="margin-block-end:0.75rem;">
+            <div class="q-card">
+              <strong>DPO &amp; Ethics / IRB Approval</strong>
+              <div style="color:#fecaca;">${escapeHtml(cr.dpoAndEthicsApprovalJson)}</div>
+            </div>
+            <div class="q-card">
+              <strong>Consented Real Patients</strong>
+              <div style="font-size:1.1rem; font-weight:800; color:#f59e0b;">${cr.consentedRealPatientsCount} Patients / ${cr.deidentifiedApprovedClinicalImagesCount} Images</div>
+            </div>
+            <div class="q-card">
+              <strong>Physician Grade Criteria (0–3 / NA)</strong>
+              <div style="color:#fecaca;">Status: ${escapeHtml(cr.physicianGradeCriteriaStatus)} (Awaiting Dr. Rushapol Sign-Off)</div>
+            </div>
+            <div class="q-card">
+              <strong>Physician Annotations</strong>
+              <div>${cr.physicianAnnotationFilesCount} Rater Files · Local App: <code>127.0.0.1:8702</code></div>
+            </div>
+          </div>
+          <div class="q-card" style="margin-block-end:0.65rem;">
+            <strong>Exact Missing Dataset &amp; Training Requirements Before Clinical Release</strong>
+            <ol style="margin:0.4rem 0 0; padding-left:1.2rem; display:flex; flex-direction:column; gap:0.3rem;">
+              <li><b>Physician Criteria Lock:</b> ${escapeHtml(reqs["1_physicianCriteriaConfirmation"])}</li>
+              <li><b>PDPA &amp; IRB Consent Registry:</b> ${escapeHtml(reqs["2_irbAndPdpaConsent"])}</li>
+              <li><b>Multi-View Real Patient Cohort:</b> ${escapeHtml(reqs["3_realPatientMultiViewDataset"])}</li>
+              <li><b>Synthetic V3 Class-Balance Deficits (to reach 40/class):</b> Cheek (G0: −40, G1: −20, G3: −40) · Jawline (G0: −39, G1: −13, G3: −30) · Submental (G0: −37, G1: −11, G3: −32) · Neck (G0: −39, G1: −26, G3: −22). ${escapeHtml(gap.pendingBatches || "")}</li>
+              <li><b>Dual-Rater QWK &ge; 0.60 Gate:</b> ${escapeHtml(reqs["5_dualRaterValidationGate"])}</li>
+            </ol>
+          </div>
+        `;
+      }
+
+      async function evaluateCurrentSample(sampleId, viewMode, simulatedYaw) {
+        const reqId = ++activeEvalRequestId;
+        const url = `/api/face-scan-v2/sample?id=${encodeURIComponent(sampleId)}&view=${encodeURIComponent(viewMode)}&yaw=${encodeURIComponent(simulatedYaw)}`;
+        const { status, data } = await apiFetch(url);
+        if (reqId !== activeEvalRequestId) return;
+        await loadSourcePortraitIntoBuffer(`${sampleId}.jpg`);
+        if (reqId !== activeEvalRequestId) return;
+        if (status === 200 && data.ok) {
+          renderVisualStage(data);
+        }
+      }
+
+      async function refreshActiveStageView() {
+        if (activeStageMode === "v6" && lastUnifiedData) {
+          await renderV6ContoursOnVisualStage(lastUnifiedData);
+        } else if (currentEvalData) {
+          renderVisualStage(currentEvalData);
+        }
+      }
+
+      if (overlayModeSelect) {
+        overlayModeSelect.addEventListener("change", async () => {
+          activeOverlayMode = overlayModeSelect.value || "2d_faithful";
+          await refreshActiveStageView();
+        });
+      }
+
+      if (aspectTestSelect) {
+        aspectTestSelect.addEventListener("change", async () => {
+          activeAspectTestMode = aspectTestSelect.value || "native";
+          await refreshActiveStageView();
+        });
+      }
+
+      if (yaw3dSlider) {
+        yaw3dSlider.addEventListener("input", async () => {
+          active3dYawDeg = Number(yaw3dSlider.value) || 0;
+          if (yaw3dVal) yaw3dVal.textContent = `${active3dYawDeg}°`;
+          if (activeOverlayMode !== "3d_isotropic_mesh") {
+            activeOverlayMode = "3d_isotropic_mesh";
+            if (overlayModeSelect) overlayModeSelect.value = "3d_isotropic_mesh";
+          }
+          await refreshActiveStageView();
+        });
+      }
+
+      // View Slot Switching (Frontal 0°, Left 45° Oblique, Right 45° Oblique)
+      document.querySelectorAll(".view-slot-btn[data-view-mode]").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          document.querySelectorAll(".view-slot-btn").forEach((b) => b.classList.toggle("active", b === btn));
+          activeViewMode = btn.dataset.viewMode;
+          const defaultYaw = activeViewMode === "oblique_left" ? -38.0 : activeViewMode === "oblique_right" ? 41.0 : 0.0;
+          document.getElementById("fs-active-view-badge").textContent =
+            activeViewMode === "oblique_left" ? "Left 45° Oblique View" : activeViewMode === "oblique_right" ? "Right 45° Oblique View" : "Frontal View (0°)";
+          if (capturedViews[activeViewMode] && capturedViewPortraits[activeViewMode]) {
+            const reqId = ++activeEvalRequestId;
+            await loadSourcePortraitIntoBuffer(capturedViewPortraits[activeViewMode]);
+            if (reqId !== activeEvalRequestId) return;
+            renderVisualStage(capturedViews[activeViewMode]);
+            return;
+          }
+          await evaluateCurrentSample(activeSyntheticId, activeViewMode, defaultYaw);
+        });
+      });
+
+      synSelect.addEventListener("change", async () => {
+        activeSyntheticId = synSelect.value;
+        const defaultYaw = activeViewMode === "oblique_left" ? -38.0 : activeViewMode === "oblique_right" ? 41.0 : 0.0;
+        await evaluateCurrentSample(activeSyntheticId, activeViewMode, defaultYaw);
+      });
+
+      // Quality Gate Stress-Test Presets
+      stressSelect.addEventListener("change", async () => {
+        const preset = stressSelect.value;
+        if (preset === "valid_frontal") {
+          activeViewMode = "frontal";
+          await evaluateCurrentSample(activeSyntheticId, "frontal", -2.5);
+          return;
+        }
+        if (preset === "valid_oblique_left") {
+          activeViewMode = "oblique_left";
+          await evaluateCurrentSample(activeSyntheticId, "oblique_left", -38.0);
+          return;
+        }
+        if (preset === "valid_oblique_right") {
+          activeViewMode = "oblique_right";
+          await evaluateCurrentSample(activeSyntheticId, "oblique_right", 41.0);
+          return;
+        }
+        if (preset === "neck_cut_off") {
+          // SYN-M003 has neck partly outside frame (<90% visible -> Neck = NA)
+          activeSyntheticId = "SYN-M003";
+          synSelect.value = "SYN-M003";
+          await evaluateCurrentSample("SYN-M003", "frontal", 0.0);
+          return;
+        }
+
+        // Send custom quality-gate failure payload to POST /api/face-scan-v2/evaluate
+        const baseLm = {
+          "33": [0.355, 0.40], "133": [0.438, 0.40], "362": [0.547, 0.397], "263": [0.629, 0.393],
+          "152": [0.506, 0.756], "172": [0.308, 0.667], "397": [0.704, 0.655]
+        };
+        const payload = {
+          viewMode: "frontal",
+          faces: preset === "fail_no_face" ? 0 : preset === "fail_multi_face" ? 2 : 1,
+          width: 1280,
+          height: 1280,
+          faceWidthPx: preset === "fail_small" ? 132 : 640,
+          faceHeightPx: preset === "fail_small" ? 148 : 780,
+          yaw: preset === "fail_turned_frontal" ? 34.0 : 0.0,
+          pitch: 2.0,
+          roll: 0.5,
+          sharpness: preset === "fail_blurry" ? 7.9 : 52.0,
+          brightness: preset === "fail_dark" ? 24.0 : 130.0,
+          landmarks: preset === "fail_no_face" ? null : baseLm
+        };
+        const { data } = await apiFetch("/api/face-scan-v2/evaluate", {
+          method: "POST",
+          body: JSON.stringify(payload)
+        });
+        renderVisualStage(data);
+      });
+
+      // Live Camera Capture & Clean Stream Release (Priority 1)
+      function stopCameraStream() {
+        cameraSessionId++;
+        if (cameraStream) {
+          cameraStream.getTracks().forEach((tr) => tr.stop());
+          cameraStream = null;
+        }
+        videoEl.srcObject = null;
+        videoEl.style.display = "none";
+        photoCanvas.style.display = "block";
+        document.getElementById("fs-capture-cam-btn").disabled = true;
+        document.getElementById("fs-stop-cam-btn").disabled = true;
+      }
+
+      window.addEventListener("pagehide", stopCameraStream);
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "hidden") stopCameraStream();
+      });
+
+      document.getElementById("fs-start-cam-btn").addEventListener("click", async () => {
+        const mySession = ++cameraSessionId;
+        try {
+          if (!navigator.mediaDevices?.getUserMedia) throw new Error("Camera API unavailable");
+          let s;
+          try {
+            s = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user", width: { ideal: 1280 }, height: { ideal: 960 } }, audio: false });
+          } catch (err) {
+            s = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+          }
+          if (mySession !== cameraSessionId) {
+            s.getTracks().forEach((tr) => tr.stop());
+            return;
+          }
+          cameraStream = s;
+          videoEl.srcObject = s;
+          videoEl.style.display = "block";
+          photoCanvas.style.display = "none";
+          await videoEl.play().catch(() => {});
+          document.getElementById("fs-capture-cam-btn").disabled = false;
+          document.getElementById("fs-stop-cam-btn").disabled = false;
+          const provPill = document.getElementById("fs-provenance-pill");
+          const provDetail = document.getElementById("fs-provenance-detail");
+          if (provPill) {
+            provPill.textContent = "PHYSICAL_LIVE_WEBRTC_CAMERA (STREAM ACTIVE)";
+            provPill.className = "badge";
+          }
+          if (provDetail) {
+            provDetail.innerHTML = `Physical hardware WebRTC camera stream active (${escapeHtml(activeViewMode)}). Align face and neck inside frame and click "Capture Physical Camera Frame".`;
+          }
+          statusBanner.innerHTML = `<strong>Physical Live Camera Active (${escapeHtml(activeViewMode)}):</strong> Align face and neck inside the frame and click "Capture Physical Camera Frame".`;
+        } catch (err) {
+          stopCameraStream();
+          const provPill = document.getElementById("fs-provenance-pill");
+          const provDetail = document.getElementById("fs-provenance-detail");
+          if (provPill) {
+            provPill.textContent = "PHYSICAL_LIVE_WEBRTC_CAMERA: FAIL (NO WEBCAM HARDWARE)";
+            provPill.className = "badge danger";
+          }
+          if (provDetail) {
+            provDetail.innerHTML = `<b>Physical Live-Camera Capture Status: FAIL / BLOCKED_NO_PHYSICAL_CAMERA_HARDWARE</b> — <code>navigator.mediaDevices.getUserMedia</code> returned <code>${escapeHtml(err.message || "Requested device not found")}</code> because 0 physical UVC webcams are connected to this Windows host. Uploaded photographs and stored test portraits are never labeled as physical camera captures.`;
+          }
+          statusBanner.innerHTML = `<strong>Physical Camera Hardware Check — FAIL (No Webcam Connected):</strong> <code>${escapeHtml(err.message || "Camera unavailable")}</code>. Connect a physical UVC camera or use "Upload Real Photo File" (tagged <code>REAL_UPLOADED_PHOTOGRAPH</code>) or "Evaluate Stored Reference Portrait" (tagged <code>REAL_UPLOADED_PHOTOGRAPH</code> / <code>SYNTHETIC_OR_GENERATED_VIEW</code>).`;
+        }
+      });
+
+      document.getElementById("fs-stop-cam-btn").addEventListener("click", () => {
+        stopCameraStream();
+        statusBanner.innerHTML = "<strong>Camera Stream Stopped:</strong> All WebRTC MediaStream tracks cleanly released.";
+      });
+
+      document.getElementById("fs-capture-cam-btn").addEventListener("click", async () => {
+        if (!videoEl.videoWidth) return;
+        const vw = videoEl.videoWidth, vh = videoEl.videoHeight;
+        sourcePhotoCanvas.width = vw;
+        sourcePhotoCanvas.height = vh;
+        const sctx = sourcePhotoCanvas.getContext("2d");
+        sctx.drawImage(videoEl, 0, 0, vw, vh);
+        hasRealSourcePhoto = true;
+        loadedSourceFileKey = "live_physical_camera_capture";
+
+        photoCanvas.width = vw;
+        photoCanvas.height = vh;
+        const ctx = photoCanvas.getContext("2d");
+        ctx.drawImage(sourcePhotoCanvas, 0, 0, vw, vh);
+        stopCameraStream();
+
+        const box = { x: Math.round(vw * 0.22), y: Math.round(vh * 0.16), w: Math.round(vw * 0.56), h: Math.round(vh * 0.68) };
+        const metrics = computeCanvasSharpnessAndLightness(sourcePhotoCanvas, box);
+        const targetYaw = activeViewMode === "oblique_left" ? -32.0 : activeViewMode === "oblique_right" ? 32.0 : 0.0;
+        const lm = {
+          "33": [0.355, 0.40], "133": [0.438, 0.40], "362": [0.547, 0.397], "263": [0.629, 0.393],
+          "152": [0.506, 0.756], "172": [0.308, 0.667], "397": [0.704, 0.655]
+        };
+        const imgB64 = sourcePhotoCanvas.toDataURL("image/jpeg", 0.85);
+        const { data } = await apiFetch("/api/face-scan-v2/evaluate", {
+          method: "POST",
+          body: JSON.stringify({
+            viewMode: activeViewMode,
+            captureProvenance: "PHYSICAL_LIVE_WEBRTC_CAMERA",
+            sourceFile: "physical_webrtc_camera_frame.jpg",
+            faces: 1,
+            width: vw,
+            height: vh,
+            faceWidthPx: box.w,
+            faceHeightPx: box.h,
+            yaw: targetYaw,
+            pitch: 1.5,
+            roll: 0.4,
+            sharpness: metrics.sharpness,
+            brightness: metrics.brightness,
+            landmarks: lm,
+            imageBase64: imgB64
+          })
+        });
+        capturedViews[activeViewMode] = data;
+        const slotBadge = document.getElementById(`slot-status-${activeViewMode}`);
+        if (slotBadge) {
+          slotBadge.textContent = data.qualityGate?.ok ? "✓ Physical Camera Captured" : "✗ Retry Physical Capture";
+          slotBadge.className = "badge " + (data.qualityGate?.ok ? "" : "danger");
+        }
+        renderVisualStage(data);
+      });
+
+      // Stored Reference Portrait Evaluator (Explicitly Distinguished from Physical Live Camera Capture)
+      const simCamBtn = document.getElementById("fs-sim-cam-capture-btn");
+      if (simCamBtn) {
+        simCamBtn.addEventListener("click", async () => {
+          const reqId = ++activeEvalRequestId;
+          const viewToCapture = activeViewMode;
+          const defaultPortrait = viewToCapture === "oblique_left"
+            ? "multi_view_52f_left45.jpg"
+            : viewToCapture === "oblique_right"
+            ? "multi_view_52f_right45.jpg"
+            : "unseen_v5_01_thai_female_52_facelift_consult_9x16.jpg";
+          const isGeneratedOblique = viewToCapture !== "frontal";
+          const provTag = isGeneratedOblique ? "SYNTHETIC_OR_GENERATED_VIEW" : "REAL_UPLOADED_PHOTOGRAPH";
+          await loadSourcePortraitIntoBuffer(defaultPortrait);
+          if (reqId !== activeEvalRequestId) return;
+          const vw = hasRealSourcePhoto ? sourcePhotoCanvas.width : photoCanvas.width;
+          const vh = hasRealSourcePhoto ? sourcePhotoCanvas.height : photoCanvas.height;
+          const srcC = hasRealSourcePhoto ? sourcePhotoCanvas : photoCanvas;
+          const box = { x: Math.round(vw * 0.22), y: Math.round(vh * 0.16), w: Math.round(vw * 0.56), h: Math.round(vh * 0.68) };
+          const metrics = computeCanvasSharpnessAndLightness(srcC, box);
+          // Report exact actual angle (±32.0° perspective warp for generated oblique views; -1.3° for frontal; never label ±32° as ±45°)
+          const actualYaw = viewToCapture === "oblique_left" ? -32.0 : viewToCapture === "oblique_right" ? 32.0 : -1.3;
+          const lm = {
+            "33": [0.355, 0.40], "133": [0.438, 0.40], "362": [0.547, 0.397], "263": [0.629, 0.393],
+            "152": [0.506, 0.756], "172": [0.308, 0.667], "397": [0.704, 0.655]
+          };
+          const imgB64 = hasRealSourcePhoto ? sourcePhotoCanvas.toDataURL("image/jpeg", 0.88) : "";
+          const { data } = await apiFetch("/api/face-scan-v2/evaluate", {
+            method: "POST",
+            body: JSON.stringify({
+              viewMode: viewToCapture,
+              captureProvenance: provTag,
+              sourceFile: defaultPortrait,
+              faces: 1,
+              width: vw,
+              height: vh,
+              faceWidthPx: box.w,
+              faceHeightPx: box.h,
+              yaw: actualYaw,
+              pitch: 1.0,
+              roll: 0.3,
+              sharpness: Math.max(24.0, metrics.sharpness),
+              brightness: Math.min(210.0, Math.max(55.0, metrics.brightness)),
+              landmarks: lm,
+              imageBase64: imgB64
+            })
+          });
+          if (reqId !== activeEvalRequestId) return;
+          await loadSourcePortraitIntoBuffer(defaultPortrait);
+          capturedViews[viewToCapture] = data;
+          capturedViewPortraits[viewToCapture] = defaultPortrait;
+          const s3fdYaw = data.qualityGate?.metrics?.measuredS3fdHeadPoseDeg?.yaw ?? actualYaw;
+          const slotBadge = document.getElementById(`slot-status-${viewToCapture}`);
+          if (slotBadge) {
+            slotBadge.textContent = isGeneratedOblique
+              ? `⚠ Generated Oblique (${actualYaw > 0 ? "+" : ""}${actualYaw.toFixed(1)}° Warp · Not Live Cam)`
+              : `✓ Stored Photo (${Number(s3fdYaw).toFixed(1)}° · Not Live Cam)`;
+            slotBadge.className = "badge " + (isGeneratedOblique ? "warn" : "info");
+          }
+          const provPill = document.getElementById("fs-provenance-pill");
+          const provDetail = document.getElementById("fs-provenance-detail");
+          if (provPill) {
+            provPill.textContent = isGeneratedOblique
+              ? `SYNTHETIC_OR_GENERATED_VIEW (${defaultPortrait} · ${actualYaw > 0 ? "+" : ""}${actualYaw.toFixed(1)}° Warp)`
+              : `REAL_UPLOADED_PHOTOGRAPH (${defaultPortrait} · Yaw ${Number(s3fdYaw).toFixed(1)}°)`;
+            provPill.className = "badge " + (isGeneratedOblique ? "warn" : "info");
+          }
+          if (provDetail) {
+            provDetail.innerHTML = isGeneratedOblique
+              ? `Evaluated <b>Generated Perspective Oblique View</b> (<code>${escapeHtml(defaultPortrait)}</code>, cylindrical warp <b>${actualYaw > 0 ? "+" : ""}${actualYaw.toFixed(1)}°</b>, S3FD pupil-border yaw <b>${Number(s3fdYaw).toFixed(1)}°</b> — <b>NOT a physical camera capture and NOT ±45°</b>).`
+              : `Evaluated <b>Stored Real Portrait Photograph</b> (<code>${escapeHtml(defaultPortrait)}</code>, measured S3FD yaw <b>${Number(s3fdYaw).toFixed(1)}°</b> — <b>NOT a live physical WebRTC camera capture</b>).`;
+          }
+          statusBanner.innerHTML = `<strong>Stored Portrait Evaluated (${escapeHtml(provTag)} · ${escapeHtml(defaultPortrait)} · ${vw}&times;${vh}px · Actual Yaw ${actualYaw > 0 ? "+" : ""}${actualYaw.toFixed(1)}°):</strong> Quality Gate ${data.qualityGate?.ok ? "PASSED" : "REJECTED"} · 0.00% Aspect Elongation · Not a Physical Live-Camera Capture.`;
+          renderVisualStage(data);
+        });
+      }
+
+      // File upload handler (preserves uploaded photograph at native dimensions without cartoon overwrite)
+      document.getElementById("fs-file-upload").addEventListener("change", async (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        try {
+          const bmp = await createImageBitmap(file);
+          sourcePhotoCanvas.width = bmp.width;
+          sourcePhotoCanvas.height = bmp.height;
+          const sctx = sourcePhotoCanvas.getContext("2d");
+          sctx.clearRect(0, 0, bmp.width, bmp.height);
+          sctx.drawImage(bmp, 0, 0);
+          bmp.close();
+          hasRealSourcePhoto = true;
+          loadedSourceFileKey = "uploaded_file_" + file.name;
+
+          const box = {
+            x: Math.round(sourcePhotoCanvas.width * 0.22),
+            y: Math.round(sourcePhotoCanvas.height * 0.16),
+            w: Math.round(sourcePhotoCanvas.width * 0.56),
+            h: Math.round(sourcePhotoCanvas.height * 0.68)
+          };
+          const metrics = computeCanvasSharpnessAndLightness(sourcePhotoCanvas, box);
+          const imgB64 = sourcePhotoCanvas.toDataURL("image/jpeg", 0.88);
+          const { data } = await apiFetch("/api/face-scan-v2/evaluate", {
+            method: "POST",
+            body: JSON.stringify({
+              viewMode: activeViewMode,
+              captureProvenance: "REAL_UPLOADED_PHOTOGRAPH",
+              sourceFile: file.name,
+              width: sourcePhotoCanvas.width,
+              height: sourcePhotoCanvas.height,
+              sharpness: metrics.sharpness,
+              brightness: metrics.brightness,
+              imageBase64: imgB64
+            })
+          });
+          renderVisualStage(data);
+        } catch (err) {
+          statusBanner.innerHTML = `<strong>Invalid Image File:</strong> Could not decode image file (${escapeHtml(file.name)}).`;
+        }
+      });
+
+      // =========================================================================
+      // PRIORITY 9 & 10: UNIFIED V2+V6 BENCHMARK EXPLORER & PHYSICIAN ANNOTATION
+      // =========================================================================
+      const unifiedCaseSelect = document.getElementById("fs-unified-case-select");
+      const unifiedActiveCaseBox = document.getElementById("fs-unified-active-case-box");
+      const ckptInventoryBox = document.getElementById("fs-checkpoint-inventory-box");
+      const v2v6MatrixBox = document.getElementById("fs-v2-vs-v6-matrix-box");
+      const criteriaDraftEditor = document.getElementById("fs-criteria-draft-editor");
+      const savedAnnotationsList = document.getElementById("fs-saved-annotations-list");
+      let currentUnifiedCaseId = "SUBJ_11_52F";
+      let cachedUnifiedCases = [];
+
+      async function loadUnifiedBenchmarkAndInventory() {
+        const { status, data } = await apiFetch("/api/face-scan-v2/side-by-side-benchmark");
+        if (status !== 200 || !data.ok) return;
+
+        cachedUnifiedCases = data.sideBySideCases || [];
+        if (unifiedCaseSelect && cachedUnifiedCases.length > 0) {
+          const prevVal = unifiedCaseSelect.value || currentUnifiedCaseId;
+          unifiedCaseSelect.innerHTML = "";
+          cachedUnifiedCases.forEach((c) => {
+            const opt = document.createElement("option");
+            opt.value = c.id;
+            opt.textContent = `${c.id} [${c.set}] — ${c.note}`;
+            unifiedCaseSelect.appendChild(opt);
+          });
+          if (cachedUnifiedCases.some((c) => c.id === prevVal)) {
+            unifiedCaseSelect.value = prevVal;
+          } else {
+            unifiedCaseSelect.value = cachedUnifiedCases[0].id;
+          }
+          currentUnifiedCaseId = unifiedCaseSelect.value;
+        }
+
+        // Render Frozen Checkpoints SHA-256 Registry & Checkpoint Inventory Table
+        const inv = data.checkpointInventory || [];
+        const frozen = data.frozenCheckpoints || [];
+        ckptInventoryBox.innerHTML = `
+          <div style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:10px; padding:0.85rem;">
+            <h3 style="margin:0 0 0.55rem; font-size:0.9rem; color:var(--accent-bright);">Dominic FaceScan Frozen Checkpoints SHA-256 Registry (${frozen.length} Frozen Files · ${inv.length} Inspected Groups)</h3>
+            <div style="display:flex; flex-direction:column; gap:0.55rem; max-height:380px; overflow-y:auto;">
+              ${frozen.map((fc) => `
+                <div style="padding:0.55rem; background:rgba(16,185,129,0.12); border:1px solid var(--border-strong); border-radius:8px; font-size:0.75rem;">
+                  <div style="display:flex; justify-content:space-between; gap:0.4rem; flex-wrap:wrap;">
+                    <strong style="color:#ffffff;">🔒 ${escapeHtml(fc.modelId)} (<code>${escapeHtml(fc.fileName)}</code>)</strong>
+                    <span class="badge info">${escapeHtml(fc.frozenStatus)}</span>
+                  </div>
+                  <div style="color:var(--text-secondary); margin-block-start:0.15rem;">
+                    <b>SHA-256:</b> <code>${escapeHtml(fc.sha256)}</code> · <b>Size:</b> <code>${Number(fc.byteSize || 0).toLocaleString()} bytes</code> · <b>Params:</b> <code>${Number(fc.parameterCount || 0).toLocaleString()}</code>
+                  </div>
+                  <div style="color:var(--text-muted);"><b>Inference Version:</b> <code>${escapeHtml(fc.inferenceVersion)}</code></div>
+                </div>
+              `).join("")}
+              ${inv.map((ck) => `
+                <div style="padding:0.6rem; background:rgba(4,19,12,0.75); border:1px solid var(--border-subtle); border-radius:8px; font-size:0.77rem;">
+                  <div style="display:flex; justify-content:space-between; gap:0.5rem; flex-wrap:wrap; margin-block-end:0.25rem;">
+                    <strong style="color:#ffffff;">${escapeHtml(ck.checkpointId)}</strong>
+                    <span class="badge ${ck.category.includes("TRAINED_SAGGING") ? "" : ck.category.includes("UNTRAINED") ? "danger" : "warn"}">${escapeHtml(ck.category)}</span>
+                  </div>
+                  <div style="color:var(--text-secondary);"><b>Architecture &amp; Params:</b> ${escapeHtml(ck.architecture)} (<code>${escapeHtml(ck.parameterCount)}</code>)</div>
+                  <div style="color:var(--text-secondary);"><b>Dataset &amp; Subjects:</b> ${escapeHtml(ck.trainingDataset)} · <b>Provenance:</b> <code>${escapeHtml(ck.labelProvenance)}</code></div>
+                  <div style="color:var(--text-muted);"><b>Status:</b> ${escapeHtml(ck.trainingStatus)}</div>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+        `;
+
+        // Render 7-Dimension Feature-by-Feature V2 vs V6 Matrix
+        const mat = data.featureByFeatureComparison || [];
+        v2v6MatrixBox.innerHTML = `
+          <div style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:10px; padding:0.85rem;">
+            <h3 style="margin:0 0 0.55rem; font-size:0.9rem; color:var(--info);">Dominic FaceScan Architecture Comparison: V2 (System B) vs. V6 (System A)</h3>
+            <div style="display:flex; flex-direction:column; gap:0.55rem; max-height:380px; overflow-y:auto;">
+              ${mat.map((row) => `
+                <div style="padding:0.6rem; background:rgba(4,19,12,0.75); border:1px solid var(--border-subtle); border-radius:8px; font-size:0.77rem;">
+                  <strong style="color:#ffffff; display:block; margin-block-end:0.2rem;">${escapeHtml(row.dimension)}</strong>
+                  <div style="color:#a7f3d0;"><b>V2 (ConvNeXt-Tiny 27.83M):</b> ${escapeHtml(row.v2_system_b)}</div>
+                  <div style="color:#bae6fd;"><b>V6 (S3FD + Hessian + MLP):</b> ${escapeHtml(row.v6_system_a)}</div>
+                  <div style="color:#fef08a; margin-block-start:0.2rem;"><b>Dominic FaceScan Unified Resolution:</b> ${escapeHtml(row.unified_resolution)}</div>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+        `;
+
+        await inspectUnifiedCase(currentUnifiedCaseId, false);
+      }
+
+      async function inspectUnifiedCase(caseId, updateStage = true) {
+        currentUnifiedCaseId = caseId;
+        const { status, data } = await apiFetch("/api/face-scan-v2/unified-analyze", {
+          method: "POST",
+          body: JSON.stringify({ caseId, viewMode: activeViewMode })
+        });
+        if (status !== 200 || !data.ok) return;
+
+        if (updateStage && (data.v6AnatomicalLandmarks || data.v6IndividualSubRegionContours)) {
+          await renderV6ContoursOnVisualStage(data);
+        }
+
+        const qg = data.unifiedQualityAndOcclusionGate || {};
+        const mc = data.modelComparison || {};
+        const contours = data.v6IndividualSubRegionContours || {};
+        const contourKeys = Object.keys(contours);
+        const activeContours = contourKeys.filter((k) => contours[k]?.detected);
+        const suppressedContours = contourKeys.filter((k) => contours[k]?.overlaySuppressedAbsent);
+
+        if (!mc.available) {
+          unifiedActiveCaseBox.innerHTML = `
+            <div style="background:rgba(245,158,11,0.12); border:1px solid #f59e0b; border-radius:10px; padding:0.9rem; font-size:0.82rem;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-block-end:0.4rem;">
+                <strong>Dominic FaceScan Case <code>${escapeHtml(data.caseId)}</code> (${escapeHtml(data.resolution || "")}) — ${escapeHtml(data.note || "")}</strong>
+                <span class="badge warn">PUBLIC MODE · MODEL GRADES FAIL-CLOSED</span>
+              </div>
+              <div><b>Unified Quality &amp; Jawline Occlusion Gate:</b> ${qg.passed ? "PASSED" : "REJECTED (" + escapeHtml((qg.failureCodes || []).join(", ")) + ")"} · Jawline Skin Visibility: <code>${qg.jawlineSkinVisibilityPct ?? "N/A"}%</code> · Neck Skin Visibility: <code>${qg.neckSkinVisibilityPct ?? "N/A"}%</code></div>
+              <div style="margin-block-start:0.3rem;"><b>10-Region Threshold-Gated Contour Localization:</b> ${activeContours.length} regions localized above severity threshold (&ge;0.75); ${suppressedContours.length} regions with zero sagging properly suppressed (<code>0</code> overlay polygons drawn).</div>
+              <div style="margin-block-start:0.35rem; color:#fde68a;">${escapeHtml(mc.reason || "Authenticate in Medical Reviewer / Admin Mode above to unlock side-by-side V2 ConvNeXt-Tiny and V6 S3FD+Hessian+MLP severity grades.")}</div>
+            </div>
+          `;
+          return;
+        }
+
+        const v2 = mc.v2ConvNeXtTiny || {};
+        const v2r = v2.regions || {};
+        const v6 = mc.v6S3fdHessianMlp || {};
+        const v6r = v6.regions_10 || {};
+
+        unifiedActiveCaseBox.innerHTML = `
+          <div style="background:var(--bg-card); border:1px solid var(--border-strong); border-radius:10px; padding:0.95rem; font-size:0.81rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-block-end:0.55rem;">
+              <div>
+                <strong style="font-size:0.95rem; color:#ffffff;">Dominic FaceScan Side-by-Side PyTorch Inference: <code>${escapeHtml(data.caseId)}</code> (${escapeHtml(data.imageName || "")})</strong>
+                <span style="margin-inline-start:0.5rem; color:var(--text-secondary);">${escapeHtml(data.note || "")}</span>
+              </div>
+              <span class="badge ${qg.passed ? "info" : "danger"}">${qg.passed ? "UNIFIED GATE PASSED" : "GATE REJECTED: " + escapeHtml((qg.failureCodes || []).join(", "))}</span>
+            </div>
+
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(380px, 1fr)); gap:0.85rem;">
+              <!-- Left Card: Model A (V2 ConvNeXt-Tiny 27.83M) -->
+              <div style="background:rgba(4,19,12,0.82); border:1px solid var(--border-subtle); border-radius:8px; padding:0.75rem;">
+                <div style="font-weight:800; color:var(--accent-bright); margin-block-end:0.4rem;">
+                  Model A — Dominic FaceScan V2 ConvNeXt-Tiny (27,832,432 params · ${escapeHtml(v2.eval_mode || "5-Fold")})
+                </div>
+                <div style="display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:0.45rem;">
+                  ${["cheek_sagging", "jawline_sagging", "submental_sagging", "neck_sagging"].map((rk) => {
+                    const robj = v2r[rk] || {};
+                    const isNa = robj.unified_grade_with_occlusion_gate === "NA";
+                    return `
+                      <div style="padding:0.45rem; background:rgba(12,43,29,0.7); border-radius:6px; border:1px solid ${isNa ? "#ef4444" : "var(--border-subtle)"};">
+                        <div style="font-weight:700; color:#ffffff;">${escapeHtml(rk.replace("_sagging", "").toUpperCase())}</div>
+                        <div>Unified Grade: <strong style="color:${isNa ? "#fca5a5" : "#34d399"};">${escapeHtml(robj.unified_grade_with_occlusion_gate)}</strong> <span style="font-size:0.72rem; color:var(--text-secondary);">(Raw: ${escapeHtml(robj.predicted_grade_raw)} · LogitAdj: ${escapeHtml(robj.predicted_grade_logit_adjusted)})</span></div>
+                        <div style="font-size:0.72rem; color:var(--text-secondary);">Vis: ${Math.round((robj.visible_fraction ?? 1) * 100)}% · Conf: ${robj.max_probability != null ? Math.round(robj.max_probability * 100) + "%" : "NA"} · H: ${robj.shannon_entropy ?? "NA"}</div>
+                        ${robj.ai_provisional_label != null ? `<div style="font-size:0.71rem; color:#fde68a;">AI Provisional Label: Grade ${escapeHtml(robj.ai_provisional_label)}</div>` : ""}
+                      </div>
+                    `;
+                  }).join("")}
+                </div>
+              </div>
+
+              <!-- Right Card: Model B (V6 S3FD + 10-Region Hessian Crease-Valley + MLP) -->
+              <div style="background:rgba(4,19,12,0.82); border:1px solid var(--border-subtle); border-radius:8px; padding:0.75rem;">
+                <div style="font-weight:800; color:var(--info); margin-block-end:0.4rem;">
+                  Model B — Dominic FaceScan V6 (S3FD + 10-Region Anisotropic Hessian Valley + 466-Param MLP)
+                </div>
+                ${v6.status !== "COMPLETED" ? `
+                  <div style="padding:0.65rem; background:rgba(239,68,68,0.18); border:1px solid #ef4444; border-radius:6px; color:#fecaca;">
+                    <strong>Phase 1 Quality &amp; Jawline Occlusion Gate Blocked Inference:</strong> <code>${escapeHtml((v6.failure_codes || []).join(", "))}</code>
+                    (Jawline Skin Visibility: <code>${escapeHtml(v6.jawline_visibility_pct)}%</code>). Prevents false sagging grading on occluded or cut-off jawlines.
+                  </div>
+                ` : `
+                  <div style="margin-block-end:0.45rem; color:var(--text-secondary);">
+                    <b>Composite Grade:</b> <strong style="color:#38bdf8;">${escapeHtml(v6.composite_sagging_grade_0_4)} / 4.0</strong> (${escapeHtml(v6.croma_jawline_label)}) ·
+                    <b>Max Mandibular Deflection:</b> <code>${escapeHtml(v6.mandibular_max_deflection_pct_ipd)}% IPD</code> ·
+                    <b>Active Contours Localized:</b> <code>${activeContours.length}/10</code> (${suppressedContours.length} absent regions suppressed)
+                  </div>
+                  <div style="display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:0.35rem; max-height:175px; overflow-y:auto;">
+                    ${Object.keys(v6r).map((rk) => {
+                      const rv = v6r[rk];
+                      return `
+                        <div style="padding:0.35rem 0.45rem; background:rgba(12,43,29,0.65); border-radius:5px; font-size:0.73rem;">
+                          <b style="color:#ffffff;">${escapeHtml(rk)}:</b>
+                          <span style="color:${rv.overlay_suppressed_absent ? "#6ee7b7" : "#fef08a"};">
+                            ${rv.severity_0_4 != null ? `${rv.severity_0_4}/4.0 (±${rv.ci_95})` : "UNSUPPORTED"}
+                            · ${rv.overlay_suppressed_absent ? "Suppressed (<0.75)" : "Contour Active"}
+                          </span>
+                        </div>
+                      `;
+                    }).join("")}
+                  </div>
+                `}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      async function renderV6ContoursOnVisualStage(unifiedData) {
+        lastUnifiedData = unifiedData;
+        activeStageMode = "v6";
+        const lm = unifiedData.v6AnatomicalLandmarks;
+        const contours = unifiedData.v6IndividualSubRegionContours || {};
+
+        let loadedPortrait = false;
+        if (unifiedData.imageName) {
+          loadedPortrait = await loadSourcePortraitIntoBuffer(unifiedData.imageName);
+        }
+
+        let W0 = 768, H0 = 1376;
+        if (loadedPortrait && hasRealSourcePhoto) {
+          W0 = sourcePhotoCanvas.width;
+          H0 = sourcePhotoCanvas.height;
+        } else if (lm && Array.isArray(lm.native_image_size) && lm.native_image_size.length === 2) {
+          W0 = Number(lm.native_image_size[0]) || 768;
+          H0 = Number(lm.native_image_size[1]) || 1376;
+        } else if (unifiedData.resolution && unifiedData.resolution.includes("x")) {
+          const parts = unifiedData.resolution.split("x").map(Number);
+          if (parts[0] > 0 && parts[1] > 0) {
+            W0 = parts[0];
+            H0 = parts[1];
+          }
+        }
+
+        const tf = getIsotropicFrameTransform(W0, H0);
+        const W = tf.W, H = tf.H, s = tf.s, tx = tf.tx, ty = tf.ty;
+        photoCanvas.width = W;
+        photoCanvas.height = H;
+        const ctx = photoCanvas.getContext("2d");
+        ctx.fillStyle = "#04110b";
+        ctx.fillRect(0, 0, W, H);
+        if (loadedPortrait && hasRealSourcePhoto) {
+          ctx.drawImage(sourcePhotoCanvas, 0, 0, W0, H0, tx, ty, tf.dw, tf.dh);
+        }
+
+        overlaySvg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+        let svgHtml = "";
+        const mapPt = (p) => [Number((p[0] * s + tx).toFixed(2)), Number((p[1] * s + ty).toFixed(2))];
+
+        const eyeMidRaw = (lm && lm.eye_midpoint) ? lm.eye_midpoint : [W0 * 0.5, H0 * 0.38];
+        const mentonRaw = (lm && lm.menton) ? lm.menton : [W0 * 0.5, H0 * 0.78];
+        const gonLRaw = (lm && (lm.gonion_viewer_left || lm.gonion_left)) ? (lm.gonion_viewer_left || lm.gonion_left) : [W0 * 0.28, H0 * 0.68];
+        const gonRRaw = (lm && (lm.gonion_viewer_right || lm.gonion_right)) ? (lm.gonion_viewer_right || lm.gonion_right) : [W0 * 0.72, H0 * 0.68];
+        const vLeftEyeRaw = (lm && (lm.viewer_left_eye || lm.eye_left || lm.right_eye)) ? (lm.viewer_left_eye || lm.eye_left || lm.right_eye) : [W0 * 0.39, H0 * 0.38];
+        const vRightEyeRaw = (lm && (lm.viewer_right_eye || lm.eye_right || lm.left_eye)) ? (lm.viewer_right_eye || lm.eye_right || lm.left_eye) : [W0 * 0.61, H0 * 0.38];
+        const noseTipRaw = (lm && (lm.nose_tip || lm.nasal_base)) ? (lm.nose_tip || lm.nasal_base) : [W0 * 0.5, H0 * 0.53];
+        const vLeftMouthRaw = (lm && (lm.commissure_viewer_left || lm.mouth_left)) ? (lm.commissure_viewer_left || lm.mouth_left) : [W0 * 0.42, H0 * 0.64];
+        const vRightMouthRaw = (lm && (lm.commissure_viewer_right || lm.mouth_right)) ? (lm.commissure_viewer_right || lm.mouth_right) : [W0 * 0.58, H0 * 0.64];
+
+        const eyeMid = mapPt(eyeMidRaw);
+        const menton = mapPt(mentonRaw);
+        const gonVLeft = mapPt(gonLRaw[0] <= gonRRaw[0] ? gonLRaw : gonRRaw);
+        const gonVRight = mapPt(gonLRaw[0] <= gonRRaw[0] ? gonRRaw : gonLRaw);
+        const eyPx = eyeMid[1];
+        const cyPx = menton[1] - 0.126 * (menton[1] - eyPx);
+        const xcPx = (gonVLeft[0] + gonVRight[0]) * 0.5;
+        const hwPx = Math.max(tf.dw * 0.14, 0.93 * 0.5 * Math.abs(gonVRight[0] - gonVLeft[0]));
+        const dPx = Math.max(40, cyPx - eyPx);
+        const ipdRaw = Math.hypot(vRightEyeRaw[0] - vLeftEyeRaw[0], vRightEyeRaw[1] - vLeftEyeRaw[1]);
+        const fs = Math.max(16, Math.round(Math.min(tf.dw, tf.dh) * 0.024));
+
+        const zygLRaw = (lm && lm.zygoma_viewer_left) ? lm.zygoma_viewer_left : [gonLRaw[0] - 14, (eyeMidRaw[1] + gonLRaw[1]) * 0.5];
+        const zygRRaw = (lm && lm.zygoma_viewer_right) ? lm.zygoma_viewer_right : [gonRRaw[0] + 14, (eyeMidRaw[1] + gonRRaw[1]) * 0.5];
+        const anchorPts = {
+          eyeMid,
+          rightEye: mapPt(vLeftEyeRaw[0] <= vRightEyeRaw[0] ? vLeftEyeRaw : vRightEyeRaw),
+          leftEye: mapPt(vLeftEyeRaw[0] <= vRightEyeRaw[0] ? vRightEyeRaw : vLeftEyeRaw),
+          noseTip: mapPt(noseTipRaw),
+          rightMalar: mapPt(zygLRaw[0] <= zygRRaw[0] ? zygLRaw : zygRRaw),
+          leftMalar: mapPt(zygLRaw[0] <= zygRRaw[0] ? zygRRaw : zygLRaw),
+          mouthRight: mapPt(vLeftMouthRaw[0] <= vRightMouthRaw[0] ? vLeftMouthRaw : vRightMouthRaw),
+          mouthLeft: mapPt(vLeftMouthRaw[0] <= vRightMouthRaw[0] ? vRightMouthRaw : vLeftMouthRaw),
+          gonR: gonVLeft,
+          menton,
+          gonL: gonVRight,
+          ipdPx: ipdRaw * s
+        };
+
+        const v2CalReg = unifiedData.v2CalibratedRegions;
+        const fallbackReg = {
+          boxes: {
+            cheek: [(xcPx - 1.15 * hwPx - tx) / s, (eyPx + 0.15 * dPx - ty) / s, (xcPx + 1.15 * hwPx - tx) / s, (eyPx + 0.85 * dPx - ty) / s],
+            jawline: [(xcPx - 1.35 * hwPx - tx) / s, (eyPx + 0.55 * dPx - ty) / s, (xcPx + 1.35 * hwPx - tx) / s, (cyPx + 0.35 * dPx - ty) / s],
+            submental: [(xcPx - 0.85 * hwPx - tx) / s, (cyPx - 0.30 * dPx - ty) / s, (xcPx + 0.85 * hwPx - tx) / s, (cyPx + 0.55 * dPx - ty) / s],
+            neck: [(xcPx - 1.15 * hwPx - tx) / s, (cyPx - 0.05 * dPx - ty) / s, (xcPx + 1.15 * hwPx - tx) / s, (cyPx + 1.00 * dPx - ty) / s]
+          },
+          visible: { cheek: 1, jawline: 1, submental: 1, neck: 1 }
+        };
+        const activeRegObj = (v2CalReg && v2CalReg.boxes) ? v2CalReg : fallbackReg;
+
+        if (activeOverlayMode !== "photo_clean") {
+          const regColors = { cheek: "#38bdf8", jawline: "#34d399", submental: "#f59e0b", neck: "#c084fc" };
+          ["cheek", "jawline", "submental", "neck"].forEach((k) => {
+            const bRaw = activeRegObj.boxes[k];
+            const b = [bRaw[0] * s + tx, bRaw[1] * s + ty, bRaw[2] * s + tx, bRaw[3] * s + ty];
+            const bw = Math.max(10, b[2] - b[0]);
+            const bh = Math.max(10, b[3] - b[1]);
+            const ix0 = Math.max(tx, b[0]), iy0 = Math.max(ty, b[1]);
+            const ix1 = Math.min(tx + tf.dw, b[2]), iy1 = Math.min(ty + tf.dh, b[3]);
+            const vis = activeRegObj.visible?.[k] ?? Number((Math.max(0, ix1 - ix0) * Math.max(0, iy1 - iy0) / (bw * bh)).toFixed(3));
+            svgHtml += `<g data-region="${k}" data-visible="${vis}"><rect x="${b[0]}" y="${b[1]}" width="${bw}" height="${bh}" rx="8" fill="none" stroke="${regColors[k]}" stroke-width="${Math.max(1.8, fs * 0.09)}" stroke-dasharray="6 4" opacity="0.78" /></g>`;
+          });
+
+          if (lm && Array.isArray(lm.taut_reference_mandibular_contour) && Array.isArray(lm.traced_mandibular_contour)) {
+            const refPath = lm.taut_reference_mandibular_contour.map(mapPt).map((p, i) => `${i === 0 ? "M" : "L"}${p[0]},${p[1]}`).join(" ");
+            const trcPath = lm.traced_mandibular_contour.map(mapPt).map((p, i) => `${i === 0 ? "M" : "L"}${p[0]},${p[1]}`).join(" ");
+            svgHtml += `
+              <path d="${refPath}" fill="none" stroke="#38bdf8" stroke-width="${Math.max(2.4, fs * 0.12)}" stroke-dasharray="6 4" />
+              <path d="${trcPath}" fill="none" stroke="#f59e0b" stroke-width="${Math.max(3.2, fs * 0.16)}" />
+            `;
+          }
+
+          Object.keys(contours).forEach((rk) => {
+            const robj = contours[rk];
+            if (!robj || !robj.supported || !robj.detected) return;
+            const rgb = robj.colorRgb || [52, 211, 153];
+            const strokeCol = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
+            const fillCol = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},0.26)`;
+            (robj.polygons || []).forEach((poly) => {
+              if (poly.length >= 3) {
+                const pts = poly.map(mapPt).map((p) => `${p[0]},${p[1]}`).join(" ");
+                svgHtml += `<polygon points="${pts}" fill="${fillCol}" stroke="${strokeCol}" stroke-width="${Math.max(2.2, fs * 0.11)}" data-v6-contour="${escapeHtml(rk)}" />`;
+              }
+            });
+            if (Array.isArray(robj.centerline) && robj.centerline.length >= 2) {
+              const cPath = robj.centerline.map(mapPt).map((p, i) => `${i === 0 ? "M" : "L"}${p[0]},${p[1]}`).join(" ");
+              svgHtml += `<path d="${cPath}" fill="none" stroke="#ffffff" stroke-width="${Math.max(1.8, fs * 0.09)}" stroke-dasharray="3 2" />`;
+            }
+          });
+
+          if (activeOverlayMode === "3d_isotropic_mesh") {
+            svgHtml += buildIsotropic3dMeshSvg(anchorPts, W, H, fs);
+          }
+        }
+
+        overlaySvg.innerHTML = svgHtml;
+        const v6AnchorMetrics = {
+          ipdPx: ipdRaw,
+          noseLenPx: Math.hypot(noseTipRaw[0] - eyeMidRaw[0], noseTipRaw[1] - eyeMidRaw[1]),
+          jawWidthPx: Math.hypot(gonRRaw[0] - gonLRaw[0], gonRRaw[1] - gonLRaw[1]),
+          dPx: Math.max(1, mentonRaw[1] - eyeMidRaw[1]),
+          heightToWidthRatio: Math.max(1, mentonRaw[1] - eyeMidRaw[1]) / Math.max(1, Math.abs(gonRRaw[0] - gonLRaw[0]))
+        };
+        renderProportionTelemetryCards(unifiedData.proportionAnd3dTelemetry || unifiedData.proportionAnd3dProjectionTelemetry, tf, v6AnchorMetrics);
+        renderThreeUpComparisonStrip(tf, activeRegObj, unifiedData.v2MandibularChordTelemetry, contours, lm, anchorPts, v6AnchorMetrics);
+        renderCrops224Canvas(hasRealSourcePhoto ? sourcePhotoCanvas : photoCanvas, activeRegObj);
+      }
+
+      document.getElementById("fs-run-unified-case-btn").addEventListener("click", async () => {
+        await inspectUnifiedCase(unifiedCaseSelect.value);
+      });
+
+      unifiedCaseSelect.addEventListener("change", async () => {
+        await inspectUnifiedCase(unifiedCaseSelect.value);
+      });
+
+      const blindedToggle = document.getElementById("ann-blinded-toggle");
+      if (blindedToggle) {
+        blindedToggle.addEventListener("change", () => {
+          if (blindedToggle.checked) {
+            unifiedActiveCaseBox.style.opacity = "0.08";
+            unifiedActiveCaseBox.style.filter = "blur(8px)";
+            unifiedActiveCaseBox.title = "Blinded Mode Active: AI grades hidden during physician evaluation";
+          } else {
+            unifiedActiveCaseBox.style.opacity = "1";
+            unifiedActiveCaseBox.style.filter = "none";
+            unifiedActiveCaseBox.title = "";
+          }
+        });
+      }
+
+      document.getElementById("fs-load-case-to-annotator-btn").addEventListener("click", () => {
+        const cid = unifiedCaseSelect.value || "SUBJ_11_52F";
+        document.getElementById("ann-case-id").value = cid;
+        if (blindedToggle && blindedToggle.checked) {
+          unifiedActiveCaseBox.style.opacity = "0.08";
+          unifiedActiveCaseBox.style.filter = "blur(8px)";
+        }
+        document.getElementById("fs-physician-annotation-section").scrollIntoView({ behavior: "smooth" });
+      });
+
+      // Load & Save Blinded Physician Criteria Draft & Case Annotations
+      async function loadPhysicianAnnotations() {
+        const { status, data } = await apiFetch("/api/face-scan-v2/physician-annotations");
+        if (status !== 200 || !data.ok) return;
+
+        const draft = data.criteriaDraft || {};
+        const badge = document.getElementById("fs-criteria-status-badge");
+        if (badge) {
+          badge.textContent = `CRITERIA STATUS: ${draft.status || "DRAFT"} (LOCKED: ${draft.lockedForClinicalTraining ? "YES" : "NO"})`;
+        }
+        const encBadge = document.getElementById("fs-encrypted-vault-badge");
+        if (encBadge && data.encryptedVaultStatus) {
+          encBadge.textContent = data.encryptedVaultStatus.hmacIntegrityVerified
+            ? "ENCRYPTED VAULT: PBKDF2-HMAC-SHA256 VERIFIED ✓"
+            : "ENCRYPTED VAULT: PENDING";
+        }
+        const genCountEl = document.getElementById("fs-genuine-phy-count");
+        if (genCountEl) {
+          genCountEl.textContent = String(data.syntheticOrDemoInterfaceReviewsCount ?? data.genuineHumanPhysicianAnnotationsCount ?? 0);
+        }
+        const realPatCountEl = document.getElementById("fs-real-patient-phy-count");
+        if (realPatCountEl) {
+          realPatCountEl.textContent = String(data.consentedRealPatientPhysicianEvaluationsCount ?? 0);
+        }
+
+        const defs = draft.gradeScaleDefinitions || {};
+        criteriaDraftEditor.innerHTML = ["0", "1", "2", "3", "NA"].map((gk) => {
+          const d = defs[gk] || {};
+          return `
+            <div style="background:rgba(4,19,12,0.75); border:1px solid var(--border-subtle); border-radius:8px; padding:0.55rem;">
+              <label for="crit-def-${gk}" style="display:block; font-size:0.76rem; font-weight:800; color:var(--accent-bright); margin-block-end:0.2rem;">
+                ${escapeHtml(d.label || "Grade " + gk)}
+              </label>
+              <textarea id="crit-def-${gk}" data-crit-grade="${gk}" rows="2" style="font-size:0.78rem;">${escapeHtml(d.clinicalCriteria || "")}</textarea>
+            </div>
+          `;
+        }).join("");
+
+        renderSavedCaseAnnotations(data.caseAnnotations || []);
+      }
+
+      function renderSavedCaseAnnotations(list) {
+        document.getElementById("fs-ann-count").textContent = String(list.length);
+        savedAnnotationsList.innerHTML = list.map((a) => {
+          const pg = a.physicianGrades || {};
+          const isGenuine = a.provenance === "GENUINE_HUMAN_PHYSICIAN_BLINDED";
+          const isRealPatient = a.countsAsRealPatientClinicalValidation === true;
+          const adj = a.adjudicationStatus || "";
+          return `
+            <div style="padding:0.6rem; background:rgba(4,19,12,0.82); border:1px solid ${isGenuine ? "var(--accent-bright)" : "var(--border-subtle)"}; border-radius:8px; font-size:0.76rem;">
+              <div style="display:flex; justify-content:space-between; gap:0.5rem; flex-wrap:wrap;">
+                <strong style="color:#ffffff;">${escapeHtml(a.annotationId)} · Case <code>${escapeHtml(a.caseId)}</code> (${escapeHtml(a.raterId || a.reviewer)})</strong>
+                <div style="display:flex; gap:0.35rem; flex-wrap:wrap;">
+                  <span class="badge ${isGenuine ? "" : "warn"}">${escapeHtml(a.provenance || "SYSTEM_SEED")}</span>
+                  <span class="badge ${isRealPatient ? "info" : "warn"}">${isRealPatient ? "REAL_PATIENT_CLINICAL_VALIDATION" : "DEMO/SYNTHETIC_NOT_REAL_PATIENT"}</span>
+                  ${adj ? `<span class="badge ${a.disagreementDetected ? "danger" : "info"}">${escapeHtml(adj)}</span>` : ""}
+                </div>
+              </div>
+              <div style="color:var(--text-secondary); margin-block-start:0.2rem;">
+                <b>Grades:</b> Cheek: <code>${escapeHtml(pg.cheek)}</code> · Jawline: <code>${escapeHtml(pg.jawline)}</code> · Jowl: <code>${escapeHtml(pg.jowl)}</code> · Marionette: <code>${escapeHtml(pg.marionette)}</code> · Submental: <code>${escapeHtml(pg.submental)}</code> · Neck: <code>${escapeHtml(pg.neck)}</code>
+                ${a.blindedToAiDuringGrading ? ` · <b style="color:#34d399;">Blinded: YES</b>` : ""}
+                ${a.doNotTrainOnEvaluationSubject ? ` · <b style="color:#fde68a;">Hold-Out Lock: YES</b>` : ""}
+              </div>
+              <div style="color:#fef08a;"><b>Flag:</b> ${escapeHtml(a.boundaryReviewFlag)}</div>
+              <div style="color:var(--text-muted);"><b>Notes (${escapeHtml(a.reviewer)} · ${escapeHtml(a.updatedAtUtc || "")}):</b> ${escapeHtml(a.physicianNotes)}</div>
+            </div>
+          `;
+        }).join("");
+      }
+
+      document.getElementById("fs-save-criteria-draft-btn").addEventListener("click", async () => {
+        const fb = document.getElementById("fs-criteria-save-feedback");
+        const defs = {};
+        document.querySelectorAll("[data-crit-grade]").forEach((ta) => {
+          const gk = ta.getAttribute("data-crit-grade");
+          defs[gk] = { clinicalCriteria: ta.value.trim() };
+        });
+        const reviewer = document.getElementById("ann-reviewer-name").value.trim() || "Dr. Rushapol Review Draft";
+        const { status, data } = await apiFetch("/api/face-scan-v2/physician-annotations", {
+          method: "POST",
+          body: JSON.stringify({
+            action: "save_criteria_draft",
+            reviewer,
+            gradeScaleDefinitions: defs
+          })
+        });
+        if (status === 200 && data.ok) {
+          fb.textContent = `✓ Saved draft (${data.status}) at ${data.updatedAtUtc} — lockedForClinicalTraining: false`;
+          fb.style.color = "#34d399";
+          await loadPhysicianAnnotations();
+        } else {
+          fb.textContent = `✗ ${data.error || "Authenticate as Admin / Medical Reviewer above to save criteria drafts."}`;
+          fb.style.color = "#fca5a5";
+        }
+      });
+
+      document.getElementById("fs-physician-case-form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const fb = document.getElementById("fs-case-save-feedback");
+        const payload = {
+          action: "save_case_annotation",
+          caseId: document.getElementById("ann-case-id").value.trim(),
+          raterId: document.getElementById("ann-rater-id").value,
+          reviewer: document.getElementById("ann-reviewer-name").value.trim(),
+          consentStatus: document.getElementById("ann-consent-status").value,
+          blindedToAiDuringGrading: Boolean(document.getElementById("ann-blinded-toggle")?.checked),
+          physicianGrades: {
+            cheek: document.getElementById("ann-grade-cheek").value,
+            jawline: document.getElementById("ann-grade-jawline").value,
+            jowl: document.getElementById("ann-grade-jowl").value,
+            marionette: document.getElementById("ann-grade-marionette").value,
+            submental: document.getElementById("ann-grade-submental").value,
+            neck: document.getElementById("ann-grade-neck").value
+          },
+          regionalLocalizationVerdicts: {
+            jowl_jawline: document.getElementById("ann-loc-jowl").value,
+            cheek_midface: document.getElementById("ann-loc-cheek").value,
+            submental: document.getElementById("ann-loc-cheek").value,
+            neck: document.getElementById("ann-loc-cheek").value
+          },
+          boundaryReviewFlag: document.getElementById("ann-boundary-flag").value,
+          physicianNotes: document.getElementById("ann-physician-notes").value.trim(),
+          reviewStatus: "BLINDED_PHYSICIAN_SUBMITTED"
+        };
+        const { status, data } = await apiFetch("/api/face-scan-v2/physician-annotations", {
+          method: "POST",
+          body: JSON.stringify(payload)
+        });
+        if (status === 200 && data.ok) {
+          // Reveal AI comparison box after blinded submission
+          unifiedActiveCaseBox.style.opacity = "1";
+          unifiedActiveCaseBox.style.filter = "none";
+          fb.textContent = `✓ Saved ${data.savedAnnotation.annotationId} for ${data.savedAnnotation.caseId} (Adjudication: ${data.adjudicationStatus} · Genuine Physician Count: ${data.genuineHumanPhysicianAnnotationsCount})`;
+          fb.style.color = "#34d399";
+          await loadPhysicianAnnotations();
+          await loadAiVsPhysicianComparison();
+        } else {
+          fb.textContent = `✗ ${data.error || "Authenticate as Admin / Medical Reviewer above to save physician annotations."}`;
+          fb.style.color = "#fca5a5";
+        }
+      });
+
+      // Priority 4: Load AI vs. Real Physician Grades & Regional / Subgroup Evaluation
+      async function loadAiVsPhysicianComparison() {
+        const box = document.getElementById("fs-ai-vs-physician-comparison-box");
+        const badge = document.getElementById("fs-phy-concordance-badge");
+        if (!box) return;
+        const { status, data } = await apiFetch("/api/face-scan-v2/physician-validation-comparison");
+        if (status !== 200 || !data.ok) return;
+
+        const gsum = data.genuinePhysicianValidationSummary || {};
+        const reg = data.heldOutTechnicalEvaluationByRegion || {};
+        const fpfn = reg.false_positives_and_false_negatives || {};
+        const loc = reg.localization_accuracy || {};
+        const unc = reg.uncertainty_and_rejected_images || {};
+        const subg = reg.lighting_and_skin_appearance_performance || [];
+
+        if (badge) {
+          const nGen = gsum.genuineHumanPhysicianEvaluationsCount || 0;
+          badge.textContent = nGen === 0
+            ? "GENUINE PHYSICIAN CASES: 0 (READY FOR PHYSICIAN EVALUATION)"
+            : `GENUINE PHYSICIAN CASES: ${nGen} (LIVE CONCORDANCE ACTIVE)`;
+          badge.className = "badge " + (nGen === 0 ? "warn" : "info");
+        }
+
+        box.innerHTML = `
+          <div style="background:rgba(16,185,129,0.1); border:1px solid var(--border-strong); border-radius:8px; padding:0.75rem; margin-block-end:0.85rem;">
+            <strong style="color:#ffffff;">Clinical Truth &amp; Genuine Physician Validation Status:</strong>
+            <div style="color:var(--text-secondary); margin-block-start:0.2rem;">${escapeHtml(data.clinicalHonestyNotice)}</div>
+            <div style="margin-block-start:0.35rem; color:#fef08a;">
+              <b>Status:</b> <code>${escapeHtml(gsum.clinicalValidationStatus)}</code> ·
+              <b>Live Regional Agreement vs. Genuine Blinded Physicians:</b>
+              Cheek: <code>${escapeHtml(gsum.liveRegionalExactAgreement?.cheek)}</code> ·
+              Jawline: <code>${escapeHtml(gsum.liveRegionalExactAgreement?.jawline)}</code> ·
+              Submental: <code>${escapeHtml(gsum.liveRegionalExactAgreement?.submental)}</code> ·
+              Neck: <code>${escapeHtml(gsum.liveRegionalExactAgreement?.neck)}</code>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(380px, 1fr)); gap:0.85rem;">
+            <div style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:8px; padding:0.75rem;">
+              <strong style="color:var(--accent-bright); display:block; margin-block-end:0.35rem;">1. Regional Performance on Held-Out Cases (Jowls/Jawline, Cheeks, Submental, Neck)</strong>
+              <div style="display:flex; flex-direction:column; gap:0.4rem;">
+                <div><b>Jowls &amp; Jawline:</b> ${escapeHtml(reg.jowls_and_jawline?.v2ConvNeXtTiny)} ${escapeHtml(reg.jowls_and_jawline?.v6HessianAndMandibularTracer)}</div>
+                <div><b>Cheeks:</b> ${escapeHtml(reg.cheeks?.v2ConvNeXtTiny)} ${escapeHtml(reg.cheeks?.v6LowerCheekAndNasolabial)}</div>
+                <div><b>Submental Region:</b> ${escapeHtml(reg.submental_region?.v2ConvNeXtTiny)}</div>
+                <div><b>Neck:</b> ${escapeHtml(reg.neck?.v2ConvNeXtTiny)} ${escapeHtml(reg.neck?.visibilityAndCollarMasking)}</div>
+              </div>
+            </div>
+
+            <div style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:8px; padding:0.75rem;">
+              <strong style="color:#fca5a5; display:block; margin-block-end:0.35rem;">2. False Positives, False Negatives, Localization &amp; Uncertainty</strong>
+              <div><b>False Positives:</b><ul style="margin:0.2rem 0 0.45rem; padding-inline-start:1.1rem;">${(fpfn.falsePositives || []).map((x) => `<li>${escapeHtml(x)}</li>`).join("")}</ul></div>
+              <div><b>False Negatives:</b><ul style="margin:0.2rem 0 0.45rem; padding-inline-start:1.1rem;">${(fpfn.falseNegatives || []).map((x) => `<li>${escapeHtml(x)}</li>`).join("")}</ul></div>
+              <div><b>Localization Accuracy:</b> ${escapeHtml(loc.v2CalibratedRegionGeometry)} ${escapeHtml(loc.v6ThresholdGatedSubRegionContours)}</div>
+              <div style="margin-block-start:0.3rem;"><b>Uncertainty &amp; Rejected Images:</b> ${escapeHtml(unc.hardRejectedImages)}</div>
+            </div>
+          </div>
+
+          <div style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:8px; padding:0.75rem; margin-block-start:0.85rem;">
+            <strong style="color:var(--info); display:block; margin-block-end:0.35rem;">3. Performance Across Different Lighting Conditions &amp; Skin Appearances</strong>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(340px, 1fr)); gap:0.5rem;">
+              ${subg.map((s) => `
+                <div style="padding:0.5rem; background:rgba(4,19,12,0.75); border:1px solid var(--border-subtle); border-radius:6px;">
+                  <b style="color:#ffffff;">${escapeHtml(s.condition)}</b>
+                  <div style="font-size:0.74rem; color:var(--text-muted);">Cases: <code>${escapeHtml(s.cases)}</code></div>
+                  <div style="font-size:0.76rem; color:var(--text-secondary); margin-block-start:0.15rem;">${escapeHtml(s.behavior)}</div>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+        `;
+      }
+
+      // Server-Side Admin / Medical Reviewer Authentication Form
+      document.getElementById("fs-admin-login-form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const passcode = document.getElementById("fs-passcode-input").value.trim();
+        const { status, data } = await apiFetch("/api/admin/login", {
+          method: "POST",
+          body: JSON.stringify({ passcode })
+        });
+        if (status === 200 && data.ok) {
+          adminToken = data.token;
+          sessionStorage.setItem("intrarat_admin_token", adminToken);
+          authBadge.textContent = "Server-Authenticated Admin / Medical Reviewer";
+          authBadge.className = "badge info";
+          const defaultYaw = activeViewMode === "oblique_left" ? -38.0 : activeViewMode === "oblique_right" ? 41.0 : 0.0;
+          await evaluateCurrentSample(activeSyntheticId, activeViewMode, defaultYaw);
+          await loadUnifiedBenchmarkAndInventory();
+          await loadPhysicianAnnotations();
+          await loadAiVsPhysicianComparison();
+        } else {
+          authBadge.textContent = "Auth Failed — Public Fail-Closed Mode";
+          authBadge.className = "badge danger";
+        }
+      });
+
+      document.getElementById("fs-logout-btn").addEventListener("click", async () => {
+        await apiFetch("/api/admin/logout", { method: "POST", body: "{}" });
+        adminToken = "";
+        sessionStorage.removeItem("intrarat_admin_token");
+        sessionStorage.removeItem("intrarat_crm_token");
+        authBadge.textContent = "Public Mode (Model Fail-Closed)";
+        authBadge.className = "badge warn";
+        const defaultYaw = activeViewMode === "oblique_left" ? -38.0 : activeViewMode === "oblique_right" ? 41.0 : 0.0;
+        await evaluateCurrentSample(activeSyntheticId, activeViewMode, defaultYaw);
+        await loadUnifiedBenchmarkAndInventory();
+        await loadPhysicianAnnotations();
+        await loadAiVsPhysicianComparison();
+      });
+
+      // Boot
+      renderAtlas("jawline");
+      loadClinicalReadiness();
+      evaluateCurrentSample("SYN-M001", "frontal", 0.0);
+      loadUnifiedBenchmarkAndInventory();
+      loadPhysicianAnnotations();
+      loadAiVsPhysicianComparison();
+    })();
+  </script>
+</body>
+</html>

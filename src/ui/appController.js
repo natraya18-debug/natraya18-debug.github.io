@@ -805,8 +805,15 @@
 
     window.addEventListener("wheel", (e) => {
       if (editorDrawer.contains(e.target) || document.getElementById("video-modal").classList.contains("is-open")) return;
+      if (document.body.classList.contains("master-stage-open")) return;
       const sens = (state.config.animation.scrollSensitivity || 1.0) * 0.00055;
-      state.targetScroll = Math.max(0, Math.min(1, state.targetScroll + e.deltaY * sens));
+      const nextScroll = state.targetScroll + e.deltaY * sens;
+      if (nextScroll > 0.68 && e.deltaY > 25 && window.__INTRARAT_MASTER__ && typeof window.__INTRARAT_MASTER__.goToPage === "function") {
+        state.targetScroll = 0.36;
+        window.__INTRARAT_MASTER__.goToPage(3);
+        return;
+      }
+      state.targetScroll = Math.max(0, Math.min(0.68, nextScroll));
     }, { passive: true });
 
     let touchStartY = 0;
@@ -1380,6 +1387,19 @@
       document.body.classList.toggle("is-page02-active", workActive);
       workStage.classList.toggle("is-active", workActive);
       discoveryPanel.classList.remove("is-visible");
+      if (!document.body.classList.contains("master-stage-open") && window.__INTRARAT_MASTER__ && typeof window.__INTRARAT_MASTER__.getState === "function") {
+        const mSt = window.__INTRARAT_MASTER__.getState();
+        const wantP = workActive ? 2 : 1;
+        if (mSt && (mSt.currentPage === 1 || mSt.currentPage === 2) && mSt.currentPage !== wantP) {
+          mSt.currentPage = wantP;
+          document.querySelectorAll(".master-page-pill").forEach((btn) => {
+            const active = Number(btn.dataset.pageTarget) === wantP;
+            btn.classList.toggle("is-active", active);
+            if (active) btn.setAttribute("aria-current", "page");
+            else btn.removeAttribute("aria-current");
+          });
+        }
+      }
 
       const nCards = cardElements.length;
       if (nCards > 0) {

@@ -1,0 +1,1885 @@
+{
+  "revision": 4,
+  "authorRole": "Owner",
+  "changeNote": "",
+  "updatedAt": "2026-11-22T08:10:07Z",
+  "config": {
+    "page02Version": 2,
+    "brand": {
+      "name": "",
+      "labLabel": "// REPLAY 3D INTRO",
+      "labTargetScene": "hero",
+      "logoImageUrl": "assets/03_OFFICIAL_INTRARAT_LOGO_20_CIRCLES_HEADER_LOCKUP.png",
+      "officialLogoOriginalUrl": "assets/03_OFFICIAL_INTRARAT_LOGO_20_CIRCLES(1).png",
+      "officialLogoVerticalTransparentUrl": "assets/03_OFFICIAL_INTRARAT_LOGO_20_CIRCLES_TRANSPARENT.png",
+      "showLogoImage": true,
+      "audioEnabledByDefault": false
+    },
+    "page02": {
+      "smallHeading": "INTRARAT HOSPITAL",
+      "headlineDark": "DISCOVER",
+      "headlineGreen": "OUR EXPERIENCE",
+      "subtitle": "World-Class Care with Thai Hospitality",
+      "primaryBg": "#FFFFFF",
+      "secondaryBg": "#F7FAF8",
+      "hospitalGreen": "#087A3B",
+      "luminousEmerald": "#20C66A",
+      "darkText": "#172B25",
+      "cardTiltDeg": 13.5,
+      "cardBorderGlow": 1,
+      "floorReflectionOpacity": 0.34
+    },
+    "intro": {
+      "logoImageUrl": "assets/INTRARAT_LOGO_SYMBOL_ONLY_TRANSPARENT.png",
+      "logoLabel": "INTRARAT_LOGO_SYMBOL_ONLY_TRANSPARENT.png",
+      "backgroundColor": "#fcfefc",
+      "backgroundEdgeColor": "#e9f4ec",
+      "ambientGlowColor": "#d5f0dc",
+      "ambientGlowOpacity": 1,
+      "sphereSurfaceColor": "#439e29",
+      "sphereColorBlend": 0,
+      "sphereBrightness": 1,
+      "reflectionColor": "#f5fff7",
+      "reflectionIntensity": 1,
+      "shadowColor": "#0f381c",
+      "shadowIntensity": 1,
+      "trailEnabled": true,
+      "trailColor": "#439e29",
+      "trailLengthPx": 115,
+      "trailWidthPx": 7.5,
+      "trailIntensity": 0.88,
+      "trailFadeMs": 540,
+      "durationMs": 3000,
+      "maxTiltDeg": 15,
+      "parallaxDamping": 0.08,
+      "floatIntensity": 1,
+      "returnDelayMs": 1100
+    },
+    "navigation": {
+      "items": [
+        {
+          "id": "nav-work",
+          "label": "SHOWCASE",
+          "target": "work"
+        },
+        {
+          "id": "nav-contact",
+          "label": "CONTACT",
+          "target": "contact"
+        }
+      ],
+      "pillUnderglow": true,
+      "velocityStretch": 1
+    },
+    "hero": {
+      "headlineLine1": "",
+      "headlineLine2": "",
+      "headlineLine3": "",
+      "fontStyle": "sans",
+      "headlineScale": 1,
+      "horizontalOffsetPx": 0,
+      "verticalOffsetPx": 0,
+      "manifesto": [
+        {
+          "bullet": false,
+          "text": ""
+        },
+        {
+          "bullet": false,
+          "text": ""
+        },
+        {
+          "bullet": false,
+          "text": ""
+        }
+      ],
+      "scrollCueLabel": "SCROLL TO EXPLORE"
+    },
+    "layout": {
+      "ringOffsetX": 0,
+      "cardWidthPx": 500,
+      "cardHeightPx": 312,
+      "manifestoWidthPx": 345,
+      "cardGlassOpacity": 0.86
+    },
+    "model3D": {
+      "preset": "intrarat-3d-spheres",
+      "customObjData": "",
+      "customObjName": "",
+      "modelScale": 1,
+      "rotationSpeed": 1,
+      "iridescenceIntensity": 0.85,
+      "refractionStrength": 0.75,
+      "spineTwist": 1,
+      "particleDensity": 0.45,
+      "cursorTubes": false
+    },
+    "theme": {
+      "voidBg": "#f7fbf8",
+      "volumetricGlow": "#d9efe0",
+      "accentCyan": "#208030",
+      "accentMagenta": "#439e29",
+      "textPrimary": "#123820",
+      "backgroundImageUrl": "",
+      "backgroundImageOpacity": 0.22
+    },
+    "animation": {
+      "cameraLerp": 0.08,
+      "scrollSensitivity": 1,
+      "enablePreloader": true,
+      "preloaderDurationMs": 3000
+    },
+    "discovery": {
+      "heading": "WHAT ARE YOU LOOKING FOR?",
+      "promptPlaceholder": "ASK ME ANYTHING...",
+      "categories": [
+        {
+          "id": "all",
+          "label": "ALL PROJECTS"
+        },
+        {
+          "id": "websites",
+          "label": "WEBSITES"
+        },
+        {
+          "id": "installations",
+          "label": "INSTALLATIONS"
+        },
+        {
+          "id": "xr-ai",
+          "label": "XR / AI"
+        },
+        {
+          "id": "multiplayer",
+          "label": "MULTIPLAYER"
+        },
+        {
+          "id": "motion",
+          "label": "MOTION"
+        }
+      ]
+    },
+    "showreel": {
+      "title": "INTRARAT INTERNATIONAL · HOSPITAL PRESENTATION",
+      "videoUrl": "assets/INTRARAT_REVIEW_2m59_v4.mp4",
+      "videoLabel": "INTRARAT_REVIEW_2m59_v4.mp4 (03:01)",
+      "posterUrl": "assets/intrarat_review_frame_poster.jpg"
+    },
+    "projects": [
+      {
+        "id": "proj-01",
+        "eyebrow": "VIDEO 01",
+        "title": "Hospital Presentation",
+        "subtitle": "Our People · Our Facilities · Our Commitment",
+        "category": "websites",
+        "categoryLabel": "PRESENTATION",
+        "videoUrl": "assets/INTRARAT_REVIEW_2m59_v4.mp4",
+        "videoLabel": "INTRARAT_REVIEW_2m59_v4.mp4",
+        "posterUrl": "assets/intrarat_review_frame_poster.jpg",
+        "ctaLabel": "PLAY PRESENTATION",
+        "comingSoon": false,
+        "durationLabel": ""
+      },
+      {
+        "id": "proj-02",
+        "eyebrow": "VIDEO 02",
+        "title": "The Intrarat Experience",
+        "subtitle": "From Arrival to Farewell — Premium Care",
+        "category": "installations",
+        "categoryLabel": "EXPERIENCE",
+        "videoUrl": "",
+        "videoLabel": "Coming Soon (In Production)",
+        "posterUrl": "assets/lobby-admission-1920.webp",
+        "ctaLabel": "COMING SOON",
+        "comingSoon": true,
+        "durationLabel": "COMING SOON"
+      }
+    ],
+    "contact": {
+      "eyebrow": "// INTERNATIONAL PATIENT SERVICES",
+      "headline": "Connect with Intrarat International Hospital",
+      "subcopy": "555/5 Ram Inthra Road, Kannayao, Bangkok 10230, Thailand · 24-Hour Hospital & International Desk: +66 2 481 5555",
+      "email": "info@intrarathospital.co.th",
+      "primaryCtaLabel": "OPEN CONSULTATION & TRAVEL DESK",
+      "secondaryCtaLabel": "PLAY HOSPITAL PRESENTATION (03:01)",
+      "locationLabel": "555/5 RAM INTHRA RD · BANGKOK 10230",
+      "socialLabel1": "TEL: +66 2 481 5555",
+      "socialLabel2": "EMERGENCY: 1669"
+    },
+    "masterCms": {
+      "lang": "th",
+      "page03": {
+        "eyebrow": {
+          "en": "DEDICATION · EXPERIENCE · PRECISION",
+          "th": "ความมุ่งมั่น · ประสบการณ์ · ความแม่นยำ"
+        },
+        "headline": {
+          "en": "THE JOURNEY OF DR. RUSHAPOL",
+          "th": "เส้นทางวิชาชีพ นพ.รัชพล สดาวรรธน์"
+        },
+        "doctorName": {
+          "en": "Rushapol Sdawat, M.D.",
+          "th": "นพ.รัชพล สดาวรรธน์ (Rushapol Sdawat, M.D.)"
+        },
+        "credentials": {
+          "en": "Plastic and Reconstructive Surgeon · Intrarat Hospital, Bangkok",
+          "th": "ศัลยแพทย์ตกแต่งและเสริมสร้าง · โรงพยาบาลอินทรารัตน์ กรุงเทพฯ"
+        },
+        "introduction": {
+          "en": "Rushapol Sdawat, M.D., is a Board-Certified Plastic and Reconstructive Surgeon at Intrarat Hospital, Bangkok, whose clinical practice encompasses Deep Plane facial and neck lifting as well as reconstructive and aesthetic plastic surgery. Every surgical plan begins with a personal anatomical assessment.",
+          "th": "นพ.รัชพล สดาวรรธน์ เป็นศัลยแพทย์ตกแต่งและเสริมสร้างประจำโรงพยาบาลอินทรารัตน์ กรุงเทพฯ ดูแลด้านการผ่าตัดดึงหน้าและลำคอ (Deep Plane & SMAS) รวมถึงศัลยกรรมตกแต่งและเสริมสร้าง โดยวางแผนการรักษาจากการประเมินโครงสร้างกายวิภาคของผู้ป่วยโดยตรง"
+        },
+        "officialProfileEn": "https://www.intrarathospital.co.th/en/doctor-profile/rushapolsdawat/",
+        "officialProfileTh": "https://www.intrarathospital.co.th/doctor-profile/rushapolsdawat/",
+        "portraitPrimary": "assets/doctor/archive/dr-37-portrait-intrarat-official.webp",
+        "portraitSecondary": "assets/doctor/archive/dr-46-recent-nurse-consultation-desk.webp",
+        "portraitObjectPos": "50% 18%",
+        "videoUrl": "",
+        "videoPoster": "assets/doctor/archive/dr-09-training-tmed-cadaveric-center.webp",
+        "videoTitle": {
+          "en": "Dr. Rushapol Presentation Film",
+          "th": "วิดีโอแนะนำ นพ.รัชพล สดาวรรธน์"
+        },
+        "videoSubtitle": {
+          "en": "Anatomical Philosophy · Facial & Neck Precision · Patient Care",
+          "th": "แนวคิดทางกายวิภาค · ความแม่นยำในการผ่าตัดใบหน้าและลำคอ"
+        },
+        "societies": [
+          "The Society of Plastic and Reconstructive Surgery of Thailand",
+          "The Society of Aesthetic Plastic Surgery of Thailand (ThSAPS)",
+          "International Society of Aesthetic Plastic Surgery (ISAPS)",
+          "American Society of Plastic Surgeons (ASPS)"
+        ],
+        "chapters": [
+          {
+            "id": "ch-01",
+            "num": "01",
+            "year": "1985–1992",
+            "yearTh": "พ.ศ. 2528–2535",
+            "title": {
+              "en": "Where It All Began",
+              "th": "จุดเริ่มต้นแห่งเส้นทางสายการแพทย์"
+            },
+            "institution": {
+              "en": "Faculty of Medicine Siriraj Hospital, Mahidol University (1985–1992)",
+              "th": "คณะแพทยศาสตร์ศิริราชพยาบาล มหาวิทยาลัยมหิดล (พ.ศ. 2528–2535)"
+            },
+            "milestoneBadge": {
+              "en": "Siriraj Medical School · M.D. Foundation",
+              "th": "ศิริราชพยาบาล มหาวิทยาลัยมหิดล"
+            },
+            "description": {
+              "en": "Every surgical calling begins with years of quiet study, observation, and discipline. Between 1985 and 1992 at the Faculty of Medicine Siriraj Hospital, Mahidol University, Rushapol Sdawat built his foundational understanding of human anatomy while cultivating a lifelong appreciation for music, nature, and fine manual dexterity.",
+              "th": "ทุกความเชี่ยวชาญทางศัลยกรรมเริ่มต้นจากการศึกษาที่มุ่งมั่นและมีวินัย ระหว่างปี พ.ศ. 2528–2535 ณ คณะแพทยศาสตร์ศิริราชพยาบาล มหาวิทยาลัยมหิดล นพ.รัชพล สดาวรรธน์ ได้วางรากฐานด้านกายวิภาคศาสตร์ควบคู่กับการฝึกฝนความประณีตผ่านดนตรีและธรรมชาติ"
+            },
+            "videoUrl": "assets/doctor/video/ch01-consultation-planning.mp4",
+            "musicUrl": "assets/audio/music-biography-inspirational.mp3",
+            "musicLabel": {
+              "en": "Inspirational Documentary Score",
+              "th": "ดนตรีสารคดีสร้างแรงบันดาลใจ"
+            },
+            "narrationScript": {
+              "en": "Chapter One: Where It All Began. Between 1985 and 1992 at the Faculty of Medicine Siriraj Hospital, Mahidol University, Rushapol Sdawat built his foundation in human anatomy and clinical medicine, graduating with his Doctor of Medicine degree in 1992.",
+              "th": "บทที่ 1 จุดเริ่มต้นแห่งเส้นทางสายการแพทย์ ระหว่างปีพุทธศักราช 2528 ถึง 2535 ณ คณะแพทยศาสตร์ศิริราชพยาบาล มหาวิทยาลัยมหิดล นายแพทย์รัชพล สดาวรรธน์ ได้สร้างรากฐานด้านกายวิภาคศาสตร์ และสำเร็จการศึกษาแพทยศาสตรบัณฑิตในปี 2535"
+            },
+            "sourceUrl": "https://www.intrarathospital.co.th/en/doctor-profile/rushapolsdawat/",
+            "adminMeta": "CHAPTER 01 · WHERE IT ALL BEGAN · 9 SCENES (DR-01..08, DR-41) + ch01-consultation-planning.mp4",
+            "photos": [
+              {
+                "id": "sc-dr-01",
+                "code": "DR-01",
+                "year": "2005",
+                "url": "assets/doctor/archive/dr-01-student-youth-coast-2005.webp",
+                "videoUrl": "assets/doctor/video/ch01-consultation-planning.mp4",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-biography-inspirational.mp3",
+                "heading": {
+                  "en": "Scene 01 · Formative Years & Medical Calling (1985–1992)",
+                  "th": "ฉากที่ 01 · จุดเริ่มต้นแห่งวิชาชีพแพทย์ ศิริราชพยาบาล (พ.ศ. 2528–2535)"
+                },
+                "description": {
+                  "en": "Between 1985 and 1992 at the Faculty of Medicine Siriraj Hospital, Mahidol University, Rushapol Sdawat began his lifelong study of human anatomy and clinical medicine.",
+                  "th": "ระหว่างปี พ.ศ. 2528–2535 ณ คณะแพทยศาสตร์ศิริราชพยาบาล มหาวิทยาลัยมหิดล นพ.รัชพล สดาวรรธน์ เริ่มต้นเส้นทางการเรียนรู้ด้านกายวิภาคศาสตร์และเวชปฏิบัติ"
+                },
+                "caption": {
+                  "en": "Formative academic years — coastal study excursion (June 2005)",
+                  "th": "ภาพถ่ายช่วงวัยหนุ่มและการศึกษาดูงานนอกสถานที่ (มิถุนายน พ.ศ. 2548)"
+                },
+                "subtitle": {
+                  "en": "1985–1992: At Siriraj Hospital, Mahidol University, a lifelong dedication to human anatomy and surgical discipline began.",
+                  "th": "พ.ศ. 2528–2535: จุดเริ่มต้นแห่งความมุ่งมั่นด้านกายวิภาคศาสตร์และวิชาชีพแพทย์ ณ ศิริราชพยาบาล มหาวิทยาลัยมหิดล"
+                },
+                "durationSec": 6,
+                "transitionType": "cinematic-dissolve",
+                "cameraMovement": "kenburns-pan-right",
+                "animationIntensity": "cinematic",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-02",
+                "code": "DR-02",
+                "year": "Archive",
+                "url": "assets/doctor/archive/dr-02-student-acoustic-guitar.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-biography-inspirational.mp3",
+                "heading": {
+                  "en": "Scene 02 · Classical Guitar & Fine Finger Dexterity",
+                  "th": "ฉากที่ 02 · ดนตรีกีตาร์คลาสสิกกับการฝึกความละเอียดของนิ้วมือ"
+                },
+                "description": {
+                  "en": "Outside the lecture hall, practicing acoustic guitar cultivated the delicate tactile control and finger coordination essential for reconstructive microsurgery.",
+                  "th": "นอกเวลาเรียน การฝึกซ้อมกีตาร์โปร่งช่วยหล่อหลอมความนิ่งและความประณีตของนิ้วมือ ซึ่งเป็นพื้นฐานสำคัญของงานจุลศัลยกรรม"
+                },
+                "caption": {
+                  "en": "Early academic years — classical guitar practice in study quarters",
+                  "th": "การฝึกซ้อมดนตรีกีตาร์โปร่งในห้องพักช่วงต้นของเส้นทางวิชาชีพ"
+                },
+                "subtitle": {
+                  "en": "Practicing classical guitar cultivated the fine manual dexterity and patience that would later guide his surgical hand.",
+                  "th": "การฝึกซ้อมดนตรีช่วยหล่อหลอมความประณีตและความนิ่งของมือ ซึ่งเป็นหัวใจสำคัญของศัลยแพทย์"
+                },
+                "durationSec": 5,
+                "transitionType": "scale-crossfade",
+                "cameraMovement": "slow-zoom-in",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-03",
+                "code": "DR-03",
+                "year": "Archive",
+                "url": "assets/doctor/archive/dr-03-student-nature-trek.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-biography-inspirational.mp3",
+                "heading": {
+                  "en": "Scene 03 · Observation of Natural Harmony",
+                  "th": "ฉากที่ 03 · การเรียนรู้สมดุลแห่งธรรมชาติ"
+                },
+                "description": {
+                  "en": "Early field excursions into nature reinforced a core aesthetic philosophy: true surgical restoration must respect natural proportion and harmony.",
+                  "th": "การออกเดินทางศึกษาธรรมชาติช่วยปลูกฝังมุมมองด้านสุนทรียศาสตร์ การฟื้นฟูความงามต้องเคารพสัดส่วนที่เป็นธรรมชาติเสมอ"
+                },
+                "caption": {
+                  "en": "Outdoor field excursion during formative medical years",
+                  "th": "กิจกรรมทัศนศึกษาธรรมชาติในช่วงต้นของเส้นทางสายการแพทย์"
+                },
+                "subtitle": {
+                  "en": "Studying natural balance shaped a core belief: surgical restoration must always look natural and unforced.",
+                  "th": "สมดุลแห่งธรรมชาติคือต้นแบบของการผ่าตัดที่มุ่งเน้นผลลัพธ์ที่ดูเป็นธรรมชาติ"
+                },
+                "durationSec": 5,
+                "transitionType": "emerald-wipe",
+                "cameraMovement": "pan-left-drift",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-04",
+                "code": "DR-04",
+                "year": "Archive",
+                "url": "assets/doctor/archive/dr-04-student-suspension-bridge.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-biography-inspirational.mp3",
+                "heading": {
+                  "en": "Scene 04 · Collegiate Fellowship & Perseverance",
+                  "th": "ฉากที่ 04 · มิตรภาพและความเพียรพยายามในวัยศึกษา"
+                },
+                "description": {
+                  "en": "Seven rigorous years of medical education forged enduring professional ethics, teamwork, and clinical responsibility.",
+                  "th": "ตลอด 7 ปีของการศึกษาแพทยศาสตร์ ได้สร้างจริยธรรมวิชาชีพ การทำงานเป็นทีม และความรับผิดชอบต่อผู้ป่วย"
+                },
+                "caption": {
+                  "en": "Collegiate field walk across suspension bridge",
+                  "th": "กิจกรรมเดินทางร่วมกับคณะเพื่อนในช่วงต้นของวิชาชีพ"
+                },
+                "subtitle": {
+                  "en": "Seven rigorous years of medical education forged lasting clinical ethics and camaraderie.",
+                  "th": "การศึกษาแพทยศาสตร์อย่างเข้มข้นตลอด 7 ปี หล่อหลอมจริยธรรมและความรับผิดชอบต่อชีวิตผู้ป่วย"
+                },
+                "durationSec": 5,
+                "transitionType": "lift-fade",
+                "cameraMovement": "slow-zoom-out",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-41",
+                "code": "DR-41",
+                "year": "2015",
+                "url": "assets/doctor/archive/dr-41-candid-electric-guitar.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-biography-inspirational.mp3",
+                "heading": {
+                  "en": "Scene 05 · Rhythm, Focus & Precision Off-Duty",
+                  "th": "ฉากที่ 05 · สมาธิและจังหวะแห่งความแม่นยำ"
+                },
+                "description": {
+                  "en": "Music remained a lifelong companion, keeping hand-eye coordination sharp and the mind calm before complex procedures.",
+                  "th": "ดนตรียังคงเป็นกิจกรรมที่ช่วยสร้างสมาธิและความผ่อนคลายควบคู่กับการทำงานที่ต้องใช้ความแม่นยำสูง"
+                },
+                "caption": {
+                  "en": "Off-duty passion for music and fine finger dexterity — playing electric guitar",
+                  "th": "มุมสบายๆ นอกเวลาตรวจรักษา — การเล่นกีตาร์ไฟฟ้า"
+                },
+                "subtitle": {
+                  "en": "Music remained a lifelong discipline for keeping focus calm and hand coordination precise.",
+                  "th": "ดนตรีช่วยรักษาสมาธิและความประณีตของประสาทสัมผัสในทุกช่วงวัยของชีวิตแพทย์"
+                },
+                "durationSec": 5,
+                "transitionType": "cinematic-dissolve",
+                "cameraMovement": "tilt-up-reveal",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-05",
+                "code": "DR-05",
+                "year": "2017",
+                "url": "assets/doctor/archive/dr-05-diplomas-wall-fellowship.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-biography-inspirational.mp3",
+                "heading": {
+                  "en": "Scene 06 · Doctor of Medicine (M.D.), Siriraj Hospital (1992)",
+                  "th": "ฉากที่ 06 · แพทยศาสตรบัณฑิต คณะแพทยศาสตร์ศิริราชพยาบาล (พ.ศ. 2535)"
+                },
+                "description": {
+                  "en": "In 1992, Dr. Rushapol graduated with his Doctor of Medicine (M.D.) degree from Siriraj Hospital, Mahidol University, framed here alongside his postgraduate board credentials.",
+                  "th": "ในปี พ.ศ. 2535 สำเร็จการศึกษาแพทยศาสตรบัณฑิต (พบ.) จากคณะแพทยศาสตร์ศิริราชพยาบาล มหาวิทยาลัยมหิดล"
+                },
+                "caption": {
+                  "en": "With international faculty before framed Doctor of Medicine (Siriraj) and Thai Board diplomas",
+                  "th": "หน้าเกียรติบัตรแพทยศาสตรบัณฑิต ศิริราช และวุฒิบัตรศัลยศาสตร์ตกแต่ง"
+                },
+                "subtitle": {
+                  "en": "1992: Awarded the Doctor of Medicine degree from the Faculty of Medicine Siriraj Hospital, Mahidol University.",
+                  "th": "พ.ศ. 2535: สำเร็จการศึกษาแพทยศาสตรบัณฑิต จากคณะแพทยศาสตร์ศิริราชพยาบาล มหาวิทยาลัยมหิดล"
+                },
+                "durationSec": 5,
+                "transitionType": "scale-crossfade",
+                "cameraMovement": "kenburns-pan-right",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-06",
+                "code": "DR-06",
+                "year": "2016",
+                "url": "assets/doctor/archive/dr-06-diplomas-framed-hall.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-biography-inspirational.mp3",
+                "heading": {
+                  "en": "Scene 07 · Academic Foundation for Surgical Residency",
+                  "th": "ฉากที่ 07 · รากฐานวิชาการสู่การฝึกอบรมแพทย์เฉพาะทาง"
+                },
+                "description": {
+                  "en": "Each framed diploma represents years of verified academic examination, hospital rotations, and clinical mentorship.",
+                  "th": "ปริญญาบัตรและวุฒิบัตรทุกฉบับคือเครื่องยืนยันถึงการฝึกฝนและการสอบประเมินตามมาตรฐานวิชาชีพเวชกรรม"
+                },
+                "caption": {
+                  "en": "Standing beneath framed medical degrees and board certification diplomas",
+                  "th": "ใต้เกียรติบัตรและวุฒิบัตรวิชาชีพแพทย์เฉพาะทาง"
+                },
+                "subtitle": {
+                  "en": "Every credential represents years of verified hospital training and academic examination.",
+                  "th": "เกียรติบัตรทุกฉบับสะท้อนถึงความทุ่มเทในการศึกษาและฝึกอบรมตามมาตรฐานวิชาชีพ"
+                },
+                "durationSec": 5,
+                "transitionType": "emerald-wipe",
+                "cameraMovement": "slow-zoom-in",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-07",
+                "code": "DR-07",
+                "year": "2016",
+                "url": "assets/doctor/archive/dr-07-diplomas-five-certificates.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-biography-inspirational.mp3",
+                "heading": {
+                  "en": "Scene 08 · Five Pillars of Medical & Surgical Certification",
+                  "th": "ฉากที่ 08 · วุฒิบัตรและเกียรติบัตรวิชาชีพทั้ง 5 ฉบับ"
+                },
+                "description": {
+                  "en": "Seated beneath five framed academic and surgical board diplomas spanning Siriraj, Phramongkutklao, and Ramathibodi hospitals.",
+                  "th": "นพ.รัชพล สดาวรรธน์ กับชุดใบปริญญาบัตรและวุฒิบัตรเฉพาะทางจากศิริราช พระมงกุฎเกล้า และรามาธิบดี"
+                },
+                "caption": {
+                  "en": "Five framed medical graduation and surgical board credentials display",
+                  "th": "ชุดใบปริญญาบัตรและวุฒิบัตรเฉพาะทางทั้ง 5 ฉบับ"
+                },
+                "subtitle": {
+                  "en": "Academic credentials spanning three of Thailand’s premier university and military teaching hospitals.",
+                  "th": "คุณวุฒิทางการแพทย์จาก 3 สถาบันการแพทย์ชั้นนำของประเทศไทย"
+                },
+                "durationSec": 5,
+                "transitionType": "lift-fade",
+                "cameraMovement": "pan-left-drift",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-08",
+                "code": "DR-08",
+                "year": "2016",
+                "url": "assets/doctor/archive/dr-08-diplomas-clinic-emblem.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-biography-inspirational.mp3",
+                "heading": {
+                  "en": "Scene 09 · Commitment to Reconstructive & Aesthetic Standards",
+                  "th": "ฉากที่ 09 · ความมุ่งมั่นในมาตรฐานศัลยกรรมตกแต่งและเสริมสร้าง"
+                },
+                "description": {
+                  "en": "Where it all began: a physician grounded in university medical science, ready to dedicate his career to surgical excellence.",
+                  "th": "จุดเริ่มต้นจากรากฐานแพทยศาสตร์ที่มั่นคง สู่การอุทิศตนเพื่อวิชาชีพศัลยกรรมตกแต่งและเสริมสร้าง"
+                },
+                "caption": {
+                  "en": "Formal credential portrait before the Plastic & Reconstructive Surgery emblem",
+                  "th": "ภาพถ่ายหน้าตราสัญลักษณ์คลินิกศัลยกรรมตกแต่งและเสริมสร้าง"
+                },
+                "subtitle": {
+                  "en": "Grounded in university medical science and committed to lifelong surgical excellence.",
+                  "th": "รากฐานวิชาการที่แข็งแกร่งคือก้าวแรกของการเป็นศัลยแพทย์ตกแต่งและเสริมสร้าง"
+                },
+                "durationSec": 5,
+                "transitionType": "cinematic-dissolve",
+                "cameraMovement": "slow-zoom-out",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              }
+            ]
+          },
+          {
+            "id": "ch-02",
+            "num": "02",
+            "year": "1992–1997",
+            "yearTh": "พ.ศ. 2535–2540",
+            "title": {
+              "en": "The Pursuit of Excellence",
+              "th": "การมุ่งสู่ความเป็นเลิศทางศัลยศาสตร์"
+            },
+            "institution": {
+              "en": "M.D. Graduation (Siriraj, 1992) & General Surgery Residency, Phramongkutklao Hospital (1995–1997)",
+              "th": "แพทยศาสตรบัณฑิต ศิริราช (2535) และแพทย์ประจำบ้านศัลยศาสตร์ทั่วไป รพ.พระมงกุฎเกล้า (2538–2540)"
+            },
+            "milestoneBadge": {
+              "en": "Thai Board of General Surgery",
+              "th": "วุฒิบัตรศัลยศาสตร์ทั่วไป"
+            },
+            "description": {
+              "en": "Graduating with a Doctor of Medicine degree from Siriraj Hospital in 1992, Dr. Rushapol pursued intensive postgraduate surgical training at Phramongkutklao Hospital from 1995 to 1997, earning Thai Board Certification in General Surgery and mastering operative discipline, vascular control, and reconstructive tissue handling.",
+              "th": "หลังสำเร็จการศึกษาแพทยศาสตรบัณฑิตในปี พ.ศ. 2535 นพ.รัชพล ได้เข้าฝึกอบรมแพทย์ประจำบ้านสาขาศัลยศาสตร์ทั่วไป ณ โรงพยาบาลพระมงกุฎเกล้า (พ.ศ. 2538–2540) จนได้รับวุฒิบัตรศัลยศาสตร์ทั่วไป เชี่ยวชาญการจัดการเนื้อเยื่อ โครงสร้างหลอดเลือด และระเบียบวินัยในห้องผ่าตัด"
+            },
+            "videoUrl": "assets/doctor/video/ch02-or-instrument-table.mp4",
+            "musicUrl": "assets/audio/music-biography-inspirational.mp3",
+            "musicLabel": {
+              "en": "Inspirational Documentary Score",
+              "th": "ดนตรีสารคดีสร้างแรงบันดาลใจ"
+            },
+            "narrationScript": {
+              "en": "Chapter Two: The Pursuit of Excellence. Following his M.D. graduation from Siriraj Hospital in 1992, Dr. Rushapol completed General Surgery residency at Phramongkutklao Hospital from 1995 to 1997, mastering operative discipline, sterile instrumentation, and microsurgical tissue handling.",
+              "th": "บทที่ 2 การมุ่งสู่ความเป็นเลิศทางศัลยศาสตร์ หลังจบแพทยศาสตรบัณฑิตจากศิริราช นายแพทย์รัชพล ได้ฝึกอบรมศัลยศาสตร์ทั่วไป ณ โรงพยาบาลพระมงกุฎเกล้า ระหว่างปี 2538 ถึง 2540 เชี่ยวชาญระเบียบวินัยในห้องผ่าตัดและการจัดการเนื้อเยื่ออย่างประณีต"
+            },
+            "sourceUrl": "https://www.intrarathospital.co.th/en/doctor-profile/rushapolsdawat/",
+            "adminMeta": "CHAPTER 02 · THE PURSUIT OF EXCELLENCE · 9 SCENES (DR-11..16, DR-34, DR-42, DR-43) + ch02-or-instrument-table.mp4",
+            "photos": [
+              {
+                "id": "sc-dr-11",
+                "code": "DR-11",
+                "year": "2005",
+                "url": "assets/doctor/archive/dr-11-training-microsurgery-2005.webp",
+                "videoUrl": "assets/doctor/video/ch02-or-instrument-table.mp4",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-biography-inspirational.mp3",
+                "heading": {
+                  "en": "Scene 01 · General Surgery Residency at Phramongkutklao (1995–1997)",
+                  "th": "ฉากที่ 01 · การฝึกอบรมศัลยศาสตร์ทั่วไป รพ.พระมงกุฎเกล้า (พ.ศ. 2538–2540)"
+                },
+                "description": {
+                  "en": "From 1995 to 1997, Dr. Rushapol completed General Surgery training at Phramongkutklao Hospital, mastering vascular control, microsurgical tissue handling, and operative discipline.",
+                  "th": "พ.ศ. 2538–2540 ฝึกอบรมและได้รับวุฒิบัตรศัลยศาสตร์ทั่วไป ณ โรงพยาบาลพระมงกุฎเกล้า ฝึกฝนความแม่นยำในการผ่าตัดและจุลศัลยกรรม"
+                },
+                "caption": {
+                  "en": "Reconstructive microsurgical hand and tendon training session (Dec 4, 2005)",
+                  "th": "การปฏิบัติการศัลยกรรมตกแต่งและจุลศัลยกรรม (4 ธันวาคม พ.ศ. 2548)"
+                },
+                "subtitle": {
+                  "en": "1995–1997: General Surgery training at Phramongkutklao Hospital established deep operative discipline and tissue mastery.",
+                  "th": "พ.ศ. 2538–2540: การฝึกอบรมศัลยศาสตร์ทั่วไป ณ โรงพยาบาลพระมงกุฎเกล้า สร้างความเชี่ยวชาญในการจัดการเนื้อเยื่อและหลอดเลือด"
+                },
+                "durationSec": 6,
+                "transitionType": "cinematic-dissolve",
+                "cameraMovement": "kenburns-pan-right",
+                "animationIntensity": "cinematic",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-12",
+                "code": "DR-12",
+                "year": "2005",
+                "url": "assets/doctor/archive/dr-12-training-instruments-2005.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-biography-inspirational.mp3",
+                "heading": {
+                  "en": "Scene 02 · Sterile Instrumentation & Mayo Table Precision (2005)",
+                  "th": "ฉากที่ 02 · ระเบียบวินัยของเครื่องมือผ่าตัดและความปลอดเชื้อ (พ.ศ. 2548)"
+                },
+                "description": {
+                  "en": "Recorded on December 4, 2005: meticulous arrangement of surgical instruments and coordination with the operating room scrub nurse.",
+                  "th": "ภาพถ่ายวันที่ 4 ธันวาคม พ.ศ. 2548 แสดงถึงระเบียบวินัยในการจัดเตรียมเครื่องมือผ่าตัดร่วมกับทีมพยาบาลห้องผ่าตัด"
+                },
+                "caption": {
+                  "en": "Sterile surgical instrumentation and operative discipline (Dec 4, 2005)",
+                  "th": "การเตรียมเครื่องมือผ่าตัดและระเบียบปฏิบัติในห้องผ่าตัด (4 ธันวาคม พ.ศ. 2548)"
+                },
+                "subtitle": {
+                  "en": "December 2005: Surgical excellence demands systematic preparation of every instrument before an incision is made.",
+                  "th": "ธันวาคม พ.ศ. 2548: ความเป็นเลิศทางศัลยกรรมเริ่มต้นจากความพร้อมและระเบียบวินัยของเครื่องมือทุกชิ้น"
+                },
+                "durationSec": 5,
+                "transitionType": "scale-crossfade",
+                "cameraMovement": "slow-zoom-in",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-13",
+                "code": "DR-13",
+                "year": "2004",
+                "url": "assets/doctor/archive/dr-13-early-career-conference-2004.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-biography-inspirational.mp3",
+                "heading": {
+                  "en": "Scene 03 · Hospital Department Clinical Conferencing (Nov 18, 2004)",
+                  "th": "ฉากที่ 03 · การประชุมวิชาการร่วมกับคณาจารย์แพทย์ (18 พ.ย. 2547)"
+                },
+                "description": {
+                  "en": "Archival photograph dated November 18, 2004: reviewing clinical cases at the hospital conference table alongside senior medical faculty and nursing staff.",
+                  "th": "บันทึกภาพเมื่อวันที่ 18 พฤศจิกายน พ.ศ. 2547 ขณะประชุมทบทวนแนวทางการรักษาร่วมกับอาจารย์แพทย์และทีมพยาบาล"
+                },
+                "caption": {
+                  "en": "Hospital department clinical conference table with senior medical faculty (Nov 18, 2004)",
+                  "th": "การประชุมวิชาการร่วมกับคณาจารย์แพทย์และทีมพยาบาล (18 พฤศจิกายน พ.ศ. 2547)"
+                },
+                "subtitle": {
+                  "en": "November 18, 2004: Collaborative case discussions with senior hospital faculty refined clinical judgment.",
+                  "th": "18 พฤศจิกายน พ.ศ. 2547: การแลกเปลี่ยนเรียนรู้ร่วมกับคณาจารย์แพทย์และทีมสหวิชาชีพ"
+                },
+                "durationSec": 5,
+                "transitionType": "emerald-wipe",
+                "cameraMovement": "pan-left-drift",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-14",
+                "code": "DR-14",
+                "year": "2004",
+                "url": "assets/doctor/archive/dr-14-early-career-diagnostic-unit-2004.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-biography-inspirational.mp3",
+                "heading": {
+                  "en": "Scene 04 · Diagnostic & Imaging Integration (Nov 22, 2004)",
+                  "th": "ฉากที่ 04 · การประยุกต์ใช้เครื่องมือตรวจวินิจฉัยในโรงพยาบาล (22 พ.ย. 2547)"
+                },
+                "description": {
+                  "en": "Archival photograph dated November 22, 2004: early specialist hospital practice integrating diagnostic imaging technology into surgical planning.",
+                  "th": "บันทึกภาพเมื่อวันที่ 22 พฤศจิกายน พ.ศ. 2547 ขณะปฏิบัติงานแพทย์เฉพาะทางคู่กับเครื่องมือตรวจวินิจฉัยในโรงพยาบาล"
+                },
+                "caption": {
+                  "en": "Early specialist hospital practice beside diagnostic imaging unit (Nov 22, 2004)",
+                  "th": "การปฏิบัติงานแพทย์เฉพาะทางในโรงพยาบาล (22 พฤศจิกายน พ.ศ. 2547)"
+                },
+                "subtitle": {
+                  "en": "November 22, 2004: Integrating diagnostic imaging directly into pre-operative surgical assessment.",
+                  "th": "22 พฤศจิกายน พ.ศ. 2547: การผสานเทคโนโลยีการตรวจวินิจฉัยเข้ากับการวางแผนผ่าตัด"
+                },
+                "durationSec": 5,
+                "transitionType": "lift-fade",
+                "cameraMovement": "slow-zoom-out",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-15",
+                "code": "DR-15",
+                "year": "2006",
+                "url": "assets/doctor/archive/dr-15-early-career-or-scrubs-2006.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-biography-inspirational.mp3",
+                "heading": {
+                  "en": "Scene 05 · Operating Theatre Team Cohesion (Aug 23, 2006)",
+                  "th": "ฉากที่ 05 · การทำงานร่วมกับทีมห้องผ่าตัด (23 ส.ค. 2549)"
+                },
+                "description": {
+                  "en": "Archival photograph dated August 23, 2006: in green surgical scrubs inside the hospital operating suite with anesthesia and monitoring equipment.",
+                  "th": "บันทึกภาพเมื่อวันที่ 23 สิงหาคม พ.ศ. 2549 ในชุดผ่าตัดสีเขียวร่วมกับทีมบุคลากรห้องผ่าตัดและเครื่องมอนิเตอร์สัญญาณชีพ"
+                },
+                "caption": {
+                  "en": "Operating theatre team portrait in green surgical scrubs (Aug 23, 2006)",
+                  "th": "ภาพถ่ายในห้องผ่าตัดช่วงปฏิบัติงานศัลยแพทย์เฉพาะทาง (23 สิงหาคม พ.ศ. 2549)"
+                },
+                "subtitle": {
+                  "en": "August 23, 2006: Safe surgery relies on seamless teamwork between surgeon, anesthesiologist, and scrub nurses.",
+                  "th": "23 สิงหาคม พ.ศ. 2549: ความปลอดภัยในห้องผ่าตัดเกิดจากการประสานงานที่เป็นหนึ่งเดียวกันของทีม"
+                },
+                "durationSec": 5,
+                "transitionType": "cinematic-dissolve",
+                "cameraMovement": "tilt-up-reveal",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-16",
+                "code": "DR-16",
+                "year": "2005",
+                "url": "assets/doctor/archive/dr-16-early-career-surgery-2005.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-biography-inspirational.mp3",
+                "heading": {
+                  "en": "Scene 06 · Unwavering Focus in the Operating Room (Dec 24, 2005)",
+                  "th": "ฉากที่ 06 · สมาธิและความมุ่งมั่นขณะผ่าตัด (24 ธ.ค. 2548)"
+                },
+                "description": {
+                  "en": "Recorded on December 24, 2005: performing reconstructive surgery with complete concentration under sterile drapes.",
+                  "th": "บันทึกภาพเมื่อวันที่ 24 ธันวาคม พ.ศ. 2548 ขณะปฏิบัติการผ่าตัดศัลยกรรมตกแต่งด้วยความมุ่งมั่นและสมาธิสูงสุด"
+                },
+                "caption": {
+                  "en": "Plastic and reconstructive surgical operation on Christmas Eve (Dec 24, 2005)",
+                  "th": "ความมุ่งมั่นขณะปฏิบัติการผ่าตัดศัลยกรรมตกแต่ง (24 ธันวาคม พ.ศ. 2548)"
+                },
+                "subtitle": {
+                  "en": "December 24, 2005: Quiet, unhurried concentration during every step of tissue dissection and closure.",
+                  "th": "24 ธันวาคม พ.ศ. 2548: ความประณีตและสมาธิในทุกขั้นตอนของการผ่าตัด"
+                },
+                "durationSec": 5,
+                "transitionType": "scale-crossfade",
+                "cameraMovement": "kenburns-pan-right",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-34",
+                "code": "DR-34",
+                "year": "2017",
+                "url": "assets/doctor/archive/dr-34-intl-surgeon-credentials-slide.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-biography-inspirational.mp3",
+                "heading": {
+                  "en": "Scene 07 · Three-Institution Board Training Lineage",
+                  "th": "ฉากที่ 07 · เส้นทางการฝึกอบรมจาก 3 สถาบันการแพทย์ชั้นนำ"
+                },
+                "description": {
+                  "en": "An international seminar slide summarizing Dr. Rushapol’s verified training path across Siriraj Medical School, Phramongkutklao, and Ramathibodi Hospital.",
+                  "th": "สไลด์บรรยายระดับนานาชาติแสดงประวัติการศึกษาจากศิริราชพยาบาล โรงพยาบาลพระมงกุฎเกล้า และโรงพยาบาลรามาธิบดี"
+                },
+                "caption": {
+                  "en": "International seminar screen highlighting Siriraj, Phramongkutklao & Ramathibodi board credentials",
+                  "th": "สไลด์แนะนำประวัติการศึกษาจากศิริราช พระมงกุฎเกล้า และรามาธิบดี สำหรับผู้ป่วยต่างชาติ"
+                },
+                "subtitle": {
+                  "en": "A verified lineage of training across Siriraj, Phramongkutklao, and Ramathibodi teaching hospitals.",
+                  "th": "พื้นฐานการฝึกอบรมที่ได้รับการรับรองจากศิริราช พระมงกุฎเกล้า และรามาธิบดี"
+                },
+                "durationSec": 5,
+                "transitionType": "emerald-wipe",
+                "cameraMovement": "slow-zoom-in",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-42",
+                "code": "DR-42",
+                "year": "2016",
+                "url": "assets/doctor/archive/dr-42-candid-table-tennis.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-biography-inspirational.mp3",
+                "heading": {
+                  "en": "Scene 08 · Reflexes & Hand-Eye Coordination",
+                  "th": "ฉากที่ 08 · การฝึกความไวของสายตาและการประสานงานของมือ"
+                },
+                "description": {
+                  "en": "Pursuing excellence requires physical readiness—table tennis sharpens visual tracking and rapid motor precision.",
+                  "th": "การดูแลความพร้อมของร่างกายและสายตาด้วยกีฬาเทเบิลเทนนิส ช่วยเสริมความแม่นยำในการทำงาน"
+                },
+                "caption": {
+                  "en": "Active lifestyle and hand-eye coordination — playing table tennis",
+                  "th": "การออกกำลังกายและฝึกความแม่นยำด้วยกีฬาเทเบิลเทนนิส"
+                },
+                "subtitle": {
+                  "en": "Athletic conditioning keeps visual tracking and fine motor reflexes sharp.",
+                  "th": "การออกกำลังกายสม่ำเสมอช่วยรักษาความเฉียบคมของสายตาและประสาทสัมผัส"
+                },
+                "durationSec": 5,
+                "transitionType": "lift-fade",
+                "cameraMovement": "pan-left-drift",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-43",
+                "code": "DR-43",
+                "year": "2016",
+                "url": "assets/doctor/archive/dr-43-candid-badminton-court.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-biography-inspirational.mp3",
+                "heading": {
+                  "en": "Scene 09 · Endurance for Complex Reconstructive Procedures",
+                  "th": "ฉากที่ 09 · ความแข็งแกร่งของร่างกายสำหรับการผ่าตัดที่ซับซ้อน"
+                },
+                "description": {
+                  "en": "Regular training on the badminton court builds the stamina needed for multi-hour Deep Plane and reconstructive operations.",
+                  "th": "การเล่นกีฬาแบดมินตันช่วยสร้างความทนทานของกล้ามเนื้อและสมาธิสำหรับการผ่าตัดที่ใช้เวลานานหลายชั่วโมง"
+                },
+                "caption": {
+                  "en": "Regular athletics on the badminton court",
+                  "th": "การดูแลสุขภาพด้วยการเล่นกีฬาแบดมินตัน"
+                },
+                "subtitle": {
+                  "en": "Physical endurance supports steady hands across multi-hour facial and reconstructive procedures.",
+                  "th": "ความพร้อมของร่างกายคือพื้นฐานสำคัญของการผ่าตัดที่ต้องใช้ความละเอียดต่อเนื่องหลายชั่วโมง"
+                },
+                "durationSec": 5,
+                "transitionType": "cinematic-dissolve",
+                "cameraMovement": "slow-zoom-out",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              }
+            ]
+          },
+          {
+            "id": "ch-03",
+            "num": "03",
+            "year": "1998–2000 · Board",
+            "yearTh": "พ.ศ. 2541–2543",
+            "title": {
+              "en": "A Lifetime of Dedication",
+              "th": "ความทุ่มเทตลอดเส้นทางศัลยแพทย์ตกแต่ง"
+            },
+            "institution": {
+              "en": "Plastic & Reconstructive Surgery, Ramathibodi Hospital (1998–2000 · Thai Board 2000) & Global Congress Faculty",
+              "th": "ศัลยกรรมตกแต่งและเสริมสร้าง รพ.รามาธิบดี ม.มหิดล (วุฒิบัตร พ.ศ. 2543) และวิทยากรวิชาการนานาชาติ"
+            },
+            "milestoneBadge": {
+              "en": "Thai Board of Plastic Surgery (2000) · ThSAPS · ISAPS · ASPS",
+              "th": "วุฒิบัตรศัลยกรรมตกแต่ง (2543) · ThSAPS · ISAPS · ASPS"
+            },
+            "description": {
+              "en": "Between 1998 and 2000, Dr. Rushapol completed specialized residency in Plastic and Reconstructive Surgery at Ramathibodi Hospital, Mahidol University, receiving the Thai Board of Plastic and Reconstructive Surgery in 2000. Across more than two decades, he has contributed to international surgical symposia, cadaveric anatomy workshops at TMEd, and global societies including ThSAPS, ISAPS, and ASPS.",
+              "th": "พ.ศ. 2541–2543 ฝึกอบรมเฉพาะทางสาขาศัลยกรรมตกแต่งและเสริมสร้าง ณ โรงพยาบาลรามาธิบดี มหาวิทยาลัยมหิดล ได้รับวุฒิบัตรในปี พ.ศ. 2543 และตลอดกว่าสองทศวรรษได้ร่วมบรรยายในงานประชุมวิชาการนานาชาติ ศูนย์ฝึกผ่าตัดอาจารย์ใหญ่ TMEd และเป็นสมาชิกสมาคม ThSAPS, ISAPS และ ASPS"
+            },
+            "videoUrl": "assets/doctor/video/ch03-tmed-academic-lecture.mp4",
+            "musicUrl": "assets/audio/music-biography-inspirational.mp3",
+            "musicLabel": {
+              "en": "Inspirational Documentary Score",
+              "th": "ดนตรีสารคดีสร้างแรงบันดาลใจ"
+            },
+            "narrationScript": {
+              "en": "Chapter Three: A Lifetime of Dedication. From 1998 to 2000 at Ramathibodi Hospital, Mahidol University, he earned the Thai Board of Plastic and Reconstructive Surgery, dedicating over two decades to international symposia, cadaveric anatomical training, and global surgical societies including ThSAPS, ISAPS, and ASPS.",
+              "th": "บทที่ 3 ความทุ่มเทตลอดเส้นทางศัลยแพทย์ตกแต่ง จากการฝึกอบรมเฉพาะทาง ณ โรงพยาบาลรามาธิบดี มหาวิทยาลัยมหิดล จนได้รับวุฒิบัตรศัลยกรรมตกแต่งในปี 2543 สู่การเป็นวิทยากรงานประชุมวิชาการระดับนานาชาติและศูนย์ฝึกผ่าตัดอาจารย์ใหญ่ TMEd"
+            },
+            "sourceUrl": "https://www.intrarathospital.co.th/en/doctor-profile/rushapolsdawat/",
+            "adminMeta": "CHAPTER 03 · A LIFETIME OF DEDICATION · 10 SCENES (DR-09, DR-17..24, DR-44) + ch03-tmed-academic-lecture.mp4",
+            "photos": [
+              {
+                "id": "sc-dr-09",
+                "code": "DR-09",
+                "year": "2025",
+                "url": "assets/doctor/archive/dr-09-training-tmed-cadaveric-center.webp",
+                "videoUrl": "assets/doctor/video/ch03-tmed-academic-lecture.mp4",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-biography-inspirational.mp3",
+                "heading": {
+                  "en": "Scene 01 · Ramathibodi Plastic Surgery & TMEd Cadaveric Center",
+                  "th": "ฉากที่ 01 · วุฒิบัตรศัลยกรรมตกแต่ง รามาธิบดี สู่ศูนย์ฝึกผ่าตัด TMEd"
+                },
+                "description": {
+                  "en": "After earning the Thai Board of Plastic and Reconstructive Surgery at Ramathibodi Hospital (1998–2000), Dr. Rushapol continued teaching and advancing anatomical dissection at the Surgical Skill and Cadaveric Training Center (TMEd).",
+                  "th": "หลังได้รับวุฒิบัตรศัลยกรรมตกแต่งและเสริมสร้างจากโรงพยาบาลรามาธิบดี (พ.ศ. 2541–2543) นพ.รัชพล ยังคงถ่ายทอดองค์ความรู้ ณ ศูนย์ฝึกทักษะศัลยกรรมและผ่าตัดอาจารย์ใหญ่ TMEd"
+                },
+                "caption": {
+                  "en": "Surgical Skill and Cadaveric Training Center (TMEd) anatomical instruction",
+                  "th": "การบรรยายและฝึกอบรมทักษะศัลยกรรม ณ ศูนย์ฝึกผ่าตัดอาจารย์ใหญ่ TMEd"
+                },
+                "subtitle": {
+                  "en": "1998–2000 to Present: From Ramathibodi Plastic Surgery Board certification to anatomical instruction at the TMEd Cadaveric Training Center.",
+                  "th": "จากวุฒิบัตรศัลยกรรมตกแต่ง โรงพยาบาลรามาธิบดี สู่การถ่ายทอดทักษะกายวิภาค ณ ศูนย์ฝึกผ่าตัดอาจารย์ใหญ่ TMEd"
+                },
+                "durationSec": 6,
+                "transitionType": "cinematic-dissolve",
+                "cameraMovement": "kenburns-pan-right",
+                "animationIntensity": "cinematic",
+                "sourceOrigin": "Authentic Video Keyframe (D:\\dominic / D:\\เยี่ยมคนไข้.mp4)"
+              },
+              {
+                "id": "sc-dr-17",
+                "code": "DR-17",
+                "year": "2017",
+                "url": "assets/doctor/archive/dr-17-conf-breast-workshop-2017.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-biography-inspirational.mp3",
+                "heading": {
+                  "en": "Scene 02 · Surgical Excellence Workshop Faculty (2017)",
+                  "th": "ฉากที่ 02 · คณะวิทยากรงานประชุมเชิงปฏิบัติการศัลยกรรมตกแต่ง (พ.ศ. 2560)"
+                },
+                "description": {
+                  "en": "Standing with fellow board-certified plastic surgeons on the faculty panel of the Surgical Excellence Workshop 2017.",
+                  "th": "ร่วมเป็นคณะวิทยากรแลกเปลี่ยนเทคนิคการผ่าตัดในงานประชุมเชิงปฏิบัติการศัลยกรรมตกแต่ง ปี พ.ศ. 2560"
+                },
+                "caption": {
+                  "en": "Faculty panel at the Breast Augmentation Surgical Excellence Workshop 2017",
+                  "th": "คณะวิทยากรในงานประชุมเชิงปฏิบัติการศัลยกรรมตกแต่ง ปี พ.ศ. 2560"
+                },
+                "subtitle": {
+                  "en": "Sharing clinical experience alongside national and international plastic surgery faculty.",
+                  "th": "ร่วมแบ่งปันประสบการณ์ทางคลินิกกับคณะศัลยแพทย์ตกแต่งระดับประเทศและนานาชาติ"
+                },
+                "durationSec": 5,
+                "transitionType": "scale-crossfade",
+                "cameraMovement": "slow-zoom-in",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-18",
+                "code": "DR-18",
+                "year": "2017",
+                "url": "assets/doctor/archive/dr-18-conf-mentor-symposium-2017.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-biography-inspirational.mp3",
+                "heading": {
+                  "en": "Scene 03 · BDMS & Mentor Academic Symposium Panel (Nov 2017)",
+                  "th": "ฉากที่ 03 · เวทีเสวนาวิชาการศัลยกรรมตกแต่ง (พฤศจิกายน พ.ศ. 2560)"
+                },
+                "description": {
+                  "en": "Participating in scientific panel discussions on anatomical safety, surgical planning, and long-term outcomes.",
+                  "th": "ร่วมเวทีเสวนาวิชาการเพื่อยกระดับความปลอดภัยและมาตรฐานการวางแผนผ่าตัดศัลยกรรมตกแต่ง"
+                },
+                "caption": {
+                  "en": "Speaker panel at the BDMS & Mentor Plastic Surgery Symposium (Nov 10, 2017)",
+                  "th": "ร่วมเวทีเสวนาวิชาการศัลยกรรมตกแต่งระดับนานาชาติ (10 พฤศจิกายน พ.ศ. 2560)"
+                },
+                "subtitle": {
+                  "en": "Advancing surgical standards through peer-reviewed symposia and academic workshops.",
+                  "th": "การพัฒนาองค์ความรู้อย่างต่อเนื่องผ่านเวทีสัมมนาวิชาการระดับมาตรฐานสากล"
+                },
+                "durationSec": 5,
+                "transitionType": "emerald-wipe",
+                "cameraMovement": "pan-left-drift",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-19",
+                "code": "DR-19",
+                "year": "2017",
+                "url": "assets/doctor/archive/dr-19-conf-auditorium-delegate-2017.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-biography-inspirational.mp3",
+                "heading": {
+                  "en": "Scene 04 · Lifelong Scientific Inquiry in the Congress Hall",
+                  "th": "ฉากที่ 04 · การศึกษาวิทยาการใหม่ในห้องประชุมวิชาการ"
+                },
+                "description": {
+                  "en": "A dedicated surgeon never stops being a student—attending scientific sessions as a member of ThSAPS, ISAPS, and ASPS.",
+                  "th": "ในฐานะสมาชิกสมาคม ThSAPS, ISAPS และ ASPS การติดตามงานวิจัยและเทคนิคใหม่คือหัวใจของการพัฒนาไม่หยุดยั้ง"
+                },
+                "caption": {
+                  "en": "Attending scientific session in the surgical congress auditorium (Nov 10, 2017)",
+                  "th": "เข้าร่วมประชุมวิชาการศัลยศาสตร์ตกแต่งในห้องประชุมใหญ่ (พ.ศ. 2560)"
+                },
+                "subtitle": {
+                  "en": "Active membership in ThSAPS, ISAPS, and ASPS connects his practice to global plastic surgery standards.",
+                  "th": "การเป็นสมาชิกสมาคมศัลยกรรมตกแต่งทั้งในไทยและระดับสากล เชื่อมโยงมาตรฐานการรักษาสู่ระดับโลก"
+                },
+                "durationSec": 5,
+                "transitionType": "lift-fade",
+                "cameraMovement": "slow-zoom-out",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-20",
+                "code": "DR-20",
+                "year": "2017",
+                "url": "assets/doctor/archive/dr-20-conf-scientific-roundtable-2017.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-biography-inspirational.mp3",
+                "heading": {
+                  "en": "Scene 05 · International Faculty Roundtable Exchange",
+                  "th": "ฉากที่ 05 · การแลกเปลี่ยนองค์ความรู้กับศัลยแพทย์นานาชาติ"
+                },
+                "description": {
+                  "en": "Discussing anatomical techniques directly with visiting international plastic surgery professors during academic conferences.",
+                  "th": "แลกเปลี่ยนมุมมองด้านกายวิภาคและเทคนิคการผ่าตัดร่วมกับศาสตราจารย์และศัลยแพทย์ตกแต่งจากต่างประเทศ"
+                },
+                "caption": {
+                  "en": "Academic roundtable discussion with international plastic surgery faculty (Nov 2017)",
+                  "th": "แลกเปลี่ยนองค์ความรู้ร่วมกับศัลยแพทย์ตกแต่งนานาชาติ (พ.ศ. 2560)"
+                },
+                "subtitle": {
+                  "en": "Direct dialogue with international surgical leaders refines technique and patient safety protocols.",
+                  "th": "การแลกเปลี่ยนความรู้กับผู้เชี่ยวชาญระดับนานาชาติช่วยยกระดับความแม่นยำและความปลอดภัย"
+                },
+                "durationSec": 5,
+                "transitionType": "cinematic-dissolve",
+                "cameraMovement": "tilt-up-reveal",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-21",
+                "code": "DR-21",
+                "year": "2017",
+                "url": "assets/doctor/archive/dr-21-achieve-keynote-auditorium-2017.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-biography-inspirational.mp3",
+                "heading": {
+                  "en": "Scene 06 · Keynote Lecture to an International Auditorium",
+                  "th": "ฉากที่ 06 · การบรรยายพิเศษแก่ผู้เข้าร่วมสัมมนานานาชาติเต็มห้องประชุม"
+                },
+                "description": {
+                  "en": "On stage delivering an educational presentation on Thailand’s board-certified plastic surgery standards to a full international audience.",
+                  "th": "ขึ้นเวทีบรรยายถ่ายทอดมาตรฐานศัลยกรรมตกแต่งของไทยแก่ผู้เข้าร่วมฟังการสัมมนาในต่างประเทศเต็มห้องประชุม"
+                },
+                "caption": {
+                  "en": "Delivering keynote surgical lecture to a full international conference hall",
+                  "th": "บรรยายพิเศษด้านศัลยกรรมตกแต่งแก่ผู้เข้าร่วมสัมมนานานาชาติเต็มห้องประชุม"
+                },
+                "subtitle": {
+                  "en": "Presenting verified anatomical principles and surgical standards on the international stage.",
+                  "th": "ถ่ายทอดหลักการทางกายวิภาคและมาตรฐานวิชาชีพศัลยแพทย์ไทยบนเวทีระดับนานาชาติ"
+                },
+                "durationSec": 5,
+                "transitionType": "scale-crossfade",
+                "cameraMovement": "kenburns-pan-right",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-22",
+                "code": "DR-22",
+                "year": "2017",
+                "url": "assets/doctor/archive/dr-22-achieve-international-delegation.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-biography-inspirational.mp3",
+                "heading": {
+                  "en": "Scene 07 · Leading the International Medical Delegation",
+                  "th": "ฉากที่ 07 · ร่วมกับคณะผู้แทนทางการแพทย์ในการประชุมระดับนานาชาติ"
+                },
+                "description": {
+                  "en": "Commemorative stage portrait with the international symposium delegation and medical hospitality team.",
+                  "th": "ภาพถ่ายเกียรติยศบนเวทีร่วมกับคณะผู้แทนทางการแพทย์และทีมประสานงานระดับนานาชาติ"
+                },
+                "caption": {
+                  "en": "Honored with the international medical delegation on the symposium stage",
+                  "th": "ถ่ายภาพเกียรติยศร่วมกับคณะผู้แทนทางการแพทย์ในการประชุมสัมมนานานาชาติ"
+                },
+                "subtitle": {
+                  "en": "Building international trust through transparent, evidence-based medical education.",
+                  "th": "สร้างความเชื่อมั่นในระดับนานาชาติด้วยการให้ความรู้ทางการแพทย์ที่โปร่งใสและตรวจสอบได้"
+                },
+                "durationSec": 5,
+                "transitionType": "emerald-wipe",
+                "cameraMovement": "slow-zoom-in",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-23",
+                "code": "DR-23",
+                "year": "2016",
+                "url": "assets/doctor/archive/dr-23-achieve-executive-director-desk.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-biography-inspirational.mp3",
+                "heading": {
+                  "en": "Scene 08 · Executive Medical Leadership & Governance",
+                  "th": "ฉากที่ 08 · บทบาทการบริหารและการรักษามาตรฐานคลินิก"
+                },
+                "description": {
+                  "en": "At his medical director desk surrounded by institutional awards, board certificates, and clinical governance records.",
+                  "th": "ในห้องทำงานแพทย์บริหารพร้อมเกียรติบัตรและรางวัลวิชาชีพ มุ่งมั่นรักษามาตรฐานความปลอดภัยสูงสุด"
+                },
+                "caption": {
+                  "en": "At the executive medical director desk surrounded by academic plaques and certificates",
+                  "th": "ในห้องทำงานแพทย์บริหารพร้อมเกียรติบัตรและรางวัลวิชาชีพ"
+                },
+                "subtitle": {
+                  "en": "Clinical leadership rooted in accountability, ethics, and documented medical standards.",
+                  "th": "ความเป็นผู้นำทางการแพทย์ที่ยึดมั่นในจริยธรรม ความรับผิดชอบ และมาตรฐานวิชาชีพ"
+                },
+                "durationSec": 5,
+                "transitionType": "lift-fade",
+                "cameraMovement": "pan-left-drift",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-24",
+                "code": "DR-24",
+                "year": "2017",
+                "url": "assets/doctor/archive/dr-24-achieve-symposium-banner-portrait.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-biography-inspirational.mp3",
+                "heading": {
+                  "en": "Scene 09 · Peer Recognition in Reconstructive & Aesthetic Surgery",
+                  "th": "ฉากที่ 09 · การยอมรับในแวดวงศัลยกรรมตกแต่งและเสริมสร้าง"
+                },
+                "description": {
+                  "en": "Honored alongside colleagues at the BDMS & Mentor Surgical Excellence Symposium.",
+                  "th": "ถ่ายภาพร่วมกับเพื่อนแพทย์เฉพาะทางในงานประชุมวิชาการศัลยกรรมตกแต่ง"
+                },
+                "caption": {
+                  "en": "Faculty recognition at the BDMS & Mentor Aesthetic Surgery Symposium",
+                  "th": "เกียรติคุณวิทยากรในงานประชุมวิชาการศัลยกรรมตกแต่ง"
+                },
+                "subtitle": {
+                  "en": "More than twenty-five years of board-certified dedication to plastic and reconstructive surgery.",
+                  "th": "กว่าสองทศวรรษแห่งความทุ่มเทในฐานะศัลยแพทย์ตกแต่งและเสริมสร้างเฉพาะทาง"
+                },
+                "durationSec": 5,
+                "transitionType": "cinematic-dissolve",
+                "cameraMovement": "slow-zoom-out",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-44",
+                "code": "DR-44",
+                "year": "2017",
+                "url": "assets/doctor/archive/dr-44-candid-perth-skyline.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-biography-inspirational.mp3",
+                "heading": {
+                  "en": "Scene 10 · Global Perspective from Academic Travel",
+                  "th": "ฉากที่ 10 · มุมมองระดับสากลจากการเดินทางบรรยายวิชาการ"
+                },
+                "description": {
+                  "en": "Overlooking the Perth skyline during his international plastic surgery seminar tour in Australia.",
+                  "th": "ระหว่างการเดินทางไปบรรยายวิชาการด้านศัลยกรรมตกแต่ง ณ เมืองเพิร์ธ ประเทศออสเตรเลีย"
+                },
+                "caption": {
+                  "en": "Overlooking the Perth skyline during an international plastic surgery lecture tour",
+                  "th": "ภาพถ่ายริมอ่าวเมืองเพิร์ธ ประเทศออสเตรเลีย ระหว่างเดินทางไปบรรยายวิชาการ"
+                },
+                "subtitle": {
+                  "en": "Bringing international perspective back to every consultation in Bangkok.",
+                  "th": "นำประสบการณ์และมาตรฐานระดับสากลกลับมาพัฒนาการดูแลผู้ป่วยในประเทศไทย"
+                },
+                "durationSec": 5,
+                "transitionType": "scale-crossfade",
+                "cameraMovement": "tilt-up-reveal",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              }
+            ]
+          },
+          {
+            "id": "ch-04",
+            "num": "04",
+            "year": "Deep Plane & SMAS",
+            "yearTh": "กายวิภาคชั้นลึก",
+            "title": {
+              "en": "The Art of Precision",
+              "th": "ศิลปะแห่งความแม่นยำทางกายวิภาค"
+            },
+            "institution": {
+              "en": "Sub-SMAS & Deep Plane Facial Anatomy · Operating Theatre Mastery",
+              "th": "การผ่าตัดดึงหน้าและลำคอชั้นลึก Sub-SMAS & Deep Plane · มาตรฐานห้องผ่าตัดโรงพยาบาล"
+            },
+            "milestoneBadge": {
+              "en": "5-Layer Facial Anatomy & Coaxial OR Optics",
+              "th": "กายวิภาคใบหน้า 5 ชั้น และห้องผ่าตัดมาตรฐานสูง"
+            },
+            "description": {
+              "en": "True facial rejuvenation relies on anatomical understanding rather than surface tension. In the operating theatre and consultation suite, Dr. Rushapol maps the five facial and neck layers—navigating the sub-SMAS gliding space, releasing retaining ligaments, and preserving the motor branches of the facial nerve under coaxial LED surgical illumination.",
+              "th": "การย้อนวัยใบหน้าที่เป็นธรรมชาติเกิดจากความเข้าใจในโครงสร้างกายวิภาค ไม่ใช่การดึงรั้งผิวหนังส่วนบน ในห้องตรวจและห้องผ่าตัด นพ.รัชพล วิเคราะห์โครงสร้างใบหน้าและลำคอทั้ง 5 ชั้น คลายเอ็นยึดใบหน้าในชั้นใต้ SMAS และปกป้องแขนงเส้นประสาทใบหน้าภายใต้ไฟส่องสว่างศัลยกรรมความละเอียดสูง"
+            },
+            "videoUrl": "assets/doctor/video/ch04-art-of-precision-or.mp4",
+            "musicUrl": "assets/audio/music-surgical-precision.mp3",
+            "musicLabel": {
+              "en": "Sophisticated Surgical Precision Score",
+              "th": "ดนตรีแห่งความประณีตและแม่นยำทางศัลยกรรม"
+            },
+            "narrationScript": {
+              "en": "Chapter Four: The Art of Precision. True facial and neck rejuvenation relies on deep anatomical harmony rather than surface skin tension. Under coaxial LED illumination, Dr. Rushapol and his six-member operating theatre team navigate the five facial layers, releasing retaining ligaments while protecting the facial nerve.",
+              "th": "บทที่ 4 ศิลปะแห่งความแม่นยำทางกายวิภาค การผ่าตัดดึงหน้าและลำคอแบบ Deep Plane มุ่งเน้นการปรับโครงสร้างชั้นลึกใต้กล้ามเนื้อ SMAS โดยไม่ดึงรั้งผิวหนัง ภายใต้ระบบไฟส่องสว่างความละเอียดสูงและการทำงานร่วมกับทีมห้องผ่าตัดครบทีมเพื่อปกป้องเส้นประสาทใบหน้า"
+            },
+            "sourceUrl": "https://www.intrarathospital.co.th/en/doctor-profile/rushapolsdawat/",
+            "adminMeta": "CHAPTER 04 · THE ART OF PRECISION · 10 SCENES (DR-10, DR-25..30, DR-32, DR-38, DR-47) + ch04-art-of-precision-or.mp4",
+            "photos": [
+              {
+                "id": "sc-dr-10",
+                "code": "DR-10",
+                "year": "2025",
+                "url": "assets/doctor/archive/dr-10-training-surgical-dome-lights-2025.webp",
+                "videoUrl": "assets/doctor/video/ch04-art-of-precision-or.mp4",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-surgical-precision.mp3",
+                "heading": {
+                  "en": "Scene 01 · Coaxial Illumination Under Operating Theatre Dome Lights",
+                  "th": "ฉากที่ 01 · ความแม่นยำภายใต้โคมไฟห้องผ่าตัดและไฟส่องสว่างศัลยกรรม"
+                },
+                "description": {
+                  "en": "Equipped with a coaxial LED surgical headlight under twin operating theatre dome lights, Dr. Rushapol visualizes deep sub-SMAS anatomical planes with millimeter clarity.",
+                  "th": "ภายใต้โคมไฟห้องผ่าตัดคู่และไฟส่องสว่างศัลยกรรมความละเอียดสูง ช่วยให้มองเห็นโครงสร้างชั้นลึกใต้ SMAS ได้อย่างชัดเจนในระดับมิลลิเมตร"
+                },
+                "caption": {
+                  "en": "Precision coaxial surgical headlight under twin operating theatre dome lights",
+                  "th": "การปฏิบัติงานศัลยกรรมภายใต้โคมไฟห้องผ่าตัดคู่และไฟส่องสว่างศัลยกรรมความละเอียดสูง"
+                },
+                "subtitle": {
+                  "en": "The Art of Precision: Coaxial LED illumination reveals the delicate sub-SMAS gliding planes with crystal clarity.",
+                  "th": "ศิลปะแห่งความแม่นยำ: แสงไฟส่องสว่างศัลยกรรมช่วยให้มองเห็นชั้นเนื้อเยื่อลึกใต้ SMAS อย่างชัดเจน"
+                },
+                "durationSec": 6,
+                "transitionType": "cinematic-dissolve",
+                "cameraMovement": "kenburns-pan-right",
+                "animationIntensity": "cinematic",
+                "sourceOrigin": "Authentic Video Keyframe (D:\\dominic / D:\\เยี่ยมคนไข้.mp4)"
+              },
+              {
+                "id": "sc-dr-25",
+                "code": "DR-25",
+                "year": "2017",
+                "url": "assets/doctor/archive/dr-25-or-team-suite-10.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-surgical-precision.mp3",
+                "heading": {
+                  "en": "Scene 02 · Six-Member Surgical Team in Operating Room 10",
+                  "th": "ฉากที่ 02 · ทีมศัลยกรรมครบทีม ณ ห้องผ่าตัด OR 10"
+                },
+                "description": {
+                  "en": "Precision is a team discipline: Dr. Rushapol with his full six-member surgical and scrub nursing team in Operating Room 10.",
+                  "th": "ความแม่นยำเกิดจากทีมที่เชี่ยวชาญ นพ.รัชพล พร้อมทีมศัลยแพทย์ผู้ช่วยและพยาบาลห้องผ่าตัดครบทีม ณ ห้องผ่าตัด OR 10"
+                },
+                "caption": {
+                  "en": "Full six-member plastic surgery team in Operating Room 10",
+                  "th": "ทีมศัลยแพทย์และพยาบาลห้องผ่าตัดครบทีม ณ ห้องผ่าตัด OR 10"
+                },
+                "subtitle": {
+                  "en": "In Operating Room 10, every member of the six-person surgical team works in synchronized harmony.",
+                  "th": "ณ ห้องผ่าตัด OR 10 ทีมศัลยแพทย์และพยาบาลห้องผ่าตัดทั้ง 6 ท่าน ปฏิบัติงานสอดประสานกันอย่างเป็นระบบ"
+                },
+                "durationSec": 5,
+                "transitionType": "scale-crossfade",
+                "cameraMovement": "slow-zoom-in",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-26",
+                "code": "DR-26",
+                "year": "2017",
+                "url": "assets/doctor/archive/dr-26-or-dual-surgeon-precision.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-surgical-precision.mp3",
+                "heading": {
+                  "en": "Scene 03 · Bimanual Microsurgical Tissue Elevation",
+                  "th": "ฉากที่ 03 · การยกชั้นเนื้อเยื่ออย่างประณีตและไร้แรงตึงที่ผิวหนัง"
+                },
+                "description": {
+                  "en": "Working alongside a co-surgeon and scrub team, composite tissue planes are elevated gently while protecting underlying neurovascular structures.",
+                  "th": "การผ่าตัดยกชั้นเนื้อเยื่ออย่างนุ่มนวลร่วมกับทีมแพทย์ผู้ช่วย โดยให้ความสำคัญสูงสุดกับการปกป้องเส้นประสาทและหลอดเลือด"
+                },
+                "caption": {
+                  "en": "Bimanual microsurgical tissue elevation in the hospital operating theatre",
+                  "th": "การผ่าตัดร่วมกับทีมศัลยแพทย์ด้วยความละเอียดแม่นยำในห้องผ่าตัดมาตรฐานโรงพยาบาล"
+                },
+                "subtitle": {
+                  "en": "Gentle composite tissue elevation repositions deeper structural layers while avoiding surface skin tension.",
+                  "th": "การปรับตำแหน่งโครงสร้างชั้นลึกอย่างนุ่มนวล ช่วยให้ผลลัพธ์ดูเป็นธรรมชาติโดยไม่ดึงรั้งผิวหนังส่วนบน"
+                },
+                "durationSec": 5,
+                "transitionType": "emerald-wipe",
+                "cameraMovement": "pan-left-drift",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-27",
+                "code": "DR-27",
+                "year": "2017",
+                "url": "assets/doctor/archive/dr-27-or-led-lighthead-portrait.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-surgical-precision.mp3",
+                "heading": {
+                  "en": "Scene 04 · High-Intensity LED Surgical Suite Readiness",
+                  "th": "ฉากที่ 04 · ความพร้อมภายในห้องผ่าตัดมาตรฐานโรงพยาบาล"
+                },
+                "description": {
+                  "en": "Inside the sterile positive-pressure operating theatre, calibrated lighting and magnification support meticulous facial and neck contouring.",
+                  "th": "ภายในห้องผ่าตัดระบบความดันบวกปลอดเชื้อ พร้อมระบบไฟส่องสว่างและอุปกรณ์มาตรฐานโรงพยาบาล"
+                },
+                "caption": {
+                  "en": "In the operating theatre under high-intensity LED surgical lighting (Sept 2017)",
+                  "th": "ภายในห้องผ่าตัดมาตรฐานสูงพร้อมโคมไฟผ่าตัด LED"
+                },
+                "subtitle": {
+                  "en": "Positive-pressure sterile operating suites and calibrated lighting safeguard every procedure.",
+                  "th": "ห้องผ่าตัดปลอดเชื้อและอุปกรณ์มาตรฐานสูงคือหัวใจของความปลอดภัยในทุกหัตถการ"
+                },
+                "durationSec": 5,
+                "transitionType": "lift-fade",
+                "cameraMovement": "slow-zoom-out",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-28",
+                "code": "DR-28",
+                "year": "2017",
+                "url": "assets/doctor/archive/dr-28-or-monitoring-workstation.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-surgical-precision.mp3",
+                "heading": {
+                  "en": "Scene 05 · Continuous Anesthesia & Vital Telemetry",
+                  "th": "ฉากที่ 05 · ระบบติดตามสัญญาณชีพและมาตรฐานวิสัญญี"
+                },
+                "description": {
+                  "en": "Standing beside the anesthesia and vital-sign workstation prior to surgery—patient safety always precedes aesthetic technique.",
+                  "th": "ความพร้อมของระบบดมยาสลบและเครื่องติดตามสัญญาณชีพ เพราะความปลอดภัยของผู้ป่วยต้องมาก่อนเสมอ"
+                },
+                "caption": {
+                  "en": "Pre-procedure readiness beside anesthesia and vital monitoring systems (Oct 2017)",
+                  "th": "ความพร้อมก่อนเริ่มหัตถการในห้องผ่าตัดพร้อมอุปกรณ์มอนิเตอร์มาตรฐานสูง"
+                },
+                "subtitle": {
+                  "en": "Comprehensive anesthesia monitoring ensures physiological stability throughout the operation.",
+                  "th": "การเฝ้าระวังสัญญาณชีพและมาตรฐานวิสัญญีช่วยให้ผู้ป่วยปลอดภัยตลอดระยะเวลาผ่าตัด"
+                },
+                "durationSec": 5,
+                "transitionType": "cinematic-dissolve",
+                "cameraMovement": "tilt-up-reveal",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-47",
+                "code": "DR-47",
+                "year": "2026",
+                "url": "assets/doctor/archive/dr-47-recent-headlight-surgical-prep.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-surgical-precision.mp3",
+                "heading": {
+                  "en": "Scene 06 · Custom Headlight Optics for Deep Plane Dissection (2026)",
+                  "th": "ฉากที่ 06 · อุปกรณ์ส่องสว่างความละเอียดสูงสำหรับการผ่าตัดชั้นลึก (พ.ศ. 2569)"
+                },
+                "description": {
+                  "en": "Recent 2026 operating room photograph showing Dr. Rushapol wearing his coaxial headlight system for sub-SMAS and platysma dissection.",
+                  "th": "ภาพถ่ายปี พ.ศ. 2569 ในห้องผ่าตัดพร้อมอุปกรณ์ไฟส่องสว่างเฉพาะทางสำหรับการผ่าตัดชั้นลึก Deep Plane และลำคอ"
+                },
+                "caption": {
+                  "en": "Equipped with coaxial LED headlight and custom surgical cap in the operating theatre (2026)",
+                  "th": "ความพร้อมในห้องผ่าตัดพร้อมไฟส่องสว่างศัลยกรรมความละเอียดสูง (พ.ศ. 2569)"
+                },
+                "subtitle": {
+                  "en": "2026: Precision coaxial optics illuminate the sub-SMAS corridor and retaining ligaments.",
+                  "th": "พ.ศ. 2569: เทคโนโลยีไฟส่องสว่างเฉพาะทางช่วยเพิ่มความแม่นยำในการคลายเอ็นยึดใบหน้าในชั้นลึก"
+                },
+                "durationSec": 5,
+                "transitionType": "scale-crossfade",
+                "cameraMovement": "kenburns-pan-right",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Authentic Video Keyframe (D:\\dominic / D:\\เยี่ยมคนไข้.mp4)"
+              },
+              {
+                "id": "sc-dr-29",
+                "code": "DR-29",
+                "year": "2017",
+                "url": "assets/doctor/archive/dr-29-consult-3d-cranial-model.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-surgical-precision.mp3",
+                "heading": {
+                  "en": "Scene 07 · 3D Craniofacial & Neurovascular Demonstration",
+                  "th": "ฉากที่ 07 · การวิเคราะห์โครงสร้างใบหน้าและเส้นประสาทด้วยโมเดล 3 มิติ"
+                },
+                "description": {
+                  "en": "Before entering the operating room, Dr. Rushapol uses a 3D anatomical head model to map the five facial layers and retaining ligaments.",
+                  "th": "ก่อนการผ่าตัดทุกครั้ง นพ.รัชพล ใช้หุ่นจำลองกายวิภาค 3 มิติ เพื่อวิเคราะห์โครงสร้างใบหน้า 5 ชั้นและแนวเส้นประสาท"
+                },
+                "caption": {
+                  "en": "Demonstrating craniofacial and deep facial structures with a 3D anatomical model",
+                  "th": "การอธิบายโครงสร้างกายวิภาคใบหน้าชั้นลึกด้วยหุ่นจำลอง 3 มิติในห้องปรึกษา"
+                },
+                "subtitle": {
+                  "en": "Every operation is preceded by three-dimensional anatomical analysis of the patient’s facial layers.",
+                  "th": "ทุกแผนการผ่าตัดเริ่มต้นจากการวิเคราะห์โครงสร้างกายวิภาค 3 มิติอย่างละเอียด"
+                },
+                "durationSec": 5,
+                "transitionType": "emerald-wipe",
+                "cameraMovement": "slow-zoom-in",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-30",
+                "code": "DR-30",
+                "year": "2017",
+                "url": "assets/doctor/archive/dr-30-consult-whitecoat-3d-skull.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-surgical-precision.mp3",
+                "heading": {
+                  "en": "Scene 08 · Protecting the Facial Nerve & Osseous Contours",
+                  "th": "ฉากที่ 08 · การวางแผนเพื่อปกป้องแขนงเส้นประสาทใบหน้า (CN VII)"
+                },
+                "description": {
+                  "en": "Demonstrating on the 3D cranial skull model how Deep Plane dissection glides safely above the parotid-masseteric fascia protecting the facial nerve.",
+                  "th": "อธิบายตำแหน่งของชั้นพังผืดลึกที่ทำหน้าที่ปกป้องแขนงเส้นประสาทใบหน้า (CN VII) เพื่อความปลอดภัยสูงสุดในการผ่าตัด"
+                },
+                "caption": {
+                  "en": "Explaining facial nerve protection and bone contours during consultation mapping",
+                  "th": "การใช้หุ่นจำลองกะโหลกศีรษะและใบหน้าเพื่อวางแผนการผ่าตัดเฉพาะบุคคล"
+                },
+                "subtitle": {
+                  "en": "Respecting the deep fascial floor protects the five motor branches of the facial nerve.",
+                  "th": "ความเข้าใจในชั้นพังผืดลึกช่วยปกป้องแขนงเส้นประสาทใบหน้าได้อย่างปลอดภัย"
+                },
+                "durationSec": 5,
+                "transitionType": "lift-fade",
+                "cameraMovement": "pan-left-drift",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-32",
+                "code": "DR-32",
+                "year": "2026",
+                "url": "assets/doctor/archive/dr-32-consult-hand-sketching-anatomy.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-surgical-precision.mp3",
+                "heading": {
+                  "en": "Scene 09 · Hand-Sketching Patient-Specific Surgical Vectors",
+                  "th": "ฉากที่ 09 · การวาดแผนผังทิศทางการยกกระชับเฉพาะบุคคล"
+                },
+                "description": {
+                  "en": "Hand-sketching the midface, jawline, and platysma lifting vectors on a clinical chart during a personal consultation.",
+                  "th": "การวาดแผนผังกายวิภาคใบหน้าและทิศทางการยกชั้นกล้ามเนื้อ SMAS และ Platysma ให้เหมาะสมกับโครงสร้างของแต่ละบุคคล"
+                },
+                "caption": {
+                  "en": "Hand-sketching patient-specific Deep Plane and SMAS anatomical vectors",
+                  "th": "การวาดแผนผังกายวิภาคใบหน้าและชั้นกล้ามเนื้อ SMAS เพื่ออธิบายแผนการรักษา"
+                },
+                "subtitle": {
+                  "en": "No two faces age alike—every surgical vector is hand-mapped to the individual patient’s anatomy.",
+                  "th": "เพราะโครงสร้างใบหน้าของแต่ละคนไม่เหมือนกัน แผนการผ่าตัดจึงต้องออกแบบเฉพาะบุคคลเสมอ"
+                },
+                "durationSec": 5,
+                "transitionType": "cinematic-dissolve",
+                "cameraMovement": "slow-zoom-out",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic / Intrarat)"
+              },
+              {
+                "id": "sc-dr-38",
+                "code": "DR-38",
+                "year": "2017",
+                "url": "assets/doctor/archive/dr-38-portrait-consultation-suite-wide.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-surgical-precision.mp3",
+                "heading": {
+                  "en": "Scene 10 · Where Anatomical Science Meets Surgical Artistry",
+                  "th": "ฉากที่ 10 · การผสานวิทยาศาสตร์การแพทย์เข้ากับศิลปะแห่งความประณีต"
+                },
+                "description": {
+                  "en": "In the specialist consultation suite, anatomical science, 3D modeling, and surgical precision come together before any procedure is recommended.",
+                  "th": "ภายในห้องปรึกษาแพทย์เฉพาะทาง ที่ซึ่งความรู้ทางกายวิภาค โมเดล 3 มิติ และความใส่ใจหลอมรวมเป็นแผนการรักษาที่เหมาะสม"
+                },
+                "caption": {
+                  "en": "Environmental physician portrait in the specialist consultation suite",
+                  "th": "ภาพถ่ายพอร์ตเทรตในห้องตรวจและให้คำปรึกษาแพทย์เฉพาะทาง"
+                },
+                "subtitle": {
+                  "en": "Precision begins in the consultation room, long before stepping into the operating theatre.",
+                  "th": "ความแม่นยำเริ่มต้นตั้งแต่ในห้องตรวจปรึกษา ก่อนก้าวเข้าสู่ห้องผ่าตัดจริง"
+                },
+                "durationSec": 5,
+                "transitionType": "scale-crossfade",
+                "cameraMovement": "tilt-up-reveal",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              }
+            ]
+          },
+          {
+            "id": "ch-05",
+            "num": "05",
+            "year": "Present · Intrarat",
+            "yearTh": "ปัจจุบัน · รพ.อินทรารัตน์",
+            "title": {
+              "en": "Beyond Surgery, There Is Care",
+              "th": "เหนือกว่าการผ่าตัด คือการใส่ใจดูแล"
+            },
+            "institution": {
+              "en": "Plastic and Reconstructive Surgeon · Suite 5202, Intrarat Hospital, Bangkok",
+              "th": "ศัลยแพทย์ตกแต่งและเสริมสร้าง · ห้องตรวจ 5202 โรงพยาบาลอินทรารัตน์ กรุงเทพฯ"
+            },
+            "milestoneBadge": {
+              "en": "Intrarat Hospital · Suite 5202 · Bilingual Care",
+              "th": "โรงพยาบาลอินทรารัตน์ · ห้องตรวจ 5202"
+            },
+            "description": {
+              "en": "At Intrarat Hospital on Ram Inthra Road, Bangkok, surgical technique is inseparable from human care. From Suite 5202 consultations and collaborative nursing planning to international patient seminars and daily inpatient rounds, every patient journey is guided by transparency, safety, and personal commitment.",
+              "th": "ณ โรงพยาบาลอินทรารัตน์ ถนนรามอินทรา กรุงเทพฯ เทคนิคการผ่าตัดที่แม่นยำดำเนินควบคู่ไปกับการดูแลด้วยหัวใจเสมอ ตั้งแต่การปรึกษาแบบตัวต่อตัวในห้องตรวจ 5202 การวางแผนร่วมกับทีมพยาบาลวิชาชีพ ไปจนถึงการตรวจเยี่ยมผู้ป่วยในห้องพักฟื้นทุกวันด้วยความโปร่งใสและปลอดภัย"
+            },
+            "videoUrl": "assets/doctor/video/ch05-intrarat-suite-5202.mp4",
+            "musicUrl": "assets/audio/music-patient-journey-warm.mp3",
+            "musicLabel": {
+              "en": "Warm & Reassuring Patient Care Score",
+              "th": "ดนตรีอบอุ่นและสร้างความมั่นใจแก่ผู้ป่วย"
+            },
+            "narrationScript": {
+              "en": "Chapter Five: Beyond Surgery, There Is Care. At Intrarat Hospital in Bangkok, Suite 5202 is where surgical precision meets human warmth. Supported by a bilingual nursing team and nineteen accredited hospital departments, Dr. Rushapol guides every patient from their first consultation through a serene, safe recovery.",
+              "th": "บทที่ 5 เหนือกว่าการผ่าตัด คือการใส่ใจดูแล ณ ห้องตรวจ 5202 โรงพยาบาลอินทรารัตน์ กรุงเทพฯ นายแพทย์รัชพล และทีมพยาบาลวิชาชีพดูแลผู้ป่วยทุกท่านอย่างใกล้ชิด ตั้งแต่วันแรกของการปรึกษาไปจนถึงการพักฟื้นที่ปลอดภัยและอบอุ่น"
+            },
+            "sourceUrl": "https://www.intrarathospital.co.th/en/doctor-profile/rushapolsdawat/",
+            "adminMeta": "CHAPTER 05 · BEYOND SURGERY THERE IS CARE · 10 SCENES (DR-48,37,46,45,33,35,36,31,39,40) + ch05-intrarat-suite-5202.mp4",
+            "photos": [
+              {
+                "id": "sc-dr-48",
+                "code": "DR-48",
+                "year": "2026",
+                "url": "assets/doctor/archive/dr-48-recent-intrarat-room-5202-plaque.webp",
+                "videoUrl": "assets/doctor/video/ch05-intrarat-suite-5202.mp4",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-patient-journey-warm.mp3",
+                "heading": {
+                  "en": "Scene 01 · Suite 5202 at Intrarat Hospital, Bangkok",
+                  "th": "ฉากที่ 01 · ห้องตรวจ 5202 นพ.รัชพล สดาวรรธน์ ณ โรงพยาบาลอินทรารัตน์"
+                },
+                "description": {
+                  "en": "Today at Intrarat Hospital on Ram Inthra Road, Bangkok, Suite 5202 welcomes patients seeking honest anatomical guidance and compassionate post-operative care.",
+                  "th": "ณ โรงพยาบาลอินทรารัตน์ ถนนรามอินทรา กรุงเทพฯ ห้องตรวจ 5202 พร้อมต้อนรับผู้ป่วยด้วยการให้คำปรึกษาที่จริงใจและดูแลอย่างใกล้ชิด"
+                },
+                "caption": {
+                  "en": "Dedicated physician suite 5202 doorplate — Rushapol Sdawat, M.D. at Intrarat Hospital",
+                  "th": "ป้ายห้องตรวจ 5202 นพ.รัชพล สดาวรรธน์ ณ โรงพยาบาลอินทรารัตน์"
+                },
+                "subtitle": {
+                  "en": "Beyond Surgery, There Is Care: Suite 5202 at Intrarat Hospital, Bangkok—a sanctuary of trust and personal attention.",
+                  "th": "เหนือกว่าการผ่าตัดคือการใส่ใจดูแล: ห้องตรวจ 5202 ณ โรงพยาบาลอินทรารัตน์ กรุงเทพฯ"
+                },
+                "durationSec": 6,
+                "transitionType": "cinematic-dissolve",
+                "cameraMovement": "kenburns-pan-right",
+                "animationIntensity": "cinematic",
+                "sourceOrigin": "Authentic Video Keyframe (D:\\dominic / D:\\เยี่ยมคนไข้.mp4)"
+              },
+              {
+                "id": "sc-dr-37",
+                "code": "DR-37",
+                "year": "2026",
+                "url": "assets/doctor/archive/dr-37-portrait-intrarat-official.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-patient-journey-warm.mp3",
+                "heading": {
+                  "en": "Scene 02 · A Personal Physician-Patient Relationship",
+                  "th": "ฉากที่ 02 · ความไว้วางใจระหว่างแพทย์และผู้ป่วย"
+                },
+                "description": {
+                  "en": "Rushapol Sdawat, M.D., believes a surgeon’s responsibility extends from the first candid conversation through every post-operative dressing change and flight-home clearance.",
+                  "th": "นพ.รัชพล สดาวรรธน์ ยึดมั่นว่าหน้าที่ของศัลยแพทย์ครอบคลุมตั้งแต่วันแรกที่ปรึกษา ไปจนถึงการตรวจติดตามผลหลังผ่าตัดจนผู้ป่วยฟื้นตัวสมบูรณ์"
+                },
+                "caption": {
+                  "en": "Official Intrarat Hospital physician portrait — Rushapol Sdawat, M.D.",
+                  "th": "ภาพถ่ายแพทย์ทางการ โรงพยาบาลอินทรารัตน์ — นพ.รัชพล สดาวรรธน์"
+                },
+                "subtitle": {
+                  "en": "A surgeon’s commitment begins at the first consultation and continues until recovery is complete.",
+                  "th": "ความรับผิดชอบของแพทย์เริ่มต้นตั้งแต่การปรึกษาครั้งแรก และดูแลต่อเนื่องจนกว่าการพักฟื้นจะสมบูรณ์"
+                },
+                "durationSec": 5,
+                "transitionType": "scale-crossfade",
+                "cameraMovement": "slow-zoom-in",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic / Intrarat)"
+              },
+              {
+                "id": "sc-dr-46",
+                "code": "DR-46",
+                "year": "2026",
+                "url": "assets/doctor/archive/dr-46-recent-nurse-consultation-desk.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-patient-journey-warm.mp3",
+                "heading": {
+                  "en": "Scene 03 · Collaborative Nursing & Chart Review (2026)",
+                  "th": "ฉากที่ 03 · การวางแผนดูแลผู้ป่วยร่วมกับทีมพยาบาลวิชาชีพ (พ.ศ. 2569)"
+                },
+                "description": {
+                  "en": "Reviewing operative notes and individualized recovery protocols at the consultation desk with his dedicated clinical nurse.",
+                  "th": "การตรวจทานเวชระเบียนและแผนการดูแลหลังผ่าตัดร่วมกับพยาบาลวิชาชีพ เพื่อให้ผู้ป่วยได้รับการดูแลที่ถูกต้องและปลอดภัย"
+                },
+                "caption": {
+                  "en": "Reviewing surgical charts and operative plans with clinical nursing staff (2026)",
+                  "th": "การวางแผนการรักษาและตรวจเวชระเบียนร่วมกับพยาบาลวิชาชีพ (พ.ศ. 2569)"
+                },
+                "subtitle": {
+                  "en": "Meticulous chart reviews with clinical nursing staff ensure every recovery detail is anticipated.",
+                  "th": "การวางแผนร่วมกับทีมพยาบาลอย่างละเอียด ช่วยให้การดูแลช่วงพักฟื้นเป็นไปอย่างราบรื่น"
+                },
+                "durationSec": 5,
+                "transitionType": "emerald-wipe",
+                "cameraMovement": "pan-left-drift",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Authentic Video Keyframe (D:\\dominic / D:\\เยี่ยมคนไข้.mp4)"
+              },
+              {
+                "id": "sc-dr-45",
+                "code": "DR-45",
+                "year": "2026",
+                "url": "assets/doctor/archive/dr-45-recent-colleagues-2026.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-patient-journey-warm.mp3",
+                "heading": {
+                  "en": "Scene 04 · Multidisciplinary Specialist Colleagues (Sept 2026)",
+                  "th": "ฉากที่ 04 · การทำงานร่วมกับทีมแพทย์เฉพาะทางสหสาขา (กันยายน พ.ศ. 2569)"
+                },
+                "description": {
+                  "en": "Photographed in September 2026 with fellow specialist physicians—supported by Intrarat Hospital’s 19 medical departments.",
+                  "th": "ภาพถ่ายเดือนกันยายน พ.ศ. 2569 ร่วมกับทีมแพทย์เฉพาะทาง ภายใต้การสนับสนุนของศูนย์การแพทย์ 19 แผนกในโรงพยาบาลอินทรารัตน์"
+                },
+                "caption": {
+                  "en": "With fellow specialist physicians at Intrarat Hospital (September 2026)",
+                  "th": "ถ่ายภาพร่วมกับทีมแพทย์เฉพาะทาง (กันยายน พ.ศ. 2569)"
+                },
+                "subtitle": {
+                  "en": "September 2026: Backed by multidisciplinary physicians across 19 accredited hospital departments.",
+                  "th": "กันยายน พ.ศ. 2569: การทำงานร่วมกับทีมแพทย์สหสาขาวิชาชีพในโรงพยาบาลมาตรฐานครบวงจร"
+                },
+                "durationSec": 5,
+                "transitionType": "lift-fade",
+                "cameraMovement": "slow-zoom-out",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic / Intrarat)"
+              },
+              {
+                "id": "sc-dr-33",
+                "code": "DR-33",
+                "year": "2017",
+                "url": "assets/doctor/archive/dr-33-intl-parmelia-hilton-podium.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-patient-journey-warm.mp3",
+                "heading": {
+                  "en": "Scene 05 · International Patient Education in Australia",
+                  "th": "ฉากที่ 05 · การให้ความรู้แก่ผู้ป่วยต่างชาติ ณ ประเทศออสเตรเลีย"
+                },
+                "description": {
+                  "en": "Speaking at the Parmelia Hilton in Perth, Australia, helping international patients understand how to plan safe surgical travel to Thailand.",
+                  "th": "บรรยายให้ความรู้แก่ผู้สนใจชาวต่างชาติ ณ โรงแรม Parmelia Hilton เมืองเพิร์ธ ประเทศออสเตรเลีย เรื่องการเตรียมตัวเดินทางมารักษาในประเทศไทย"
+                },
+                "caption": {
+                  "en": "Presenting Thailand’s international patient care standards at Parmelia Hilton, Perth",
+                  "th": "บรรยายมาตรฐานการดูแลผู้ป่วยต่างชาติ ณ โรงแรม Parmelia Hilton ประเทศออสเตรเลีย"
+                },
+                "subtitle": {
+                  "en": "Educating international patients abroad on safe surgical preparation and recovery timelines.",
+                  "th": "ให้ความรู้แก่ผู้ป่วยนานาชาติถึงแนวทางการเตรียมตัวและการวางแผนพักฟื้นอย่างปลอดภัย"
+                },
+                "durationSec": 5,
+                "transitionType": "cinematic-dissolve",
+                "cameraMovement": "tilt-up-reveal",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-35",
+                "code": "DR-35",
+                "year": "2017",
+                "url": "assets/doctor/archive/dr-35-intl-documentary-film-crew.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-patient-journey-warm.mp3",
+                "heading": {
+                  "en": "Scene 06 · Transparency with International Documentary Media",
+                  "th": "ฉากที่ 06 · ความโปร่งใสในการต้อนรับสื่อและทีมสารคดีการแพทย์นานาชาติ"
+                },
+                "description": {
+                  "en": "Welcoming an international documentary film crew into the consultation suite to share transparent insights into Thai medical hospitality.",
+                  "th": "ต้อนรับทีมถ่ายทำสารคดีการแพทย์จากต่างประเทศ เพื่อนำเสนอมาตรฐานการดูแลผู้ป่วยที่โปร่งใสและตรวจสอบได้"
+                },
+                "caption": {
+                  "en": "Hosting an international medical documentary television crew in the consultation suite",
+                  "th": "ต้อนรับทีมถ่ายทำสารคดีการแพทย์นานาชาติภายในห้องตรวจปรึกษา"
+                },
+                "subtitle": {
+                  "en": "Open, transparent communication with international media and patient advocates.",
+                  "th": "สื่อสารอย่างเปิดเผยและโปร่งใสเกี่ยวกับมาตรฐานการรักษาพยาบาล"
+                },
+                "durationSec": 5,
+                "transitionType": "scale-crossfade",
+                "cameraMovement": "kenburns-pan-right",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-36",
+                "code": "DR-36",
+                "year": "2017",
+                "url": "assets/doctor/archive/dr-36-intl-bilingual-reception-team.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-patient-journey-warm.mp3",
+                "heading": {
+                  "en": "Scene 07 · Bilingual International Reception & Concierge Team",
+                  "th": "ฉากที่ 07 · ทีมพยาบาลและเจ้าหน้าที่ประสานงานผู้ป่วยนานาชาติ"
+                },
+                "description": {
+                  "en": "Standing with the bilingual reception and patient coordination staff who guide international guests from arrival to departure.",
+                  "th": "ร่วมกับทีมพยาบาลและเจ้าหน้าที่ต้อนรับสองภาษา ซึ่งคอยดูแลอำนวยความสะดวกผู้ป่วยตั้งแต่วันเดินทางมาถึงจนถึงวันเดินทางกลับ"
+                },
+                "caption": {
+                  "en": "With the bilingual international patient reception and hospitality coordination team",
+                  "th": "ร่วมกับทีมพยาบาลและเจ้าหน้าที่ประสานงานต้อนรับผู้ป่วยนานาชาติ"
+                },
+                "subtitle": {
+                  "en": "Warm Thai hospitality delivered by a dedicated bilingual nursing and concierge team.",
+                  "th": "การต้อนรับด้วยหัวใจบริการแบบไทยจากทีมพยาบาลและเจ้าหน้าที่ประสานงานสองภาษา"
+                },
+                "durationSec": 5,
+                "transitionType": "emerald-wipe",
+                "cameraMovement": "slow-zoom-in",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-31",
+                "code": "DR-31",
+                "year": "2017",
+                "url": "assets/doctor/archive/dr-31-consult-nursing-care-team.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-patient-journey-warm.mp3",
+                "heading": {
+                  "en": "Scene 08 · Compassionate Outpatient & Ward Nursing Care",
+                  "th": "ฉากที่ 08 · ความอบอุ่นของทีมพยาบาลดูแลผู้ป่วย"
+                },
+                "description": {
+                  "en": "Surrounded by the clinical nursing team whose warmth, attentiveness, and 24-hour bedside presence comfort every recovering patient.",
+                  "th": "รอยยิ้มและความอบอุ่นของทีมพยาบาลผู้ดูแลใกล้ชิดตลอด 24 ชั่วโมง คือพลังใจสำคัญที่ช่วยให้ผู้ป่วยฟื้นตัวได้อย่างมั่นใจ"
+                },
+                "caption": {
+                  "en": "With the clinical consultation and outpatient nursing care team",
+                  "th": "ร่วมกับทีมพยาบาลวิชาชีพประจำศูนย์ให้คำปรึกษาและดูแลผู้ป่วย"
+                },
+                "subtitle": {
+                  "en": "Behind every successful recovery is a compassionate nursing team present around the clock.",
+                  "th": "เบื้องหลังการฟื้นตัวที่ดีคือทีมพยาบาลที่ดูแลด้วยความอบอุ่นและใส่ใจตลอด 24 ชั่วโมง"
+                },
+                "durationSec": 5,
+                "transitionType": "lift-fade",
+                "cameraMovement": "pan-left-drift",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-39",
+                "code": "DR-39",
+                "year": "2017",
+                "url": "assets/doctor/archive/dr-39-portrait-formal-suit-hall.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-patient-journey-warm.mp3",
+                "heading": {
+                  "en": "Scene 09 · Stewardship of Patient Trust",
+                  "th": "ฉากที่ 09 · การรักษาความไว้วางใจของผู้ป่วยดุจคนในครอบครัว"
+                },
+                "description": {
+                  "en": "In the grand hospital atrium: upholding a standard where medical ethics, realistic expectations, and patient well-being always come first.",
+                  "th": "ณ โถงรับรองหลักของโรงพยาบาล ด้วยปณิธานที่ยึดถือความปลอดภัย ความคาดหวังที่เป็นจริง และประโยชน์สูงสุดของผู้ป่วยเป็นสำคัญ"
+                },
+                "caption": {
+                  "en": "Formal executive portrait in the hospital grand hall",
+                  "th": "ภาพถ่ายทางการเต็มตัว ณ โถงรับรองหลักของโรงพยาบาล"
+                },
+                "subtitle": {
+                  "en": "Ethical guidance means recommending surgery only when an in-person assessment confirms it is right for the patient.",
+                  "th": "จริยธรรมทางการแพทย์คือการแนะนำการรักษาตามความเหมาะสมจากการตรวจประเมินผู้ป่วยโดยตรงเท่านั้น"
+                },
+                "durationSec": 5,
+                "transitionType": "cinematic-dissolve",
+                "cameraMovement": "slow-zoom-out",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              },
+              {
+                "id": "sc-dr-40",
+                "code": "DR-40",
+                "year": "2017",
+                "url": "assets/doctor/archive/dr-40-portrait-campus-whitecoat.webp",
+                "videoUrl": "",
+                "narrationUrl": "",
+                "musicUrl": "assets/audio/music-patient-journey-warm.mp3",
+                "heading": {
+                  "en": "Scene 10 · A Sanctuary of Healing at Intrarat Hospital",
+                  "th": "ฉากที่ 10 · โรงพยาบาลอินทรารัตน์ — พื้นที่แห่งการดูแลและฟื้นฟูอย่างแท้จริง"
+                },
+                "description": {
+                  "en": "Beyond surgery, there is care—combining university-trained surgical precision with five-star recovery hospitality in Bangkok.",
+                  "th": "เพราะการรักษาไม่ได้จบลงที่ห้องผ่าตัด แต่คือการดูแลอย่างใส่ใจในทุกก้าวของการฟื้นตัว ณ โรงพยาบาลอินทรารัตน์ กรุงเทพฯ"
+                },
+                "caption": {
+                  "en": "Outdoor physician portrait on the hospital garden campus",
+                  "th": "ภาพถ่ายในชุดกาวน์แพทย์บริเวณสวนภายนอกอาคารโรงพยาบาล"
+                },
+                "subtitle": {
+                  "en": "Where university-trained surgical precision meets the warmth of Thai hospitality—Intrarat Hospital, Bangkok.",
+                  "th": "ผสานความแม่นยำทางศัลยกรรมเข้ากับความอบอุ่นของการบริการระดับพรีเมียม ณ โรงพยาบาลอินทรารัตน์"
+                },
+                "durationSec": 5,
+                "transitionType": "scale-crossfade",
+                "cameraMovement": "tilt-up-reveal",
+                "animationIntensity": "medium",
+                "sourceOrigin": "Local Archive (D:\\dominic\\รูปเก่าๆส่งให้เจมส์ ทำเว็บ)"
+              }
+            ]
+          }
+        ]
+      },
+      "pageOverrides": {
+        "3": {
+          "navLabelEn": "03 DR. RUSHAPOL",
+          "navLabel": "03 DR. RUSHAPOL",
+          "navLabelTh": "03 นพ.รัชพล"
+        }
+      }
+    }
+  }
+}
