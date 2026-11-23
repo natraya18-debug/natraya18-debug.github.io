@@ -5327,34 +5327,33 @@
       octx.drawImage(imgEl, 0, 0, off.width, off.height);
 
       // 1. Primary Live HTTPS PyTorch V2 (5-Fold ConvNeXt-Tiny) + V6 (S3FD/Hessian/MLP) Backend Evaluation
-      const apiBase = window.__INTRARAT_API_BASE__ || (
-        (window.location.hostname.endsWith(".github.io") || window.location.hostname.endsWith(".pages.dev"))
-          ? "https://72ecf80a2b7c59.app.lhr.life"
-          : ""
-      );
       const imgB64 = off.toDataURL("image/jpeg", 0.85);
       let backendEvalData = null;
-      try {
-        const r = await fetch(`${apiBase}/api/face-scan-v2/evaluate`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          mode: "cors",
-          body: JSON.stringify({
-            viewMode: "frontal",
-            captureProvenance: "REAL_UPLOADED_PHOTOGRAPH",
-            sourceFile: masterState.p6CustomFaceFileName || "dr-37-portrait-intrarat-official.webp",
-            width: off.width,
-            height: off.height,
-            sharpness: lapVar,
-            brightness: meanLum,
-            imageBase64: imgB64
-          })
-        });
-        if (r.ok) {
-          backendEvalData = await r.json();
-        }
-      } catch (_beErr) {
-        backendEvalData = null;
+      const candidateBases = (window.location.hostname.endsWith(".github.io") || window.location.hostname.endsWith(".pages.dev"))
+        ? [window.__INTRARAT_API_BASE__ || "https://41f5957704227f.app.lhr.life", "http://127.0.0.1:3080"]
+        : ["", "http://127.0.0.1:3080", "https://41f5957704227f.app.lhr.life"];
+      for (const apiBase of candidateBases) {
+        try {
+          const r = await fetch(`${apiBase}/api/face-scan-v2/evaluate`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            mode: "cors",
+            body: JSON.stringify({
+              viewMode: "frontal",
+              captureProvenance: "REAL_UPLOADED_PHOTOGRAPH",
+              sourceFile: masterState.p6CustomFaceFileName || "dr-37-portrait-intrarat-official.webp",
+              width: off.width,
+              height: off.height,
+              sharpness: lapVar,
+              brightness: meanLum,
+              imageBase64: imgB64
+            })
+          });
+          if (r.ok) {
+            backendEvalData = await r.json();
+            break;
+          }
+        } catch (_beErr) {}
       }
 
       // 2. On-Device MediaPipe Face Landmarker (478 3D points via WebAssembly) — never falls back to SYN-M001.json
