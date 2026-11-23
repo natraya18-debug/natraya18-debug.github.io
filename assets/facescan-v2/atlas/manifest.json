@@ -1,0 +1,67 @@
+{
+ "cheek_1": {
+  "source_image": "SYN-M058.jpg",
+  "label": "AI_PROVISIONAL_LABEL",
+  "generator": "Meta AI"
+ },
+ "cheek_2": {
+  "source_image": "SYN-M047.jpg",
+  "label": "AI_PROVISIONAL_LABEL",
+  "generator": "Meta AI"
+ },
+ "jaw_0": {
+  "source_image": "SYN-M073.jpg",
+  "label": "AI_PROVISIONAL_LABEL",
+  "generator": "Meta AI"
+ },
+ "jaw_1": {
+  "source_image": "SYN-M058.jpg",
+  "label": "AI_PROVISIONAL_LABEL",
+  "generator": "Meta AI"
+ },
+ "jaw_2": {
+  "source_image": "SYN-M047.jpg",
+  "label": "AI_PROVISIONAL_LABEL",
+  "generator": "Meta AI"
+ },
+ "jaw_3": {
+  "source_image": "SYN-M011.jpg",
+  "label": "AI_PROVISIONAL_LABEL",
+  "generator": "Meta AI"
+ },
+ "sub_0": {
+  "source_image": "SYN-M073.jpg",
+  "label": "AI_PROVISIONAL_LABEL",
+  "generator": "Meta AI"
+ },
+ "sub_1": {
+  "source_image": "SYN-M058.jpg",
+  "label": "AI_PROVISIONAL_LABEL",
+  "generator": "Meta AI"
+ },
+ "sub_2": {
+  "source_image": "SYN-M047.jpg",
+  "label": "AI_PROVISIONAL_LABEL",
+  "generator": "Meta AI"
+ },
+ "sub_3": {
+  "source_image": "SYN-M002.jpg",
+  "label": "AI_PROVISIONAL_LABEL",
+  "generator": "Meta AI"
+ },
+ "neck_1": {
+  "source_image": "SYN-M058.jpg",
+  "label": "AI_PROVISIONAL_LABEL",
+  "generator": "Meta AI"
+ },
+ "neck_2": {
+  "source_image": "SYN-M047.jpg",
+  "label": "AI_PROVISIONAL_LABEL",
+  "generator": "Meta AI"
+ },
+ "neck_3": {
+  "source_image": "SYN-M081.jpg",
+  "label": "AI_PROVISIONAL_LABEL",
+  "generator": "Meta AI"
+ }
+}

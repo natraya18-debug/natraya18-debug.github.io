@@ -1,0 +1,452 @@
+{
+  "project": "INTRARAT — Deep Plane 3D Explorer",
+  "institution": "Intrarat International Hospital, Bangkok, Thailand",
+  "masterGlb": "intrarat_deep_plane_3d_explorer_17meshes.glb",
+  "embeddedGlb": "intrarat_deep_plane_3d_explorer_embedded.glb",
+  "meshCount": 17,
+  "rotationYawLimitsDeg": [
+    -90,
+    90
+  ],
+  "defaultYawDeg": 0,
+  "anglePresetsDeg": [
+    -90,
+    -45,
+    0,
+    45,
+    90
+  ],
+  "creditsAndLicenses": {
+    "clinicalAnd3DModel": "Intrarat International Hospital — First-Party 17-Structure Deep Plane Craniofacial Model (Clinical Review Framework: Dr. Rushapol Sdawat, M.D.)",
+    "anatomicalTaxonomy": "Foundational Model of Anatomy (FMA) & BodyParts3D, © The Database Center for Life Science, CC BY 4.0 (Mitsuhashi et al., Nucleic Acids Research, 2009)",
+    "renderingEngine": "Three.js (MIT License) / WebGL 2.0 Custom Hardware PBR Shader, Architectural Baseline inspired by ashemag/human-atlas (MIT License)",
+    "typography": "Cormorant Garamond, Plus Jakarta Sans, Inter, Noto Sans Thai (SIL Open Font License 1.1)"
+  },
+  "structures": [
+    {
+      "index": 0,
+      "num": "01",
+      "id": "Skin_Mesh",
+      "milestone": "A",
+      "group": "01_Skin",
+      "fma": "FMA:24728",
+      "origVerts": 17397,
+      "origTris": 33860,
+      "colorHex": "#E6BFA8",
+      "baseColor": [
+        0.9,
+        0.75,
+        0.66
+      ],
+      "explodeVec": [
+        -0.22,
+        0.02,
+        0.22
+      ],
+      "nameEn": "Cutaneous Envelope (Epidermis & Dermis)",
+      "nameTh": "ชั้นผิวหนังกำพร้าและหนังแท้ (Cutaneous Envelope)",
+      "descEn": "360° outermost cutaneous envelope. In Deep Plane surgery, lifting tension is anchored on the underlying SMAS so skin is redraped under zero tension.",
+      "descTh": "ชั้นผิวหนังส่วนนอกสุด ในการผ่าตัด Deep Plane แรงพยุงหลักจะอยู่ที่ชั้น SMAS ทำให้ผิวหนังชั้นนอกถูกปูกลับโดยไร้แรงดึงรั้ง"
+    },
+    {
+      "index": 1,
+      "num": "02",
+      "id": "Subcutaneous_Fat_Mesh",
+      "milestone": "A",
+      "group": "02_Subcutaneous_Fat",
+      "fma": "FMA:61494",
+      "origVerts": 7996,
+      "origTris": 16004,
+      "colorHex": "#F2C23D",
+      "baseColor": [
+        0.95,
+        0.76,
+        0.24
+      ],
+      "explodeVec": [
+        -0.15,
+        0.01,
+        0.15
+      ],
+      "nameEn": "Subcutaneous Adipose Tissue (Superficial Fat)",
+      "nameTh": "ชั้นไขมันตื้นใต้ผิวหนัง (Subcutaneous Fat)",
+      "descEn": "Lobular superficial fat compartments between the dermis and SMAS. Elevated as a single composite flap together with skin and SMAS.",
+      "descTh": "เนื้อเยื่อไขมันชั้นตื้นที่อยู่ระหว่างชั้นหนังแท้และแผ่นพังผืดกล้ามเนื้อ SMAS ซึ่งถูกยกขึ้นพร้อมกันเป็นเนื้อเดียว (Composite Flap)"
+    },
+    {
+      "index": 2,
+      "num": "03",
+      "id": "SMAS_Mesh",
+      "milestone": "A",
+      "group": "03_SMAS_Platysma",
+      "fma": "FMA:71306",
+      "origVerts": 4480,
+      "origTris": 8960,
+      "colorHex": "#C74F42",
+      "baseColor": [
+        0.78,
+        0.31,
+        0.26
+      ],
+      "explodeVec": [
+        -0.08,
+        0.01,
+        0.09
+      ],
+      "nameEn": "SMAS (Superficial Musculoaponeurotic System)",
+      "nameTh": "ชั้นพังผืดกล้ามเนื้อ SMAS (โครงสร้างหลักในการพยุงใบหน้า)",
+      "descEn": "Primary load-bearing fibromuscular scaffold investing the mimetic musculature of the midface and lower face.",
+      "descTh": "แผ่นพังผืดและกล้ามเนื้อแสดงอารมณ์ที่เป็นโครงสร้างรับแรงพยุงหลักในการยกกระชับใบหน้าชั้นลึก"
+    },
+    {
+      "index": 3,
+      "num": "04",
+      "id": "Platysma_Mesh",
+      "milestone": "A",
+      "group": "03_SMAS_Platysma",
+      "fma": "FMA:46770",
+      "origVerts": 4460,
+      "origTris": 8912,
+      "colorHex": "#BD594D",
+      "baseColor": [
+        0.74,
+        0.35,
+        0.3
+      ],
+      "explodeVec": [
+        -0.08,
+        -0.02,
+        0.09
+      ],
+      "nameEn": "Platysma Muscle Continuum (Cervicomental Sheet)",
+      "nameTh": "กล้ามเนื้อพลาทิสมาบริเวณลำคอ (Platysma Continuum)",
+      "descEn": "Inferior cervical continuation of the SMAS spanning the jawline and anterior/lateral neck to define the cervicomental angle.",
+      "descTh": "กล้ามเนื้อแผ่นบางบริเวณลำคอที่ต่อเนื่องเป็นแผ่นเดียวกับชั้น SMAS ช่วยกำหนดความคมชัดของกรอบหน้าและมุมใต้คาง"
+    },
+    {
+      "index": 4,
+      "num": "05",
+      "id": "Zygomatic_Retaining_Ligament_Mesh",
+      "milestone": "A",
+      "group": "04_Retaining_Ligaments",
+      "fma": "FMA:71310",
+      "origVerts": 6028,
+      "origTris": 11840,
+      "colorHex": "#F0E3D4",
+      "baseColor": [
+        0.94,
+        0.89,
+        0.83
+      ],
+      "explodeVec": [
+        -0.01,
+        0.02,
+        0.04
+      ],
+      "nameEn": "Zygomatic Retaining Ligaments (ZRL / McGregor's Patch)",
+      "nameTh": "เส้นเอ็นยึดโหนกแก้ม (Zygomatic Retaining Ligaments — ZRL)",
+      "descEn": "True osteocutaneous fibrous anchor originating along the zygomatic arch. Sub-SMAS release mobilizes the midface and malar fat pad.",
+      "descTh": "เส้นเอ็นยึดหลักจากกระดูกโหนกแก้มทะลุผ่านชั้น SMAS การคลายเอ็นยึดนี้ในชั้น Sub-SMAS ช่วยยกแก้มส่วนกลางโดยไม่ดึงผิวหนัง"
+    },
+    {
+      "index": 5,
+      "num": "06",
+      "id": "Masseteric_Retaining_Ligaments_Mesh",
+      "milestone": "A",
+      "group": "04_Retaining_Ligaments",
+      "fma": "FMA:71312",
+      "origVerts": 7056,
+      "origTris": 13856,
+      "colorHex": "#EBE0CA",
+      "baseColor": [
+        0.92,
+        0.86,
+        0.79
+      ],
+      "explodeVec": [
+        -0.01,
+        0.0,
+        0.04
+      ],
+      "nameEn": "Masseteric Cutaneous Retaining Ligaments",
+      "nameTh": "เส้นเอ็นยึดหน้ากล้ามเนื้อเคี้ยว (Masseteric Ligaments)",
+      "descEn": "Fasciocutaneous tethers along the anterior border of the masseter muscle bounding the premasseteric sub-SMAS glide space.",
+      "descTh": "แนวเส้นเอ็นพยุงตามขอบด้านหน้ากล้ามเนื้อเคี้ยว (Masseter) ซึ่งเป็นขอบเขตของช่องว่าง Premasseteric Space"
+    },
+    {
+      "index": 6,
+      "num": "07",
+      "id": "Mandibular_Retaining_Ligament_Mesh",
+      "milestone": "A",
+      "group": "04_Retaining_Ligaments",
+      "fma": "FMA:71314",
+      "origVerts": 8972,
+      "origTris": 17632,
+      "colorHex": "#F2E3D4",
+      "baseColor": [
+        0.95,
+        0.89,
+        0.83
+      ],
+      "explodeVec": [
+        -0.01,
+        -0.02,
+        0.04
+      ],
+      "nameEn": "Mandibular & Cervical Retaining Ligaments",
+      "nameTh": "เส้นเอ็นยึดขอบขากรรไกรล่าง (Mandibular Ligaments)",
+      "descEn": "Osteocutaneous ligament bundle originating from the anterior third of the mandible bordering the pre-jowl sulcus.",
+      "descTh": "เส้นเอ็นยึดจากกระดูกขากรรไกรล่างส่วนหน้า ซึ่งเป็นจุดยึดสำคัญบริเวณร่องน้ำหมากและกระเปาะแก้ม (Jowl)"
+    },
+    {
+      "index": 7,
+      "num": "08",
+      "id": "Facial_Nerve_Mesh",
+      "milestone": "A",
+      "group": "05_Facial_Nerve_CN_VII",
+      "fma": "FMA:50868",
+      "origVerts": 5932,
+      "origTris": 11760,
+      "colorHex": "#F5DB57",
+      "baseColor": [
+        0.96,
+        0.86,
+        0.34
+      ],
+      "explodeVec": [
+        0.05,
+        0.01,
+        0.01
+      ],
+      "nameEn": "Facial Nerve Branches (CN VII — 5 Motor Divisions)",
+      "nameTh": "แขนงเส้นประสาทใบหน้าคู่ที่ 7 (Facial Nerve CN VII 5 แขนง)",
+      "descEn": "Temporal, Zygomatic, Buccal, Marginal Mandibular, and Cervical motor divisions protected beneath the deep parotid-masseteric fascia floor.",
+      "descTh": "แขนงประสาทสั่งการกล้ามเนื้อใบหน้าทั้ง 5 แขนง ซึ่งได้รับการปกป้องอยู่ใต้ชั้นพังผืดลึก Parotid-Masseteric Fascia"
+    },
+    {
+      "index": 8,
+      "num": "09",
+      "id": "Malar_Fat_Pad_Mesh",
+      "milestone": "B",
+      "group": "06_Deep_Fat_Compartments",
+      "fma": "FMA:71320",
+      "origVerts": 2828,
+      "origTris": 5648,
+      "colorHex": "#F0C757",
+      "baseColor": [
+        0.94,
+        0.78,
+        0.34
+      ],
+      "explodeVec": [
+        0.02,
+        0.02,
+        0.05
+      ],
+      "nameEn": "Malar Fat Pad Compartment (Milestone B)",
+      "nameTh": "ก้อนไขมันโหนกแก้มส่วนกลาง (Malar Fat Pad)",
+      "descEn": "Triangular midface adipose pad overlying the zygomaticomaxillary prominence; repositioned vertically with the composite SMAS flap.",
+      "descTh": "ก้อนไขมันบริเวณโหนกแก้มและแก้มส่วนกลาง ซึ่งถูกยกกลับคืนสู่ตำแหน่งเดิมตามแนวเวกเตอร์ธรรมชาติ"
+    },
+    {
+      "index": 9,
+      "num": "10",
+      "id": "SOOF_Fat_Compartment_Mesh",
+      "milestone": "B",
+      "group": "06_Deep_Fat_Compartments",
+      "fma": "FMA:71322",
+      "origVerts": 1160,
+      "origTris": 2312,
+      "colorHex": "#E8C261",
+      "baseColor": [
+        0.91,
+        0.76,
+        0.38
+      ],
+      "explodeVec": [
+        0.08,
+        0.03,
+        -0.03
+      ],
+      "nameEn": "Sub-Orbicularis Oculi Fat (SOOF — Milestone B)",
+      "nameTh": "ไขมันชั้นลึกใต้กล้ามเนื้อรอบดวงตา (SOOF)",
+      "descEn": "Deep periorbital adipose compartment along the inferior lateral orbital rim beneath the orbicularis oculi muscle.",
+      "descTh": "ชั้นไขมันลึกใต้กล้ามเนื้อรอบดวงตาบริเวณขอบเบ้าตาล่าง เชื่อมต่อมิติระหว่างใต้ตากับโหนกแก้ม"
+    },
+    {
+      "index": 10,
+      "num": "11",
+      "id": "Deep_Medial_Cheek_Fat_Mesh",
+      "milestone": "B",
+      "group": "06_Deep_Fat_Compartments",
+      "fma": "FMA:71324",
+      "origVerts": 1888,
+      "origTris": 3768,
+      "colorHex": "#E3BD5C",
+      "baseColor": [
+        0.89,
+        0.74,
+        0.36
+      ],
+      "explodeVec": [
+        0.08,
+        0.01,
+        -0.03
+      ],
+      "nameEn": "Deep Medial Cheek Fat (DMCF & Ristow's Space)",
+      "nameTh": "ไขมันแก้มชั้นลึกด้านใน (DMCF & Ristow's Space)",
+      "descEn": "Deep structural adipose pillow resting on the premaxillary periosteum supporting anterior midface projection.",
+      "descTh": "ชั้นไขมันลึกที่วางตัวเหนือเยื่อหุ้มกระดูกขากรรไกรบน ช่วยพยุงมิติแก้มด้านหน้าและร่องแก้ม"
+    },
+    {
+      "index": 11,
+      "num": "12",
+      "id": "Buccal_Fat_Pad_Mesh",
+      "milestone": "B",
+      "group": "06_Deep_Fat_Compartments",
+      "fma": "FMA:59816",
+      "origVerts": 1988,
+      "origTris": 3968,
+      "colorHex": "#EBC96B",
+      "baseColor": [
+        0.92,
+        0.79,
+        0.42
+      ],
+      "explodeVec": [
+        0.09,
+        -0.01,
+        -0.04
+      ],
+      "nameEn": "Buccal Fat Pad (Bichat's Fat Pad — Milestone B)",
+      "nameTh": "ก้อนไขมันกระพุ้งแก้ม (Buccal Fat Pad)",
+      "descEn": "Encapsulated deep syssarcosis fat pad between the buccinator and masseter muscles, closely related to buccal CN VII rami.",
+      "descTh": "ก้อนไขมันชั้นลึกที่มีเยื่อหุ้มเฉพาะตัวระหว่างกล้ามเนื้อกระพุ้งแก้มและกล้ามเนื้อเคี้ยว"
+    },
+    {
+      "index": 12,
+      "num": "13",
+      "id": "Parotid_Gland_Mesh",
+      "milestone": "C",
+      "group": "07_Parotid_And_Duct",
+      "fma": "FMA:59790",
+      "origVerts": 2144,
+      "origTris": 4264,
+      "colorHex": "#D6B37A",
+      "baseColor": [
+        0.84,
+        0.7,
+        0.48
+      ],
+      "explodeVec": [
+        0.12,
+        0.0,
+        -0.06
+      ],
+      "nameEn": "Parotid Gland & Stensen's Duct (Milestone C)",
+      "nameTh": "ต่อมน้ำลายพาโรติดและท่อน้ำลาย Stensen's Duct",
+      "descEn": "Major salivary gland invested by parotid-masseteric fascia, with Stensen's duct crossing the masseter muscle.",
+      "descTh": "ต่อมน้ำลายขนาดใหญ่หน้าใบหูที่ถูกหุ้มด้วยพังผืดชั้นลึก พร้อมท่อน้ำลายที่ทอดผ่านกล้ามเนื้อเคี้ยว"
+    },
+    {
+      "index": 13,
+      "num": "14",
+      "id": "Facial_Artery_Mesh",
+      "milestone": "C",
+      "group": "08_Vascular_System",
+      "fma": "FMA:49541",
+      "origVerts": 3268,
+      "origTris": 6480,
+      "colorHex": "#D12429",
+      "baseColor": [
+        0.82,
+        0.14,
+        0.16
+      ],
+      "explodeVec": [
+        0.06,
+        -0.01,
+        -0.02
+      ],
+      "nameEn": "Facial Artery & Perforator Branches (Milestone C)",
+      "nameTh": "หลอดเลือดแดงใบหน้าและแขนงหลอดเลือดลึก",
+      "descEn": "External carotid arterial tree crossing the antegonial notch and ascending toward the nasolabial and angular territories.",
+      "descTh": "โครงข่ายหลอดเลือดแดงหลักของลำคอและใบหน้าที่ทอดข้ามขอบขากรรไกรล่างขึ้นไปเลี้ยงเนื้อเยื่อใบหน้า"
+    },
+    {
+      "index": 14,
+      "num": "15",
+      "id": "Facial_Vein_Mesh",
+      "milestone": "C",
+      "group": "08_Vascular_System",
+      "fma": "FMA:50949",
+      "origVerts": 1976,
+      "origTris": 3920,
+      "colorHex": "#2961BD",
+      "baseColor": [
+        0.16,
+        0.38,
+        0.74
+      ],
+      "explodeVec": [
+        0.07,
+        -0.01,
+        -0.03
+      ],
+      "nameEn": "Facial Vein & Retromandibular/Jugular Tributaries",
+      "nameTh": "หลอดเลือดดำใบหน้าและแขนงหลอดเลือดดำลำคอ",
+      "descEn": "Venous drainage micro-architecture descending posterior to the facial artery into the internal and external jugular system.",
+      "descTh": "โครงข่ายหลอดเลือดดำของใบหน้าและลำคอที่ช่วยระบายเลือดและลดอาการบวมหลังหัตถการ"
+    },
+    {
+      "index": 15,
+      "num": "16",
+      "id": "Deep_Fascia_Muscle_Mesh",
+      "milestone": "A",
+      "group": "09_Deep_Fascia_And_Bone",
+      "fma": "FMA:71308",
+      "origVerts": 8072,
+      "origTris": 16128,
+      "colorHex": "#9E3B38",
+      "baseColor": [
+        0.62,
+        0.23,
+        0.22
+      ],
+      "explodeVec": [
+        0.15,
+        -0.01,
+        -0.11
+      ],
+      "nameEn": "Parotid-Masseteric Fascia & Deep Mimetic Muscles",
+      "nameTh": "พังผืดชั้นลึกและกล้ามเนื้อใบหน้า/ลำคอชั้นลึก",
+      "descEn": "Protective deep fascial floor and underlying masseter, buccinator, zygomaticus, and sternocleidomastoid musculature.",
+      "descTh": "พังผืดชั้นลึกและกล้ามเนื้อเคี้ยว/กล้ามเนื้อลำคอชั้นลึก ซึ่งทำหน้าที่เป็นพื้นปกป้องเส้นประสาทใบหน้า"
+    },
+    {
+      "index": 16,
+      "num": "17",
+      "id": "Bone_Skull_Mesh",
+      "milestone": "A",
+      "group": "09_Deep_Fascia_And_Bone",
+      "fma": "FMA:46565",
+      "origVerts": 7190,
+      "origTris": 14368,
+      "colorHex": "#E3DBD0",
+      "baseColor": [
+        0.89,
+        0.86,
+        0.78
+      ],
+      "explodeVec": [
+        0.21,
+        -0.02,
+        -0.18
+      ],
+      "nameEn": "Craniofacial Skeleton, Zygoma, Mandible & Cervical Spine",
+      "nameTh": "โครงสร้างกระดูกกะโหลกศีรษะ โหนกแก้ม ขากรรไกร และกระดูกคอ",
+      "descEn": "Osseous foundation of the cranium, zygomatic arch, maxilla, mandible, hyoid, and cervical spine.",
+      "descTh": "โครงสร้างกระดูกใบหน้า โหนกแก้ม ขากรรไกรล่าง และกระดูกต้นคอ ซึ่งเป็นฐานรากของใบหน้าทั้งหมด"
+    }
+  ]
+}

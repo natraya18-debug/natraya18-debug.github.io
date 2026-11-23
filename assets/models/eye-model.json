@@ -1,0 +1,513 @@
+{
+ "source": "BodyParts3D 4.0, © The Database Center for Life Science, CC BY 4.0 (via ashemag/human-atlas @ 1c38bf3)",
+ "file": "eye-right.glb",
+ "bytes": 204800,
+ "triangles": 52039,
+ "units": "metres; +x = the body's left (nasal for the right eye), +y = up, +z = front",
+ "lens": {
+  "centre": [
+   -0.031,
+   1.596,
+   0.0592
+  ],
+  "axis": [
+   -0.0614,
+   -0.0071,
+   0.9981
+  ],
+  "radius": 0.0052
+ },
+ "measures": {
+  "axialLength_mm": 24.96,
+  "globeTransverse_mm": 26.31,
+  "globeVertical_mm": 26.23,
+  "corneaDiameter_mm": 14.07,
+  "centralCorneaThickness_mm": 0.84,
+  "anteriorChamberDepth_mm": 3.59,
+  "lensDiameter_mm": 10.48,
+  "lensThickness_mm": 4.74,
+  "lensAxisTiltFromFront_deg": 3.5,
+  "opticNerveEntry_nasal_mm": 0.84,
+  "opticNerveEntry_superior_mm": 2.7,
+  "iolHapticReachInModel_mm": 9.88
+ },
+ "cleaned": [
+  {
+   "structure": "sclera (FJ1368)",
+   "removedPieces": 3,
+   "removedTriangles": 16
+  },
+  {
+   "structure": "choroid (FJ1337)",
+   "removedPieces": 1,
+   "removedTriangles": 4
+  },
+  {
+   "structure": "ciliary-body (FJ1338)",
+   "removedPieces": 2,
+   "removedTriangles": 10
+  },
+  {
+   "structure": "zonules (FJ1371)",
+   "removedPieces": 3,
+   "removedTriangles": 18
+  },
+  {
+   "structure": "cornea (FJ1340)",
+   "removedPieces": 5,
+   "removedTriangles": 30
+  }
+ ],
+ "excluded": [
+  {
+   "id": "FJ1819",
+   "name": "Right optic nerve",
+   "reason": "runs 12.5 mm through the back wall into the vitreous body, ending about 4 mm from the centre of the eye; FJ1364 (kept) ends at the back wall"
+  }
+ ],
+ "cropped": {
+  "optic-nerve": "kept the part within 12 mm behind the eyeball"
+ },
+ "illustrations": {
+  "cataract-nuclear": "lens shape scaled to 60 % about its centre (location: nucleus, StatPearls NBK539699); size for visibility",
+  "cataract-cortical": "spokes on the lens surface, 45–98 % of the radius, front and back, more in the lower nasal quarter (StatPearls NBK539699); 0.12 mm inside the surface",
+  "cataract-psc": "central back of the lens surface within 40 % of the radius, 0.12 mm inside it (StatPearls NBK539699)",
+  "iol": "one-piece IOL, 6.0 mm biconvex optic (centre 0.9 mm / edge 0.3 mm thickness: illustrative), two C-loop haptics at 0° in the capsular bag, bent to fit this model's lens equator; unbent length 12.5–13.0 mm in the cited specifications"
+ },
+ "iolSources": [
+  {
+   "label": "AccessGUDID — AcrySof single-piece posterior-chamber IOL: 6.0 mm biconvex optic, 13.0 mm length",
+   "url": "https://accessgudid.nlm.nih.gov/devices/00380652555982"
+  },
+  {
+   "label": "Acunex Vario AN6V datasheet: 6.0 mm optic, 12.5 mm overall, C-loop, 0° angulation, capsular bag",
+   "url": "https://media.eyefox.com/partner/75/product/1695028494datasheet-qf2065v4-acunex-vario-an6v-gbr-en.pdf"
+  }
+ ],
+ "structures": [
+  {
+   "id": "sclera",
+   "label": "Sclera",
+   "system": "sclera",
+   "kind": "anatomy",
+   "triangles": 8674,
+   "centre": [
+    -0.0305,
+    1.5962,
+    0.0511
+   ],
+   "size": [
+    0.0263,
+    0.0262,
+    0.0246
+   ],
+   "explode": [
+    0.000491,
+    0.000057,
+    -0.007985
+   ],
+   "source": [
+    {
+     "id": "FJ1368",
+     "name": "Right sclera",
+     "concept": "FMA58271",
+     "sourceTriangles": 8690
+    }
+   ]
+  },
+  {
+   "id": "choroid",
+   "label": "Choroid",
+   "system": "choroid",
+   "kind": "anatomy",
+   "triangles": 8664,
+   "centre": [
+    -0.0305,
+    1.5962,
+    0.0512
+   ],
+   "size": [
+    0.024,
+    0.0239,
+    0.0224
+   ],
+   "explode": [
+    0.000368,
+    0.000043,
+    -0.005989
+   ],
+   "source": [
+    {
+     "id": "FJ1336",
+     "name": "Right choroid",
+     "concept": "FMA58299",
+     "sourceTriangles": 2318
+    },
+    {
+     "id": "FJ1337",
+     "name": "Right choroid",
+     "concept": "FMA58299",
+     "sourceTriangles": 6350
+    }
+   ]
+  },
+  {
+   "id": "retina",
+   "label": "Retina",
+   "system": "retina",
+   "kind": "anatomy",
+   "triangles": 5146,
+   "centre": [
+    -0.0305,
+    1.5962,
+    0.0498
+   ],
+   "size": [
+    0.0218,
+    0.0218,
+    0.0174
+   ],
+   "explode": [
+    0.000246,
+    0.000029,
+    -0.003992
+   ],
+   "source": [
+    {
+     "id": "FJ1367",
+     "name": "Optic part of right retina",
+     "concept": "FMA58607",
+     "sourceTriangles": 5146
+    }
+   ]
+  },
+  {
+   "id": "vitreous",
+   "label": "Vitreous body",
+   "system": "vitreous",
+   "kind": "anatomy",
+   "triangles": 2564,
+   "centre": [
+    -0.0305,
+    1.5962,
+    0.0506
+   ],
+   "size": [
+    0.0204,
+    0.0203,
+    0.0177
+   ],
+   "explode": [
+    0.000123,
+    0.000014,
+    -0.001996
+   ],
+   "source": [
+    {
+     "id": "FJ1382",
+     "name": "Right vitreous body",
+     "concept": "FMA58828",
+     "sourceTriangles": 2564
+    }
+   ]
+  },
+  {
+   "id": "ciliary-body",
+   "label": "Ciliary body (ciliary processes)",
+   "system": "ciliary-body",
+   "kind": "anatomy",
+   "triangles": 11778,
+   "centre": [
+    -0.031,
+    1.596,
+    0.0599
+   ],
+   "size": [
+    0.0169,
+    0.017,
+    0.0029
+   ],
+   "explode": [
+    -0.000037,
+    -0.000004,
+    0.000599
+   ],
+   "source": [
+    {
+     "id": "FJ1338",
+     "name": "Right corona ciliaris",
+     "concept": "FMA58483",
+     "sourceTriangles": 11788
+    }
+   ]
+  },
+  {
+   "id": "zonules",
+   "label": "Zonule fibres",
+   "system": "zonules",
+   "kind": "anatomy",
+   "triangles": 2466,
+   "centre": [
+    -0.0309,
+    1.5959,
+    0.0598
+   ],
+   "size": [
+    0.0163,
+    0.0163,
+    0.0026
+   ],
+   "explode": [
+    -0.000074,
+    -0.000009,
+    0.001198
+   ],
+   "source": [
+    {
+     "id": "FJ1371",
+     "name": "Suspensory ligament of right lens",
+     "concept": "FMA58839",
+     "sourceTriangles": 2484
+    }
+   ]
+  },
+  {
+   "id": "iris",
+   "label": "Iris",
+   "system": "iris",
+   "kind": "anatomy",
+   "triangles": 1796,
+   "centre": [
+    -0.0311,
+    1.5958,
+    0.0612
+   ],
+   "size": [
+    0.0128,
+    0.0129,
+    0.0031
+   ],
+   "explode": [
+    -0.000246,
+    -0.000029,
+    0.003992
+   ],
+   "source": [
+    {
+     "id": "FJ1348",
+     "name": "Right iris",
+     "concept": "FMA58236",
+     "sourceTriangles": 1796
+    }
+   ]
+  },
+  {
+   "id": "anterior-chamber",
+   "label": "Anterior chamber (aqueous humour)",
+   "system": "anterior-chamber",
+   "kind": "anatomy",
+   "triangles": 828,
+   "centre": [
+    -0.0311,
+    1.5959,
+    0.0633
+   ],
+   "size": [
+    0.0127,
+    0.0128,
+    0.0037
+   ],
+   "explode": [
+    -0.000338,
+    -0.000039,
+    0.005489
+   ],
+   "source": [
+    {
+     "id": "FJ1332",
+     "name": "Anterior chamber of right eyeball",
+     "concept": "FMA58081",
+     "sourceTriangles": 828
+    }
+   ]
+  },
+  {
+   "id": "cornea",
+   "label": "Cornea",
+   "system": "cornea",
+   "kind": "anatomy",
+   "triangles": 982,
+   "centre": [
+    -0.0311,
+    1.5959,
+    0.0636
+   ],
+   "size": [
+    0.0141,
+    0.0141,
+    0.0049
+   ],
+   "explode": [
+    -0.00043,
+    -0.00005,
+    0.006987
+   ],
+   "source": [
+    {
+     "id": "FJ1340",
+     "name": "Right cornea",
+     "concept": "FMA58239",
+     "sourceTriangles": 1012
+    }
+   ]
+  },
+  {
+   "id": "lens",
+   "label": "Lens",
+   "system": "lens",
+   "kind": "anatomy",
+   "triangles": 1522,
+   "centre": [
+    -0.0309,
+    1.596,
+    0.0592
+   ],
+   "size": [
+    0.0103,
+    0.0104,
+    0.0048
+   ],
+   "explode": [
+    -0.000135,
+    -0.000016,
+    0.002196
+   ],
+   "source": [
+    {
+     "id": "FJ1356",
+     "name": "Right lens",
+     "concept": "FMA58242",
+     "sourceTriangles": 1522
+    }
+   ]
+  },
+  {
+   "id": "optic-nerve",
+   "label": "Optic nerve",
+   "system": "optic-nerve",
+   "kind": "anatomy",
+   "triangles": 113,
+   "centre": [
+    -0.0248,
+    1.6008,
+    0.0347
+   ],
+   "size": [
+    0.013,
+    0.0088,
+    0.0156
+   ],
+   "explode": [
+    0.000614,
+    0.000071,
+    -0.009981
+   ],
+   "source": [
+    {
+     "id": "FJ1364",
+     "name": "Right optic nerve",
+     "concept": "FMA50875",
+     "sourceTriangles": 452
+    }
+   ]
+  },
+  {
+   "id": "cataract-nuclear",
+   "label": "Cataract: nuclear (illustration)",
+   "system": "cataract-nuclear",
+   "kind": "illustration",
+   "triangles": 1522,
+   "centre": [
+    -0.031,
+    1.596,
+    0.0592
+   ],
+   "size": [
+    0.0062,
+    0.0063,
+    0.0029
+   ],
+   "explode": [
+    -0.000135,
+    -0.000016,
+    0.002196
+   ]
+  },
+  {
+   "id": "cataract-cortical",
+   "label": "Cataract: cortical (illustration)",
+   "system": "cataract-cortical",
+   "kind": "illustration",
+   "triangles": 289,
+   "centre": [
+    -0.0309,
+    1.5954,
+    0.0593
+   ],
+   "size": [
+    0.0097,
+    0.0089,
+    0.0042
+   ],
+   "explode": [
+    -0.000135,
+    -0.000016,
+    0.002196
+   ]
+  },
+  {
+   "id": "cataract-psc",
+   "label": "Cataract: posterior subcapsular (illustration)",
+   "system": "cataract-psc",
+   "kind": "illustration",
+   "triangles": 47,
+   "centre": [
+    -0.0308,
+    1.5959,
+    0.0571
+   ],
+   "size": [
+    0.0044,
+    0.0043,
+    0.0004
+   ],
+   "explode": [
+    -0.000135,
+    -0.000016,
+    0.002196
+   ]
+  },
+  {
+   "id": "iol",
+   "label": "Intraocular lens, IOL (illustration)",
+   "system": "iol",
+   "kind": "illustration",
+   "triangles": 5648,
+   "centre": [
+    -0.031,
+    1.596,
+    0.0592
+   ],
+   "size": [
+    0.0098,
+    0.0092,
+    0.001
+   ],
+   "explode": [
+    -0.000135,
+    -0.000016,
+    0.002196
+   ]
+  }
+ ]
+}

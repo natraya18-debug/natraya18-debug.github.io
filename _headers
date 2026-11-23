@@ -1,0 +1,17 @@
+/* ==========================================================================
+   Headers for Cloudflare Pages / Netlify Drop Isolated HTTPS Staging
+   Ensures smooth MP4/WebM byte-range playback on Android Chrome & blocks indexing
+   ========================================================================== */
+/*
+  X-Robots-Tag: noindex, nofollow
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+
+/assets/*
+  Accept-Ranges: bytes
+  Cache-Control: public, max-age=3600
+
+/shared-media/*
+  Accept-Ranges: bytes
+  Cache-Control: no-cache

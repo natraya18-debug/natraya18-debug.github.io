@@ -1,0 +1,10 @@
+{
+  "name": "active-theory-editable-webgl-template",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Independent editable 3D WebGL website template modeled on Active Theory v6",
+  "scripts": {
+    "start": "npx serve . -l 3000",
+    "dev": "python3 -m http.server 3000"
+  }
+}

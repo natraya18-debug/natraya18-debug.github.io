@@ -1,0 +1,616 @@
+{
+ "source": "BodyParts3D 4.0 original OBJ files (isa_BP3D_4.0_obj_99.zip), © The Database Center for Life Science, CC BY 4.0",
+ "sourceArchive": {
+  "url": "https://dbarchive.biosciencedbc.jp/data/bodyparts3d/LATEST/isa_BP3D_4.0_obj_99.zip",
+  "bytes": 142903898,
+  "sha256": "40665852c49f218326590e204db91064a1ecfc3c6f8cbd7bbbcaac62c7cd409e"
+ },
+ "licenceNote": "The OBJ file headers carry the older notice \"CC Attribution-Share Alike 2.1 Japan\"; the dataset licence page (updated 2025-02-27) states CC BY 4.0. Listed for legal confirmation.",
+ "file": "knee-right.glb",
+ "bytes": 320992,
+ "triangles": 69103,
+ "units": "metres; origin = centre of the tibial plateau at the joint line; +x = the body's left (medial side of this right knee), +y = up, +z = front",
+ "measures": {
+  "jointGapFemurTibia_min_mm": 0.1,
+  "notchWidth_mm": 18.5,
+  "tibialPlateauWidth_mm": 72.3,
+  "aclLength_mm": 28.7,
+  "pclLength_mm": 37.4,
+  "mclLength_mm": 110.8,
+  "mclTibialAttachmentBelowJoint_mm": 62,
+  "lclLength_mm": 51.3,
+  "bandAbove_mm": 115,
+  "bandBelow_mm": 105
+ },
+ "smoothing": {
+  "femur": {
+   "method": "one step of Loop subdivision",
+   "sourceTriangles": 3102,
+   "triangles": 12408,
+   "maxSurfaceChange_mm": 0.6,
+   "meanSurfaceChange_mm": 0.08
+  },
+  "tibia": {
+   "method": "one step of Loop subdivision",
+   "sourceTriangles": 1664,
+   "triangles": 6656,
+   "maxSurfaceChange_mm": 0.7,
+   "meanSurfaceChange_mm": 0.09
+  },
+  "fibula": {
+   "method": "one step of Loop subdivision",
+   "sourceTriangles": 1142,
+   "triangles": 4568,
+   "maxSurfaceChange_mm": 0.4,
+   "meanSurfaceChange_mm": 0.07
+  },
+  "patella": {
+   "method": "one step of Loop subdivision",
+   "sourceTriangles": 306,
+   "triangles": 1224,
+   "maxSurfaceChange_mm": 0.5,
+   "meanSurfaceChange_mm": 0.09
+  }
+ },
+ "cut": [
+  {
+   "structure": "femur",
+   "cutLoops": 1,
+   "openLoops": 0
+  },
+  {
+   "structure": "tibia",
+   "cutLoops": 1,
+   "openLoops": 0
+  },
+  {
+   "structure": "fibula",
+   "cutLoops": 1,
+   "openLoops": 0
+  },
+  {
+   "structure": "patella",
+   "cutLoops": 0,
+   "openLoops": 0
+  },
+  {
+   "structure": "quadriceps",
+   "cutLoops": 4,
+   "openLoops": 0
+  },
+  {
+   "structure": "hamstrings",
+   "cutLoops": 4,
+   "openLoops": 0
+  },
+  {
+   "structure": "gastrocnemius",
+   "cutLoops": 2,
+   "openLoops": 0
+  },
+  {
+   "structure": "popliteal-vessels",
+   "cutLoops": 2,
+   "openLoops": 0
+  }
+ ],
+ "landmarks": {
+  "jointLine": 0,
+  "notchX": 0.0008,
+  "notchWidth": 0.0185,
+  "epicondyleMedial": [
+   0.0407,
+   0.0369,
+   -0.0121
+  ],
+  "epicondyleLateral": [
+   -0.0398,
+   0.0311,
+   -0.0045
+  ],
+  "fibularHead": [
+   -0.0465,
+   -0.0204,
+   -0.0138
+  ],
+  "tibialTuberosity": [
+   -0.0145,
+   -0.0252,
+   0.0318
+  ],
+  "patellaLowerPole": [
+   -0.0116,
+   -0.004,
+   0.0264
+  ],
+  "condyleCentreZ": -0.0017,
+  "tibiaBackAtNotch": -0.0248,
+  "tibiaFrontAtNotch": 0.0265,
+  "mclTibialAttachment": [
+   0.0112,
+   -0.062,
+   0.0069
+  ]
+ },
+ "illustrations": {
+  "cartilage-femur, cartilage-tibia, cartilage-patella": "a 1.6 mm layer, thinning to the bone over its last 2.5 mm, over the joint surfaces of the real femur (where it faces the tibia, the groove the kneecap runs in, and the back of the condyles), tibia (plateau, not the central spines) and the back of the kneecap; thickness for visibility (AAOS: the ends of the femur and tibia and the back of the patella are covered with articular cartilage)",
+  "meniscus-medial": "C-shaped wedge on the medial plateau of the real tibia, open towards the centre of the knee (70°), outer edge at the plateau rim, inner edge at 56 % of it; height up to 5.5 mm and never above the real femur; shape after AAOS (\"wedge-shaped\"); sizes for visibility",
+  "meniscus-lateral": "more circular wedge on the lateral plateau (open 34°), inner edge at 46 %; height up to 5 mm; sizes for visibility",
+  "acl": "band 10 × 5.5 mm, quarter-turn twist, from the inner wall of the lateral femoral condyle (back of the notch) to the tibia in front of the spines",
+  "pcl": "band 12.5 × 6.5 mm, from the inner wall of the medial femoral condyle (front of the notch) to the back of the tibia below the plateau; crosses the ACL",
+  "mcl": "flat band 10 × 2 mm lying on the bones, from the medial femoral epicondyle to the tibia 61.2 mm below the joint line (StatPearls NBK507780)",
+  "lcl": "cord 5 mm, from the lateral femoral epicondyle to the head of the fibula"
+ },
+ "structures": [
+  {
+   "id": "femur",
+   "label": "Femur (thigh bone)",
+   "system": "femur",
+   "kind": "anatomy",
+   "triangles": 5376,
+   "centre": [
+    0.0005,
+    0.0589,
+    -0.0017
+   ],
+   "size": [
+    0.0805,
+    0.1122,
+    0.0619
+   ],
+   "explode": [
+    0,
+    0.034,
+    0
+   ],
+   "source": [
+    {
+     "id": "FJ3365",
+     "name": "Right femur",
+     "triangles": 3102
+    }
+   ]
+  },
+  {
+   "id": "tibia",
+   "label": "Tibia (shin bone)",
+   "system": "tibia",
+   "kind": "anatomy",
+   "triangles": 3928,
+   "centre": [
+    0.0006,
+    -0.0484,
+    0.0022
+   ],
+   "size": [
+    0.0738,
+    0.1133,
+    0.0592
+   ],
+   "explode": [
+    0,
+    -0.03,
+    0
+   ],
+   "source": [
+    {
+     "id": "FJ3387",
+     "name": "Right tibia",
+     "triangles": 1664
+    }
+   ]
+  },
+  {
+   "id": "fibula",
+   "label": "Fibula",
+   "system": "fibula",
+   "kind": "anatomy",
+   "triangles": 1826,
+   "centre": [
+    -0.0343,
+    -0.0558,
+    -0.0172
+   ],
+   "size": [
+    0.0256,
+    0.0985,
+    0.0251
+   ],
+   "explode": [
+    -0.01,
+    -0.034,
+    0
+   ],
+   "source": [
+    {
+     "id": "FJ3366",
+     "name": "Right fibula",
+     "triangles": 1142
+    }
+   ]
+  },
+  {
+   "id": "patella",
+   "label": "Patella (kneecap)",
+   "system": "patella",
+   "kind": "anatomy",
+   "triangles": 1224,
+   "centre": [
+    -0.0085,
+    0.0155,
+    0.0292
+   ],
+   "size": [
+    0.0412,
+    0.039,
+    0.0211
+   ],
+   "explode": [
+    0,
+    0.03,
+    0.034
+   ],
+   "source": [
+    {
+     "id": "FJ3381",
+     "name": "Right patella",
+     "triangles": 306
+    }
+   ]
+  },
+  {
+   "id": "cartilage-femur",
+   "label": "Articular cartilage of the femur (illustration)",
+   "system": "cartilage",
+   "kind": "illustration",
+   "triangles": 1665,
+   "centre": [
+    0.0015,
+    0.0208,
+    -0.0021
+   ],
+   "size": [
+    0.0744,
+    0.0393,
+    0.0642
+   ],
+   "explode": [
+    0,
+    0.034,
+    0
+   ]
+  },
+  {
+   "id": "cartilage-tibia",
+   "label": "Articular cartilage of the tibia (illustration)",
+   "system": "cartilage",
+   "kind": "illustration",
+   "triangles": 866,
+   "centre": [
+    0.0016,
+    -0.0003,
+    -0.001
+   ],
+   "size": [
+    0.0707,
+    0.0172,
+    0.0516
+   ],
+   "explode": [
+    0,
+    -0.03,
+    0
+   ]
+  },
+  {
+   "id": "cartilage-patella",
+   "label": "Articular cartilage of the patella (illustration)",
+   "system": "cartilage",
+   "kind": "illustration",
+   "triangles": 610,
+   "centre": [
+    -0.0084,
+    0.0154,
+    0.0249
+   ],
+   "size": [
+    0.0417,
+    0.039,
+    0.0157
+   ],
+   "explode": [
+    0,
+    0.03,
+    0.034
+   ]
+  },
+  {
+   "id": "meniscus-medial",
+   "label": "Medial meniscus (illustration)",
+   "system": "meniscus-medial",
+   "kind": "illustration",
+   "triangles": 1788,
+   "centre": [
+    0.0207,
+    0.0027,
+    -0.0009
+   ],
+   "size": [
+    0.0315,
+    0.0192,
+    0.0497
+   ],
+   "explode": [
+    0.012,
+    0.004,
+    0
+   ]
+  },
+  {
+   "id": "meniscus-lateral",
+   "label": "Lateral meniscus (illustration)",
+   "system": "meniscus-lateral",
+   "kind": "illustration",
+   "triangles": 1788,
+   "centre": [
+    -0.019,
+    0.0066,
+    -0.0001
+   ],
+   "size": [
+    0.0287,
+    0.011,
+    0.0441
+   ],
+   "explode": [
+    -0.012,
+    0.004,
+    0
+   ]
+  },
+  {
+   "id": "acl",
+   "label": "Anterior cruciate ligament, ACL (illustration)",
+   "system": "acl",
+   "kind": "illustration",
+   "triangles": 812,
+   "centre": [
+    -0.001,
+    0.0121,
+    0.0018
+   ],
+   "size": [
+    0.017,
+    0.0172,
+    0.029
+   ],
+   "explode": [
+    -0.004,
+    0.002,
+    0.008
+   ]
+  },
+  {
+   "id": "pcl",
+   "label": "Posterior cruciate ligament, PCL (illustration)",
+   "system": "pcl",
+   "kind": "illustration",
+   "triangles": 812,
+   "centre": [
+    0.0032,
+    0.0056,
+    -0.009
+   ],
+   "size": [
+    0.0167,
+    0.0347,
+    0.0323
+   ],
+   "explode": [
+    0.004,
+    0.002,
+    -0.012
+   ]
+  },
+  {
+   "id": "mcl",
+   "label": "Medial collateral ligament, MCL (illustration)",
+   "system": "mcl",
+   "kind": "illustration",
+   "triangles": 928,
+   "centre": [
+    0.0278,
+    -0.0116,
+    -0.0046
+   ],
+   "size": [
+    0.0314,
+    0.1032,
+    0.0327
+   ],
+   "explode": [
+    0.022,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "lcl",
+   "label": "Lateral collateral ligament, LCL (illustration)",
+   "system": "lcl",
+   "kind": "illustration",
+   "triangles": 812,
+   "centre": [
+    -0.0448,
+    0.0061,
+    -0.0107
+   ],
+   "size": [
+    0.0118,
+    0.0515,
+    0.0106
+   ],
+   "explode": [
+    -0.024,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "quadriceps",
+   "label": "Quadriceps and its tendon",
+   "system": "quadriceps",
+   "kind": "anatomy",
+   "triangles": 7420,
+   "centre": [
+    -0.0145,
+    0.0321,
+    0.0248
+   ],
+   "size": [
+    0.1047,
+    0.1659,
+    0.0654
+   ],
+   "explode": [
+    0,
+    0.046,
+    0.03
+   ],
+   "source": [
+    {
+     "id": "FJ1433",
+     "name": "Right rectus femoris",
+     "triangles": 5688
+    },
+    {
+     "id": "FJ1442",
+     "name": "Right vastus lateralis",
+     "triangles": 6688
+    },
+    {
+     "id": "FJ1443",
+     "name": "Right vastus medialis",
+     "triangles": 4552
+    },
+    {
+     "id": "FJ1441",
+     "name": "Right vastus intermedius",
+     "triangles": 4260
+    }
+   ]
+  },
+  {
+   "id": "hamstrings",
+   "label": "Hamstrings",
+   "system": "hamstrings",
+   "kind": "anatomy",
+   "triangles": 6288,
+   "centre": [
+    -0.0001,
+    0.0163,
+    -0.0146
+   ],
+   "size": [
+    0.1025,
+    0.1974,
+    0.0707
+   ],
+   "explode": [
+    0,
+    0.04,
+    -0.034
+   ],
+   "source": [
+    {
+     "id": "FJ1395",
+     "name": "Long head of right biceps femoris",
+     "triangles": 5110
+    },
+    {
+     "id": "FJ1444",
+     "name": "Short head of right biceps femoris",
+     "triangles": 1728
+    },
+    {
+     "id": "FJ1436",
+     "name": "Right semitendinosus",
+     "triangles": 2712
+    },
+    {
+     "id": "FJ1435",
+     "name": "Right semimembranosus",
+     "triangles": 4612
+    }
+   ]
+  },
+  {
+   "id": "gastrocnemius",
+   "label": "Calf muscle (gastrocnemius), upper part",
+   "system": "gastrocnemius",
+   "kind": "anatomy",
+   "triangles": 4556,
+   "centre": [
+    0.0031,
+    -0.0192,
+    -0.0332
+   ],
+   "size": [
+    0.0943,
+    0.1715,
+    0.0862
+   ],
+   "explode": [
+    0,
+    -0.018,
+    -0.04
+   ],
+   "source": [
+    {
+     "id": "FJ1397",
+     "name": "Medial head of right gastrocnemius",
+     "triangles": 3842
+    },
+    {
+     "id": "FJ1394",
+     "name": "Lateral head of right gastrocnemius",
+     "triangles": 3052
+    }
+   ]
+  },
+  {
+   "id": "popliteal-vessels",
+   "label": "Popliteal artery and vein",
+   "system": "popliteal-vessels",
+   "kind": "anatomy",
+   "triangles": 28404,
+   "centre": [
+    -0.006,
+    0.0164,
+    -0.0085
+   ],
+   "size": [
+    0.0459,
+    0.1973,
+    0.0431
+   ],
+   "explode": [
+    0,
+    0,
+    -0.058
+   ],
+   "source": [
+    {
+     "id": "FJ2170",
+     "name": "Right popliteal artery",
+     "triangles": 16778
+    },
+    {
+     "id": "FJ2171",
+     "name": "Right popliteal vein",
+     "triangles": 16660
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>INTRARAT — MEDIVERSE 3D Anatomy Explorer (Body · Eye · Knee)</title>
+  <style>
+    :root {
+      --bg-stage: #061710;
+      --bg-panel: rgba(8, 28, 19, 0.92);
+      --border-emerald: rgba(32, 198, 106, 0.34);
+      --emerald-bright: #20C66A;
+      --emerald-soft: #8EF5BC;
+      --gold-accent: #E2C275;
+      --text-main: #F4F9F6;
+      --text-muted: #A9C6B8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 42%, #0E3122 0%, #05130D 76%);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', 'Inter', 'Noto Sans Thai', system-ui, sans-serif;
+      font-size: 12px;
+      user-select: none;
+    }
+    .mv-shell {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1fr 270px;
+      overflow: hidden;
+    }
+    @media (max-width: 720px) {
+      .mv-shell {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 185px;
+      }
+    }
+    .mv-stage {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    #mvCanvasHost {
+      width: 100%;
+      height: 100%;
+    }
+    #mvCanvasHost canvas {
+      width: 100% !important;
+      height: 100% !important;
+      display: block;
+      cursor: grab;
+    }
+    #mvCanvasHost canvas:active {
+      cursor: grabbing;
+    }
+    .mv-topbar {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      right: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      flex-wrap: wrap;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .mv-topbar > * {
+      pointer-events: auto;
+    }
+    .mv-pill-group {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-wrap: wrap;
+      background: rgba(6, 22, 15, 0.84);
+      border: 1px solid var(--border-emerald);
+      border-radius: 999px;
+      padding: 3px 6px;
+      backdrop-filter: blur(8px);
+    }
+    .mv-btn {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-main);
+      border: 1px solid rgba(142, 245, 188, 0.25);
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.16s ease;
+    }
+    .mv-btn:hover {
+      background: rgba(32, 198, 106, 0.24);
+      border-color: var(--emerald-bright);
+    }
+    .mv-btn.active {
+      background: var(--emerald-bright);
+      color: #04150C;
+      border-color: #FFFFFF;
+    }
+    .mv-badge {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--emerald-soft);
+      padding: 2px 7px;
+    }
+    .mv-illu-banner {
+      position: absolute;
+      top: 44px;
+      left: 10px;
+      background: rgba(180, 83, 9, 0.92);
+      color: #FEF3C7;
+      border: 1px solid #F59E0B;
+      border-radius: 8px;
+      padding: 4px 9px;
+      font-size: 10.5px;
+      font-weight: 700;
+      z-index: 10;
+      display: none;
+    }
+    .mv-illu-banner.visible {
+      display: inline-block;
+    }
+    .mv-bottom-hud {
+      position: absolute;
+      bottom: 8px;
+      left: 8px;
+      right: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      flex-wrap: wrap;
+      background: rgba(6, 22, 15, 0.86);
+      border: 1px solid var(--border-emerald);
+      border-radius: 10px;
+      padding: 5px 9px;
+      z-index: 10;
+    }
+    .mv-slider-wrap {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--emerald-soft);
+    }
+    .mv-slider-wrap input[type="range"] {
+      width: 74px;
+      accent-color: var(--emerald-bright);
+      cursor: pointer;
+    }
+    .mv-sidebar {
+      background: var(--bg-panel);
+      border-left: 1px solid var(--border-emerald);
+      padding: 8px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      overflow-y: auto;
+    }
+    .mv-search {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-emerald);
+      border-radius: 8px;
+      color: #FFFFFF;
+      padding: 5px 8px;
+      font-size: 11.5px;
+    }
+    .mv-search::placeholder {
+      color: rgba(169, 198, 184, 0.75);
+    }
+    .mv-inspector {
+      background: rgba(13, 45, 31, 0.85);
+      border: 1px solid rgba(32, 198, 106, 0.35);
+      border-radius: 9px;
+      padding: 7px 9px;
+    }
+    .mv-insp-kicker {
+      font-size: 9.5px;
+      font-weight: 800;
+      color: var(--gold-accent);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .mv-insp-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin: 2px 0;
+    }
+    .mv-insp-desc {
+      font-size: 11px;
+      line-height: 1.4;
+      color: var(--text-muted);
+    }
+    .mv-list {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      overflow-y: auto;
+      max-height: 220px;
+      padding-right: 2px;
+    }
+    .mv-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 7px;
+      padding: 4px 7px;
+      color: var(--text-main);
+      font-size: 11px;
+      cursor: pointer;
+      text-align: left;
+    }
+    .mv-item:hover {
+      border-color: var(--emerald-bright);
+      background: rgba(32, 198, 106, 0.16);
+    }
+    .mv-item.selected {
+      background: rgba(32, 198, 106, 0.28);
+      border-color: #FFFFFF;
+      font-weight: 700;
+    }
+    .mv-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: inline-block;
+    }
+    .mv-credit {
+      font-size: 9.5px;
+      color: rgba(169, 198, 184, 0.8);
+      line-height: 1.3;
+      margin-top: auto;
+      padding-top: 4px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="mv-shell">
+    <div class="mv-stage">
+      <div class="mv-topbar">
+        <div class="mv-pill-group" role="tablist" aria-label="3D Model Switcher">
+          <button type="button" class="mv-btn active" id="btnModelBody" data-model="body">3D Body (37)</button>
+          <button type="button" class="mv-btn" id="btnModelEye" data-model="eye">3D Eye &amp; Cataract (15)</button>
+          <button type="button" class="mv-btn" id="btnModelKnee" data-model="knee">3D Knee Joint (17)</button>
+        </div>
+        <div class="mv-pill-group">
+          <span class="mv-badge" id="mvStatusBadge">Loading 3D GLB...</span>
+          <button type="button" class="mv-btn" id="btnLangToggle">EN | TH</button>
+          <button type="button" class="mv-btn" id="btnReset">Reset</button>
+        </div>
+      </div>
+
+      <div class="mv-illu-banner" id="mvIlluBanner">
+        Illustration — educational drawing, not a patient scan or clinical prediction
+      </div>
+
+      <div id="mvCanvasHost"></div>
+
+      <div class="mv-bottom-hud">
+        <div class="mv-slider-wrap">
+          <span id="lblExplode">Explode: 0%</span>
+          <input type="range" id="sliderExplode" min="0" max="100" value="0" aria-label="Explode 3D Layers" />
+        </div>
+        <div class="mv-slider-wrap">
+          <label style="display:flex;align-items:center;gap:4px;cursor:pointer;">
+            <input type="checkbox" id="chkCrossSection" />
+            <span id="lblCut">Cut (Sagittal 50%)</span>
+          </label>
+          <input type="range" id="sliderCut" min="10" max="90" value="50" aria-label="Cross-section cut position" />
+        </div>
+        <div id="mvScenarioBar" style="display:flex;gap:4px;flex-wrap:wrap;"></div>
+      </div>
+    </div>
+
+    <aside class="mv-sidebar">
+      <input type="search" id="mvSearchInput" class="mv-search" placeholder="Search 3D structures (heart, liver, femur, lens, ACL)..." />
+      <div id="mvSubControls" style="display:flex;flex-wrap:wrap;gap:4px;"></div>
+
+      <div class="mv-inspector" id="mvInspectorCard">
+        <div class="mv-insp-kicker" id="mvInspKicker">BODYPARTS3D 4.0 · CC BY 4.0</div>
+        <div class="mv-insp-title" id="mvInspTitle">MEDIVERSE 3D Explorer</div>
+        <div class="mv-insp-desc" id="mvInspDesc">Tap any structure on the 3D model or in the list below to inspect its anatomy, system, and FMA taxonomy.</div>
+      </div>
+
+      <div class="mv-list" id="mvStructureList" role="listbox" aria-label="Anatomical Structures"></div>
+
+      <div class="mv-credit" id="mvCreditFoot">
+        BodyParts3D © The Database Center for Life Science (DBCLS), CC BY 4.0 · Three.js WebGL 2.0 · Educational only (not for diagnosis).
+      </div>
+    </aside>
+  </div>
+
+  <script type="module">
+    import * as THREE from '../assets/vendor/three/three.module.min.js';
+    import { GLTFLoader } from '../assets/vendor/three/GLTFLoader.js';
+    import { MeshoptDecoder } from '../assets/vendor/three/meshopt_decoder.module.js';
+    import { OrbitControls } from '../assets/vendor/three/OrbitControls.js';
+
+    const SYSTEM_COLOURS = {
+      skeletal: '#e6dec8',
+      muscular: '#b94b40',
+      cardiovascular: '#c82834',
+      respiratory: '#d98a9c',
+      digestive: '#d48d54',
+      nervous: '#ebd060',
+      sensory: '#63b8e8',
+      urinary: '#b56c43',
+      lymphatic: '#72a868',
+      skin: '#e0c7b1'
+    };
+
+    const THAI_ALIASES = {
+      'หัวใจ': 'heart',
+      'ตับ': 'liver',
+      'สมอง': 'brain',
+      'ปอด': 'lung',
+      'ไต': 'kidney',
+      'กระเพาะ': 'stomach',
+      'ม้าม': 'spleen',
+      'กะโหลก': 'skull',
+      'กระดูกสันหลัง': 'spine',
+      'ซี่โครง': 'rib',
+      'หลอดเลือดแดง': 'arteries',
+      'หลอดเลือดดำ': 'veins',
+      'ตา': 'eye',
+      'กระจกตา': 'cornea',
+      'เลนส์': 'lens',
+      'เลนส์ตา': 'lens',
+      'จอประสาทตา': 'retina',
+      'ต้อกระจก': 'cataract',
+      'เข่า': 'femur',
+      'กระดูกต้นขา': 'femur',
+      'กระดูกหน้าแข้ง': 'tibia',
+      'สะบ้า': 'patella',
+      'เอ็นไขว้หน้า': 'acl',
+      'เอ็นไขว้หลัง': 'pcl',
+      'หมอนรองเข่า': 'meniscus'
+    };
+
+    const EYE_LOOKS = {
+      'sclera': { colour: '#efe8da', opacity: 1.0, roughness: 0.6 },
+      'choroid': { colour: '#7d3a2f', opacity: 1.0, roughness: 0.55 },
+      'retina': { colour: '#e2a14a', opacity: 1.0, roughness: 0.5 },
+      'vitreous': { colour: '#a9cbe6', opacity: 0.14, roughness: 0.2 },
+      'ciliary-body': { colour: '#a8567d', opacity: 1.0, roughness: 0.5 },
+      'zonules': { colour: '#d9d2c3', opacity: 1.0, roughness: 0.5 },
+      'iris': { colour: '#6e4b2d', opacity: 1.0, roughness: 0.5 },
+      'anterior-chamber': { colour: '#c4e8f3', opacity: 0.12, roughness: 0.15 },
+      'cornea': { colour: '#d4f0ff', opacity: 0.28, roughness: 0.12 },
+      'lens': { colour: '#e9f5ff', opacity: 0.45, roughness: 0.18 },
+      'optic-nerve': { colour: '#f0d27a', opacity: 1.0, roughness: 0.5 },
+      'cataract-nuclear': { colour: '#b8862f', opacity: 0.96, roughness: 0.35 },
+      'cataract-cortical': { colour: '#f3efe6', opacity: 0.96, roughness: 0.35 },
+      'cataract-psc': { colour: '#6f6352', opacity: 0.96, roughness: 0.35 },
+      'iol': { colour: '#5cc8b6', opacity: 0.92, roughness: 0.15 }
+    };
+
+    const EYE_DESCRIPTIONS = {
+      'cornea': { en: 'Clear front dome of the eye covering the iris (14.1 mm diameter, 0.84 mm central thickness in model). Light enters the eye through it.', th: 'กระจกตา: ส่วนหน้าสุดที่ใสของลูกตา ปกคลุมม่านตา แสงผ่านเข้าสู่ดวงตาทางนี้' },
+      'anterior-chamber': { en: 'Space between cornea and iris (~3.6 mm depth) filled with aqueous humour nourishing the cornea and lens.', th: 'ช่องหน้าม่านตา: ช่องว่างระหว่างกระจกตากับม่านตา บรรจุน้ำเอเควียสที่หล่อเลี้ยงกระจกตาและเลนส์' },
+      'iris': { en: 'Coloured muscular ring controlling how much light passes through the central pupil.', th: 'ม่านตาและรูม่านตา: ควบคุมปริมาณแสงที่ผ่านเข้าสู่เลนส์ตา' },
+      'lens': { en: 'Clear biconvex crystalline lens (10.5 × 4.7 mm) suspended by zonule fibres. A cataract is a clouding of this lens.', th: 'เลนส์แก้วตา: เลนส์ใสหลังม่านตา แขวนด้วยเอ็นยึดเลนส์ ต้อกระจกคือภาวะที่เลนส์นี้ขุ่นมัว' },
+      'zonules': { en: 'Fine suspensory fibres connecting the ciliary body to the lens capsule equator.', th: 'เอ็นยึดเลนส์ (Zonule fibres): เส้นใยละเอียดที่แขวนเลนส์ตาไว้กับซิเลียรีบอดี' },
+      'ciliary-body': { en: 'Ring of tissue containing ciliary processes and muscle controlling lens accommodation and aqueous production.', th: 'ซิเลียรีบอดี (Ciliary body): เนื้อเยื่อรอบเลนส์ที่ยึดเอ็นแขวนเลนส์และปรับความโค้งของเลนส์' },
+      'vitreous': { en: 'Clear gel-like vitreous body between the lens and retina maintaining globe volume.', th: 'วุ้นตา (Vitreous body): สารใสคล้ายวุ้นระหว่างเลนส์กับจอประสาทตา' },
+      'retina': { en: 'Innermost light-sensitive photoreceptor layer converting focused light into neural signals.', th: 'จอประสาทตา (Retina): ชั้นเซลล์รับแสงด้านในสุดที่เปลี่ยนแสงเป็นสัญญาณประสาทส่งไปยังสมอง' },
+      'choroid': { en: 'Vascular layer lining the inside of the sclera beneath the retina.', th: 'คอรอยด์ (Choroid): ชั้นหลอดเลือดที่หล่อเลี้ยงจอประสาทตา' },
+      'sclera': { en: 'Protective outer white fibrous wall of the eyeball (axial length 25.0 mm).', th: 'ตาขาว (Sclera): ผนังชั้นนอกสีขาวที่หุ้มลูกตา' },
+      'optic-nerve': { en: 'Cranial Nerve II carrying visual signals from the retina to the brain (FJ1819 artefact excluded; clean posterior exit preserved).', th: 'เส้นประสาทตา (Optic nerve CN II): นำสัญญาณภาพจากจอประสาทตาสู่สมอง' },
+      'cataract-nuclear': { en: '[ILLUSTRATION] Nuclear cataract: clouding and yellowing/browning in the central nucleus of the lens (StatPearls NBK539699).', th: '[ภาพประกอบ] ต้อกระจกชนิดนิวเคลียร์ (Nuclear): เกิดการขุ่นเหลืองที่แกนกลางของเลนส์ตา' },
+      'cataract-cortical': { en: '[ILLUSTRATION] Cortical cataract: spoke- or wedge-shaped opacities in the outer lens cortex (StatPearls NBK539699).', th: '[ภาพประกอบ] ต้อกระจกชนิดคอร์ติคัล (Cortical): รอยขุ่นรูปลิ่มหรือซี่ล้อที่ขอบนอกของเลนส์ตา' },
+      'cataract-psc': { en: '[ILLUSTRATION] Posterior subcapsular cataract (PSC): plaque-like opacity at the central back of the lens just inside the posterior capsule.', th: '[ภาพประกอบ] ต้อกระจกใต้ถุงหุ้มเลนส์ด้านหลัง (PSC): รอยขุ่นด้านหลังเลนส์ตรงกลางแนวรับแสง' },
+      'iol': { en: '[ILLUSTRATION] Intraocular Lens (IOL): one-piece 6.0 mm biconvex artificial lens with C-loop haptics placed in the capsular bag after cataract removal.', th: '[ภาพประกอบ] เลนส์แก้วตาเทียม (IOL 6.0 มม.): เลนส์เทียมพร้อมขา C-loop ที่ใส่แทนเลนส์ธรรมชาติในถุงหุ้มเลนส์' }
+    };
+
+    const KNEE_LOOKS = {
+      'femur': { colour: '#ece4d2', opacity: 1.0, roughness: 0.62 },
+      'tibia': { colour: '#ece4d2', opacity: 1.0, roughness: 0.62 },
+      'fibula': { colour: '#ece4d2', opacity: 1.0, roughness: 0.62 },
+      'patella': { colour: '#e7dabd', opacity: 1.0, roughness: 0.6 },
+      'cartilage-femur': { colour: '#8ccbe0', opacity: 0.95, roughness: 0.3 },
+      'cartilage-tibia': { colour: '#8ccbe0', opacity: 0.95, roughness: 0.3 },
+      'cartilage-patella': { colour: '#8ccbe0', opacity: 0.95, roughness: 0.3 },
+      'meniscus-medial': { colour: '#f4efdc', opacity: 0.96, roughness: 0.32 },
+      'meniscus-lateral': { colour: '#f4efdc', opacity: 0.96, roughness: 0.32 },
+      'acl': { colour: '#d9773f', opacity: 1.0, roughness: 0.4 },
+      'pcl': { colour: '#b9552e', opacity: 1.0, roughness: 0.4 },
+      'mcl': { colour: '#d8aa46', opacity: 1.0, roughness: 0.4 },
+      'lcl': { colour: '#c99330', opacity: 1.0, roughness: 0.4 },
+      'quadriceps': { colour: '#b8473d', opacity: 0.45, roughness: 0.7 },
+      'hamstrings': { colour: '#9d4459', opacity: 0.45, roughness: 0.7 },
+      'gastrocnemius': { colour: '#a8533f', opacity: 0.45, roughness: 0.7 },
+      'popliteal-vessels': { colour: '#b8222e', opacity: 0.95, roughness: 0.45 }
+    };
+
+    const KNEE_DESCRIPTIONS = {
+      'femur': { en: 'Distal femur (thigh bone): rounded condyles rest on the tibial plateau (intercondylar notch width 18.5 mm).', th: 'กระดูกต้นขาส่วนปลาย (Femur): ปลายโค้งมนวางอยู่บนกระดูกหน้าแข้ง' },
+      'tibia': { en: 'Proximal tibia (shin bone): tibial plateau width 72.3 mm supporting the menisci and femoral condyles.', th: 'กระดูกหน้าแข้งส่วนบน (Tibia): รองรับหมอนรองข้อเข่าและกระดูกต้นขา' },
+      'patella': { en: 'Patella (kneecap): shields the front of the knee joint and links the quadriceps tendon to the patellar tendon.', th: 'กระดูกสะบ้า (Patella): เชื่อมเอ็นกล้ามเนื้อต้นขาด้านหน้าเข้ากับเอ็นสะบ้า' },
+      'fibula': { en: 'Proximal fibula: lateral lower-leg bone providing attachment for the lateral collateral ligament (LCL).', th: 'กระดูกน่องส่วนหัว (Fibula): จุดเกาะด้านล่างของเอ็นประคองเข่าด้านนอก (LCL)' },
+      'cartilage-femur': { en: '[ILLUSTRATION] Articular cartilage (1.6 mm display layer): smooth gliding layer covering the femoral condyles, tibial plateau, and posterior patella (AAOS).', th: '[ภาพประกอบ] กระดูกอ่อนผิวข้อ (Articular cartilage): ชั้นผิวลื่นสีฟ้าที่หุ้มปลายกระดูกต้นขา หน้าแข้ง และด้านหลังสะบ้า' },
+      'cartilage-tibia': { en: '[ILLUSTRATION] Tibial articular cartilage covering the medial and lateral tibial plateau surfaces.', th: '[ภาพประกอบ] กระดูกอ่อนผิวข้อบนหน้าตัดกระดูกหน้าแข้ง' },
+      'cartilage-patella': { en: '[ILLUSTRATION] Retro-patellar articular cartilage allowing smooth patellofemoral tracking.', th: '[ภาพประกอบ] กระดูกอ่อนผิวข้อด้านหลังกระดูกสะบ้า' },
+      'meniscus-medial': { en: '[ILLUSTRATION] Medial meniscus: C-shaped fibrocartilage shock absorber on the inner tibial plateau (AAOS).', th: '[ภาพประกอบ] หมอนรองข้อเข่าด้านใน (Medial meniscus): แผ่นกระดูกอ่อนรูปลิ่มตัว C ดูดซับแรงกระแทกด้านในเข่า' },
+      'meniscus-lateral': { en: '[ILLUSTRATION] Lateral meniscus: circular fibrocartilage wedge cushioning the outer tibial plateau.', th: '[ภาพประกอบ] หมอนรองข้อเข่าด้านนอก (Lateral meniscus): แผ่นรองรับแรงกระแทกด้านนอกของข้อเข่า' },
+      'acl': { en: '[ILLUSTRATION] Anterior Cruciate Ligament (ACL · 28.7 mm): crosses the PCL in the intercondylar notch to control anterior tibial translation.', th: '[ภาพประกอบ] เอ็นไขว้หน้า (ACL): อยู่ในร่องกลางข้อเข่า ไขว้กับ PCL ช่วยป้องกันไม่ให้กระดูกหน้าแข้งเลื่อนมาด้านหน้า' },
+      'pcl': { en: '[ILLUSTRATION] Posterior Cruciate Ligament (PCL · 37.4 mm): crosses behind the ACL to stabilize posterior knee motion.', th: '[ภาพประกอบ] เอ็นไขว้หลัง (PCL): ไขว้ด้านหลัง ACL ช่วยควบคุมความมั่นคงด้านหน้า-หลังของข้อเข่า' },
+      'mcl': { en: '[ILLUSTRATION] Medial Collateral Ligament (MCL · 110.8 mm): flat band from medial epicondyle to tibia 62 mm below joint line (StatPearls NBK507780).', th: '[ภาพประกอบ] เอ็นข้างเข่าด้านใน (MCL): ยึดจากปุ่มกระดูกต้นขาด้านในลงไปยังกระดูกหน้าแข้ง 62 มม. ใต้แนวข้อ' },
+      'lcl': { en: '[ILLUSTRATION] Lateral Collateral Ligament (LCL · 51.3 mm): stabilizing cord from lateral femoral epicondyle to fibular head.', th: '[ภาพประกอบ] เอ็นข้างเข่าด้านนอก (LCL): ยึดจากปุ่มกระดูกต้นขาด้านนอกไปยังหัวกระดูกน่อง' },
+      'quadriceps': { en: 'Quadriceps femoris muscle group & tendon (see-through in muscle view): extends the knee via the patella.', th: 'กล้ามเนื้อต้นขาด้านหน้า (Quadriceps): ทำหน้าที่เหยียดข้อเข่าผ่านกระดูกสะบ้า' },
+      'hamstrings': { en: 'Hamstring tendons (biceps femoris, semitendinosus, semimembranosus): flex the knee joint posteriorly.', th: 'กล้ามเนื้อต้นขาด้านหลัง (Hamstrings): ทำหน้าที่งอข้อเข่า' },
+      'gastrocnemius': { en: 'Proximal medial and lateral heads of the gastrocnemius (calf) muscle originating above the femoral condyles.', th: 'กล้ามเนื้อน่องส่วนต้น (Gastrocnemius): เกาะจากเหนือปุ่มกระดูกต้นขาด้านหลัง' },
+      'popliteal-vessels': { en: 'Popliteal artery and vein passing through the posterior popliteal fossa behind the knee joint.', th: 'หลอดเลือดแดงและหลอดเลือดดำพ็อพลิเทียล (Popliteal vessels) ด้านหลังข้อเข่า' }
+    };
+
+    const state = {
+      modelType: 'body', // 'body' | 'eye' | 'knee'
+      lang: 'en',
+      explode: 0,
+      cutEnabled: false,
+      cutAt: 0.5,
+      selectedId: null,
+      hiddenSystems: new Set(),
+      isolatedId: null,
+      eyeScenario: 'normal', // 'normal' | 'cataract' | 'iol'
+      eyeCataractType: 'cataract-nuclear',
+      kneeView: 'joint', // 'joint' | 'muscles'
+      loadedDetailPacks: new Set(),
+      totalTriangles: 0,
+      totalMeshes: 0,
+      ready: false
+    };
+
+    const host = document.getElementById('mvCanvasHost');
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.localClippingEnabled = true;
+    host.appendChild(renderer.domElement);
+
+    const scene = new THREE.Scene();
+    scene.add(new THREE.HemisphereLight(0xfff6ea, 0x1b2a22, 1.25));
+    const keyLight = new THREE.DirectionalLight(0xfff1df, 1.65);
+    keyLight.position.set(1.8, 2.6, 3.2);
+    scene.add(keyLight);
+    const rimLight = new THREE.DirectionalLight(0x8ef5bc, 0.95);
+    rimLight.position.set(-2.2, 1.4, -2.8);
+    scene.add(rimLight);
+
+    const camera = new THREE.PerspectiveCamera(32, 1, 0.002, 50);
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.09;
+    controls.enablePan = false;
+
+    const rootGroup = new THREE.Group();
+    scene.add(rootGroup);
+
+    let activeParts = [];
+    let activeMeta = null;
+    let bodyDetailManifest = null;
+    let modelBox = new THREE.Box3();
+    let clipPlane = new THREE.Plane(new THREE.Vector3(-1, 0, 0), 0);
+
+    function resizeRenderer() {
+      const w = Math.max(1, host.clientWidth);
+      const h = Math.max(1, host.clientHeight);
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+    }
+    window.addEventListener('resize', resizeRenderer);
+    resizeRenderer();
+
+    async function loadJson(url) {
+      const r = await fetch(url);
+      if (!r.ok) throw new Error(`HTTP ${r.status} for ${url}`);
+      return r.json();
+    }
+
+    function clearSceneMeshes() {
+      while (rootGroup.children.length > 0) {
+        const obj = rootGroup.children[0];
+        rootGroup.remove(obj);
+        if (obj.geometry) obj.geometry.dispose();
+        if (obj.material) {
+          if (Array.isArray(obj.material)) obj.material.forEach(m => m.dispose());
+          else obj.material.dispose();
+        }
+      }
+      activeParts = [];
+    }
+
+    async function loadModelType(type) {
+      state.modelType = type;
+      state.ready = false;
+      state.explode = 0;
+      state.selectedId = null;
+      state.isolatedId = null;
+      state.hiddenSystems.clear();
+      document.getElementById('sliderExplode').value = '0';
+      document.getElementById('lblExplode').textContent = 'Explode: 0%';
+
+      ['Body', 'Eye', 'Knee'].forEach(n => {
+        const b = document.getElementById('btnModel' + n);
+        if (b) b.classList.toggle('active', n.toLowerCase() === type);
+      });
+
+      const badge = document.getElementById('mvStatusBadge');
+      if (badge) badge.textContent = `Loading ${type.toUpperCase()} GLB...`;
+
+      clearSceneMeshes();
+
+      const jsonUrl = type === 'eye'
+        ? '../assets/models/eye-model.json'
+        : type === 'knee'
+          ? '../assets/models/knee-model.json'
+          : '../assets/models/body-model.json';
+
+      const glbUrl = type === 'eye'
+        ? '../assets/models/eye-right.glb'
+        : type === 'knee'
+          ? '../assets/models/knee-right.glb'
+          : '../assets/models/intrarat-body.web.glb';
+
+      activeMeta = await loadJson(jsonUrl);
+      if (type === 'body' && !bodyDetailManifest) {
+        try {
+          bodyDetailManifest = await loadJson('../assets/models/body-detail.json');
+        } catch (e) { /* optional */ }
+      }
+
+      const loader = new GLTFLoader();
+      loader.setMeshoptDecoder(MeshoptDecoder);
+      const gltf = await loader.loadAsync(glbUrl);
+
+      const structMap = new Map((activeMeta.structures || []).map(s => [s.id, s]));
+      let tris = 0;
+
+      gltf.scene.updateMatrixWorld(true);
+      gltf.scene.traverse(node => {
+        if (!node.isMesh) return;
+        const rawId = node.name || (node.parent && node.parent.name) || '';
+        const s = structMap.get(rawId) || structMap.get((node.parent && node.parent.name) || '') || {
+          id: rawId || `mesh-${activeParts.length}`,
+          label: rawId || `Structure ${activeParts.length + 1}`,
+          system: rawId,
+          explode: [0, 0, 0]
+        };
+
+        let look = { colour: SYSTEM_COLOURS[s.system] || '#cccccc', opacity: s.system === 'skin' ? 0.14 : 1.0, roughness: 0.55 };
+        if (type === 'eye' && EYE_LOOKS[s.id]) look = { ...look, ...EYE_LOOKS[s.id] };
+        if (type === 'knee' && KNEE_LOOKS[s.id]) look = { ...look, ...KNEE_LOOKS[s.id] };
+
+        if (!node.geometry.getAttribute('normal')) {
+          node.geometry.computeVertexNormals();
+        }
+        const idxAttr = node.geometry.index;
+        const posAttr = node.geometry.getAttribute('position');
+        const mTris = idxAttr ? Math.round(idxAttr.count / 3) : posAttr ? Math.round(posAttr.count / 3) : 0;
+        tris += mTris;
+
+        const mat = new THREE.MeshStandardMaterial({
+          color: new THREE.Color(look.colour),
+          roughness: look.roughness ?? 0.55,
+          metalness: 0.04,
+          transparent: true,
+          opacity: look.opacity ?? 1.0,
+          depthWrite: (look.opacity ?? 1.0) >= 0.95,
+          side: THREE.DoubleSide
+        });
+
+        node.material = mat;
+        activeParts.push({
+          mesh: node,
+          id: s.id,
+          label: s.label || s.id,
+          system: s.system || s.id,
+          kind: s.kind || 'anatomy',
+          basePos: node.position.clone(),
+          explodeVec: new THREE.Vector3(...(s.explode || [0, 0, 0])),
+          baseColor: new THREE.Color(look.colour),
+          baseOpacity: look.opacity ?? 1.0,
+          material: mat,
+          triangles: mTris,
+          meta: s
+        });
+      });
+
+      activeParts.forEach(p => rootGroup.add(p.mesh));
+      state.totalTriangles = tris;
+      state.totalMeshes = activeParts.length;
+
+      // Default scenario/view setup
+      if (type === 'eye') {
+        state.cutEnabled = true;
+        state.cutAt = 0.5;
+        document.getElementById('chkCrossSection').checked = true;
+        applyEyeScenario('normal');
+      } else if (type === 'knee') {
+        state.cutEnabled = false;
+        document.getElementById('chkCrossSection').checked = false;
+        applyKneeView('joint');
+      } else {
+        state.cutEnabled = false;
+        document.getElementById('chkCrossSection').checked = false;
+      }
+
+      modelBox.setFromObject(rootGroup);
+      const center = modelBox.getCenter(new THREE.Vector3());
+      const size = modelBox.getSize(new THREE.Vector3());
+      const maxDim = Math.max(size.x, size.y, size.z, 0.01);
+      const fitDist = maxDim * 1.65;
+
+      controls.target.copy(center);
+      controls.minDistance = maxDim * 0.25;
+      controls.maxDistance = maxDim * 6.0;
+      if (type === 'eye') {
+        camera.position.set(center.x - fitDist * 0.65, center.y + fitDist * 0.15, center.z + fitDist * 0.78);
+      } else if (type === 'knee') {
+        camera.position.set(center.x + fitDist * 0.45, center.y + fitDist * 0.12, center.z + fitDist * 0.88);
+      } else {
+        camera.position.set(center.x, center.y + maxDim * 0.04, center.z + fitDist);
+      }
+      controls.update();
+
+      updateClippingAndMaterials();
+      buildScenarioControls();
+      buildSubControls();
+      buildStructureList();
+      updateInspectorCard();
+
+      state.ready = true;
+      if (badge) {
+        badge.textContent = `${type.toUpperCase()} READY · ${activeParts.length} MESHES · ${tris.toLocaleString()} TRIS`;
+      }
+      emitTelemetry();
+    }
+
+    function applyEyeScenario(scenarioId, cataractType) {
+      state.eyeScenario = scenarioId || state.eyeScenario;
+      if (cataractType) state.eyeCataractType = cataractType;
+      state.hiddenSystems.clear();
+      const allCats = ['cataract-nuclear', 'cataract-cortical', 'cataract-psc'];
+      if (state.eyeScenario === 'normal') {
+        allCats.forEach(c => state.hiddenSystems.add(c));
+        state.hiddenSystems.add('iol');
+      } else if (state.eyeScenario === 'cataract') {
+        state.hiddenSystems.add('iol');
+        allCats.forEach(c => {
+          if (c !== state.eyeCataractType) state.hiddenSystems.add(c);
+        });
+      } else if (state.eyeScenario === 'iol') {
+        allCats.forEach(c => state.hiddenSystems.add(c));
+      }
+      const banner = document.getElementById('mvIlluBanner');
+      if (banner) {
+        banner.classList.toggle('visible', state.eyeScenario !== 'normal');
+        banner.textContent = state.lang === 'th'
+          ? 'ภาพประกอบเพื่อการศึกษา — ไม่ใช่ดวงตาของผู้ป่วยจริงหรือการคาดการณ์ผลการรักษา'
+          : 'Illustration — educational drawing, not a real patient eye or treatment result';
+      }
+      updateClippingAndMaterials();
+      buildScenarioControls();
+      buildStructureList();
+      emitTelemetry();
+    }
+
+    function applyKneeView(viewId) {
+      state.kneeView = viewId || 'joint';
+      state.hiddenSystems.clear();
+      if (state.kneeView === 'joint') {
+        ['quadriceps', 'hamstrings', 'gastrocnemius', 'popliteal-vessels'].forEach(m => state.hiddenSystems.add(m));
+      }
+      const banner = document.getElementById('mvIlluBanner');
+      if (banner) {
+        banner.classList.add('visible');
+        banner.textContent = state.lang === 'th'
+          ? 'กระดูก/กล้ามเนื้อจาก BodyParts3D · กระดูกอ่อน หมอนรองเข่า และเอ็น 4 เส้นเป็นภาพวาดประกอบเพื่อการเรียนรู้'
+          : 'Bones & muscles: BodyParts3D · Cartilage, menisci & ligaments: educational illustrations';
+      }
+      updateClippingAndMaterials();
+      buildScenarioControls();
+      buildStructureList();
+      emitTelemetry();
+    }
+
+    function updateClippingAndMaterials() {
+      const expFactor = state.explode / 100.0;
+      const box = modelBox.isEmpty() ? new THREE.Box3().setFromObject(rootGroup) : modelBox;
+      const minX = box.min.x, maxX = box.max.x;
+      const cutX = minX + (maxX - minX) * state.cutAt;
+      clipPlane.set(new THREE.Vector3(-1, 0, 0), cutX);
+
+      activeParts.forEach(p => {
+        const isHidden = state.hiddenSystems.has(p.system) || state.hiddenSystems.has(p.id);
+        const isIsoOut = state.isolatedId && state.isolatedId !== p.id;
+        p.mesh.visible = !isHidden && !isIsoOut;
+
+        p.mesh.position.copy(p.basePos).addScaledVector(p.explodeVec, expFactor);
+        p.material.clippingPlanes = state.cutEnabled ? [clipPlane] : [];
+
+        // Eye lens opacity adjustments by scenario
+        let baseOp = p.baseOpacity;
+        let baseCol = p.baseColor.clone();
+        if (state.modelType === 'eye' && p.id === 'lens') {
+          if (state.eyeScenario === 'cataract') { baseCol.set('#efe2c0'); baseOp = 0.40; }
+          else if (state.eyeScenario === 'iol') { baseCol.set('#dbe7f2'); baseOp = 0.12; }
+        }
+
+        if (state.selectedId) {
+          if (p.id === state.selectedId) {
+            p.material.color.copy(baseCol).lerp(new THREE.Color('#20C66A'), 0.35);
+            p.material.emissive.set('#0b3d22');
+            p.material.opacity = Math.max(baseOp, 0.88);
+          } else {
+            p.material.color.copy(baseCol);
+            p.material.emissive.set('#000000');
+            p.material.opacity = Math.min(baseOp, 0.25);
+          }
+        } else {
+          p.material.color.copy(baseCol);
+          p.material.emissive.set('#000000');
+          p.material.opacity = baseOp;
+        }
+        p.material.depthWrite = p.material.opacity >= 0.92;
+      });
+    }
+
+    function buildScenarioControls() {
+      const bar = document.getElementById('mvScenarioBar');
+      if (!bar) return;
+      if (state.modelType === 'eye') {
+        bar.innerHTML = `
+          <button type="button" class="mv-btn ${state.eyeScenario === 'normal' ? 'active' : ''}" data-eye-sc="normal">${state.lang === 'th' ? 'ตาปกติ' : 'Normal Eye'}</button>
+          <button type="button" class="mv-btn ${state.eyeScenario === 'cataract' && state.eyeCataractType === 'cataract-nuclear' ? 'active' : ''}" data-eye-sc="cataract" data-cat="cataract-nuclear">${state.lang === 'th' ? 'ต้อกระจก Nuclear' : 'Nuclear Cataract'}</button>
+          <button type="button" class="mv-btn ${state.eyeScenario === 'cataract' && state.eyeCataractType === 'cataract-cortical' ? 'active' : ''}" data-eye-sc="cataract" data-cat="cataract-cortical">${state.lang === 'th' ? 'ต้อกระจก Cortical' : 'Cortical Cataract'}</button>
+          <button type="button" class="mv-btn ${state.eyeScenario === 'cataract' && state.eyeCataractType === 'cataract-psc' ? 'active' : ''}" data-eye-sc="cataract" data-cat="cataract-psc">${state.lang === 'th' ? 'ต้อกระจก PSC' : 'PSC Cataract'}</button>
+          <button type="button" class="mv-btn ${state.eyeScenario === 'iol' ? 'active' : ''}" data-eye-sc="iol">${state.lang === 'th' ? 'หลังผ่าตัด (เลนส์ IOL)' : 'After Surgery (IOL)'}</button>
+        `;
+        bar.querySelectorAll('[data-eye-sc]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const sc = btn.dataset.eyeSc;
+            const cat = btn.dataset.cat;
+            applyEyeScenario(sc, cat);
+            if (sc === 'cataract' && cat) selectStructure(cat);
+            else if (sc === 'iol') selectStructure('iol');
+            else selectStructure('lens');
+          });
+        });
+      } else if (state.modelType === 'knee') {
+        bar.innerHTML = `
+          <button type="button" class="mv-btn ${state.kneeView === 'joint' ? 'active' : ''}" data-knee-v="joint">${state.lang === 'th' ? 'ข้อเข่าและเส้นเอ็น' : 'The Joint & Ligaments'}</button>
+          <button type="button" class="mv-btn ${state.kneeView === 'muscles' ? 'active' : ''}" data-knee-v="muscles">${state.lang === 'th' ? 'รวมกล้ามเนื้อและหลอดเลือด' : 'With Muscles & Vessels'}</button>
+        `;
+        bar.querySelectorAll('[data-knee-v]').forEach(btn => {
+          btn.addEventListener('click', () => applyKneeView(btn.dataset.kneeV));
+        });
+      } else {
+        const banner = document.getElementById('mvIlluBanner');
+        if (banner) banner.classList.remove('visible');
+        bar.innerHTML = `
+          <button type="button" class="mv-btn ${!state.isolatedId ? 'active' : ''}" id="btnBodyShowAll">${state.lang === 'th' ? 'แสดงทั้งตัว (37)' : 'Show All (37)'}</button>
+          <button type="button" class="mv-btn ${state.isolatedId ? 'active' : ''}" id="btnBodyIsolate">${state.lang === 'th' ? 'แสดงเฉพาะชิ้นที่เลือก' : 'Isolate Selected'}</button>
+        `;
+        document.getElementById('btnBodyShowAll')?.addEventListener('click', () => {
+          state.isolatedId = null;
+          state.hiddenSystems.clear();
+          updateClippingAndMaterials();
+          buildScenarioControls();
+          buildSubControls();
+        });
+        document.getElementById('btnBodyIsolate')?.addEventListener('click', () => {
+          if (state.selectedId) {
+            state.isolatedId = state.isolatedId === state.selectedId ? null : state.selectedId;
+            updateClippingAndMaterials();
+            buildScenarioControls();
+          }
+        });
+      }
+    }
+
+    function buildSubControls() {
+      const box = document.getElementById('mvSubControls');
+      if (!box) return;
+      if (state.modelType !== 'body') {
+        box.innerHTML = '';
+        return;
+      }
+      const systems = ['skeletal', 'muscular', 'cardiovascular', 'respiratory', 'digestive', 'nervous', 'sensory', 'urinary'];
+      box.innerHTML = systems.map(sys => {
+        const on = !state.hiddenSystems.has(sys);
+        return `<button type="button" class="mv-btn ${on ? 'active' : ''}" data-sys-toggle="${sys}" style="font-size:10px;padding:2px 7px;">${sys}</button>`;
+      }).join('');
+      box.querySelectorAll('[data-sys-toggle]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const sys = btn.dataset.sysToggle;
+          if (state.hiddenSystems.has(sys)) state.hiddenSystems.delete(sys);
+          else state.hiddenSystems.add(sys);
+          updateClippingAndMaterials();
+          buildSubControls();
+          buildStructureList();
+        });
+      });
+    }
+
+    function selectStructure(id) {
+      state.selectedId = id;
+      const p = activeParts.find(x => x.id === id);
+      if (p) {
+        state.hiddenSystems.delete(p.system);
+        state.hiddenSystems.delete(p.id);
+      }
+      updateClippingAndMaterials();
+      updateInspectorCard();
+      buildStructureList();
+      emitTelemetry();
+    }
+
+    function updateInspectorCard() {
+      const kickerEl = document.getElementById('mvInspKicker');
+      const titleEl = document.getElementById('mvInspTitle');
+      const descEl = document.getElementById('mvInspDesc');
+      const p = activeParts.find(x => x.id === state.selectedId) || activeParts[0];
+      if (!p) return;
+
+      const srcInfo = (p.meta && p.meta.source && p.meta.source[0]) ? `${p.meta.source[0].concept || p.meta.source[0].id}` : p.system.toUpperCase();
+      if (kickerEl) kickerEl.textContent = `${state.modelType.toUpperCase()} · ${srcInfo} · ${p.triangles.toLocaleString()} TRIS`;
+      if (titleEl) titleEl.textContent = p.label;
+
+      let desc = '';
+      if (state.modelType === 'eye' && EYE_DESCRIPTIONS[p.id]) {
+        desc = EYE_DESCRIPTIONS[p.id][state.lang] || EYE_DESCRIPTIONS[p.id].en;
+      } else if (state.modelType === 'knee' && KNEE_DESCRIPTIONS[p.id]) {
+        desc = KNEE_DESCRIPTIONS[p.id][state.lang] || KNEE_DESCRIPTIONS[p.id].en;
+      } else {
+        const srcCount = (p.meta && p.meta.sourceMeshes) || 1;
+        desc = state.lang === 'th'
+          ? `โครงสร้างระบบ ${p.system} จากฐานข้อมูล BodyParts3D 4.0 (${srcCount} ชิ้นส่วนต้นฉบับ · ${p.triangles.toLocaleString()} สามเหลี่ยม) ใช้เพื่อการศึกษาและเตรียมคำถามก่อนพบแพทย์`
+          : `BodyParts3D 4.0 ${p.system} system structure (${srcCount} merged anatomical elements · ${p.triangles.toLocaleString()} triangles). Educational reference for pre-consultation orientation.`;
+      }
+      if (descEl) descEl.textContent = desc;
+    }
+
+    function buildStructureList() {
+      const listEl = document.getElementById('mvStructureList');
+      if (!listEl) return;
+      const rawQ = (document.getElementById('mvSearchInput')?.value || '').trim().toLowerCase();
+      let q = rawQ;
+      for (const [thWord, enWord] of Object.entries(THAI_ALIASES)) {
+        if (rawQ.includes(thWord)) {
+          q = enWord;
+          break;
+        }
+      }
+
+      const filtered = activeParts.filter(p => {
+        if (!q) return true;
+        return p.id.toLowerCase().includes(q) || p.label.toLowerCase().includes(q) || p.system.toLowerCase().includes(q);
+      });
+
+      listEl.innerHTML = filtered.map(p => {
+        const sel = p.id === state.selectedId ? 'selected' : '';
+        const col = '#' + p.baseColor.getHexString();
+        const badge = p.kind === 'illustration' ? (state.lang === 'th' ? 'ภาพวาด' : 'ILLU') : p.system;
+        return `
+          <button type="button" class="mv-item ${sel}" data-part-id="${p.id}">
+            <span style="display:flex;align-items:center;gap:6px;min-width:0;">
+              <span class="mv-dot" style="background:${col};"></span>
+              <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${p.label}</span>
+            </span>
+            <span style="font-size:9.5px;color:#8EF5BC;flex-shrink:0;">${badge}</span>
+          </button>
+        `;
+      }).join('');
+
+      listEl.querySelectorAll('[data-part-id]').forEach(btn => {
+        btn.addEventListener('click', () => selectStructure(btn.dataset.partId));
+      });
+    }
+
+    // Raycast tap-to-pick on the 3D canvas
+    const raycaster = new THREE.Raycaster();
+    const pointer = new THREE.Vector2();
+    let downPos = { x: 0, y: 0 };
+
+    renderer.domElement.addEventListener('pointerdown', e => {
+      downPos = { x: e.clientX, y: e.clientY };
+    });
+    renderer.domElement.addEventListener('pointerup', e => {
+      if (Math.hypot(e.clientX - downPos.x, e.clientY - downPos.y) > 6) return;
+      const rect = renderer.domElement.getBoundingClientRect();
+      pointer.x = ((e.clientX - rect.left) / Math.max(1, rect.width)) * 2 - 1;
+      pointer.y = -((e.clientY - rect.top) / Math.max(1, rect.height)) * 2 + 1;
+      raycaster.setFromCamera(pointer, camera);
+
+      const visibleMeshes = activeParts.filter(p => p.mesh.visible && p.id !== 'skin' && p.id !== 'cornea' && p.id !== 'vitreous').map(p => p.mesh);
+      const hits = raycaster.intersectObjects(visibleMeshes, false);
+      for (const h of hits) {
+        if (state.cutEnabled && clipPlane.distanceToPoint(h.point) < 0) continue;
+        const found = activeParts.find(p => p.mesh === h.object);
+        if (found) {
+          selectStructure(found.id);
+          return;
+        }
+      }
+    });
+
+    // Controls bindings
+    ['Body', 'Eye', 'Knee'].forEach(n => {
+      document.getElementById('btnModel' + n)?.addEventListener('click', () => loadModelType(n.toLowerCase()));
+    });
+
+    function applyMediverseLanguageUI() {
+      const isTh = state.lang === 'th';
+      document.documentElement.lang = state.lang;
+      const setTxt = (id, en, th) => { const el = document.getElementById(id); if (el) el.textContent = isTh ? th : en; };
+      setTxt('btnModelBody', '3D Body (37)', 'ร่างกาย 3 มิติ (37)');
+      setTxt('btnModelEye', '3D Eye & Cataract (15)', 'ดวงตาและต้อกระจก (15)');
+      setTxt('btnModelKnee', '3D Knee Joint (17)', 'ข้อเข่าและเส้นเอ็น (17)');
+      setTxt('btnLangToggle', 'EN | TH', 'ไทย | EN');
+      setTxt('btnReset', 'Reset', 'รีเซ็ต');
+      setTxt('lblExplode', `Explode: ${state.explode}%`, `แยกชั้น: ${state.explode}%`);
+      setTxt('lblCut', `Cut (Sagittal ${Math.round(state.cutAt * 100)}%)`, `ภาพตัดขวาง (${Math.round(state.cutAt * 100)}%)`);
+      setTxt('mvCreditFoot',
+        'BodyParts3D © The Database Center for Life Science (DBCLS), CC BY 4.0 · Three.js WebGL 2.0 · Educational only (not for diagnosis).',
+        'ฐานข้อมูล BodyParts3D © DBCLS (CC BY 4.0) · เอนจิน Three.js WebGL 2.0 · เพื่อการศึกษาเท่านั้น (ไม่ใช่เครื่องมือวินิจฉัยโรค)'
+      );
+      const inp = document.getElementById('mvSearchInput');
+      if (inp) {
+        inp.placeholder = isTh
+          ? 'ค้นหาโครงสร้าง 3 มิติ (เช่น หัวใจ, ตับ, กระดูกต้นขา, เลนส์ตา, เอ็นไขว้หน้า)...'
+          : 'Search 3D structures (heart, liver, femur, lens, ACL)...';
+      }
+      buildScenarioControls();
+      buildSubControls();
+      buildStructureList();
+      updateInspectorCard();
+    }
+
+    document.getElementById('btnLangToggle')?.addEventListener('click', () => {
+      state.lang = state.lang === 'en' ? 'th' : 'en';
+      applyMediverseLanguageUI();
+    });
+
+    document.getElementById('btnReset')?.addEventListener('click', () => {
+      loadModelType(state.modelType);
+    });
+
+    document.getElementById('sliderExplode')?.addEventListener('input', e => {
+      state.explode = Number(e.target.value) || 0;
+      document.getElementById('lblExplode').textContent = `Explode: ${state.explode}%`;
+      updateClippingAndMaterials();
+      emitTelemetry();
+    });
+
+    document.getElementById('chkCrossSection')?.addEventListener('change', e => {
+      state.cutEnabled = Boolean(e.target.checked);
+      updateClippingAndMaterials();
+      emitTelemetry();
+    });
+
+    document.getElementById('sliderCut')?.addEventListener('input', e => {
+      state.cutAt = (Number(e.target.value) || 50) / 100.0;
+      state.cutEnabled = true;
+      document.getElementById('chkCrossSection').checked = true;
+      document.getElementById('lblCut').textContent = `Cut (Sagittal ${Math.round(state.cutAt * 100)}%)`;
+      updateClippingAndMaterials();
+      emitTelemetry();
+    });
+
+    document.getElementById('mvSearchInput')?.addEventListener('input', () => {
+      buildStructureList();
+      const q = (document.getElementById('mvSearchInput')?.value || '').trim().toLowerCase();
+      if (q) {
+        const resolved = THAI_ALIASES[q] || q;
+        const match = activeParts.find(p => p.id.toLowerCase().includes(resolved) || p.label.toLowerCase().includes(resolved));
+        if (match) selectStructure(match.id);
+      }
+    });
+
+    function getTelemetry() {
+      return {
+        type: 'intrarat-mediverse-telemetry',
+        ready: state.ready,
+        modelType: state.modelType,
+        lang: state.lang,
+        meshCount: state.totalMeshes,
+        totalTriangles: state.totalTriangles,
+        explode: state.explode,
+        cutEnabled: state.cutEnabled,
+        cutAt: state.cutAt,
+        selectedId: state.selectedId,
+        eyeScenario: state.eyeScenario,
+        eyeCataractType: state.eyeCataractType,
+        kneeView: state.kneeView
+      };
+    }
+
+    function emitTelemetry() {
+      try {
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage(getTelemetry(), '*');
+        }
+      } catch (e) { /* ignore */ }
+    }
+
+    async function applyCommand(cmd) {
+      if (!cmd || typeof cmd !== 'object') return getTelemetry();
+      const action = cmd.action || '';
+      const payload = cmd.payload || {};
+      if (action === 'setModel' && payload.model) {
+        await loadModelType(payload.model);
+      } else if (action === 'setExplode') {
+        state.explode = Math.max(0, Math.min(100, Number(payload.explode) || 0));
+        document.getElementById('sliderExplode').value = String(state.explode);
+        document.getElementById('lblExplode').textContent = `Explode: ${state.explode}%`;
+        updateClippingAndMaterials();
+      } else if (action === 'setCut') {
+        state.cutEnabled = Boolean(payload.enabled);
+        if (payload.at !== undefined) state.cutAt = Math.max(0.1, Math.min(0.9, Number(payload.at) || 0.5));
+        document.getElementById('chkCrossSection').checked = state.cutEnabled;
+        updateClippingAndMaterials();
+      } else if (action === 'selectStructure' && payload.id) {
+        selectStructure(payload.id);
+      } else if (action === 'setEyeScenario') {
+        applyEyeScenario(payload.scenario || 'normal', payload.cataractType);
+      } else if (action === 'setKneeView') {
+        applyKneeView(payload.view || 'joint');
+      } else if (action === 'search' && payload.query !== undefined) {
+        const inp = document.getElementById('mvSearchInput');
+        if (inp) {
+          inp.value = payload.query;
+          inp.dispatchEvent(new Event('input'));
+        }
+      } else if (action === 'setLang' && payload.lang) {
+        state.lang = payload.lang === 'th' ? 'th' : 'en';
+        applyMediverseLanguageUI();
+      }
+      emitTelemetry();
+      return getTelemetry();
+    }
+
+    window.__MEDIVERSE_3D_API__ = {
+      applyCommand,
+      getTelemetry,
+      state
+    };
+
+    window.addEventListener('message', ev => {
+      if (ev.data && ev.data.type === 'intrarat-mediverse-command') {
+        applyCommand(ev.data);
+      }
+    });
+
+    function animate() {
+      requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    const params = new URLSearchParams(window.location.search);
+    const initModel = (params.get('model') || 'body').toLowerCase();
+    const initLang = (params.get('lang') || 'en').toLowerCase();
+    state.lang = initLang === 'th' ? 'th' : 'en';
+    applyMediverseLanguageUI();
+    loadModelType(['body', 'eye', 'knee'].includes(initModel) ? initModel : 'body');
+  </script>
+</body>
+</html>

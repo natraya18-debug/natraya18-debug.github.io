@@ -1,0 +1,3324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>INTRARAT — Deep Plane 3D Explorer (v5.0 Real 3D Head &amp; 17 Anatomical Structures) | Intrarat International</title>
+  <style>
+    :root {
+      --intrarat-emerald: #087A3B;
+      --intrarat-emerald-dark: #065F2D;
+      --intrarat-emerald-soft: #E8F5EE;
+      --intrarat-emerald-border: rgba(8, 122, 59, 0.20);
+      --intrarat-white: #FFFFFF;
+      --intrarat-gray-50: #F8FAFC;
+      --intrarat-gray-100: #F1F5F3;
+      --intrarat-gray-200: #E2E8F0;
+      --intrarat-ink: #0F291E;
+      --intrarat-slate: #334155;
+      --intrarat-muted: #64748B;
+      --font-serif: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', 'Inter', 'Noto Sans Thai', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+      --ease-luxury: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100vh;
+      max-height: 100vh;
+      overflow: hidden;
+      background: #FFFFFF;
+      color: var(--intrarat-ink);
+      font-family: var(--font-sans);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 1. CLEAN COMPACT TOP BAR & ANATOMICAL LAYER SELECTOR */
+    .explorer-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 8px 16px;
+      min-height: 48px;
+      flex-shrink: 0;
+      background: rgba(255, 255, 255, 0.96);
+      border-bottom: 1px solid var(--intrarat-gray-200);
+      color: var(--intrarat-ink);
+      position: relative;
+      z-index: 120;
+    }
+
+    .layer-selector-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      flex: 1 1 auto;
+      min-width: 0;
+      padding: 2px 0;
+    }
+    .layer-selector-group::-webkit-scrollbar {
+      display: none;
+    }
+
+    .layer-selector-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--intrarat-emerald);
+      white-space: nowrap;
+      margin-right: 4px;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .top-pill-btn {
+      background: var(--intrarat-gray-50);
+      color: var(--intrarat-slate);
+      border: 1px solid var(--intrarat-gray-200);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      transition: all 0.18s var(--ease-luxury);
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .top-pill-btn:hover {
+      border-color: var(--intrarat-emerald);
+      background: var(--intrarat-emerald-soft);
+      color: var(--intrarat-emerald-dark);
+    }
+
+    .top-pill-btn.active {
+      background: var(--intrarat-emerald);
+      color: #FFFFFF;
+      border-color: var(--intrarat-emerald);
+      font-weight: 700;
+      box-shadow: 0 3px 10px rgba(8, 122, 59, 0.22);
+    }
+
+    .top-pill-btn.adv-trigger-btn {
+      background: #FFFFFF;
+      color: var(--intrarat-ink);
+      border: 1.5px solid var(--intrarat-emerald-border);
+      font-weight: 700;
+    }
+    .top-pill-btn.adv-trigger-btn.active,
+    .top-pill-btn.adv-trigger-btn:hover {
+      background: var(--intrarat-emerald);
+      color: #FFFFFF;
+      border-color: var(--intrarat-emerald);
+    }
+
+    .divider-pipe {
+      width: 1px;
+      height: 18px;
+      background: var(--intrarat-gray-200);
+      margin: 0 2px;
+      flex-shrink: 0;
+    }
+
+    /* 2. LARGE CENTRAL 3D VIEWPORT STAGE (PURE WHITE & SOFT CLINICAL STUDIO) */
+    .explorer-workspace {
+      flex: 1 1 auto;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      background: #FFFFFF;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stage-frame {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 50% 44%, #FFFFFF 0%, #F7FAF8 60%, #EBF2EE 100%);
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+    }
+
+    .stage-frame.mode-iphone {
+      width: 390px;
+      max-width: 100%;
+      height: 800px;
+      border-radius: 32px;
+      border: 1px solid var(--intrarat-gray-200);
+    }
+
+    .stage-frame.mode-android {
+      width: 412px;
+      max-width: 100%;
+      height: 820px;
+      border-radius: 28px;
+      border: 1px solid var(--intrarat-gray-200);
+    }
+
+    .studio-halo-backdrop {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background: radial-gradient(circle at 50% 42%, rgba(255, 255, 255, 0.98) 0%, rgba(242, 248, 245, 0.65) 55%, rgba(232, 242, 236, 0.50) 100%);
+    }
+
+    .canvas-viewport-area {
+      position: relative;
+      flex: 1 1 auto;
+      width: 100%;
+      height: 100%;
+      min-height: 300px;
+      overflow: hidden;
+    }
+
+    /* Interactive 3D WebGL 2.0 Canvas */
+    .webgl-stage-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      display: block;
+      cursor: grab;
+      touch-action: none;
+    }
+    .webgl-stage-canvas:active {
+      cursor: grabbing;
+    }
+
+    /* Synchronized Emerald & White Optical Layer-Peel Curtain */
+    .optical-curtain {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(
+        180deg,
+        rgba(8, 122, 59, 0) 0%,
+        rgba(8, 122, 59, 0.75) 15%,
+        #087A3B 50%,
+        rgba(8, 122, 59, 0.75) 85%,
+        rgba(8, 122, 59, 0) 100%
+      );
+      box-shadow: 0 0 12px rgba(8, 122, 59, 0.35);
+      z-index: 6;
+      transform: translateX(-50%);
+      pointer-events: none;
+      transition: opacity 0.22s ease;
+    }
+
+    .optical-curtain-handle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 2px solid var(--intrarat-emerald);
+      box-shadow: 0 4px 12px rgba(8, 122, 59, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--intrarat-emerald);
+      font-size: 11px;
+      font-weight: 800;
+      pointer-events: auto;
+      cursor: ew-resize;
+    }
+
+    /* 3. SMALL INFORMATION PANEL THAT UPDATES WITH SELECTED STRUCTURE */
+    .structure-info-dock {
+      position: absolute;
+      left: 18px;
+      bottom: 16px;
+      z-index: 8;
+      width: min(350px, calc(100% - 36px));
+      pointer-events: auto;
+    }
+
+    .inspector-card-clean {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--intrarat-emerald-border);
+      border-left: 3.5px solid var(--intrarat-emerald);
+      border-radius: 12px;
+      padding: 11px 14px;
+      color: var(--intrarat-ink);
+      box-shadow: 0 10px 28px rgba(15, 41, 30, 0.07);
+    }
+
+    .inspector-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 9.5px;
+      color: var(--intrarat-emerald);
+      font-weight: 800;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    .inspector-link-btn {
+      background: transparent;
+      border: none;
+      color: var(--intrarat-emerald);
+      font-size: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 0;
+    }
+    .inspector-link-btn:hover {
+      text-decoration: underline;
+    }
+
+    .inspector-struct-title {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--intrarat-ink);
+      margin-top: 3px;
+      line-height: 1.3;
+    }
+
+    .inspector-struct-desc {
+      font-size: 11px;
+      color: var(--intrarat-slate);
+      margin-top: 4px;
+      line-height: 1.45;
+    }
+
+    /* 4. COLLAPSIBLE ADVANCED CONTROLS PANEL (ORGANIZED ACCORDION SECTIONS) */
+    .structures-drawer {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: min(100%, 350px);
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-left: 1px solid var(--intrarat-gray-200);
+      z-index: 30;
+      color: var(--intrarat-ink);
+      display: flex;
+      flex-direction: column;
+      transform: translateX(104%);
+      transition: transform 0.30s var(--ease-luxury);
+      box-shadow: -12px 0 36px rgba(15, 41, 30, 0.08);
+    }
+
+    .structures-drawer.open {
+      transform: translateX(0);
+    }
+
+    .drawer-head {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--intrarat-gray-200);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      background: var(--intrarat-gray-50);
+    }
+
+    .drawer-scroll-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px 14px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    details.adv-details {
+      border: 1px solid var(--intrarat-gray-200);
+      border-radius: 10px;
+      background: #FFFFFF;
+      overflow: visible;
+      flex-shrink: 0;
+    }
+
+    details.adv-details > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 9px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--intrarat-ink);
+      background: var(--intrarat-gray-50);
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+    }
+    details.adv-details > summary::-webkit-details-marker {
+      display: none;
+    }
+    details.adv-details > summary::after {
+      content: "▸";
+      color: var(--intrarat-emerald);
+      font-size: 12px;
+      transition: transform 0.18s ease;
+    }
+    details.adv-details[open] > summary::after {
+      transform: rotate(90deg);
+    }
+    details.adv-details[open] > summary {
+      border-radius: 9px 9px 0 0;
+      border-bottom: 1px solid var(--intrarat-gray-200);
+      color: var(--intrarat-emerald-dark);
+    }
+
+    .adv-section-body {
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .angle-preset-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 4px;
+    }
+
+    .ctrl-chip {
+      padding: 5px 7px;
+      border-radius: 7px;
+      border: 1px solid var(--intrarat-gray-200);
+      background: var(--intrarat-gray-50);
+      color: var(--intrarat-slate);
+      font-size: 10.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.16s ease;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .ctrl-chip:hover {
+      border-color: var(--intrarat-emerald);
+      background: var(--intrarat-emerald-soft);
+      color: var(--intrarat-emerald-dark);
+    }
+
+    .ctrl-chip.active {
+      background: var(--intrarat-emerald);
+      color: #FFFFFF;
+      border-color: var(--intrarat-emerald);
+      font-weight: 700;
+    }
+
+    .flex-btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+    .flex-btn-row .ctrl-chip {
+      flex: 1 1 auto;
+      min-width: max-content;
+    }
+
+    .shader-grid-2x2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 5px;
+    }
+
+    .slider-control-block {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .slider-label-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--intrarat-slate);
+    }
+
+    .slider-val-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--intrarat-emerald);
+      font-weight: 700;
+    }
+
+    input[type="range"].luxury-range {
+      width: 100%;
+      accent-color: var(--intrarat-emerald);
+      height: 5px;
+      cursor: pointer;
+    }
+
+    .mobile-dual-sliders {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .drawer-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      max-height: 250px;
+      overflow-y: auto;
+      padding-right: 2px;
+    }
+
+    .mesh-row-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 6px 8px;
+      border-radius: 8px;
+      background: var(--intrarat-gray-50);
+      border: 1px solid var(--intrarat-gray-200);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .mesh-row-item:hover {
+      background: var(--intrarat-emerald-soft);
+      border-color: var(--intrarat-emerald-border);
+    }
+
+    .mesh-row-item.selected {
+      background: var(--intrarat-emerald-soft);
+      border-color: var(--intrarat-emerald);
+    }
+
+    .mesh-color-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+      border: 1px solid rgba(0, 0, 0, 0.18);
+      flex-shrink: 0;
+    }
+
+    .telemetry-readout {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      color: var(--intrarat-muted);
+      background: var(--intrarat-gray-50);
+      border: 1px solid var(--intrarat-gray-200);
+      padding: 5px 8px;
+      border-radius: 6px;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .status-badge-3d {
+      background: var(--intrarat-emerald-soft);
+      border: 1px solid var(--intrarat-emerald-border);
+      color: var(--intrarat-emerald-dark);
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--intrarat-emerald);
+    }
+
+    /* 5. UNOBTRUSIVE MEDICAL DISCLAIMER & ATTRIBUTION FOOTER */
+    .credits-footer {
+      width: 100%;
+      padding: 5px 16px;
+      background: var(--intrarat-gray-50);
+      color: var(--intrarat-muted);
+      font-size: 10px;
+      line-height: 1.35;
+      border-top: 1px solid var(--intrarat-gray-200);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .credits-footer a,
+    .credits-inline-link {
+      color: var(--intrarat-emerald);
+      text-decoration: none;
+      font-weight: 600;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 10px;
+    }
+    .credits-footer a:hover,
+    .credits-inline-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Clean White & Emerald Credits Modal */
+    .credits-modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.45);
+      backdrop-filter: blur(6px);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .credits-modal-backdrop.open {
+      display: flex;
+    }
+
+    .credits-modal-card {
+      max-width: 580px;
+      width: 100%;
+      background: #FFFFFF;
+      border: 1px solid var(--intrarat-gray-200);
+      border-top: 4px solid var(--intrarat-emerald);
+      border-radius: 16px;
+      padding: 20px 22px;
+      color: var(--intrarat-ink);
+      box-shadow: 0 20px 48px rgba(15, 23, 42, 0.18);
+    }
+
+    .credits-modal-card h3 {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      color: var(--intrarat-ink);
+      margin-bottom: 10px;
+    }
+
+    .credits-modal-card ul {
+      padding-left: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--intrarat-slate);
+      line-height: 1.5;
+    }
+
+    .credits-modal-card a {
+      color: var(--intrarat-emerald);
+    }
+
+    /* Hide redundant iframe EN/TH switch only when embedded inside Page 04; keep visible in standalone mode */
+    html.is-embedded #btnLangSwitch {
+      display: none !important;
+    }
+
+    /* MOBILE & TABLET SEPARATE OPTIMIZATION — GUARANTEED ZERO OVERLAP WITH 3D FACE */
+    @media (max-width: 820px) {
+      .explorer-topbar {
+        padding: 6px 10px;
+        min-height: 42px;
+        gap: 5px;
+        flex-wrap: wrap;
+      }
+      .layer-selector-group {
+        width: 100%;
+        flex: 0 0 100%;
+        order: 1;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        overflow-x: visible;
+        padding: 0;
+      }
+      .topbar-actions {
+        width: 100%;
+        flex: 0 0 100%;
+        order: 2;
+        justify-content: flex-start;
+        gap: 5px;
+        padding-top: 4px;
+        border-top: 1px solid var(--intrarat-gray-100);
+      }
+      .layer-selector-label {
+        display: none;
+      }
+      .top-pill-btn {
+        padding: 4px 8px;
+        font-size: 10px;
+      }
+      .hide-on-narrow {
+        display: none !important;
+      }
+      /* Split flex layout on mobile: 3D canvas occupies top dedicated viewport, info panel docks cleanly below canvas */
+      .stage-frame {
+        display: flex;
+        flex-direction: column;
+      }
+      .canvas-viewport-area {
+        flex: 1 1 auto;
+        min-height: 290px;
+      }
+      .structure-info-dock {
+        position: relative;
+        left: auto;
+        bottom: auto;
+        width: 100%;
+        flex-shrink: 0;
+        padding: 8px 10px;
+        background: #FFFFFF;
+        border-top: 1px solid var(--intrarat-gray-200);
+      }
+      .inspector-card-clean {
+        box-shadow: none;
+        padding: 8px 11px;
+        border-radius: 10px;
+      }
+      .inspector-struct-desc {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .structures-drawer {
+        width: 100%;
+        top: auto;
+        height: 76%;
+        border-left: none;
+        border-top: 2px solid var(--intrarat-emerald);
+        border-radius: 18px 18px 0 0;
+        transform: translateY(104%);
+      }
+      .structures-drawer.open {
+        transform: translateY(0);
+      }
+      .credits-footer {
+        padding: 4px 10px;
+        font-size: 9.5px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .studio-halo-backdrop {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <input type="file" id="glbFileInput" accept=".glb,.gltf" style="display:none;" />
+
+  <!-- 1. COMPACT ANATOMICAL LAYER SELECTOR & ADVANCED CONTROLS TRIGGER BAR -->
+  <header class="explorer-topbar">
+    <div class="layer-selector-group" role="tablist" aria-label="Anatomical Layer Selector">
+      <span class="layer-selector-label" id="lblLayerBarPrefix">Anatomical Layers:</span>
+      <button type="button" class="top-pill-btn active" id="btnStageSkin" onclick="focusAnatomicalStage('outer_skin')">Outer Face</button>
+      <button type="button" class="top-pill-btn" id="btnStageFat" onclick="focusAnatomicalStage('subcutaneous_fat')">Subcutaneous Fat</button>
+      <button type="button" class="top-pill-btn" id="btnStageSmas" onclick="focusAnatomicalStage('smas_deep_plane')">SMAS &amp; Deep Plane</button>
+      <button type="button" class="top-pill-btn" id="btnIsoCn7" onclick="isolateClinicalGroup('cn7')">Facial Nerve (CN VII)</button>
+      <button type="button" class="top-pill-btn" id="btnStageNeck" onclick="focusAnatomicalStage('neck_platysma')">Neck &amp; Platysma</button>
+      <button type="button" class="top-pill-btn" id="btnStageExplode" onclick="focusAnatomicalStage('explode_17')">Explode 17 Layers</button>
+    </div>
+
+    <div class="topbar-actions">
+      <button type="button" class="top-pill-btn" id="btnTopStructures" onclick="open17LayersSection()">17 Structures</button>
+      <button type="button" class="top-pill-btn adv-trigger-btn" id="btnToggleCompactHud" onclick="toggleLayerDrawer()">⚙ Advanced Controls</button>
+      <button type="button" class="top-pill-btn" id="btnTopReset" onclick="reset3DView()">Reset</button>
+      <button type="button" class="top-pill-btn hide-on-narrow" id="btnLangSwitch" onclick="toggleExplorerLanguage()">EN | TH</button>
+    </div>
+  </header>
+
+  <!-- 2. MAIN CENTRAL 3D VIEWPORT STAGE -->
+  <main class="explorer-workspace">
+    <div class="stage-frame mode-auto" id="viewportFrame">
+
+      <!-- Dedicated 3D Canvas Viewport Area (Never Overlapped on Mobile) -->
+      <div class="canvas-viewport-area">
+        <div class="studio-halo-backdrop"></div>
+        <canvas id="explorer3DCanvas" class="webgl-stage-canvas" width="1380" height="760"></canvas>
+        <div id="opticalCurtain" class="optical-curtain" style="left: 100%; opacity: 0;">
+          <div id="opticalHandle" class="optical-curtain-handle" title="Drag left or right to peel anatomical layers">↔</div>
+        </div>
+      </div>
+
+      <!-- 3. SMALL INFORMATION PANEL THAT UPDATES WITH THE SELECTED STRUCTURE -->
+      <div class="structure-info-dock">
+        <div class="inspector-card-clean" id="miniInspectorCard">
+          <div class="inspector-top-row">
+            <span id="lblSelectedStructureTag">SELECTED ANATOMICAL LAYER</span>
+            <button type="button" class="inspector-link-btn" id="btnViewAll17Mini" onclick="open17LayersSection()">All 17 Layers ▸</button>
+          </div>
+          <div class="inspector-struct-title" id="inspMiniTitle">01. Cutaneous Envelope (Epidermis &amp; Dermis)</div>
+          <div class="inspector-struct-desc" id="inspMiniDesc">
+            Proportionate 3D human head and neck cutaneous surface. In Deep Plane surgery, lifting tension is anchored on the underlying SMAS so skin is redraped under zero tension.
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. COLLAPSIBLE ADVANCED CONTROLS PANEL (CLOSED BY DEFAULT) -->
+      <aside class="structures-drawer" id="layerDrawerPanel" aria-label="Advanced 3D Anatomy Controls">
+        <div class="drawer-head">
+          <div>
+            <div id="drawerHeadTitle" style="font-size:12.5px;font-weight:800;color:var(--intrarat-ink);letter-spacing:0.04em;text-transform:uppercase;">
+              Advanced 3D Controls
+            </div>
+            <div style="font-size:10.5px;color:var(--intrarat-muted);" id="lblDrawerSubTitle">
+              Layer Peel, Expressions, Orbit &amp; 17 Structures
+            </div>
+          </div>
+          <button type="button" class="top-pill-btn" id="btnCloseDrawer" style="padding:4px 10px;" onclick="toggleLayerDrawer(false)">✕ Close</button>
+        </div>
+
+        <div class="drawer-scroll-body">
+          <!-- Collapsible Section 1: Layer Peel & Separation -->
+          <details class="adv-details" id="advSecPeel" open>
+            <summary id="sumAdvPeel">Layer Peel &amp; Separation</summary>
+            <div class="adv-section-body">
+              <div class="slider-control-block">
+                <div class="slider-label-line">
+                  <span id="lblSliderRevealTitle">Progressive Layer Peel (Reveal)</span>
+                  <span class="slider-val-badge" id="lblRevealPct">0%</span>
+                </div>
+                <input type="range" id="sliderRevealDesktop" class="luxury-range" min="0" max="100" value="0" oninput="setRevealTarget(this.value)" aria-label="Anatomical layer reveal percentage" />
+              </div>
+
+              <div class="slider-control-block">
+                <div class="slider-label-line">
+                  <span id="lblSliderExplodeTitle">17-Layer Separation (Explode)</span>
+                  <span class="slider-val-badge" id="lblExplodePct">0%</span>
+                </div>
+                <input type="range" id="sliderExplodeDesktop" class="luxury-range" min="0" max="100" value="0" oninput="setExplodePercent(this.value)" aria-label="17-structure separation percentage" />
+              </div>
+
+              <div class="flex-btn-row">
+                <button type="button" class="ctrl-chip active" id="btnStageSurf0" onclick="focusAnatomicalStage('outer_skin')">Intact Face 0°</button>
+                <button type="button" class="ctrl-chip" id="btnIsoSmas" onclick="isolateClinicalGroup('smas')">Isolate SMAS</button>
+                <button type="button" class="ctrl-chip" id="btnIsoPlatysma" onclick="isolateClinicalGroup('platysma')">Isolate Platysma</button>
+                <button type="button" class="ctrl-chip" id="btnIsoLigaments" onclick="isolateClinicalGroup('ligaments')">Retaining Ligaments</button>
+              </div>
+            </div>
+          </details>
+
+          <!-- Collapsible Section 2: Facial Expressions & Animation -->
+          <details class="adv-details" id="advSecExpr" open>
+            <summary id="lblFacialExprHead">3D Facial Expressions &amp; Animation</summary>
+            <div class="adv-section-body">
+              <div class="shader-grid-2x2">
+                <button type="button" class="ctrl-chip" id="btnExprBlink" onclick="triggerNaturalBlink()">Natural Blink</button>
+                <button type="button" class="ctrl-chip" id="btnExprSmile" onclick="setFacialExpression('smile')">Gentle Smile</button>
+                <button type="button" class="ctrl-chip active" id="btnExprNeutral" onclick="setFacialExpression('neutral')">Neutral Expression</button>
+                <button type="button" class="ctrl-chip" id="btnExprPause" onclick="toggleExpressionPause()">Pause Animation</button>
+              </div>
+              <div class="flex-btn-row">
+                <button type="button" class="ctrl-chip" id="btnExprHalfBlink" onclick="setFacialExpression('half_blink')">Half-Closed (50%)</button>
+                <button type="button" class="ctrl-chip" id="btnExprFullBlink" onclick="setFacialExpression('full_blink')">Closed Eyes (100%)</button>
+              </div>
+              <div class="mobile-dual-sliders">
+                <div class="slider-control-block">
+                  <div class="slider-label-line">
+                    <span id="lblSliderBlinkTitle">Eyelid Blink</span>
+                    <span class="slider-val-badge" id="lblBlinkPct">0%</span>
+                  </div>
+                  <input type="range" id="sliderBlinkDesktop" class="luxury-range" min="0" max="100" value="0" oninput="setBlinkPercent(this.value)" aria-label="3D eyelid blink percentage" />
+                </div>
+                <div class="slider-control-block">
+                  <div class="slider-label-line">
+                    <span id="lblSliderSmileTitle">Natural Smile</span>
+                    <span class="slider-val-badge" id="lblSmilePct">0%</span>
+                  </div>
+                  <input type="range" id="sliderSmileDesktop" class="luxury-range" min="0" max="100" value="0" oninput="setSmilePercent(this.value)" aria-label="3D natural smile percentage" />
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <!-- Collapsible Section 3: Orbit & Zoom Controls -->
+          <details class="adv-details" id="advSecOrbit" open>
+            <summary id="lblFacialAngleHead">Camera Orbit &amp; Zoom (-90° to +90°)</summary>
+            <div class="adv-section-body">
+              <div class="angle-preset-grid">
+                <button type="button" class="ctrl-chip" id="btnAngM90" onclick="setCameraAngle(-90, 0)">-90° L</button>
+                <button type="button" class="ctrl-chip" id="btnAngM45" onclick="setCameraAngle(-45, 0)">-45° L</button>
+                <button type="button" class="ctrl-chip active" id="btnAng0" onclick="setCameraAngle(0, 0, 1.0)">0° Front</button>
+                <button type="button" class="ctrl-chip" id="btnAngP45" onclick="setCameraAngle(45, 0)">+45° R</button>
+                <button type="button" class="ctrl-chip" id="btnAngP90" onclick="setCameraAngle(90, 0)">+90° R</button>
+              </div>
+
+              <div class="slider-control-block">
+                <div class="slider-label-line">
+                  <span id="lblSliderYawTitle">Yaw Orbit (-90° to +90°)</span>
+                  <span class="slider-val-badge" id="lblYawDeg">0°</span>
+                </div>
+                <input type="range" id="sliderYaw" class="luxury-range" min="-90" max="90" value="0" oninput="setYawFromSlider(this.value)" aria-label="Orbit model from -90 to +90 degrees" />
+              </div>
+
+              <div class="flex-btn-row">
+                <button type="button" class="ctrl-chip" id="btnZoomOut" onclick="adjustZoom(-0.14)">Zoom −</button>
+                <button type="button" class="ctrl-chip" id="btnZoomIn" onclick="adjustZoom(0.14)">Zoom +</button>
+                <button type="button" class="ctrl-chip" id="btnNeckAngle" onclick="focusAnatomicalStage('neck_platysma')">Neck View</button>
+                <button type="button" class="ctrl-chip" id="btnResetLeft" onclick="reset3DView()">Reset</button>
+              </div>
+            </div>
+          </details>
+
+          <!-- Collapsible Section 4: All 17 Anatomical Structures Selector -->
+          <details class="adv-details" id="advSec17Layers">
+            <summary id="sumAdv17Layers">All 17 Anatomical Structures</summary>
+            <div class="adv-section-body">
+              <div class="flex-btn-row">
+                <button type="button" class="ctrl-chip" id="btnPresetAll17" onclick="applyLayerPreset('all')">Show All 17</button>
+                <button type="button" class="ctrl-chip" onclick="applyLayerPreset('deep')">Sub-SMAS (15)</button>
+                <button type="button" class="ctrl-chip" id="btnIsolateMesh" onclick="toggleIsolateSelectedMesh()">Isolate Selected</button>
+              </div>
+              <div class="drawer-list" id="meshListContainer"></div>
+            </div>
+          </details>
+
+          <!-- Collapsible Section 5: Studio Lighting & Technical Diagnostics (Collapsed by Default) -->
+          <details class="adv-details" id="advSecDiagnostics">
+            <summary id="sumAdvDiagnostics">Studio Lighting &amp; Technical Diagnostics</summary>
+            <div class="adv-section-body">
+              <div class="slider-control-block">
+                <div class="slider-label-line">
+                  <span id="lblSliderLightTitle">Studio Key Light Azimuth</span>
+                  <span class="slider-val-badge" id="lblLightAz">-22°</span>
+                </div>
+                <input type="range" id="sliderLightAz" class="luxury-range" min="-75" max="75" value="-22" oninput="setStudioLightAzimuth(this.value)" aria-label="Adjust studio key light direction" />
+              </div>
+
+              <div class="shader-grid-2x2">
+                <button type="button" class="ctrl-chip active" id="btnShader0" onclick="setShaderMode(0)">3D Anatomical PBR</button>
+                <button type="button" class="ctrl-chip" id="btnShader1" onclick="setShaderMode(1)">17-Layer Color</button>
+                <button type="button" class="ctrl-chip" id="btnShader2" onclick="setShaderMode(2)">Clay 3D Sculpt</button>
+                <button type="button" class="ctrl-chip" id="btnShader3" onclick="setShaderMode(3)">3D Normals</button>
+              </div>
+
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap;">
+                <span class="status-badge-3d" id="glbStatusPill">
+                  <span class="status-dot"></span>
+                  <span id="glbStatusText">3D READY</span>
+                </span>
+                <button type="button" class="ctrl-chip" id="btnRecordProof16s" onclick="recordContinuousBlinkProofVideo()">🎥 17s Blink Proof</button>
+              </div>
+
+              <div class="telemetry-readout" id="hudTelemetryText">
+                Yaw: 0° · Peel: 0% · Blink: 0% · Smile: 0%
+              </div>
+              <div class="telemetry-readout" id="drawerGlbSub">17/17 Structures</div>
+            </div>
+          </details>
+        </div>
+      </aside>
+
+      <!-- Hidden Legacy DOM Bindings (Preserves 100% compatibility with existing JS sync functions without visual clutter) -->
+      <div style="display:none !important;" aria-hidden="true">
+        <span id="stageSubTag"></span>
+        <button type="button" id="btnStageStruct17"></button>
+        <h1 id="heroTitleText"></h1>
+        <p id="heroDescText"></p>
+        <span id="hudVisibleCount"></span>
+        <span id="hudExprStatusBadge"></span>
+        <span id="inspMiniGroup"></span>
+        <button type="button" id="calloutCard0"><span id="calloutTitle0"></span><span id="calloutSub0"></span></button>
+        <button type="button" id="calloutCard1"><span id="calloutTitle1"></span><span id="calloutSub1"></span></button>
+        <button type="button" id="calloutCard2"><span id="calloutTitle2"></span><span id="calloutSub2"></span></button>
+        <span id="mobileActiveTitle"></span>
+        <button type="button" id="mobBtnLayers17"></button>
+        <button type="button" id="mobBtnReset"></button>
+        <button type="button" id="mobAngM90"></button>
+        <button type="button" id="mobAngM45"></button>
+        <button type="button" id="mobAng0"></button>
+        <button type="button" id="mobAngP45"></button>
+        <button type="button" id="mobAngP90"></button>
+        <span id="lblMobReveal"></span>
+        <input type="range" id="sliderRevealMobile" min="0" max="100" value="0" />
+        <span id="lblMobExplode"></span>
+        <input type="range" id="sliderExplodeMobile" min="0" max="100" value="0" />
+        <button type="button" id="mobBtnStageSkin"></button>
+        <button type="button" id="mobBtnStageFat"></button>
+        <button type="button" id="mobBtnStageSmas"></button>
+        <button type="button" id="mobBtnStageNeck"></button>
+        <button type="button" id="mobBtnStageExplode"></button>
+        <button type="button" id="mobBtnExprBlink"></button>
+        <button type="button" id="mobBtnExprSmile"></button>
+        <button type="button" id="mobBtnExprNeutral"></button>
+        <button type="button" id="mobBtnExprPause"></button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- 5. UNOBTRUSIVE MEDICAL EDUCATIONAL NOTICE & ATTRIBUTION FOOTER -->
+  <footer class="credits-footer">
+    <div id="footerNoticeLine1">
+      <strong>Intrarat International Hospital, Bangkok</strong> — Educational 3D anatomical reference for pre-consultation orientation; not a surgical outcome simulator.
+    </div>
+    <div id="footerNoticeLine2">
+      <button type="button" class="credits-inline-link" id="btnOpenCredits" onclick="toggleCreditsModal(true)">Attribution &amp; Open-Source Licenses</button>
+    </div>
+  </footer>
+
+  <!-- Credits & Open-Source Attribution Modal -->
+  <div class="credits-modal-backdrop" id="creditsModal" onclick="handleCreditsBackdropClick(event)">
+    <div class="credits-modal-card" role="dialog" aria-modal="true" aria-labelledby="creditsModalTitle">
+      <h3 id="creditsModalTitle">Attribution, Credits &amp; Open-Source Licenses</h3>
+      <ul id="creditsModalList">
+        <li><strong>3D Human Head &amp; Neck Sculpture:</strong> Blender Studio, <em>Human Base Meshes Bundle v1.4.1</em> (`head_sculpting_realistic_cc0.glb`), dedicated to the public domain under <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noopener noreferrer">CC0 1.0 Universal</a>.</li>
+        <li><strong>17-Structure 3D Anatomical System:</strong> <em>INTRARAT — Deep Plane 3D Explorer</em> developed for Intrarat International Hospital under the clinical anatomy review framework of Rushapol Sdawat, M.D.</li>
+        <li><strong>Anatomical Taxonomy:</strong> References the Foundational Model of Anatomy (FMA) and BodyParts3D database (© The Database Center for Life Science — DBCLS, Mitsuhashi et al., <em>Nucleic Acids Research</em>, 2009) licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Attribution 4.0 International (CC BY 4.0)</a>.</li>
+        <li><strong>3D Rendering Engine:</strong> Built on WebGL 2.0 / glTF 2.0 with layer-separation concepts inspired by <a href="https://github.com/ashemag/human-atlas" target="_blank" rel="noopener noreferrer">ashemag/human-atlas</a> (MIT License).</li>
+      </ul>
+      <div style="margin-top:16px;text-align:right;">
+        <button type="button" class="top-pill-btn active" id="btnCloseCreditsModal" onclick="toggleCreditsModal(false)">Close Window</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // 1. 17 INTRARAT v5.0 ANATOMICAL STRUCTURES METADATA & STRICT ±90° STATE
+    // =========================================================================
+    const STRUCTURES_17 = [
+      {"index": 0, "num": "01", "id": "Skin_Mesh", "milestone": "A", "group": "01_Skin", "fma": "FMA:24728", "origVerts": 34941, "origTris": 58740, "colorHex": "#E4C1AC", "baseColor": [0.89, 0.76, 0.67], "explodeVec": [-0.26, 0.03, 0.34], "nameEn": "Cutaneous Envelope (Epidermis & Dermis)", "nameTh": "ชั้นผิวหนังกำพร้าและหนังแท้ (Cutaneous Envelope)", "descEn": "Proportionate 3D human head and neck cutaneous envelope (Blender Studio CC0 sculpted anatomy). In Deep Plane surgery, lifting tension is anchored on the underlying SMAS so skin is redraped under zero tension.", "descTh": "ชั้นผิวหนังศีรษะ ใบหน้า และลำคอ 3 มิติตามสัดส่วนกายวิภาคจริง ในการผ่าตัด Deep Plane แรงพยุงหลักอยู่ที่ชั้น SMAS ทำให้ปูผิวหนังกลับโดยไร้แรงดึงรั้ง"},
+      {"index": 1, "num": "02", "id": "Subcutaneous_Fat_Mesh", "milestone": "A", "group": "02_Subcutaneous_Fat", "fma": "FMA:61494", "origVerts": 7432, "origTris": 14280, "colorHex": "#F2C23D", "baseColor": [0.95, 0.76, 0.24], "explodeVec": [-0.17, 0.02, 0.22], "nameEn": "Subcutaneous Adipose Tissue (Superficial Fat)", "nameTh": "ชั้นไขมันตื้นใต้ผิวหนัง (Subcutaneous Fat)", "descEn": "Lobular superficial fat compartments between the dermis and SMAS. Elevated as a single composite flap together with skin and SMAS.", "descTh": "เนื้อเยื่อไขมันชั้นตื้นที่อยู่ระหว่างชั้นหนังแท้และแผ่นพังผืดกล้ามเนื้อ SMAS ซึ่งถูกยกขึ้นพร้อมกันเป็นเนื้อเดียว (Composite Flap)"},
+      {"index": 2, "num": "03", "id": "SMAS_Mesh", "milestone": "A", "group": "03_SMAS_Platysma", "fma": "FMA:71306", "origVerts": 4292, "origTris": 8361, "colorHex": "#C74F42", "baseColor": [0.78, 0.31, 0.26], "explodeVec": [-0.08, 0.01, 0.11], "nameEn": "SMAS (Superficial Musculoaponeurotic System)", "nameTh": "ชั้นพังผืดกล้ามเนื้อ SMAS (โครงสร้างหลักในการพยุงใบหน้า)", "descEn": "Primary load-bearing fibromuscular scaffold investing the mimetic musculature of the midface and lower face.", "descTh": "แผ่นพังผืดและกล้ามเนื้อแสดงอารมณ์ที่เป็นโครงสร้างรับแรงพยุงหลักในการยกกระชับใบหน้าชั้นลึก"},
+      {"index": 3, "num": "04", "id": "Platysma_Mesh", "milestone": "A", "group": "03_SMAS_Platysma", "fma": "FMA:46770", "origVerts": 4371, "origTris": 8683, "colorHex": "#BD594D", "baseColor": [0.74, 0.35, 0.30], "explodeVec": [-0.08, -0.02, 0.11], "nameEn": "Platysma Muscle Continuum (Cervicomental Sheet)", "nameTh": "กล้ามเนื้อพลาทิสมาบริเวณลำคอ (Platysma Continuum)", "descEn": "Inferior cervical continuation of the SMAS spanning the mandible and anterior/lateral neck to define the jawline and cervicomental angle.", "descTh": "กล้ามเนื้อแผ่นบางบริเวณลำคอที่ต่อเนื่องเป็นแผ่นเดียวกับชั้น SMAS ช่วยกำหนดความคมชัดของกรอบหน้าและมุมใต้คาง"},
+      {"index": 4, "num": "05", "id": "Zygomatic_Retaining_Ligament_Mesh", "milestone": "A", "group": "04_Retaining_Ligaments", "fma": "FMA:71310", "origVerts": 6028, "origTris": 11840, "colorHex": "#F5ECE0", "baseColor": [0.96, 0.92, 0.86], "explodeVec": [0.00, 0.02, 0.03], "nameEn": "Zygomatic Retaining Ligaments (ZRL / McGregor's Patch)", "nameTh": "เส้นเอ็นยึดโหนกแก้ม (Zygomatic Retaining Ligaments — ZRL)", "descEn": "True osteocutaneous fibrous anchor originating along the zygomatic arch. Sub-SMAS release mobilizes the midface and malar fat pad.", "descTh": "เส้นเอ็นยึดหลักจากกระดูกโหนกแก้มทะลุผ่านชั้น SMAS การคลายเอ็นยึดนี้ในชั้น Sub-SMAS ช่วยยกแก้มส่วนกลางโดยไม่ดึงผิวหนัง"},
+      {"index": 5, "num": "06", "id": "Masseteric_Retaining_Ligaments_Mesh", "milestone": "A", "group": "04_Retaining_Ligaments", "fma": "FMA:71312", "origVerts": 7056, "origTris": 13856, "colorHex": "#EFE5D4", "baseColor": [0.94, 0.90, 0.83], "explodeVec": [0.00, 0.00, 0.03], "nameEn": "Masseteric Cutaneous Retaining Ligaments", "nameTh": "เส้นเอ็นยึดหน้ากล้ามเนื้อเคี้ยว (Masseteric Ligaments)", "descEn": "Fasciocutaneous tethers along the anterior border of the masseter muscle bounding the premasseteric sub-SMAS glide space.", "descTh": "แนวเส้นเอ็นพยุงตามขอบด้านหน้ากล้ามเนื้อเคี้ยว (Masseter) ซึ่งเป็นขอบเขตของช่องว่าง Premasseteric Space"},
+      {"index": 6, "num": "07", "id": "Mandibular_Retaining_Ligament_Mesh", "milestone": "A", "group": "04_Retaining_Ligaments", "fma": "FMA:71314", "origVerts": 8972, "origTris": 17632, "colorHex": "#F5ECE0", "baseColor": [0.96, 0.92, 0.86], "explodeVec": [0.00, -0.02, 0.03], "nameEn": "Mandibular & Cervical Retaining Ligaments", "nameTh": "เส้นเอ็นยึดขอบขากรรไกรล่าง (Mandibular Ligaments)", "descEn": "Osteocutaneous ligament bundle originating from the anterior third of the mandible bordering the pre-jowl sulcus.", "descTh": "เส้นเอ็นยึดจากกระดูกขากรรไกรล่างส่วนหน้า ซึ่งเป็นจุดยึดสำคัญบริเวณร่องน้ำหมากและกระเปาะแก้ม (Jowl)"},
+      {"index": 7, "num": "08", "id": "Facial_Nerve_Mesh", "milestone": "A", "group": "05_Facial_Nerve_CN_VII", "fma": "FMA:50868", "origVerts": 5703, "origTris": 11235, "colorHex": "#F8DF4F", "baseColor": [0.98, 0.87, 0.30], "explodeVec": [0.07, 0.01, -0.05], "nameEn": "Facial Nerve Branches (CN VII — 5 Motor Divisions)", "nameTh": "แขนงเส้นประสาทใบหน้าคู่ที่ 7 (Facial Nerve CN VII 5 แขนง)", "descEn": "Temporal, Zygomatic, Buccal, Marginal Mandibular, and Cervical motor divisions protected beneath the deep parotid-masseteric fascia floor.", "descTh": "แขนงประสาทสั่งการกล้ามเนื้อใบหน้าทั้ง 5 แขนง ซึ่งได้รับการปกป้องอยู่ใต้ชั้นพังผืดลึก Parotid-Masseteric Fascia"},
+      {"index": 8, "num": "09", "id": "Malar_Fat_Pad_Mesh", "milestone": "B", "group": "06_Deep_Fat_Compartments", "fma": "FMA:71320", "origVerts": 2615, "origTris": 5091, "colorHex": "#F0C757", "baseColor": [0.94, 0.78, 0.34], "explodeVec": [-0.03, 0.03, 0.06], "nameEn": "Malar Fat Pad Compartment (Milestone B)", "nameTh": "ก้อนไขมันโหนกแก้มส่วนกลาง (Malar Fat Pad)", "descEn": "Triangular midface adipose pad overlying the zygomaticomaxillary prominence; repositioned vertically with the composite SMAS flap.", "descTh": "ก้อนไขมันบริเวณโหนกแก้มและแก้มส่วนกลาง ซึ่งถูกยกกลับคืนสู่ตำแหน่งเดิมตามแนวเวกเตอร์ธรรมชาติ"},
+      {"index": 9, "num": "10", "id": "SOOF_Fat_Compartment_Mesh", "milestone": "B", "group": "06_Deep_Fat_Compartments", "fma": "FMA:71322", "origVerts": 862, "origTris": 1592, "colorHex": "#E8C261", "baseColor": [0.91, 0.76, 0.38], "explodeVec": [0.11, 0.03, -0.10], "nameEn": "Sub-Orbicularis Oculi Fat (SOOF — Milestone B)", "nameTh": "ไขมันชั้นลึกใต้กล้ามเนื้อรอบดวงตา (SOOF)", "descEn": "Deep periorbital adipose compartment along the inferior lateral orbital rim beneath the orbicularis oculi muscle.", "descTh": "ชั้นไขมันลึกใต้กล้ามเนื้อรอบดวงตาบริเวณขอบเบ้าตาล่าง เชื่อมต่อมิติระหว่างใต้ตากับโหนกแก้ม"},
+      {"index": 10, "num": "11", "id": "Deep_Medial_Cheek_Fat_Mesh", "milestone": "B", "group": "06_Deep_Fat_Compartments", "fma": "FMA:71324", "origVerts": 1866, "origTris": 3697, "colorHex": "#E3BD5C", "baseColor": [0.89, 0.74, 0.36], "explodeVec": [0.11, 0.01, -0.10], "nameEn": "Deep Medial Cheek Fat (DMCF & Ristow's Space)", "nameTh": "ไขมันแก้มชั้นลึกด้านใน (DMCF & Ristow's Space)", "descEn": "Deep structural adipose pillow resting on the premaxillary periosteum supporting anterior midface projection.", "descTh": "ชั้นไขมันลึกที่วางตัวเหนือเยื่อหุ้มกระดูกขากรรไกรบน ช่วยพยุงมิติแก้มด้านหน้าและร่องแก้ม"},
+      {"index": 11, "num": "12", "id": "Buccal_Fat_Pad_Mesh", "milestone": "B", "group": "06_Deep_Fat_Compartments", "fma": "FMA:59816", "origVerts": 1988, "origTris": 3968, "colorHex": "#EBC96B", "baseColor": [0.92, 0.79, 0.42], "explodeVec": [0.12, -0.01, -0.11], "nameEn": "Buccal Fat Pad (Bichat's Fat Pad — Milestone B)", "nameTh": "ก้อนไขมันกระพุ้งแก้ม (Buccal Fat Pad)", "descEn": "Encapsulated deep syssarcosis fat pad between the buccinator and masseter muscles, closely related to buccal CN VII rami.", "descTh": "ก้อนไขมันชั้นลึกที่มีเยื่อหุ้มเฉพาะตัวระหว่างกล้ามเนื้อกระพุ้งแก้มและกล้ามเนื้อเคี้ยว"},
+      {"index": 12, "num": "13", "id": "Parotid_Gland_Mesh", "milestone": "C", "group": "07_Parotid_And_Duct", "fma": "FMA:59790", "origVerts": 2138, "origTris": 4246, "colorHex": "#D6B37A", "baseColor": [0.84, 0.70, 0.48], "explodeVec": [0.15, 0.00, -0.14], "nameEn": "Parotid Gland & Stensen's Duct (Milestone C)", "nameTh": "ต่อมน้ำลายพาโรติดและท่อน้ำลาย Stensen's Duct", "descEn": "Major salivary gland invested by parotid-masseteric fascia, with Stensen's duct crossing the masseter muscle.", "descTh": "ต่อมน้ำลายขนาดใหญ่หน้าใบหูที่ถูกหุ้มด้วยพังผืดชั้นลึก พร้อมท่อน้ำลายที่ทอดผ่านกล้ามเนื้อเคี้ยว"},
+      {"index": 13, "num": "14", "id": "Facial_Artery_Mesh", "milestone": "C", "group": "08_Vascular_System", "fma": "FMA:49541", "origVerts": 3268, "origTris": 6480, "colorHex": "#D92228", "baseColor": [0.85, 0.14, 0.16], "explodeVec": [0.08, -0.01, -0.07], "nameEn": "Facial Artery & Perforator Branches (Milestone C)", "nameTh": "หลอดเลือดแดงใบหน้าและแขนงหลอดเลือดลึก", "descEn": "External carotid arterial tree crossing the antegonial notch and ascending toward the nasolabial and angular territories.", "descTh": "โครงข่ายหลอดเลือดแดงหลักของลำคอและใบหน้าที่ทอดข้ามขอบขากรรไกรล่างขึ้นไปเลี้ยงเนื้อเยื่อใบหน้า"},
+      {"index": 14, "num": "15", "id": "Facial_Vein_Mesh", "milestone": "C", "group": "08_Vascular_System", "fma": "FMA:50949", "origVerts": 1976, "origTris": 3920, "colorHex": "#2965C8", "baseColor": [0.16, 0.40, 0.78], "explodeVec": [0.09, -0.01, -0.08], "nameEn": "Facial Vein & Retromandibular/Jugular Tributaries", "nameTh": "หลอดเลือดดำใบหน้าและแขนงหลอดเลือดดำลำคอ", "descEn": "Venous drainage micro-architecture descending posterior to the facial artery into the internal and external jugular system.", "descTh": "โครงข่ายหลอดเลือดดำของใบหน้าและลำคอที่ช่วยระบายเลือดและลดอาการบวมหลังหัตถการ"},
+      {"index": 15, "num": "16", "id": "Deep_Fascia_Muscle_Mesh", "milestone": "A", "group": "09_Deep_Fascia_And_Bone", "fma": "FMA:71308", "origVerts": 7884, "origTris": 15555, "colorHex": "#9E3B38", "baseColor": [0.62, 0.23, 0.22], "explodeVec": [0.20, -0.02, -0.20], "nameEn": "Parotid-Masseteric Fascia & Deep Mimetic Muscles", "nameTh": "พังผืดชั้นลึกและกล้ามเนื้อใบหน้า/ลำคอชั้นลึก", "descEn": "Protective deep fascial floor and underlying masseter, buccinator, zygomaticus, and sternocleidomastoid musculature.", "descTh": "พังผืดชั้นลึกและกล้ามเนื้อเคี้ยว/กล้ามเนื้อลำคอชั้นลึก ซึ่งทำหน้าที่เป็นพื้นปกป้องเส้นประสาทใบหน้า"},
+      {"index": 16, "num": "17", "id": "Bone_Skull_Mesh", "milestone": "A", "group": "09_Deep_Fascia_And_Bone", "fma": "FMA:46565", "origVerts": 6884, "origTris": 13528, "colorHex": "#E6DEC8", "baseColor": [0.90, 0.87, 0.78], "explodeVec": [0.28, -0.03, -0.30], "nameEn": "Craniofacial Skeleton, Zygoma, Mandible & Cervical Spine", "nameTh": "โครงสร้างกระดูกกะโหลกศีรษะ โหนกแก้ม ขากรรไกร และกระดูกคอ", "descEn": "Osseous foundation of the cranium, orbits, zygomatic arch, maxilla, mandible, and cervical spine.", "descTh": "โครงสร้างกระดูกใบหน้า เบ้าตา โหนกแก้ม ขากรรไกรล่าง และกระดูกต้นคอ ซึ่งเป็นฐานรากของใบหน้าทั้งหมด"}
+    ];
+
+    // Progressive Anatomical Stage Presets (Matching Owner Priorities 2, 3, 4 & 5)
+    const ANATOMICAL_STAGES = {
+      outer_skin: {
+        stageId: "outer_skin",
+        reveal: 0, explode: 0, yaw: 0, pitch: 0, zoom: 1.00,
+        selectedMesh: "Skin_Mesh",
+        highlightedGroup: [],
+        titleEn: "Stage 1 — Intact 3D Outer Face & Neck (Skin 100%)",
+        titleTh: "ระยะที่ 1 — โครงสร้างใบหน้าและลำคอ 3 มิติชั้นนอกสมบูรณ์ (ผิวหนัง 100%)",
+        descEn: "Neutral reference state (0° Front, Skin 100%, Peel 0%, Explode 0%). Displays proportionate human forehead, orbital sockets, eyeballs, nasal bridge, malar cheeks, vermilion lips, mandible, chin, ears, and cervical neck.",
+        descTh: "มุมมองอ้างอิงมาตรฐาน (0° หน้าตรง, ผิวชั้นนอก 100%) แสดงสัดส่วนศีรษะ หน้าผาก เบ้าตา จมูก โหนกแก้ม ริมฝีปาก ขากรรไกร คาง ใบหู และลำคอตามหลักกายวิภาค"
+      },
+      subcutaneous_fat: {
+        stageId: "subcutaneous_fat",
+        reveal: 28, explode: 0, yaw: 0, pitch: 0, zoom: 1.02,
+        selectedMesh: "Subcutaneous_Fat_Mesh",
+        highlightedGroup: ["Subcutaneous_Fat_Mesh", "Malar_Fat_Pad_Mesh"],
+        titleEn: "Stage 2 — Subcutaneous Adipose Tissue & Superficial Fat Pads",
+        titleTh: "ระยะที่ 2 — ชั้นไขมันตื้นใต้ผิวหนัง (Subcutaneous Fat & Malar Fat Pad)",
+        descEn: "Outer cutaneous envelope peels back to reveal the intact Subcutaneous Adipose Tissue (02, FMA:61494) and Malar Fat Pad (09) overlying the SMAS fibromuscular layer.",
+        descTh: "เปิดชั้นผิวหนังด้านนอกออกเพื่อเผยให้เห็นชั้นไขมันตื้นใต้ผิวหนัง (02) และก้อนไขมันโหนกแก้ม (09) ที่วางตัวอยู่เหนือชั้นพังผืดกล้ามเนื้อ SMAS"
+      },
+      smas_deep_plane: {
+        stageId: "smas_deep_plane",
+        reveal: 62, explode: 0, yaw: -18, pitch: -2, zoom: 1.04,
+        selectedMesh: "SMAS_Mesh",
+        highlightedGroup: ["SMAS_Mesh", "Zygomatic_Retaining_Ligament_Mesh", "Masseteric_Retaining_Ligaments_Mesh", "Mandibular_Retaining_Ligament_Mesh", "Facial_Nerve_Mesh"],
+        titleEn: "Stage 3 — SMAS Scaffold, Retaining Ligaments & Facial Nerve (CN VII)",
+        titleTh: "ระยะที่ 3 — ชั้นพังผืด SMAS เส้นเอ็นยึดใบหน้า และเส้นประสาทใบหน้าคู่ที่ 7 (CN VII)",
+        descEn: "Subcutaneous fat steps back to expose the fibromuscular SMAS (03), Zygomatic/Masseteric/Mandibular retaining ligaments (05–07), and the 5 motor divisions of the Facial Nerve (08, CN VII) on the deep fascia floor.",
+        descTh: "เปิดชั้นไขมันตื้นเพื่อแสดงแผ่นพังผืดกล้ามเนื้อ SMAS (03), เส้นเอ็นยึดโหนกแก้ม/ขากรรไกร (05–07) และแขนงเส้นประสาทใบหน้าคู่ที่ 7 ทั้ง 5 แขนง (08, CN VII)"
+      },
+      neck_platysma: {
+        stageId: "neck_platysma",
+        reveal: 48, explode: 0, yaw: 22, pitch: -6, zoom: 1.06,
+        selectedMesh: "Platysma_Mesh",
+        highlightedGroup: ["Platysma_Mesh", "Mandibular_Retaining_Ligament_Mesh", "SMAS_Mesh", "Facial_Artery_Mesh", "Facial_Vein_Mesh"],
+        titleEn: "Stage 4 — Cervical Neck, Platysma Continuum & Mandibular Ligaments",
+        titleTh: "ระยะที่ 4 — กายวิภาคลำคอ กล้ามเนื้อ Platysma และเส้นเอ็นยึดขอบขากรรไกรล่าง",
+        descEn: "Highlights the cervicomental Platysma muscle continuum (04, FMA:46770), SMAS–Platysma continuity across the mandible, Mandibular retaining ligaments (07), and cervical vessels.",
+        descTh: "แสดงความต่อเนื่องของกล้ามเนื้อลำคอ Platysma (04), แนวกรอบขากรรไกรล่าง, เส้นเอ็นยึด Mandibular Ligaments (07) และโครงข่ายหลอดเลือดลำคอ"
+      },
+      explode_17: {
+        stageId: "explode_17",
+        reveal: 68, explode: 100, yaw: 26, pitch: -3, zoom: 0.90,
+        selectedMesh: "SMAS_Mesh",
+        highlightedGroup: ["Skin_Mesh", "Subcutaneous_Fat_Mesh", "SMAS_Mesh", "Platysma_Mesh", "Zygomatic_Retaining_Ligament_Mesh", "Facial_Nerve_Mesh", "Bone_Skull_Mesh"],
+        titleEn: "Stage 5 — Exploded 17-Layer Craniofacial & Cervical Visualization",
+        titleTh: "ระยะที่ 5 — ภาพแยกชิ้นส่วนโครงสร้างกายวิภาคใบหน้าและลำคอครบ 17 ชั้น (Exploded View)",
+        descEn: "All 17 anatomical meshes separated along calibrated 3D anatomical vectors from outer Cutaneous Skin (01) and Adipose (02) through SMAS/Platysma (03–04), Ligaments (05–07), CN VII (08), Deep Fat/Parotid/Vessels (09–15), Deep Fascia (16), and Craniofacial Skeleton (17).",
+        descTh: "แยกโครงสร้างกายวิภาคทั้ง 17 ชิ้นในอวกาศ 3 มิติ ตั้งแต่ชั้นผิวหนัง (01), ไขมันตื้น (02), SMAS และ Platysma (03–04), เส้นเอ็นยึด (05–07), เส้นประสาท CN VII (08) ไปจนถึงพังผืดลึก (16) และกะโหลกศีรษะ (17)"
+      }
+    };
+
+    function clampYaw(deg) {
+      return Math.max(-90, Math.min(90, Number(deg) || 0));
+    }
+    function clampPitch(deg) {
+      return Math.max(-22, Math.min(22, Number(deg) || 0));
+    }
+
+    const osReducedMotion = Boolean(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    const urlPauseAutoBlink = new URLSearchParams(window.location.search).get("pauseAutoBlink") === "1";
+
+    const state = {
+      viewportMode: "auto",
+      lang: "en",
+      activeStage: "outer_skin",
+      hudCollapsed: false,
+      revealDepth: 0,
+      targetReveal: 0,
+      revealVel: 0,
+      yaw: 0,
+      targetYaw: 0,
+      pitch: 0,
+      targetPitch: 0,
+      zoom: 1.0,
+      targetZoom: 1.0,
+      explode: 0,
+      targetExplode: 0,
+      lightAzimuth: -22,
+      shaderMode: 0,
+      // 3D Facial Expression State (Unpaused by default so automatic physiological blinking is visible on load;
+      // OS prefers-reduced-motion suppresses continuous vestibular/breathing sway while keeping manual controls & physiological blinking active)
+      osReducedMotion: osReducedMotion,
+      blinkAmount: 0.0,
+      targetBlink: 0.0,
+      manualBlinkHold: null,
+      activeBlinkCycleStart: -1,
+      nextAutoBlinkTime: performance.now() + 900,
+      autoBlinkCount: 0,
+      smileAmount: 0.0,
+      targetSmile: 0.0,
+      activeExpressionMode: "neutral",
+      expressionPaused: urlPauseAutoBlink,
+      isRecordingProof: false,
+      lastRecordedProofUrl: "",
+      selectedMesh: "Skin_Mesh",
+      highlightedGroup: [],
+      isolatedMesh: null,
+      isolatedGroup: null,
+      visible: {},
+      drawerOpen: false,
+      isOrbitDragging: false,
+      isCurtainDragging: false,
+      pointerDownPos: { x: 0, y: 0 },
+      lastPointerPos: { x: 0, y: 0 },
+      pinchStartDist: 0,
+      curtainScreenX: 1.05,
+      glbSourceName: "intrarat_deep_plane_anatomy_v5.glb",
+      totalVertices: 0,
+      totalTriangles: 0
+    };
+
+    STRUCTURES_17.forEach(s => { state.visible[s.id] = true; });
+    window.__EXPLORER_STATE__ = state;
+    window.__STRUCTURES_17__ = STRUCTURES_17;
+
+    // =========================================================================
+    // 2. BINARY GLTF 2.0 (.GLB) PARSER (SUPPORTS POSITION, NORMAL, TEXCOORD_0, COLOR_0)
+    // =========================================================================
+    function parseGlbBinaryToMeshes(arrayBuffer) {
+      const dv = new DataView(arrayBuffer);
+      const magic = dv.getUint32(0, true);
+      if (magic !== 0x46546C67) {
+        throw new Error("Invalid glTF 2.0 binary header");
+      }
+      const totalLen = dv.getUint32(8, true);
+      let offset = 12;
+      let gltf = null;
+      let binChunkOffset = 0;
+
+      while (offset < arrayBuffer.byteLength) {
+        const chunkLen = dv.getUint32(offset, true);
+        const chunkType = dv.getUint32(offset + 4, true);
+        offset += 8;
+        if (chunkType === 0x4E4F534A) {
+          const jsonBytes = new Uint8Array(arrayBuffer, offset, chunkLen);
+          gltf = JSON.parse(new TextDecoder("utf-8").decode(jsonBytes));
+        } else if (chunkType === 0x004E4942) {
+          binChunkOffset = offset;
+        }
+        offset += chunkLen;
+      }
+
+      const getAcc = (accIdx) => {
+        if (accIdx === undefined || accIdx === null) return null;
+        const acc = gltf.accessors[accIdx];
+        const bv = gltf.bufferViews[acc.bufferView];
+        const byteOff = binChunkOffset + (bv.byteOffset || 0) + (acc.byteOffset || 0);
+        const nComp = acc.type === "VEC3" ? 3 : acc.type === "VEC2" ? 2 : acc.type === "VEC4" ? 4 : 1;
+        const len = acc.count * nComp;
+        if (acc.componentType === 5126) return new Float32Array(arrayBuffer, byteOff, len);
+        if (acc.componentType === 5125) return new Uint32Array(arrayBuffer, byteOff, len);
+        if (acc.componentType === 5123) return new Uint16Array(arrayBuffer, byteOff, len);
+        return null;
+      };
+
+      let totalV = 0, totalT = 0;
+      const parsed = (gltf.meshes || []).map((m, idx) => {
+        const prim = m.primitives[0];
+        const pos = getAcc(prim.attributes.POSITION);
+        const nrm = getAcc(prim.attributes.NORMAL);
+        const uv  = getAcc(prim.attributes.TEXCOORD_0);
+        const rawCol = getAcc(prim.attributes.COLOR_0);
+        const ind = getAcc(prim.indices);
+        const vCount = pos.length / 3;
+        const tCount = ind.length / 3;
+        totalV += vCount;
+        totalT += tCount;
+        const meta = STRUCTURES_17.find(s => s.id === m.name) || STRUCTURES_17[idx] || STRUCTURES_17[0];
+
+        // Ensure every mesh has a VEC4 float32 color buffer (RGB + corneal/tissue flag)
+        let col = null;
+        if (rawCol && rawCol.length === vCount * 4) {
+          col = rawCol;
+        } else if (rawCol && rawCol.length === vCount * 3) {
+          col = new Float32Array(vCount * 4);
+          for (let i = 0; i < vCount; i++) {
+            col[i * 4]     = rawCol[i * 3];
+            col[i * 4 + 1] = rawCol[i * 3 + 1];
+            col[i * 4 + 2] = rawCol[i * 3 + 2];
+            col[i * 4 + 3] = 0.0;
+          }
+        } else {
+          col = new Float32Array(vCount * 4);
+          const bc = meta.baseColor;
+          for (let i = 0; i < vCount; i++) {
+            col[i * 4]     = bc[0];
+            col[i * 4 + 1] = bc[1];
+            col[i * 4 + 2] = bc[2];
+            col[i * 4 + 3] = 0.0;
+          }
+        }
+
+        const safeUv = uv || new Float32Array(vCount * 2);
+
+        let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity, minZ = Infinity, maxZ = -Infinity;
+        for (let k = 0; k < pos.length; k += 3) {
+          const px = pos[k], py = pos[k + 1], pz = pos[k + 2];
+          if (px < minX) minX = px; if (px > maxX) maxX = px;
+          if (py < minY) minY = py; if (py > maxY) maxY = py;
+          if (pz < minZ) minZ = pz; if (pz > maxZ) maxZ = pz;
+        }
+
+        return {
+          index: idx,
+          id: m.name || meta.id,
+          pos, nrm, uv: safeUv, col, ind,
+          isUint32: (ind instanceof Uint32Array),
+          vertCount: vCount,
+          triCount: tCount,
+          indexCount: ind.length,
+          bounds: { minX, maxX, minY, maxY, minZ, maxZ },
+          meta
+        };
+      });
+
+      return { meshes: parsed, totalV, totalT, byteLength: totalLen, asset: gltf.asset || {} };
+    }
+
+    // =========================================================================
+    // 3. WEBGL 2.0 3D ANATOMICAL PBR SHADER ENGINE (TRUE 3D MODEL-SPACE SHADING)
+    // =========================================================================
+    const canvas = document.getElementById("explorer3DCanvas");
+    const gl = canvas.getContext("webgl2", { antialias: true, alpha: true, premultipliedAlpha: false, preserveDrawingBuffer: true })
+            || canvas.getContext("webgl", { antialias: true, alpha: true, premultipliedAlpha: false, preserveDrawingBuffer: true });
+    const isWebGL2 = (typeof WebGL2RenderingContext !== "undefined") && (gl instanceof WebGL2RenderingContext);
+    if (!isWebGL2 && gl) {
+      gl.getExtension("OES_element_index_uint");
+    }
+
+    const VS_SRC = `
+      precision highp float;
+      precision highp int;
+      attribute vec3 aPosition;
+      attribute vec3 aNormal;
+      attribute vec2 aUv;
+      attribute vec4 aColor;
+
+      uniform mat4 uProjectionMatrix;
+      uniform mat4 uViewMatrix;
+      uniform mat4 uModelMatrix;
+      uniform vec3 uExplodeOffset;
+      uniform float uBreathWave;
+      uniform float uBlinkAmount;
+      uniform float uSmileAmount;
+      uniform float uRevealRatio;
+      uniform float uExplodeFactor;
+      uniform int uIsIsolated;
+      uniform int uMeshIndex;
+
+      varying vec3 vModelPos;
+      varying vec3 vOrigPos;
+      varying vec3 vWorldPos;
+      varying vec3 vNormal;
+      varying vec2 vUv;
+      varying vec4 vColor;
+      varying float vScreenX;
+
+      void main() {
+        vec3 pos = aPosition + uExplodeOffset;
+        vec3 localNormal = aNormal;
+
+        // Constrain facial expressions strictly to intact outer face mode (auto-disables when deep layers are exposed)
+        float exprGate = (uIsIsolated == 0) ? (1.0 - smoothstep(0.0, 0.08, uRevealRatio + uExplodeFactor)) : 0.0;
+        float effBlink = clamp(uBlinkAmount, 0.0, 1.0) * exprGate;
+        float effSmile = clamp(uSmileAmount, 0.0, 1.0) * exprGate;
+        float isEyeball = (uMeshIndex == 0 && aColor.a > 0.65) ? 1.0 : 0.0;
+
+        // 3D Anatomical Eyelid Blinking & Natural Zygomaticus/Duchenne Smile on Skin_Mesh (Eyeballs NEVER deform!)
+        if (uMeshIndex == 0 && isEyeball < 0.5 && (effBlink > 0.001 || effSmile > 0.001)) {
+          float ax = abs(aPosition.x);
+          float sideSign = (aPosition.x >= 0.0) ? 1.0 : -1.0;
+
+          // A. 3D Spherical-Arc Eyelid Mesh Closure over the 3D Eyeball Globes (100% True 3D Mesh Geometry Deformation)
+          // Left Eye Center: (-0.1765, 0.2959, 0.2789), Right Eye Center: (+0.1793, 0.2972, 0.2785), R_eye = 0.06435
+          vec3 eyeCenter = vec3((aPosition.x >= 0.0) ? 0.1793 : -0.1765, 0.2965, 0.2787);
+          float dxEye = (ax - 0.183) / 0.062;
+          if ((effBlink > 0.001 || effSmile > 0.001) && abs(dxEye) < 1.16 && aPosition.y > 0.228 && aPosition.y < 0.365 && aPosition.z > 0.268) {
+            float dxClamped = clamp(dxEye, -1.10, 1.10);
+            float yOpenU = 0.3142 - 0.0302 * (dxClamped * dxClamped);
+            float yOpenL = 0.2626 + 0.0164 * (dxClamped * dxClamped);
+            float yClose = mix(yOpenL, yOpenU, 0.22);
+            float ySplit = 0.5 * (yOpenL + yOpenU);
+
+            // wHoriz is 1.0 across the entire open palpebral aperture (|dxEye| <= 0.92), tapering only outside the canthi
+            float wHoriz = 1.0 - smoothstep(0.92, 1.15, abs(dxEye));
+            float wFront = smoothstep(0.268, 0.294, aPosition.z);
+
+            if (aPosition.y >= ySplit) {
+              // Upper Eyelid & Supratarsal Skin sweeps downward across the front of the 3D eyeball globe to yClose - 0.0020
+              float tAbove = clamp((aPosition.y - (yOpenU + 0.0025)) / 0.044, 0.0, 1.0);
+              float wUpperY = 1.0 - tAbove * tAbove * (3.0 - 2.0 * tAbove);
+              float wMoveU = wUpperY * wHoriz * wFront;
+
+              pos.y = aPosition.y + ((yClose - 0.0020) - aPosition.y) * (effBlink * wMoveU);
+
+              // Project descending 3D upper eyelid triangles onto outer spherical shell (shellR = 0.0722 > R_eye = 0.06435 + 1.24mm chord sagitta)
+              float r2 = (pos.x - eyeCenter.x) * (pos.x - eyeCenter.x) + (pos.y - eyeCenter.y) * (pos.y - eyeCenter.y);
+              float shellR = 0.0722;
+              if (r2 < shellR * shellR && wMoveU > 0.02 && effBlink > 0.001) {
+                float sphereZ = eyeCenter.z + sqrt(shellR * shellR - r2);
+                float pushW = smoothstep(0.0, 0.08, effBlink) * smoothstep(0.02, 0.25, wMoveU);
+                pos.z = max(pos.z, mix(pos.z, sphereZ, pushW));
+              }
+              vec3 lidSphereN = normalize(vec3((pos.x - eyeCenter.x) * 0.60, (pos.y - eyeCenter.y) * 0.45 + 0.08, max(0.045, pos.z - eyeCenter.z)));
+              localNormal = normalize(mix(localNormal, lidSphereN, 0.88 * effBlink * wMoveU));
+            } else {
+              // Lower Eyelid rises (~22% of gap) to meet the descending 3D upper eyelid at yClose + 0.0015
+              float tBelow = clamp(((yOpenL - 0.0025) - aPosition.y) / 0.026, 0.0, 1.0);
+              float wLowerY = 1.0 - tBelow * tBelow * (3.0 - 2.0 * tBelow);
+              float wMoveL = wLowerY * wHoriz * wFront;
+
+              pos.y = aPosition.y + ((yClose + 0.0015) - aPosition.y) * (effBlink * wMoveL);
+
+              // Project rising 3D lower eyelid triangles onto outer spherical shell (shellR = 0.0704 > R_eye = 0.06435)
+              float r2 = (pos.x - eyeCenter.x) * (pos.x - eyeCenter.x) + (pos.y - eyeCenter.y) * (pos.y - eyeCenter.y);
+              float shellR = 0.0704;
+              if (r2 < shellR * shellR && wMoveL > 0.02 && effBlink > 0.001) {
+                float sphereZ = eyeCenter.z + sqrt(shellR * shellR - r2);
+                float pushW = smoothstep(0.0, 0.08, effBlink) * smoothstep(0.02, 0.25, wMoveL);
+                pos.z = max(pos.z, mix(pos.z, sphereZ, pushW));
+              }
+              vec3 lidSphereN = normalize(vec3((pos.x - eyeCenter.x) * 0.60, (pos.y - eyeCenter.y) * 0.45, max(0.045, pos.z - eyeCenter.z)));
+              localNormal = normalize(mix(localNormal, lidSphereN, 0.78 * effBlink * wMoveL));
+            }
+          }
+
+          // B. 3D Natural Zygomaticus Major & Duchenne Smile Blendshape (Smooth, Divergence-Free Deformation -> Zero Upper-Lip Crease!)
+          if (effSmile > 0.001) {
+            // 1. Oral Commissures (Mouth Corners at |x|=0.136, y=-0.108, z=0.368) elevate, widen & tuck naturally
+            // Use an asymmetric vertical radius (broader above y=-0.108 into the lateral cheek) so upper-lip triangles never compress!
+            float dxCorner = (ax - 0.136) / 0.076;
+            float dyRaw = aPosition.y - (-0.108);
+            float ryCorner = (dyRaw >= 0.0) ? 0.125 : 0.075;
+            float dyCorner = dyRaw / ryCorner;
+            float dzCorner = (aPosition.z - 0.368) / 0.120;
+            // Protect central nasal tip/columella (ax < 0.065, y > -0.055) while allowing lateral corner & cheek lift
+            float nasalAnchor = 1.0 - (1.0 - smoothstep(0.045, 0.105, ax)) * smoothstep(-0.075, -0.025, aPosition.y);
+            float wCorner = exp(-(dxCorner * dxCorner + dyCorner * dyCorner + dzCorner * dzCorner)) * nasalAnchor;
+
+            pos.x += sideSign * 0.021 * wCorner * effSmile;
+            pos.y += 0.025 * wCorner * effSmile;
+            pos.z -= 0.006 * wCorner * effSmile;
+
+            // 2. Smooth Parabolic Vermilion Lip Smile Curve (|x| < 0.155, y in [-0.170, -0.060])
+            float wxLip = 1.0 - smoothstep(0.085, 0.165, ax);
+            float dyLip = (aPosition.y - (-0.112)) / 0.065;
+            float wyLip = exp(-(dyLip * dyLip)) * nasalAnchor;
+            float wzLip = smoothstep(0.32, 0.38, aPosition.z);
+            float wLip = wxLip * wyLip * wzLip;
+            float lateralArch = smoothstep(0.00, 0.135, ax);
+            pos.y += (0.002 + 0.015 * lateralArch * lateralArch) * wLip * effSmile;
+            pos.z += 0.0025 * wLip * effSmile;
+
+            // 3. Malar Cheek & Zygomatic Soft-Tissue Elevation (|x|=0.158, y=+0.055, z=0.345)
+            float dxCheek = (ax - 0.158) / 0.098;
+            float dyCheek = (aPosition.y - 0.055) / 0.110;
+            float dzCheek = (aPosition.z - 0.345) / 0.125;
+            float wCheek = exp(-(dxCheek * dxCheek + dyCheek * dyCheek + dzCheek * dzCheek));
+            pos.y += 0.014 * wCheek * effSmile;
+            pos.z += 0.010 * wCheek * effSmile;
+            pos.x += sideSign * 0.006 * wCheek * effSmile;
+
+            // 4. Duchenne Orbicularis Oculi Lower-Eyelid Engagement (|x|=0.178, y=0.252)
+            float dxDuch = (ax - 0.178) / 0.058;
+            float dyDuch = (aPosition.y - 0.252) / 0.028;
+            float wDuch = exp(-(dxDuch * dxDuch + dyDuch * dyDuch)) * smoothstep(0.28, 0.31, aPosition.z);
+            pos.y += 0.0048 * wDuch * effSmile;
+            pos.z += 0.0020 * wDuch * effSmile;
+          }
+        }
+
+        // Subtle physiological lower-cervical breathing micro-motion (only below neck base y < -0.56)
+        if (aPosition.y < -0.56) {
+          float br = (-0.56 - aPosition.y) * 0.006 * uBreathWave;
+          pos.z += br;
+        }
+
+        vModelPos = pos - uExplodeOffset;
+        vOrigPos = aPosition;
+        vec4 worldPos = uModelMatrix * vec4(pos, 1.0);
+        vWorldPos = worldPos.xyz;
+        vNormal = normalize(mat3(uModelMatrix) * localNormal);
+        vUv = aUv;
+        vColor = aColor;
+
+        vec4 clipPos = uProjectionMatrix * uViewMatrix * worldPos;
+        gl_Position = clipPos;
+        vScreenX = (clipPos.x / max(clipPos.w, 0.0001)) * 0.5 + 0.5;
+      }
+    `;
+
+    const FS_SRC = `
+      precision highp float;
+      precision highp int;
+
+      varying vec3 vModelPos;
+      varying vec3 vOrigPos;
+      varying vec3 vWorldPos;
+      varying vec3 vNormal;
+      varying vec2 vUv;
+      varying vec4 vColor;
+      varying float vScreenX;
+
+      uniform int uMeshIndex;
+      uniform int uShaderMode;
+      uniform int uIsSelected;
+      uniform int uIsIsolated;
+      uniform float uRevealRatio;    // 0.0 .. 1.0
+      uniform float uExplodeFactor;  // 0.0 .. 1.0
+      uniform float uBlinkAmount;    // 0.0 .. 1.0
+      uniform float uSmileAmount;    // 0.0 .. 1.0
+      uniform vec3 uBaseColor;
+      uniform vec3 uKeyLightDir;
+
+      // Maps a layer's peel window [rStart, rEnd] in uRevealRatio to a 3D model-space X dissection plane (+0.36 right to -0.36 left)
+      float computeLayerModelCutX(float r, float rStart, float rEnd, float rightX, float leftX) {
+        if (r <= rStart) return 0.45;
+        if (r >= rEnd) return leftX;
+        float t = (r - rStart) / max(0.001, rEnd - rStart);
+        return mix(rightX, leftX, t);
+      }
+
+      void main() {
+        // 1. Clean 3D Model-Space Sculptural Bust Pedestal Trim below clavicular/platysma base (y < -0.75)
+        float bustAlpha = smoothstep(-0.85, -0.73, vModelPos.y);
+        if (bustAlpha < 0.03) discard;
+
+        float isCornea = (uMeshIndex == 0 && vColor.a > 0.65) ? 1.0 : 0.0;
+        float exprGate = (uIsIsolated == 0) ? (1.0 - smoothstep(0.0, 0.08, uRevealRatio + uExplodeFactor)) : 0.0;
+        float effBlink = clamp(uBlinkAmount, 0.0, 1.0) * exprGate;
+        float effSmile = clamp(uSmileAmount, 0.0, 1.0) * exprGate;
+
+        // Landmark-Guided 3D Facial & Cervical Surgical Dissection Window encoded in vColor.a (0.25 = Peelable Dissection Window,
+        // 0.00 = Protected 3D Cranium Vault, External Ears, Eyelids framing eyeballs, Central Nasal Dorsum/Tip, Curved Vermilion Lips, & Clavicular Base,
+        // 1.00 = 3D Eyeballs). Also protect the nasal alar sidewall (!inNasalCore) so Skin_Mesh never peels inside the nasal trim boundary of Subcutaneous_Fat_Mesh!
+        float noseGuardRx = (vOrigPos.y < 0.09) ? 0.112 : 0.084;
+        bool inNasalCore = (abs(vOrigPos.x) < noseGuardRx) && (vOrigPos.y > -0.045) && (vOrigPos.y < 0.30) && (vOrigPos.z > 0.32);
+        bool canPeelSkin = (uMeshIndex == 0) && (vColor.a > 0.18) && (vColor.a < 0.60) && !inNasalCore;
+
+        // 2. 4-Phase 3D Model-Space Progressive Anatomical Layer Peel:
+        //    Phase 1 (0.00..0.30): Skin_Mesh (00) peels across the dissection window -> reveals intact Subcutaneous_Fat_Mesh (01) & Malar Fat (08)
+        //    Phase 2 (0.30..0.55): Subcutaneous_Fat_Mesh (01) steps back -> reveals intact SMAS (02) & Platysma (03)
+        //    Phase 3 (0.52..0.82): SMAS_Mesh (02) peels across lateral/central cheek -> reveals Retaining Ligaments (04..06) & Facial Nerve CN VII (07)
+        //    Phase 4 (0.78..1.00): Platysma (03) & lateral Deep Fascia (15) open -> reveals deep cervical & Craniofacial Skeleton (16)
+        float cutRim = 0.0;
+        float organicWave = 0.004 * sin(vModelPos.y * 22.0);
+
+        if (uIsIsolated == 1) {
+          // In clinical isolation mode, keep Skin_Mesh's Cranium, Ears, Eyeballs, Lips & Neck Pedestal intact around the open dissection window!
+          if (uMeshIndex == 0 && canPeelSkin) {
+            discard;
+          }
+        } else if (uExplodeFactor > 0.25) {
+          // In Exploded 17-Layer mode, peel the right half of the facial dissection window on Skin_Mesh (vModelPos.x > -0.02)
+          // while keeping all 16 deeper anatomical layers 100% intact and separated in 3D space!
+          if (uMeshIndex == 0 && canPeelSkin) {
+            float hemifaceCut = mix(0.36, -0.02, min(1.0, uExplodeFactor));
+            if (vModelPos.x > hemifaceCut) discard;
+            float dRim = hemifaceCut - vModelPos.x;
+            if (dRim < 0.014) cutRim = 1.0 - (dRim / 0.014);
+          }
+        } else {
+          float cx0 = computeLayerModelCutX(uRevealRatio, 0.00, 0.28, 0.35, -0.35) + organicWave;
+          float cx1 = computeLayerModelCutX(uRevealRatio, 0.30, 0.56, 0.35, -0.22) + organicWave;
+          float cx2 = computeLayerModelCutX(uRevealRatio, 0.50, 0.82, 0.35, -0.10) + organicWave;
+
+          if (uMeshIndex == 0) {
+            if (canPeelSkin) {
+              if (vModelPos.x > cx0) discard;
+              float dist0 = cx0 - vModelPos.x;
+              if (dist0 < 0.014 && uRevealRatio > 0.01) {
+                cutRim = 1.0 - (dist0 / 0.014);
+              }
+            }
+          } else if (uMeshIndex == 1) {
+            // Layer 02: Subcutaneous Adipose Tissue (100% intact across exposed dissection window at Reveal = 28%!)
+            if (vModelPos.x > cx1) discard;
+            float dist1 = cx1 - vModelPos.x;
+            if (dist1 < 0.012 && uRevealRatio > 0.30) {
+              cutRim = 0.85 * (1.0 - (dist1 / 0.012));
+            }
+          } else if (uMeshIndex == 8) {
+            // Layer 09: Malar Fat Pad (Visible along with Subcutaneous Fat and SMAS, peels in Phase 3)
+            if (vModelPos.x > cx2) discard;
+          } else if (uMeshIndex == 2) {
+            // Layer 03: SMAS (Peels at cx2 in Phase 3 to reveal Retaining Ligaments & Facial Nerve CN VII!)
+            if (vModelPos.x > cx2) discard;
+            float dist2 = cx2 - vModelPos.x;
+            if (dist2 < 0.012 && uRevealRatio > 0.50) {
+              cutRim = 0.85 * (1.0 - (dist2 / 0.012));
+            }
+          } else if (uMeshIndex == 3) {
+            // Layer 04: Platysma Muscle Continuum (Stays 100% intact across jawline and neck up to Reveal 76%!)
+            float cx3 = computeLayerModelCutX(uRevealRatio, 0.76, 0.98, 0.28, -0.08) + organicWave;
+            if (vModelPos.x > cx3) discard;
+          } else if (uMeshIndex == 15 && uRevealRatio > 0.86) {
+            // Layer 16: Deep Fascia opens laterally at Reveal > 86% to expose Layer 17 (Craniofacial Bone & Mandible)
+            float cx15 = computeLayerModelCutX(uRevealRatio, 0.86, 1.00, 0.34, 0.04) + organicWave;
+            if (vModelPos.x > cx15) discard;
+          }
+        }
+
+        // Seamless Subcutaneous Fat coverage in Phase 1 (prevents paranasal mesh gaps from showing red SMAS in Stage 2 Fat view)
+        bool underIntactFat = (uIsIsolated == 0) && (uExplodeFactor <= 0.25) &&
+                              (uRevealRatio <= 0.31) && (vModelPos.x < 0.32) && (vModelPos.y > -0.35);
+
+        // 3. 4-Point Medical Studio PBR Lighting (Balanced Key, Fill, Rim & Subsurface Scattering)
+        vec3 N = normalize(vNormal);
+        vec3 V = normalize(vec3(0.0, 0.0, 3.6) - vWorldPos);
+        vec3 L_key  = normalize(uKeyLightDir);
+        vec3 L_fill = normalize(vec3(-L_key.x * 0.78, 0.20, 0.85));
+        vec3 L_rim  = normalize(vec3(0.0, 0.62, -0.78));
+
+        float diffKey  = max(dot(N, L_key), 0.0);
+        float diffFill = max(dot(N, L_fill), 0.0);
+        float diffRim  = max(dot(N, L_rim), 0.0);
+        float sssWrap  = max(0.0, (dot(N, L_key) + 0.45) / 1.45);
+        vec3 H_key = normalize(L_key + V);
+        float spec = pow(max(dot(N, H_key), 0.0), (isCornea > 0.5) ? 92.0 : (uMeshIndex == 0) ? 26.0 : 38.0);
+        float fresnel = pow(1.0 - max(dot(N, V), 0.0), 3.0);
+
+        vec3 finalColor = vec3(1.0);
+
+        if (uShaderMode == 2) {
+          // Mode 2: 3D Studio Clay Sculpt (Pure 3D Form & Proportion Verification)
+          vec3 clay = (uMeshIndex == 0) ? vec3(0.91, 0.87, 0.81) : mix(vec3(0.85, 0.80, 0.73), uBaseColor, 0.34);
+          finalColor = clay * (0.30 + 0.56 * diffKey + 0.22 * diffFill + 0.12 * diffRim) + vec3(0.98, 0.94, 0.85) * (spec * 0.22 + fresnel * 0.14);
+        } else if (uShaderMode == 3) {
+          // Mode 3: 3D Surface Normals & Topology Proof
+          vec3 nCol = N * 0.5 + 0.5;
+          finalColor = nCol * (0.78 + 0.22 * diffKey);
+        } else if (uShaderMode == 1) {
+          // Mode 1: 17-Layer Clinical Color-Coded FMA PBR
+          vec3 baseC = (uMeshIndex == 0) ? vColor.rgb : uBaseColor;
+          finalColor = baseC * (0.34 + 0.56 * diffKey + 0.24 * diffFill) + vec3(1.0, 0.96, 0.88) * (spec * 0.28 + fresnel * 0.16);
+        } else {
+          // Mode 0: Signature 3D Anatomical Studio PBR (Default)
+          if (uMeshIndex == 0) {
+            // Layer 01: Real 3D Sculpted Human Head, Neck & Eyeballs (v5.0 Blender Studio CC0 + Anatomical Vertex Color)
+            vec3 skinBase = vColor.rgb;
+            float ax = abs(vOrigPos.x);
+
+            if (isCornea > 0.5) {
+              // 3D Eyeball Sclera, Limbal Ring, Iris & Moist Corneal Reflection
+              // Zero texture-only eyelid illusion: the 3D eyeball is 100% static and occluded solely by the real deformed 3D eyelid mesh geometry!
+              float eyeShade = 0.48 + 0.52 * diffKey + 0.22 * diffFill;
+              finalColor = skinBase * eyeShade + vec3(1.0, 0.99, 0.96) * (spec * 0.72 + fresnel * 0.16);
+            } else {
+              // Subtle 3D model-space dermal micro-texture
+              float pore = 0.99 + 0.01 * sin(vModelPos.x * 160.0) * cos(vModelPos.y * 160.0) * cos(vModelPos.z * 160.0);
+              // Natural anatomical crease occlusion in downward/inward concavities (nostrils, orbital sulcus, submental crease)
+              float cavityAO = 0.92 + 0.08 * clamp(N.z * 0.6 + N.y * 0.4 + 0.5, 0.0, 1.0);
+
+              // Dynamic 3D Eyelid Lash Margin & Lateral Malar/Nasolabial Smile Contour on the Deformed 3D Head Mesh
+              float exprShadeMod = 1.0;
+              vec3 exprTint = skinBase;
+
+              if (effBlink > 0.05 && ax > 0.120 && ax < 0.244 && vOrigPos.z > 0.28) {
+                float dxClamped = clamp((ax - 0.183) / 0.062, -1.0, 1.0);
+                float yOpenU = 0.3142 - 0.0302 * (dxClamped * dxClamped);
+                float yOpenL = 0.2626 + 0.0164 * (dxClamped * dxClamped);
+                float yCloseLine = mix(yOpenL, yOpenU, 0.22);
+                float dLash = abs(vModelPos.y - yCloseLine);
+                float lashLine = exp(-(dLash * dLash) / (0.0024 * 0.0024)) * (1.0 - dxClamped * dxClamped) * smoothstep(0.20, 0.85, effBlink);
+                exprTint = mix(exprTint, vec3(0.35, 0.23, 0.18), lashLine * 0.52);
+              }
+
+              if (effSmile > 0.02 && vOrigPos.z > 0.26 && ax > 0.112) {
+                // Lateral Nasolabial Fold & Malar Cheek Soft-Tissue Highlight (Strictly lateral ax > 0.112 so upper lip remains 100% clean)
+                float lateralMask = smoothstep(0.112, 0.142, ax);
+                float tNlf = clamp((vOrigPos.y - (-0.125)) / 0.120, 0.0, 1.0);
+                float xNlf = mix(0.168, 0.115, tNlf);
+                float dNlf = abs(ax - xNlf);
+                float wNlfY = smoothstep(-0.145, -0.105, vOrigPos.y) * (1.0 - smoothstep(-0.020, 0.015, vOrigPos.y));
+                float wNlfZ = smoothstep(0.30, 0.36, vOrigPos.z);
+                float nlfCrease = exp(-(dNlf * dNlf) / (0.012 * 0.012)) * wNlfY * wNlfZ * lateralMask * effSmile;
+
+                float dxMalar = (ax - 0.158) / 0.068;
+                float dyMalar = (vOrigPos.y - 0.055) / 0.075;
+                float malarLift = exp(-(dxMalar * dxMalar + dyMalar * dyMalar)) * wNlfZ * lateralMask * effSmile;
+
+                exprShadeMod = 1.0 - 0.11 * nlfCrease + 0.06 * malarLift;
+              }
+
+              float shade = (0.32 + 0.54 * diffKey + 0.22 * diffFill + 0.10 * diffRim) * cavityAO * exprShadeMod;
+              vec3 sss = vec3(0.94, 0.46, 0.36) * (0.10 * sssWrap * (1.0 - diffKey * 0.45));
+              finalColor = (exprTint * pore) * shade + sss + vec3(1.0, 0.96, 0.90) * (spec * 0.16 + fresnel * 0.09);
+            }
+          } else if (uMeshIndex == 1 || (uMeshIndex >= 8 && uMeshIndex <= 11) || (uMeshIndex == 2 && underIntactFat)) {
+            // Layers 02 & 09..12: Subcutaneous & Deep Adipose Compartments (3D Lobular Fat PBR)
+            vec3 fatBase = (uMeshIndex == 2) ? vec3(0.95, 0.76, 0.24) : uBaseColor;
+            float lob1 = sin(vModelPos.x * 85.0 + vModelPos.z * 35.0) * cos(vModelPos.y * 85.0 - vModelPos.x * 25.0);
+            float lob2 = sin(vModelPos.z * 140.0) * cos(vModelPos.y * 140.0);
+            float lobule = 0.91 + 0.06 * lob1 + 0.03 * lob2;
+            vec3 fatCol = fatBase * lobule * (0.38 + 0.56 * diffKey + 0.24 * diffFill);
+            vec3 fatSss = vec3(1.0, 0.82, 0.32) * (0.10 * sssWrap);
+            finalColor = fatCol + fatSss + vec3(1.0, 0.97, 0.86) * (spec * 0.32 + fresnel * 0.16);
+          } else if (uMeshIndex == 2 || uMeshIndex == 3) {
+            // Layers 03 & 04: SMAS & Platysma Fibromuscular Continuum (3D Myofascial Fiber Striations)
+            float fiberCoord = (uMeshIndex == 2)
+              ? (abs(vModelPos.x) * 145.0 - vModelPos.y * 95.0 + vModelPos.z * 40.0)
+              : (abs(vModelPos.x) * 160.0 - vModelPos.y * 75.0);
+            float striation = 0.90 + 0.10 * sin(fiberCoord);
+            // Subtle aponeurotic silver-pearl tendinous sheen on lateral SMAS
+            float aponeurosis = (uMeshIndex == 2) ? smoothstep(0.14, 0.30, abs(vModelPos.x)) * 0.18 : 0.05;
+            vec3 myoBase = mix(uBaseColor * striation, vec3(0.92, 0.84, 0.78), aponeurosis);
+            float shade = 0.36 + 0.56 * diffKey + 0.22 * diffFill + 0.10 * diffRim;
+            finalColor = myoBase * shade + vec3(1.0, 0.93, 0.86) * (spec * 0.26 + fresnel * 0.15);
+          } else if (uMeshIndex >= 4 && uMeshIndex <= 6) {
+            // Layers 05..07: Zygomatic, Masseteric & Mandibular Retaining Ligaments (Collagenous Fibrous Anchors)
+            float collagen = 0.94 + 0.06 * sin(vModelPos.x * 210.0 + vModelPos.y * 210.0);
+            vec3 ligCol = uBaseColor * collagen * (0.46 + 0.54 * diffKey + 0.26 * diffFill);
+            finalColor = ligCol + vec3(1.0, 0.98, 0.92) * (spec * 0.38 + fresnel * 0.28);
+          } else if (uMeshIndex == 7) {
+            // Layer 08: Facial Nerve Branches (CN VII — 5 Motor Divisions in High-Visibility Clinical Gold)
+            vec3 nerveCol = uBaseColor * (0.52 + 0.56 * diffKey + 0.26 * diffFill);
+            finalColor = nerveCol + vec3(1.0, 0.95, 0.55) * (spec * 0.46 + fresnel * 0.34);
+          } else if (uMeshIndex == 12) {
+            // Layer 13: Parotid Gland & Stensen's Duct (Acinar Glandular Parenchyma)
+            float acini = 0.92 + 0.08 * sin(vModelPos.x * 110.0) * cos(vModelPos.y * 110.0) * sin(vModelPos.z * 110.0);
+            vec3 glandCol = uBaseColor * acini * (0.40 + 0.54 * diffKey + 0.22 * diffFill);
+            finalColor = glandCol + vec3(1.0, 0.95, 0.86) * (spec * 0.24 + fresnel * 0.14);
+          } else if (uMeshIndex == 15) {
+            // Layer 16: Parotid-Masseteric Deep Fascia & Deep Mimetic Musculature
+            float deepFiber = 0.91 + 0.09 * sin(vModelPos.y * 150.0 + abs(vModelPos.x) * 90.0);
+            vec3 fasciaCol = uBaseColor * deepFiber * (0.34 + 0.56 * diffKey + 0.22 * diffFill);
+            finalColor = fasciaCol + vec3(0.95, 0.88, 0.84) * (spec * 0.24 + fresnel * 0.18);
+          } else if (uMeshIndex == 16) {
+            // Layer 17: Craniofacial Skeleton, Zygoma, Mandible & Cervical Spine (Pure Ivory Osseous PBR)
+            float trab = 0.97 + 0.03 * sin(vModelPos.x * 180.0 + vModelPos.y * 160.0);
+            vec3 boneCol = uBaseColor * trab * (0.40 + 0.56 * diffKey + 0.24 * diffFill);
+            finalColor = boneCol + vec3(1.0, 0.98, 0.94) * (spec * 0.20 + fresnel * 0.12);
+          } else {
+            // Layers 14 & 15: Facial Artery (Crimson) & Facial Vein (Cobalt Blue)
+            vec3 vascCol = uBaseColor * (0.42 + 0.60 * diffKey + 0.24 * diffFill);
+            finalColor = vascCol + vec3(1.0, 0.97, 0.92) * (spec * 0.48 + fresnel * 0.24);
+          }
+        }
+
+        // 4. Champagne-Gold Surgical Dissection Margin Bevel
+        if (cutRim > 0.0) {
+          vec3 goldBeam = mix(vec3(0.86, 0.70, 0.40), vec3(1.0, 0.99, 0.92), pow(cutRim, 1.6));
+          finalColor = mix(finalColor, goldBeam, cutRim * 0.88);
+        }
+
+        // 5. Selected / Highlighted Structure Rim Glow
+        if (uIsSelected == 1 && !(uMeshIndex == 0 && uRevealRatio < 0.02 && uExplodeFactor < 0.02)) {
+          vec3 hiCol = (uMeshIndex == 7) ? vec3(1.0, 0.92, 0.36)
+                     : (uMeshIndex == 13) ? vec3(1.0, 0.34, 0.36)
+                     : (uMeshIndex == 14) ? vec3(0.38, 0.68, 1.0)
+                     : (uMeshIndex >= 4 && uMeshIndex <= 6) ? vec3(1.0, 0.96, 0.84)
+                     : vec3(0.95, 0.82, 0.52);
+          float hiAmt = (uMeshIndex == 0 || uMeshIndex == 2 || uMeshIndex == 3 || uMeshIndex == 15)
+            ? (0.10 + 0.26 * fresnel)
+            : (0.22 + 0.38 * fresnel);
+          finalColor = mix(finalColor, hiCol, hiAmt) + hiCol * (spec * 0.20);
+        }
+
+        gl_FragColor = vec4(clamp(finalColor, 0.0, 1.0), bustAlpha);
+      }
+    `;
+
+    function compileShader(type, src) {
+      const s = gl.createShader(type);
+      gl.shaderSource(s, src);
+      gl.compileShader(s);
+      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+        console.error("Shader compile error:", gl.getShaderInfoLog(s));
+      }
+      return s;
+    }
+
+    const prog = gl.createProgram();
+    gl.attachShader(prog, compileShader(gl.VERTEX_SHADER, VS_SRC));
+    gl.attachShader(prog, compileShader(gl.FRAGMENT_SHADER, FS_SRC));
+    gl.linkProgram(prog);
+
+    const loc = {
+      aPosition: gl.getAttribLocation(prog, "aPosition"),
+      aNormal: gl.getAttribLocation(prog, "aNormal"),
+      aUv: gl.getAttribLocation(prog, "aUv"),
+      aColor: gl.getAttribLocation(prog, "aColor"),
+      uProjectionMatrix: gl.getUniformLocation(prog, "uProjectionMatrix"),
+      uViewMatrix: gl.getUniformLocation(prog, "uViewMatrix"),
+      uModelMatrix: gl.getUniformLocation(prog, "uModelMatrix"),
+      uExplodeOffset: gl.getUniformLocation(prog, "uExplodeOffset"),
+      uBreathWave: gl.getUniformLocation(prog, "uBreathWave"),
+      uBlinkAmount: gl.getUniformLocation(prog, "uBlinkAmount"),
+      uSmileAmount: gl.getUniformLocation(prog, "uSmileAmount"),
+      uMeshIndex: gl.getUniformLocation(prog, "uMeshIndex"),
+      uShaderMode: gl.getUniformLocation(prog, "uShaderMode"),
+      uIsSelected: gl.getUniformLocation(prog, "uIsSelected"),
+      uIsIsolated: gl.getUniformLocation(prog, "uIsIsolated"),
+      uRevealRatio: gl.getUniformLocation(prog, "uRevealRatio"),
+      uExplodeFactor: gl.getUniformLocation(prog, "uExplodeFactor"),
+      uBaseColor: gl.getUniformLocation(prog, "uBaseColor"),
+      uKeyLightDir: gl.getUniformLocation(prog, "uKeyLightDir")
+    };
+
+    let gpuMeshes = [];
+    let cpuMeshes = [];
+
+    function uploadGlbToGpu(parsedGlb, sourceLabel) {
+      gpuMeshes.forEach(gm => {
+        gl.deleteBuffer(gm.vboPos);
+        gl.deleteBuffer(gm.vboNrm);
+        gl.deleteBuffer(gm.vboUv);
+        gl.deleteBuffer(gm.vboCol);
+        gl.deleteBuffer(gm.ibo);
+      });
+      gpuMeshes = [];
+      cpuMeshes = parsedGlb.meshes;
+
+      parsedGlb.meshes.forEach(m => {
+        const vboPos = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, vboPos);
+        gl.bufferData(gl.ARRAY_BUFFER, m.pos, gl.STATIC_DRAW);
+
+        const vboNrm = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, vboNrm);
+        gl.bufferData(gl.ARRAY_BUFFER, m.nrm, gl.STATIC_DRAW);
+
+        const vboUv = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, vboUv);
+        gl.bufferData(gl.ARRAY_BUFFER, m.uv, gl.STATIC_DRAW);
+
+        const vboCol = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, vboCol);
+        gl.bufferData(gl.ARRAY_BUFFER, m.col, gl.STATIC_DRAW);
+
+        const ibo = gl.createBuffer();
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ibo);
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, m.ind, gl.STATIC_DRAW);
+
+        gpuMeshes.push({
+          index: m.index,
+          id: m.id,
+          vboPos, vboNrm, vboUv, vboCol, ibo,
+          indexCount: m.indexCount,
+          indexType: m.isUint32 ? gl.UNSIGNED_INT : gl.UNSIGNED_SHORT,
+          meta: m.meta
+        });
+      });
+
+      state.glbSourceName = sourceLabel;
+      state.totalVertices = parsedGlb.totalV;
+      state.totalTriangles = parsedGlb.totalT;
+
+      const pillTxt = document.getElementById("glbStatusText");
+      if (pillTxt) {
+        pillTxt.textContent = `3D v5.0 ACTIVE: 17/17 MESHES · ${parsedGlb.totalV.toLocaleString()}V · ±90°`;
+      }
+      buildLayerDrawerUI();
+      updateInspectorUI();
+    }
+
+    // =========================================================================
+    // 4. 3D MATRICES, HEAD-AND-NECK FRAMING & RENDER LOOP
+    // =========================================================================
+    function mat4Perspective(fovRad, aspect, near, far) {
+      const f = 1.0 / Math.tan(fovRad / 2);
+      const nf = 1 / (near - far);
+      return new Float32Array([
+        f / aspect, 0, 0, 0,
+        0, f, 0, 0,
+        0, 0, (far + near) * nf, -1,
+        0, 0, (2 * far * near) * nf, 0
+      ]);
+    }
+
+    function mat4Translation(tx, ty, tz) {
+      return new Float32Array([
+        1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
+        tx, ty, tz, 1
+      ]);
+    }
+
+    function mat4RotationXY(pitchRad, yawRad) {
+      const cp = Math.cos(pitchRad), sp = Math.sin(pitchRad);
+      const cy = Math.cos(yawRad),   sy = Math.sin(yawRad);
+      return new Float32Array([
+        cy, sp * sy, -cp * sy, 0,
+        0, cp, sp, 0,
+        sy, -sp * cy, cp * cy, 0,
+        0, 0, 0, 1
+      ]);
+    }
+
+    function isMobileLayoutActive() {
+      return state.viewportMode === "iphone" || state.viewportMode === "android" ||
+             (state.viewportMode === "auto" && window.innerWidth <= 760);
+    }
+
+    function computeCurtainScreenX(effectiveRevealPct) {
+      if (effectiveRevealPct <= 0.5) return 1.05;
+      if (effectiveRevealPct >= 99.5) return -0.05;
+      const r = effectiveRevealPct / 100.0;
+      // Track the active outer dissection margin across the 3 main peel phases
+      if (r <= 0.34) {
+        return 0.72 - (r / 0.34) * (0.72 - 0.24);
+      } else if (r <= 0.62) {
+        return 0.72 - ((r - 0.32) / 0.30) * (0.72 - 0.28);
+      } else {
+        return 0.72 - (Math.min(0.84, r) - 0.50) / 0.34 * (0.72 - 0.36);
+      }
+    }
+
+    let lastFrameTime = performance.now();
+
+    // Asymmetric human physiological eyelid blink envelope (540ms cycle: 140ms closure, 120ms full-closed dwell at 100%, 280ms smooth reopening)
+    function evaluatePhysiologicalBlinkWave(elapsedMs) {
+      if (elapsedMs < 0 || elapsedMs > 540) return 0.0;
+      if (elapsedMs <= 140) {
+        const t = elapsedMs / 140.0;
+        return t * t * (3.0 - 2.0 * t);
+      } else if (elapsedMs <= 260) {
+        return 1.0;
+      } else {
+        const t = (elapsedMs - 260.0) / 280.0;
+        return 1.0 - (t * t * (3.0 - 2.0 * t));
+      }
+    }
+
+    function renderLoop(now) {
+      if (!window.__PAUSE_RAF_LOOP__) requestAnimationFrame(renderLoop);
+      const dt = Math.min(0.05, (now - lastFrameTime) / 1000.0);
+      lastFrameTime = now;
+
+      const springF = 180.0 * (state.targetReveal - state.revealDepth) - 26.0 * state.revealVel;
+      state.revealVel += (springF / 0.9) * dt;
+      state.revealDepth += state.revealVel * dt;
+      if (Math.abs(state.targetReveal - state.revealDepth) < 0.06 && Math.abs(state.revealVel) < 0.4) {
+        state.revealDepth = state.targetReveal;
+        state.revealVel = 0;
+      }
+      state.revealDepth = Math.max(0, Math.min(100, state.revealDepth));
+
+      // Suppress continuous vestibular breathing sway when paused or when OS prefers-reduced-motion is active
+      const breathWave = (state.expressionPaused || state.osReducedMotion) ? 0.0 : Math.sin(now * 0.0009);
+
+      // Update 3D Eyelid Blink (Manual Slider/Pose Hold vs Triggered/Automatic Physiological Blink Cycle)
+      if (state.manualBlinkHold !== null) {
+        state.blinkAmount += (state.manualBlinkHold - state.blinkAmount) * 0.26;
+        if (Math.abs(state.manualBlinkHold - state.blinkAmount) < 0.004) {
+          state.blinkAmount = state.manualBlinkHold;
+        }
+      } else {
+        const canAutoBlink = !state.expressionPaused &&
+                             !state.isolatedMesh &&
+                             !state.isolatedGroup &&
+                             state.revealDepth < 4.0 &&
+                             state.explode < 4.0;
+        if (state.activeBlinkCycleStart >= 0) {
+          const elapsed = now - state.activeBlinkCycleStart;
+          if (elapsed <= 540) {
+            state.blinkAmount = evaluatePhysiologicalBlinkWave(elapsed);
+          } else {
+            state.blinkAmount = 0.0;
+            state.activeBlinkCycleStart = -1;
+            state.autoBlinkCount = (state.autoBlinkCount || 0) + 1;
+            state.nextAutoBlinkTime = now + 2400 + (state.autoBlinkCount % 2) * 350;
+          }
+        } else if (canAutoBlink && now >= state.nextAutoBlinkTime) {
+          state.activeBlinkCycleStart = now;
+          state.blinkAmount = 0.04;
+        } else {
+          state.blinkAmount += (0.0 - state.blinkAmount) * 0.24;
+          if (state.blinkAmount < 0.003) state.blinkAmount = 0.0;
+        }
+      }
+
+      // Smooth damped interpolation for 3D Natural Zygomaticus/Duchenne Smile
+      state.smileAmount += (state.targetSmile - state.smileAmount) * 0.16;
+      if (Math.abs(state.targetSmile - state.smileAmount) < 0.004) {
+        state.smileAmount = state.targetSmile;
+      }
+
+      state.targetYaw = clampYaw(state.targetYaw);
+      state.targetPitch = clampPitch(state.targetPitch);
+
+      state.yaw = clampYaw(state.yaw + (state.targetYaw - state.yaw) * 0.18);
+      state.pitch = clampPitch(state.pitch + (state.targetPitch - state.pitch) * 0.18);
+      state.zoom += (state.targetZoom - state.zoom) * 0.18;
+      state.explode += (state.targetExplode - state.explode) * 0.16;
+
+      if (Math.abs(state.targetYaw - state.yaw) < 0.05) state.yaw = state.targetYaw;
+      if (Math.abs(state.targetPitch - state.pitch) < 0.05) state.pitch = state.targetPitch;
+      if (Math.abs(state.targetExplode - state.explode) < 0.05) state.explode = state.targetExplode;
+
+      syncUIAndCurtain();
+      drawWebGLScene(breathWave);
+    }
+
+    function isMeshCurrentlyVisible(meshId) {
+      if (!state.visible[meshId]) return false;
+      if (state.isolatedMesh && state.isolatedMesh !== meshId) return false;
+      if (state.isolatedGroup && !state.isolatedGroup.includes(meshId)) return false;
+      return true;
+    }
+
+    function drawWebGLScene(breathWave) {
+      if (!gl || gpuMeshes.length === 0) return;
+
+      const frame = document.getElementById("viewportFrame");
+      const cw = canvas.clientWidth || (frame ? frame.clientWidth : 0);
+      const ch = canvas.clientHeight || (frame ? frame.clientHeight : 0);
+      if (cw < 10 || ch < 10) return;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const w = Math.max(1, Math.round(cw * dpr));
+      const h = Math.max(1, Math.round(ch * dpr));
+      if (canvas.width !== w || canvas.height !== h) {
+        canvas.width = w;
+        canvas.height = h;
+      }
+
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      gl.clearColor(0, 0, 0, 0);
+      gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+      gl.enable(gl.DEPTH_TEST);
+      gl.depthFunc(gl.LEQUAL);
+      gl.enable(gl.CULL_FACE);
+      gl.cullFace(gl.BACK);
+      gl.enable(gl.BLEND);
+      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+      gl.useProgram(prog);
+
+      const aspect = canvas.width / Math.max(1, canvas.height);
+      const mob = isMobileLayoutActive();
+      // Frame the v5.0 3D head and neck (Y = -0.755..+0.9225, center Y = +0.084) prominently in the center safe zone!
+      const fovDeg = mob ? 30.0 : 25.5;
+      const baseCamZ = mob ? 5.10 : 4.12;
+      const camYOffset = mob ? 0.14 : -0.105;
+
+      const projMat = mat4Perspective((fovDeg * Math.PI) / 180.0, aspect, 0.15, 20.0);
+      const viewMat = mat4Translation(0.0, camYOffset, -baseCamZ / Math.max(0.70, state.zoom));
+      const modelMat = mat4RotationXY((state.pitch * Math.PI) / 180.0, (state.yaw * Math.PI) / 180.0);
+
+      const expFactor = state.explode / 100.0;
+      const effectiveReveal = Math.max(state.revealDepth, state.explode > 4 ? Math.min(68, state.explode * 0.75) : 0);
+      const curtainX = computeCurtainScreenX(effectiveReveal);
+      state.curtainScreenX = curtainX;
+
+      const isIsolatedMode = Boolean(state.isolatedMesh || state.isolatedGroup);
+
+      gl.uniformMatrix4fv(loc.uProjectionMatrix, false, projMat);
+      gl.uniformMatrix4fv(loc.uViewMatrix, false, viewMat);
+      gl.uniformMatrix4fv(loc.uModelMatrix, false, modelMat);
+      gl.uniform1f(loc.uBreathWave, breathWave);
+      gl.uniform1f(loc.uBlinkAmount, state.blinkAmount);
+      gl.uniform1f(loc.uSmileAmount, state.smileAmount);
+      gl.uniform1i(loc.uShaderMode, state.shaderMode);
+      gl.uniform1i(loc.uIsIsolated, isIsolatedMode ? 1 : 0);
+      gl.uniform1f(loc.uRevealRatio, effectiveReveal / 100.0);
+      gl.uniform1f(loc.uExplodeFactor, expFactor);
+
+      const azRad = (state.lightAzimuth * Math.PI) / 180.0;
+      gl.uniform3f(loc.uKeyLightDir, Math.sin(azRad) * 0.82, 0.36, Math.cos(azRad) * 0.92);
+
+      const skinCovers100 = (
+        !isIsolatedMode &&
+        effectiveReveal <= 0.5 &&
+        expFactor <= 0.005 &&
+        state.visible["Skin_Mesh"]
+      );
+
+      // Calibrated v5 back-to-front anatomical depth draw order (draw_order.py)
+      const drawOrder = skinCovers100
+        ? [0]
+        : [16, 15, 14, 12, 13, 7, 11, 5, 10, 9, 6, 4, 3, 2, 8, 1, 0];
+
+      for (let k = 0; k < drawOrder.length; k++) {
+        const mIdx = drawOrder[k];
+        const gm = gpuMeshes[mIdx];
+        if (!gm) continue;
+        if (!isMeshCurrentlyVisible(gm.id)) continue;
+
+        const ev = gm.meta.explodeVec;
+        gl.uniform3f(loc.uExplodeOffset, ev[0] * expFactor, ev[1] * expFactor, ev[2] * expFactor);
+        gl.uniform1i(loc.uMeshIndex, gm.index);
+
+        const isHi = (state.selectedMesh === gm.id) || (state.highlightedGroup && state.highlightedGroup.includes(gm.id));
+        gl.uniform1i(loc.uIsSelected, isHi ? 1 : 0);
+
+        const bc = gm.meta.baseColor;
+        gl.uniform3f(loc.uBaseColor, bc[0], bc[1], bc[2]);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, gm.vboPos);
+        gl.enableVertexAttribArray(loc.aPosition);
+        gl.vertexAttribPointer(loc.aPosition, 3, gl.FLOAT, false, 0, 0);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, gm.vboNrm);
+        gl.enableVertexAttribArray(loc.aNormal);
+        gl.vertexAttribPointer(loc.aNormal, 3, gl.FLOAT, false, 0, 0);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, gm.vboUv);
+        gl.enableVertexAttribArray(loc.aUv);
+        gl.vertexAttribPointer(loc.aUv, 2, gl.FLOAT, false, 0, 0);
+
+        if (loc.aColor >= 0) {
+          gl.bindBuffer(gl.ARRAY_BUFFER, gm.vboCol);
+          gl.enableVertexAttribArray(loc.aColor);
+          gl.vertexAttribPointer(loc.aColor, 4, gl.FLOAT, false, 0, 0);
+        }
+
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, gm.ibo);
+        gl.drawElements(gl.TRIANGLES, gm.indexCount, gm.indexType, 0);
+      }
+    }
+
+    // =========================================================================
+    // 5. PROGRESSIVE STAGE CONTROLLERS, CLINICAL ISOLATION & UI SYNC
+    // =========================================================================
+    function focusAnatomicalStage(stageKey) {
+      const st = ANATOMICAL_STAGES[stageKey] || ANATOMICAL_STAGES.outer_skin;
+      state.activeStage = st.stageId;
+      state.isolatedMesh = null;
+      state.isolatedGroup = null;
+      const isoBtn = document.getElementById("btnIsolateMesh");
+      if (isoBtn) isoBtn.classList.remove("active");
+      ["btnIsoSmas", "btnIsoPlatysma", "btnIsoLigaments", "btnIsoCn7"].forEach(id => {
+        document.getElementById(id)?.classList.remove("active");
+      });
+
+      STRUCTURES_17.forEach(s => { state.visible[s.id] = true; });
+      state.targetReveal = st.reveal;
+      state.targetExplode = st.explode;
+      state.targetYaw = clampYaw(st.yaw);
+      state.targetPitch = clampPitch(st.pitch);
+      state.targetZoom = st.zoom;
+      state.selectedMesh = st.selectedMesh;
+      state.highlightedGroup = st.highlightedGroup.slice();
+
+      // When returning to intact outer skin from Deep Plane mode, automatically re-enable live blinking!
+      if (st.stageId === "outer_skin" && st.reveal === 0 && st.explode === 0) {
+        state.manualBlinkHold = null;
+        state.expressionPaused = false;
+        state.nextAutoBlinkTime = Math.min(state.nextAutoBlinkTime, performance.now() + 950);
+        const isTh = state.lang === "th";
+        const btnD = document.getElementById("btnExprPause");
+        const btnM = document.getElementById("mobBtnExprPause");
+        if (btnD) btnD.textContent = isTh ? "หยุดแอนิเมชัน" : "Pause Animation";
+        if (btnM) btnM.textContent = isTh ? "หยุดแอนิเมชัน" : "Pause Anim";
+      }
+
+      const isTh = state.lang === "th";
+      const hTitle = document.getElementById("heroTitleText");
+      const hDesc = document.getElementById("heroDescText");
+      if (hTitle) hTitle.textContent = isTh ? st.titleTh : st.titleEn;
+      if (hDesc) hDesc.textContent = isTh ? st.descTh : st.descEn;
+
+      buildLayerDrawerUI();
+      updateInspectorUI();
+      try { if (window.parent && window.parent !== window) window.parent.postMessage(getExplorerTelemetry(), "*"); } catch (e) {}
+    }
+
+    function isolateClinicalGroup(groupKey) {
+      state.isolatedMesh = null;
+      state.targetExplode = 0;
+      STRUCTURES_17.forEach(s => { state.visible[s.id] = true; });
+
+      if (groupKey === "smas") {
+        state.activeStage = "iso_smas";
+        state.isolatedGroup = ["Skin_Mesh", "SMAS_Mesh", "Zygomatic_Retaining_Ligament_Mesh", "Masseteric_Retaining_Ligaments_Mesh", "Deep_Fascia_Muscle_Mesh", "Bone_Skull_Mesh"];
+        state.selectedMesh = "SMAS_Mesh";
+        state.highlightedGroup = ["SMAS_Mesh", "Zygomatic_Retaining_Ligament_Mesh", "Masseteric_Retaining_Ligaments_Mesh"];
+        state.targetYaw = -20; state.targetPitch = 0; state.targetZoom = 1.04; state.targetReveal = 0;
+      } else if (groupKey === "platysma") {
+        state.activeStage = "iso_platysma";
+        state.isolatedGroup = ["Skin_Mesh", "Platysma_Mesh", "Mandibular_Retaining_Ligament_Mesh", "SMAS_Mesh", "Deep_Fascia_Muscle_Mesh", "Bone_Skull_Mesh"];
+        state.selectedMesh = "Platysma_Mesh";
+        state.highlightedGroup = ["Platysma_Mesh", "Mandibular_Retaining_Ligament_Mesh"];
+        state.targetYaw = 22; state.targetPitch = -6; state.targetZoom = 1.06; state.targetReveal = 0;
+      } else if (groupKey === "ligaments") {
+        state.activeStage = "iso_ligaments";
+        state.isolatedGroup = [
+          "Skin_Mesh",
+          "Zygomatic_Retaining_Ligament_Mesh",
+          "Masseteric_Retaining_Ligaments_Mesh",
+          "Mandibular_Retaining_Ligament_Mesh",
+          "Deep_Fascia_Muscle_Mesh",
+          "Bone_Skull_Mesh"
+        ];
+        state.selectedMesh = "Zygomatic_Retaining_Ligament_Mesh";
+        state.highlightedGroup = [
+          "Zygomatic_Retaining_Ligament_Mesh",
+          "Masseteric_Retaining_Ligaments_Mesh",
+          "Mandibular_Retaining_Ligament_Mesh"
+        ];
+        state.targetYaw = -24; state.targetPitch = -2; state.targetZoom = 1.05; state.targetReveal = 0;
+      } else if (groupKey === "cn7") {
+        state.activeStage = "iso_cn7";
+        state.isolatedGroup = [
+          "Skin_Mesh",
+          "Facial_Nerve_Mesh",
+          "Parotid_Gland_Mesh",
+          "Facial_Artery_Mesh",
+          "Facial_Vein_Mesh",
+          "Deep_Fascia_Muscle_Mesh",
+          "Bone_Skull_Mesh"
+        ];
+        state.selectedMesh = "Facial_Nerve_Mesh";
+        state.highlightedGroup = ["Facial_Nerve_Mesh"];
+        state.targetYaw = -26; state.targetPitch = 0; state.targetZoom = 1.05; state.targetReveal = 0;
+      }
+
+      const mapBtns = { smas: "btnIsoSmas", platysma: "btnIsoPlatysma", ligaments: "btnIsoLigaments", cn7: "btnIsoCn7" };
+      Object.entries(mapBtns).forEach(([k, id]) => {
+        document.getElementById(id)?.classList.toggle("active", k === groupKey);
+      });
+      document.getElementById("btnStageSurf0")?.classList.remove("active");
+
+      buildLayerDrawerUI();
+      updateInspectorUI();
+      try { if (window.parent && window.parent !== window) window.parent.postMessage(getExplorerTelemetry(), "*"); } catch (e) {}
+    }
+
+    function toggleCompactHud(forceState) {
+      state.hudCollapsed = forceState !== undefined ? Boolean(forceState) : !state.hudCollapsed;
+      const frame = document.getElementById("viewportFrame");
+      if (frame) frame.classList.toggle("hud-collapsed", state.hudCollapsed);
+      const btn = document.getElementById("btnToggleCompactHud");
+      if (btn) {
+        btn.classList.toggle("active", state.hudCollapsed);
+        const isTh = state.lang === "th";
+        btn.textContent = state.hudCollapsed
+          ? (isTh ? "แสดงแผงข้อมูล" : "Expand Panels")
+          : (isTh ? "ย่อแผงควบคุม" : "Collapse Panels");
+      }
+    }
+
+    function syncUIAndCurtain() {
+      const rev = Math.round(state.revealDepth);
+      const exp = Math.round(state.explode);
+      const yawInt = Math.round(state.yaw);
+      const effectiveRev = Math.max(state.revealDepth, state.explode > 4 ? Math.min(68, state.explode * 0.75) : 0);
+      const cx = computeCurtainScreenX(effectiveRev);
+
+      const curtain = document.getElementById("opticalCurtain");
+      if (curtain) {
+        if (!state.isolatedMesh && !state.isolatedGroup && exp < 25 && effectiveRev > 1 && effectiveRev < 94) {
+          curtain.style.left = (cx * 100).toFixed(2) + "%";
+          curtain.style.opacity = "1";
+        } else {
+          curtain.style.opacity = "0";
+        }
+      }
+
+      const slYaw = document.getElementById("sliderYaw");
+      if (slYaw && document.activeElement !== slYaw) slYaw.value = yawInt;
+      const lblYaw = document.getElementById("lblYawDeg");
+      if (lblYaw) lblYaw.textContent = (yawInt > 0 ? "+" : "") + yawInt + "°";
+
+      const slRevD = document.getElementById("sliderRevealDesktop");
+      const slRevM = document.getElementById("sliderRevealMobile");
+      if (slRevD && document.activeElement !== slRevD) slRevD.value = rev;
+      if (slRevM && document.activeElement !== slRevM) slRevM.value = rev;
+      const lblRevD = document.getElementById("lblRevealPct");
+      const lblRevM = document.getElementById("lblMobReveal");
+      if (lblRevD) lblRevD.textContent = rev + "%";
+      if (lblRevM) lblRevM.textContent = rev + "%";
+
+      const slExpD = document.getElementById("sliderExplodeDesktop");
+      const slExpM = document.getElementById("sliderExplodeMobile");
+      if (slExpD && document.activeElement !== slExpD) slExpD.value = exp;
+      if (slExpM && document.activeElement !== slExpM) slExpM.value = exp;
+      const lblExpD = document.getElementById("lblExplodePct");
+      const lblExpM = document.getElementById("lblMobExplode");
+      if (lblExpD) lblExpD.textContent = exp + "%";
+      if (lblExpM) lblExpM.textContent = exp + "%";
+
+      const anglePairs = [
+        ["btnAngM90", "mobAngM90", -90],
+        ["btnAngM45", "mobAngM45", -45],
+        ["btnAng0",   "mobAng0",     0],
+        ["btnAngP45", "mobAngP45",  45],
+        ["btnAngP90", "mobAngP90",  90]
+      ];
+      anglePairs.forEach(([idD, idM, deg]) => {
+        const active = Math.abs(yawInt - deg) <= 4 && Math.abs(state.pitch) <= 6;
+        document.getElementById(idD)?.classList.toggle("active", active);
+        document.getElementById(idM)?.classList.toggle("active", active);
+      });
+
+      // Sync active stage buttons on Desktop + Mobile
+      const isIso = Boolean(state.isolatedMesh || state.isolatedGroup);
+      const isExp = exp >= 40;
+      const isSkin = !isIso && !isExp && rev <= 8;
+      const isFat  = !isIso && !isExp && rev > 8 && rev <= 40;
+      const isNeck = !isIso && !isExp && state.activeStage === "neck_platysma" && rev > 35 && rev <= 60;
+      const isSmas = !isIso && !isExp && !isNeck && rev > 40;
+
+      document.getElementById("btnStageSkin")?.classList.toggle("active", isSkin);
+      document.getElementById("mobBtnStageSkin")?.classList.toggle("active", isSkin);
+      document.getElementById("btnStageSurf0")?.classList.toggle("active", isSkin);
+
+      document.getElementById("btnStageFat")?.classList.toggle("active", isFat);
+      document.getElementById("mobBtnStageFat")?.classList.toggle("active", isFat);
+      document.getElementById("calloutCard0")?.classList.toggle("active-callout", isFat);
+
+      document.getElementById("btnStageSmas")?.classList.toggle("active", isSmas);
+      document.getElementById("mobBtnStageSmas")?.classList.toggle("active", isSmas);
+      document.getElementById("calloutCard1")?.classList.toggle("active-callout", isSmas);
+
+      document.getElementById("btnStageNeck")?.classList.toggle("active", isNeck);
+      document.getElementById("mobBtnStageNeck")?.classList.toggle("active", isNeck);
+      document.getElementById("calloutCard2")?.classList.toggle("active-callout", isNeck);
+
+      document.getElementById("btnStageExplode")?.classList.toggle("active", isExp);
+      document.getElementById("mobBtnStageExplode")?.classList.toggle("active", isExp);
+
+      // Sync Facial Expression Controls & Intact-Skin Gate Indicator
+      const exprGateVal = (!isIso && rev <= 6 && exp <= 6) ? 1.0 : 0.0;
+      const blinkPctInt = Math.round(state.blinkAmount * exprGateVal * 100);
+      const smilePctInt = Math.round(state.smileAmount * exprGateVal * 100);
+
+      const slBlinkD = document.getElementById("sliderBlinkDesktop");
+      if (slBlinkD && document.activeElement !== slBlinkD) slBlinkD.value = blinkPctInt;
+      const lblBlink = document.getElementById("lblBlinkPct");
+      if (lblBlink) lblBlink.textContent = blinkPctInt + "%";
+
+      const slSmileD = document.getElementById("sliderSmileDesktop");
+      if (slSmileD && document.activeElement !== slSmileD) slSmileD.value = smilePctInt;
+      const lblSmile = document.getElementById("lblSmilePct");
+      if (lblSmile) lblSmile.textContent = smilePctInt + "%";
+
+      const exprBadge = document.getElementById("hudExprStatusBadge");
+      if (exprBadge) {
+        if (exprGateVal < 0.5) {
+          exprBadge.textContent = state.lang === "th" ? "ล็อกอัตโนมัติ (โหมดชั้นลึก)" : "Auto-Locked (Deep Layer View)";
+        } else if (state.expressionPaused) {
+          exprBadge.textContent = state.lang === "th" ? "หยุดแอนิเมชันชั่วคราว" : "Animation Paused";
+        } else {
+          exprBadge.textContent = state.lang === "th" ? "ทำงานบนผิวหน้า 100%" : "Intact Face Active";
+        }
+      }
+
+      const isNeutralExpr = exprGateVal > 0.5 && blinkPctInt <= 4 && smilePctInt <= 4 && state.activeBlinkCycleStart < 0;
+      const isHalfBlinkExpr = exprGateVal > 0.5 && state.manualBlinkHold !== null && Math.abs(state.manualBlinkHold - 0.5) <= 0.12;
+      const isFullBlinkExpr = exprGateVal > 0.5 && state.manualBlinkHold !== null && state.manualBlinkHold >= 0.88;
+      const isAutoBlinkActive = exprGateVal > 0.5 && state.activeBlinkCycleStart >= 0;
+      const isSmileExpr = exprGateVal > 0.5 && state.targetSmile >= 0.5;
+
+      document.getElementById("btnExprNeutral")?.classList.toggle("active", isNeutralExpr);
+      document.getElementById("mobBtnExprNeutral")?.classList.toggle("active", isNeutralExpr);
+      document.getElementById("btnExprBlink")?.classList.toggle("active", isAutoBlinkActive || isFullBlinkExpr);
+      document.getElementById("mobBtnExprBlink")?.classList.toggle("active", isAutoBlinkActive || isFullBlinkExpr);
+      document.getElementById("btnExprHalfBlink")?.classList.toggle("active", isHalfBlinkExpr);
+      document.getElementById("btnExprFullBlink")?.classList.toggle("active", isFullBlinkExpr);
+      document.getElementById("btnExprSmile")?.classList.toggle("active", isSmileExpr);
+      document.getElementById("mobBtnExprSmile")?.classList.toggle("active", isSmileExpr);
+      document.getElementById("btnExprPause")?.classList.toggle("active", state.expressionPaused);
+      document.getElementById("mobBtnExprPause")?.classList.toggle("active", state.expressionPaused);
+
+      const tel = document.getElementById("hudTelemetryText");
+      if (tel) {
+        tel.textContent = state.lang === "th"
+          ? `หมุน: ${yawInt > 0 ? "+" + yawInt : yawInt}° · เปิดชั้น: ${rev}% · กะพริบตา: ${blinkPctInt}% · ยิ้ม: ${smilePctInt}%`
+          : `Yaw: ${yawInt > 0 ? "+" + yawInt : yawInt}° · Peel: ${rev}% · Blink: ${blinkPctInt}% · Smile: ${smilePctInt}%`;
+      }
+      const mobTitle = document.getElementById("mobileActiveTitle");
+      if (mobTitle) {
+        mobTitle.textContent = `INTRARAT v5.0 — 3D Head & Neck (${yawInt > 0 ? "+" + yawInt : yawInt}° · Peel ${rev}%)`;
+      }
+    }
+
+    function ensureIntactFaceForExpression() {
+      if (state.isolatedMesh || state.isolatedGroup || state.targetReveal > 4 || state.targetExplode > 4) {
+        focusAnatomicalStage("outer_skin");
+        state.revealDepth = 0;
+        state.targetReveal = 0;
+        state.revealVel = 0;
+        state.explode = 0;
+        state.targetExplode = 0;
+      }
+    }
+
+    function triggerNaturalBlink() {
+      ensureIntactFaceForExpression();
+      state.expressionPaused = false;
+      state.manualBlinkHold = null;
+      state.activeExpressionMode = "natural_blink";
+      state.activeBlinkCycleStart = performance.now();
+      state.nextAutoBlinkTime = performance.now() + 2700;
+      const isTh = state.lang === "th";
+      const btnD = document.getElementById("btnExprPause");
+      const btnM = document.getElementById("mobBtnExprPause");
+      if (btnD) btnD.textContent = isTh ? "หยุดแอนิเมชัน" : "Pause Animation";
+      if (btnM) btnM.textContent = isTh ? "หยุดแอนิเมชัน" : "Pause Anim";
+      try { if (window.parent && window.parent !== window) window.parent.postMessage(getExplorerTelemetry(), "*"); } catch (e) {}
+    }
+
+    function setFacialExpression(mode) {
+      ensureIntactFaceForExpression();
+      if (mode === "neutral") {
+        state.activeExpressionMode = "neutral";
+        state.manualBlinkHold = null;
+        state.activeBlinkCycleStart = -1;
+        state.targetSmile = 0.0;
+        state.nextAutoBlinkTime = performance.now() + 2200;
+      } else if (mode === "half_blink") {
+        state.activeExpressionMode = "half_blink";
+        state.activeBlinkCycleStart = -1;
+        state.manualBlinkHold = 0.50;
+        state.targetSmile = 0.0;
+      } else if (mode === "full_blink") {
+        state.activeExpressionMode = "full_blink";
+        state.activeBlinkCycleStart = -1;
+        state.manualBlinkHold = 1.00;
+        state.targetSmile = 0.0;
+      } else if (mode === "smile") {
+        state.activeExpressionMode = "smile";
+        state.manualBlinkHold = null;
+        state.targetSmile = 1.00;
+        state.nextAutoBlinkTime = Math.min(state.nextAutoBlinkTime, performance.now() + 1600);
+      }
+      syncUIAndCurtain();
+      try { if (window.parent && window.parent !== window) window.parent.postMessage(getExplorerTelemetry(), "*"); } catch (e) {}
+    }
+
+    function setBlinkPercent(val) {
+      ensureIntactFaceForExpression();
+      const b = Math.max(0, Math.min(100, Number(val) || 0)) / 100.0;
+      state.activeBlinkCycleStart = -1;
+      state.manualBlinkHold = b <= 0.01 ? null : b;
+      state.blinkAmount = b;
+      state.activeExpressionMode = b >= 0.85 ? "full_blink" : b >= 0.35 ? "half_blink" : (state.targetSmile > 0.3 ? "smile" : "neutral");
+      syncUIAndCurtain();
+      try { if (window.parent && window.parent !== window) window.parent.postMessage(getExplorerTelemetry(), "*"); } catch (e) {}
+    }
+
+    function setSmilePercent(val) {
+      ensureIntactFaceForExpression();
+      const s = Math.max(0, Math.min(100, Number(val) || 0)) / 100.0;
+      state.targetSmile = s;
+      state.smileAmount = s;
+      state.activeExpressionMode = s >= 0.35 ? "smile" : (state.manualBlinkHold > 0.3 ? "half_blink" : "neutral");
+      syncUIAndCurtain();
+      try { if (window.parent && window.parent !== window) window.parent.postMessage(getExplorerTelemetry(), "*"); } catch (e) {}
+    }
+
+    function toggleExpressionPause(forcePaused) {
+      state.expressionPaused = forcePaused !== undefined ? Boolean(forcePaused) : !state.expressionPaused;
+      if (state.expressionPaused) {
+        state.activeBlinkCycleStart = -1;
+      } else {
+        state.manualBlinkHold = null;
+        state.nextAutoBlinkTime = performance.now() + 700;
+      }
+      const isTh = state.lang === "th";
+      const btnD = document.getElementById("btnExprPause");
+      const btnM = document.getElementById("mobBtnExprPause");
+      if (btnD) btnD.textContent = state.expressionPaused ? (isTh ? "เล่นแอนิเมชันต่อ" : "Resume Animation") : (isTh ? "หยุดแอนิเมชัน" : "Pause Animation");
+      if (btnM) btnM.textContent = state.expressionPaused ? (isTh ? "เล่นต่อ" : "Resume Anim") : (isTh ? "หยุดแอนิเมชัน" : "Pause Anim");
+      syncUIAndCurtain();
+      try { if (window.parent && window.parent !== window) window.parent.postMessage(getExplorerTelemetry(), "*"); } catch (e) {}
+    }
+
+    function setViewportMode(mode) {
+      state.viewportMode = mode;
+      const frame = document.getElementById("viewportFrame");
+      frame.className = "stage-frame mode-" + mode + (state.hudCollapsed ? " hud-collapsed" : "");
+    }
+
+    function setCameraAngle(yawDeg, pitchDeg, zoomVal) {
+      state.targetYaw = clampYaw(yawDeg);
+      state.targetPitch = clampPitch(pitchDeg !== undefined ? pitchDeg : 0);
+      if (zoomVal !== undefined) {
+        state.targetZoom = Math.max(0.70, Math.min(1.85, Number(zoomVal)));
+      }
+    }
+
+    function setYawFromSlider(val) {
+      state.targetYaw = clampYaw(val);
+    }
+
+    function setRevealTarget(val) {
+      state.isolatedMesh = null;
+      state.isolatedGroup = null;
+      const r = Math.max(0, Math.min(100, Number(val) || 0));
+      state.targetReveal = r;
+      // Automatically update selectedMesh & inspector to explain the anatomical layer exposed at this Peel %
+      if (r <= 10) {
+        state.activeStage = "outer_skin";
+        state.selectedMesh = "Skin_Mesh";
+        state.highlightedGroup = [];
+        state.manualBlinkHold = null;
+        state.expressionPaused = false;
+        state.nextAutoBlinkTime = Math.min(state.nextAutoBlinkTime, performance.now() + 900);
+      } else if (r <= 40) {
+        state.activeStage = "subcutaneous_fat";
+        state.selectedMesh = "Subcutaneous_Fat_Mesh";
+        state.highlightedGroup = ["Subcutaneous_Fat_Mesh", "Malar_Fat_Pad_Mesh"];
+      } else if (r <= 68) {
+        state.activeStage = "smas_deep_plane";
+        state.selectedMesh = "SMAS_Mesh";
+        state.highlightedGroup = ["SMAS_Mesh", "Platysma_Mesh", "Zygomatic_Retaining_Ligament_Mesh", "Masseteric_Retaining_Ligaments_Mesh", "Mandibular_Retaining_Ligament_Mesh"];
+      } else {
+        state.activeStage = "smas_deep_plane";
+        state.selectedMesh = "Facial_Nerve_Mesh";
+        state.highlightedGroup = ["Facial_Nerve_Mesh", "Zygomatic_Retaining_Ligament_Mesh", "Parotid_Gland_Mesh", "Facial_Artery_Mesh", "Facial_Vein_Mesh"];
+      }
+      buildLayerDrawerUI();
+      updateInspectorUI();
+    }
+
+    function animateRevealTo(targetPct) {
+      setRevealTarget(targetPct);
+    }
+
+    function setExplodePercent(val) {
+      const exp = Math.max(0, Math.min(100, Number(val) || 0));
+      state.targetExplode = exp;
+      if (exp > 35) {
+        state.isolatedMesh = null;
+        state.isolatedGroup = null;
+        state.activeStage = "explode_17";
+      }
+      updateInspectorUI();
+    }
+
+    function adjustZoom(delta) {
+      state.targetZoom = Math.max(0.70, Math.min(1.85, state.targetZoom + Number(delta)));
+    }
+
+    function setStudioLightAzimuth(val) {
+      state.lightAzimuth = Number(val) || 0;
+      const lbl = document.getElementById("lblLightAz");
+      if (lbl) lbl.textContent = (state.lightAzimuth > 0 ? "+" : "") + state.lightAzimuth + "°";
+    }
+
+    function setShaderMode(modeIdx) {
+      state.shaderMode = Number(modeIdx) || 0;
+      for (let i = 0; i < 4; i++) {
+        const btn = document.getElementById("btnShader" + i);
+        if (btn) btn.classList.toggle("active", i === state.shaderMode);
+      }
+    }
+
+    function selectAnatomicalMesh(meshId) {
+      state.selectedMesh = meshId;
+      state.highlightedGroup = [meshId];
+      state.visible[meshId] = true;
+      if (meshId === "Subcutaneous_Fat_Mesh" && state.targetReveal < 20) {
+        state.targetReveal = 28;
+      } else if ((meshId === "SMAS_Mesh" || meshId === "Platysma_Mesh") && state.targetReveal < 42) {
+        state.targetReveal = 52;
+      } else if (meshId !== "Skin_Mesh" && meshId !== "Subcutaneous_Fat_Mesh" && state.targetReveal < 56) {
+        state.targetReveal = 68;
+      }
+      buildLayerDrawerUI();
+      updateInspectorUI();
+    }
+
+    function toggleMeshVisibility(e, meshId) {
+      e.stopPropagation();
+      state.visible[meshId] = !state.visible[meshId];
+      buildLayerDrawerUI();
+      updateInspectorUI();
+    }
+
+    function applyLayerPreset(preset) {
+      state.isolatedMesh = null;
+      state.isolatedGroup = null;
+      document.getElementById("btnIsolateMesh")?.classList.remove("active");
+      ["btnIsoSmas", "btnIsoPlatysma", "btnIsoLigaments", "btnIsoCn7"].forEach(id => {
+        document.getElementById(id)?.classList.remove("active");
+      });
+      STRUCTURES_17.forEach(s => {
+        if (preset === "all") state.visible[s.id] = true;
+        else if (preset === "deep") state.visible[s.id] = (s.id !== "Skin_Mesh" && s.id !== "Subcutaneous_Fat_Mesh");
+        else if (preset === "milA") state.visible[s.id] = (s.milestone === "A");
+        else if (preset === "milB") state.visible[s.id] = (s.milestone === "A" || s.milestone === "B");
+      });
+      if (preset === "deep") state.targetReveal = 68;
+      buildLayerDrawerUI();
+      updateInspectorUI();
+    }
+
+    function toggleIsolateSelectedMesh() {
+      const btn = document.getElementById("btnIsolateMesh");
+      state.isolatedGroup = null;
+      if (state.isolatedMesh === state.selectedMesh) {
+        state.isolatedMesh = null;
+        if (btn) btn.classList.remove("active");
+      } else {
+        state.isolatedMesh = state.selectedMesh;
+        if (btn) btn.classList.add("active");
+      }
+      buildLayerDrawerUI();
+      updateInspectorUI();
+    }
+
+    function toggleLayerDrawer(forceOpen) {
+      state.drawerOpen = forceOpen !== undefined ? Boolean(forceOpen) : !state.drawerOpen;
+      document.getElementById("layerDrawerPanel")?.classList.toggle("open", state.drawerOpen);
+      document.getElementById("btnToggleCompactHud")?.classList.toggle("active", state.drawerOpen);
+    }
+
+    function open17LayersSection() {
+      const sec17 = document.getElementById("advSec17Layers");
+      if (sec17) sec17.open = true;
+      toggleLayerDrawer(true);
+      setTimeout(() => {
+        try { sec17?.scrollIntoView({ behavior: "smooth", block: "nearest" }); } catch (_e) {}
+      }, 80);
+    }
+
+    function toggleCreditsModal(openState) {
+      const m = document.getElementById("creditsModal");
+      if (m) m.classList.toggle("open", !!openState);
+    }
+
+    function handleCreditsBackdropClick(e) {
+      if (e.target && e.target.id === "creditsModal") {
+        toggleCreditsModal(false);
+      }
+    }
+
+    function reset3DView() {
+      setStudioLightAzimuth(-22);
+      const slLight = document.getElementById("sliderLightAz");
+      if (slLight) slLight.value = -22;
+      setShaderMode(0);
+      state.activeExpressionMode = "neutral";
+      state.manualBlinkHold = null;
+      state.activeBlinkCycleStart = -1;
+      state.blinkAmount = 0.0;
+      state.targetSmile = 0.0;
+      state.smileAmount = 0.0;
+      focusAnatomicalStage("outer_skin");
+    }
+
+    function toggleExplorerLanguage(forceLang) {
+      state.lang = forceLang ? (forceLang === "th" ? "th" : "en") : (state.lang === "th" ? "en" : "th");
+      const isTh = state.lang === "th";
+      document.documentElement.lang = state.lang;
+      const setTxt = (id, en, th) => { const el = document.getElementById(id); if (el) el.textContent = isTh ? th : en; };
+      setTxt("lblLayerBarPrefix", "Anatomical Layers:", "ชั้นกายวิภาค:");
+      setTxt("btnLangSwitch", "EN | TH", "ไทย | EN");
+      setTxt("btnStageSkin", "Outer Face", "ผิวชั้นนอก");
+      setTxt("btnStageFat", "Subcutaneous Fat", "ชั้นไขมันตื้น");
+      setTxt("btnStageSmas", "SMAS & Deep Plane", "ชั้น SMAS & Deep Plane");
+      setTxt("btnIsoCn7", "Facial Nerve (CN VII)", "เส้นประสาทใบหน้า CN VII");
+      setTxt("btnStageNeck", "Neck & Platysma", "ลำคอ & Platysma");
+      setTxt("btnStageExplode", "Explode 17 Layers", "แยก 17 โครงสร้าง");
+      setTxt("btnTopStructures", "17 Structures", "17 โครงสร้าง");
+      setTxt("btnToggleCompactHud", "⚙ Advanced Controls", "⚙ ตั้งค่าขั้นสูง");
+      setTxt("btnOpenCredits", "Attribution & Open-Source Licenses", "แหล่งอ้างอิงและสัญญาอนุญาต");
+      setTxt("btnTopReset", "Reset", "รีเซ็ต");
+      setTxt("lblSelectedStructureTag", "SELECTED ANATOMICAL LAYER", "โครงสร้างกายวิภาคที่เลือก");
+      setTxt("btnViewAll17Mini", "All 17 Layers ▸", "ดูครบ 17 ชั้น ▸");
+      setTxt("drawerHeadTitle", "Advanced 3D Controls", "ตั้งค่าการสำรวจ 3 มิติขั้นสูง");
+      setTxt("lblDrawerSubTitle", "Layer Peel, Expressions, Orbit & 17 Structures", "เปิดชั้นเนื้อเยื่อ สีหน้า การหมุน และโครงสร้าง 17 ชั้น");
+      setTxt("sumAdvPeel", "Layer Peel & Separation", "การเปิดชั้นเนื้อเยื่อและแยกโครงสร้าง");
+      setTxt("sumAdv17Layers", "All 17 Anatomical Structures", "โครงสร้างกายวิภาคทั้ง 17 ชั้น");
+      setTxt("sumAdvDiagnostics", "Studio Lighting & Technical Diagnostics", "แสงสตูดิโอและข้อมูลเทคนิค");
+      setTxt("stageSubTag", "3D Head & Neck Anatomy", "กายวิภาคศีรษะและลำคอ 3 มิติ");
+      setTxt("btnStageSurf0", "Intact Face 0°", "ใบหน้าสมบูรณ์ 0°");
+      setTxt("btnIsoSmas", "Isolate SMAS", "แยกชั้น SMAS");
+      setTxt("btnIsoPlatysma", "Isolate Platysma", "แยกชั้น Platysma");
+      setTxt("btnIsoLigaments", "Retaining Ligaments", "เส้นเอ็นยึดใบหน้า");
+      setTxt("btnStageStruct17", "17 Layers", "17 ชั้น");
+      setTxt("lblFacialAngleHead", "Camera Orbit & Zoom (-90° to +90°)", "การหมุนมุมมองและซูม (-90° ถึง +90°)");
+      setTxt("btnAngM90", "-90° L", "-90° ซ้าย");
+      setTxt("btnAngM45", "-45° L", "-45° ซ้าย");
+      setTxt("btnAng0", "0° Front", "0° หน้าตรง");
+      setTxt("btnAngP45", "+45° R", "+45° ขวา");
+      setTxt("btnAngP90", "+90° R", "+90° ขวา");
+      setTxt("lblSliderYawTitle", "Yaw Orbit (-90° to +90°)", "หมุนซ้าย–ขวา (Yaw Orbit)");
+      setTxt("lblSliderRevealTitle", "Progressive Layer Peel (Reveal)", "เปิดชั้นกายวิภาคตามลำดับ (Peel)");
+      setTxt("lblSliderExplodeTitle", "17-Layer Separation (Explode)", "แยกชิ้นส่วน 17 ชั้น (Explode)");
+      setTxt("btnNeckAngle", "Neck View", "มุมลำคอ");
+      setTxt("btnResetLeft", "Reset", "รีเซ็ต");
+      setTxt("lblFacialExprHead", "3D Facial Expressions & Animation", "การแสดงสีหน้าและแอนิเมชัน 3 มิติ");
+      setTxt("btnExprBlink", "Natural Blink", "กะพริบตาธรรมชาติ");
+      setTxt("btnExprSmile", "Gentle Smile", "ยิ้มธรรมชาติ");
+      setTxt("btnExprNeutral", "Neutral Expression", "สีหน้าปกติ");
+      setTxt("btnExprPause", state.expressionPaused ? "Resume Animation" : "Pause Animation", state.expressionPaused ? "เล่นแอนิเมชันต่อ" : "หยุดแอนิเมชัน");
+      setTxt("btnExprHalfBlink", "Half-Closed (50%)", "หลับตาครึ่งหนึ่ง (50%)");
+      setTxt("btnExprFullBlink", "Closed Eyes (100%)", "หลับตาสนิท (100%)");
+      setTxt("lblSliderBlinkTitle", "Eyelid Blink", "กะพริบตา");
+      setTxt("lblSliderSmileTitle", "Natural Smile", "รอยยิ้ม");
+      setTxt("mobBtnExprBlink", "Natural Blink", "กะพริบตา");
+      setTxt("mobBtnExprSmile", "Gentle Smile", "ยิ้มธรรมชาติ");
+      setTxt("mobBtnExprNeutral", "Neutral", "สีหน้าปกติ");
+      setTxt("mobBtnExprPause", state.expressionPaused ? "Resume Anim" : "Pause Anim", state.expressionPaused ? "เล่นต่อ" : "หยุดแอนิเมชัน");
+      setTxt("lblSliderLightTitle", "Studio Key Light Azimuth", "ทิศทางแสงสตูดิโอ (Key Light)");
+      setTxt("btnCloseDrawer", "✕ Close", "✕ ปิด");
+      setTxt("btnPresetAll17", "Show All 17", "แสดงครบ 17 ชั้น");
+      setTxt("btnIsolateMesh", "Isolate Selected", "แสดงเฉพาะชิ้นที่เลือก");
+
+      const fn1 = document.getElementById("footerNoticeLine1");
+      if (fn1) {
+        fn1.innerHTML = isTh
+          ? "<strong>โรงพยาบาลอินทรารัตน์ กรุงเทพฯ</strong> — สื่อการเรียนรู้กายวิภาค 3 มิติเพื่อเตรียมความพร้อมก่อนปรึกษาแพทย์ ไม่ใช่การจำลองผลลัพธ์หลังผ่าตัด"
+          : "<strong>Intrarat International Hospital, Bangkok</strong> — Educational 3D anatomical reference for pre-consultation orientation; not a surgical outcome simulator.";
+      }
+
+      const st = ANATOMICAL_STAGES[state.activeStage] || ANATOMICAL_STAGES.outer_skin;
+      const hTitle = document.getElementById("heroTitleText");
+      const hDesc = document.getElementById("heroDescText");
+      if (hTitle) hTitle.textContent = isTh ? st.titleTh : st.titleEn;
+      if (hDesc) hDesc.textContent = isTh ? st.descTh : st.descEn;
+
+      buildLayerDrawerUI();
+      updateInspectorUI();
+    }
+
+    function updateInspectorUI() {
+      const isTh = state.lang === "th";
+      const s = STRUCTURES_17.find(item => item.id === state.selectedMesh) || STRUCTURES_17[0];
+      const visCount = STRUCTURES_17.filter(item => isMeshCurrentlyVisible(item.id)).length;
+      const cntEl = document.getElementById("hudVisibleCount");
+      if (cntEl) cntEl.textContent = isTh ? `${visCount}/17 ชั้น` : `${visCount}/17 Layers`;
+      const subEl = document.getElementById("drawerGlbSub");
+      if (subEl) subEl.textContent = isTh
+        ? `แสดงผล ${visCount}/17 โครงสร้าง`
+        : `Showing ${visCount}/17 Structures`;
+
+      const gEl = document.getElementById("inspMiniGroup");
+      const tEl = document.getElementById("inspMiniTitle");
+      const dEl = document.getElementById("inspMiniDesc");
+      if (gEl) gEl.textContent = `${s.group} · ${s.fma}`;
+      if (tEl) tEl.textContent = `${s.num}. ${isTh ? s.nameTh : s.nameEn}`;
+      if (dEl) dEl.textContent = isTh ? s.descTh : s.descEn;
+    }
+
+    function buildLayerDrawerUI() {
+      const container = document.getElementById("meshListContainer");
+      if (!container) return;
+      const isTh = state.lang === "th";
+      container.innerHTML = STRUCTURES_17.map(s => {
+        const isSel = state.selectedMesh === s.id ? "selected" : "";
+        const chk = isMeshCurrentlyVisible(s.id) ? "checked" : "";
+        const primaryName = isTh ? s.nameTh : s.nameEn;
+        const ariaText = isTh ? `เปิด/ปิด ${s.nameTh}` : `Toggle ${s.nameEn}`;
+        return `
+          <div class="mesh-row-item ${isSel}" data-mesh-id="${s.id}" onclick="selectAnatomicalMesh('${s.id}')">
+            <div style="display:flex;align-items:center;gap:8px;min-width:0;">
+              <input type="checkbox" ${chk} onclick="toggleMeshVisibility(event, '${s.id}')" aria-label="${ariaText}" style="accent-color:#087A3B;" />
+              <span class="mesh-color-dot" style="background:${s.colorHex};"></span>
+              <div style="min-width:0;">
+                <div style="font-size:11px;font-weight:700;color:#0F291E;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                  ${s.num}. ${primaryName}
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    // =========================================================================
+    // 6. POINTER ORBIT (STRICT -90°..+90°), OPTICAL CURTAIN SCRUB & ZOOM
+    // =========================================================================
+    const opticalHandle = document.getElementById("opticalHandle");
+    opticalHandle?.addEventListener("pointerdown", (e) => {
+      e.stopPropagation();
+      state.isCurtainDragging = true;
+    });
+
+    canvas.addEventListener("pointerdown", (e) => {
+      state.isOrbitDragging = true;
+      state.pointerDownPos = { x: e.clientX, y: e.clientY };
+      state.lastPointerPos = { x: e.clientX, y: e.clientY };
+    });
+
+    window.addEventListener("pointermove", (e) => {
+      if (state.isCurtainDragging) {
+        const frame = document.getElementById("viewportFrame");
+        const rect = frame.getBoundingClientRect();
+        const relX = (e.clientX - rect.left) / Math.max(1, rect.width);
+        const pct = Math.max(0, Math.min(100, Math.round(((0.76 - relX) / 0.52) * 100)));
+        setRevealTarget(pct);
+        return;
+      }
+      if (!state.isOrbitDragging) return;
+      const dx = e.clientX - state.lastPointerPos.x;
+      const dy = e.clientY - state.lastPointerPos.y;
+      state.lastPointerPos = { x: e.clientX, y: e.clientY };
+      state.targetYaw = clampYaw(state.targetYaw + dx * 0.42);
+      state.targetPitch = clampPitch(state.targetPitch + dy * 0.25);
+    });
+
+    window.addEventListener("pointerup", (e) => {
+      if (state.isCurtainDragging) {
+        state.isCurtainDragging = false;
+        return;
+      }
+      if (state.isOrbitDragging) {
+        state.isOrbitDragging = false;
+        const dist = Math.hypot(e.clientX - state.pointerDownPos.x, e.clientY - state.pointerDownPos.y);
+        if (dist < 6) {
+          handleCanvas3DPick(e);
+        }
+      }
+    });
+
+    canvas.addEventListener("wheel", (e) => {
+      e.preventDefault();
+      adjustZoom(e.deltaY < 0 ? 0.10 : -0.10);
+    }, { passive: false });
+
+    canvas.addEventListener("touchstart", (e) => {
+      if (e.touches.length === 2) {
+        state.isOrbitDragging = false;
+        const dx = e.touches[0].clientX - e.touches[1].clientX;
+        const dy = e.touches[0].clientY - e.touches[1].clientY;
+        state.pinchStartDist = Math.hypot(dx, dy);
+      }
+    }, { passive: true });
+
+    canvas.addEventListener("touchmove", (e) => {
+      if (e.touches.length === 2 && state.pinchStartDist > 0) {
+        const dx = e.touches[0].clientX - e.touches[1].clientX;
+        const dy = e.touches[0].clientY - e.touches[1].clientY;
+        const d = Math.hypot(dx, dy);
+        adjustZoom((d - state.pinchStartDist) * 0.004);
+        state.pinchStartDist = d;
+      }
+    }, { passive: true });
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") setCameraAngle(state.targetYaw - 15, state.targetPitch);
+      else if (e.key === "ArrowRight") setCameraAngle(state.targetYaw + 15, state.targetPitch);
+      else if (e.key === "Escape") toggleCreditsModal(false);
+    });
+
+    function handleCanvas3DPick(e) {
+      const rect = canvas.getBoundingClientRect();
+      const nx = (e.clientX - rect.left) / Math.max(1, rect.width);
+      const ny = (e.clientY - rect.top) / Math.max(1, rect.height);
+
+      if (cpuMeshes && cpuMeshes.length > 0) {
+        const aspect = canvas.width / Math.max(1, canvas.height);
+        const mob = isMobileLayoutActive();
+        const fovRad = ((mob ? 30.0 : 25.5) * Math.PI) / 180.0;
+        const baseCamZ = mob ? 5.10 : 4.12;
+        const camYOffset = mob ? 0.14 : -0.105;
+        const camZ = -baseCamZ / Math.max(0.70, state.zoom);
+        const f = 1.0 / Math.tan(fovRad / 2);
+        const pitchRad = (state.pitch * Math.PI) / 180.0;
+        const yawRad = (state.yaw * Math.PI) / 180.0;
+        const cp = Math.cos(pitchRad), sp = Math.sin(pitchRad);
+        const cy = Math.cos(yawRad),   sy = Math.sin(yawRad);
+        const expFactor = state.explode / 100.0;
+
+        let bestId = null;
+        let bestScore = Infinity;
+
+        for (let mIdx = 0; mIdx < cpuMeshes.length; mIdx++) {
+          const cm = cpuMeshes[mIdx];
+          if (!cm || !isMeshCurrentlyVisible(cm.id)) continue;
+          if (cm.id === "Skin_Mesh" && state.revealDepth > 35 && state.explode < 25) continue;
+
+          const ev = cm.meta.explodeVec || [0, 0, 0];
+          const ex = ev[0] * expFactor, ey = ev[1] * expFactor, ez = ev[2] * expFactor;
+          const pos = cm.pos;
+          const step = Math.max(3, Math.floor((pos.length / 3) / 100) * 3);
+
+          let minD2 = Infinity;
+          for (let k = 0; k < pos.length; k += step) {
+            const px = pos[k] + ex;
+            const py = pos[k + 1] + ey;
+            const pz = pos[k + 2] + ez;
+            const wx = cy * px + sy * pz;
+            const wy = sp * sy * px + cp * py - sp * cy * pz;
+            const wz = -cp * sy * px + sp * py + cp * cy * pz;
+            const vy = wy + camYOffset;
+            const vz = wz + camZ;
+            if (vz >= -0.1) continue;
+            const sx = ((wx * (f / aspect)) / (-vz)) * 0.5 + 0.5;
+            const syScr = 0.5 - ((vy * f) / (-vz)) * 0.5;
+            const d2 = (sx - nx) * (sx - nx) + (syScr - ny) * (syScr - ny);
+            if (d2 < minD2) minD2 = d2;
+          }
+          if (minD2 < 0.018) {
+            const depthBonus = (cm.id === "Facial_Nerve_Mesh" || cm.id.includes("Ligament") || cm.id === "Platysma_Mesh" || cm.id === "SMAS_Mesh") ? -0.0015 : 0;
+            const score = minD2 + depthBonus;
+            if (score < bestScore) {
+              bestScore = score;
+              bestId = cm.id;
+            }
+          }
+        }
+
+        if (bestId) {
+          state.selectedMesh = bestId;
+          state.highlightedGroup = [bestId];
+          buildLayerDrawerUI();
+          updateInspectorUI();
+          try { if (window.parent && window.parent !== window) window.parent.postMessage(getExplorerTelemetry(), "*"); } catch (err) {}
+          return;
+        }
+      }
+    }
+
+    document.getElementById("glbFileInput")?.addEventListener("change", (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        try {
+          const parsed = parseGlbBinaryToMeshes(ev.target.result);
+          uploadGlbToGpu(parsed, file.name);
+        } catch (err) {
+          console.error("Failed to parse GLB:", err);
+        }
+      };
+      reader.readAsArrayBuffer(file);
+    });
+
+    // Boot v5.0 Engine directly from full-model.glb?v=5.0
+    function bootDeepPlane3DExplorer() {
+      if (window.__EXPLORER_BOOTED__) return;
+      window.__EXPLORER_BOOTED__ = true;
+      state.lang = (new URLSearchParams(window.location.search).get("lang") || "en").toLowerCase() === "th" ? "th" : "en";
+      fetch("full-model.glb?v=5.3", { cache: "no-cache" })
+        .then(r => {
+          if (!r.ok) throw new Error("GLB HTTP " + r.status);
+          return r.arrayBuffer();
+        })
+        .then(buf => {
+          const m = parseGlbBinaryToMeshes(buf);
+          if (m.meshes.length !== 17) throw new Error("Expected 17 anatomical structures");
+          uploadGlbToGpu(m, "intrarat_deep_plane_anatomy_v5.glb");
+          window.__INTRARAT_FULL_MODEL_READY__ = true;
+          try { if (window.parent && window.parent !== window) window.parent.postMessage(getExplorerTelemetry(), "*"); } catch (err) {}
+        })
+        .catch(e => {
+          window.__INTRARAT_FULL_MODEL_ERROR__ = String(e);
+          console.error("Failed to load v5.0 GLB:", e);
+        });
+      requestAnimationFrame(renderLoop);
+    }
+
+    if (document.readyState === "loading") window.addEventListener("DOMContentLoaded", bootDeepPlane3DExplorer);
+    else bootDeepPlane3DExplorer();
+
+    // =========================================================================
+    // 7. INTRARAT ROUND 04 BIDIRECTIONAL POSTMESSAGE & MODE BRIDGE
+    // =========================================================================
+    const PRESET_CONFIGS = {
+      outer_skin: ANATOMICAL_STAGES.outer_skin,
+      subcutaneous_fat: ANATOMICAL_STAGES.subcutaneous_fat,
+      smas_deep_plane: ANATOMICAL_STAGES.smas_deep_plane,
+      neck_platysma: ANATOMICAL_STAGES.neck_platysma,
+      explode_17: ANATOMICAL_STAGES.explode_17,
+      chapter1_anatomy: {
+        stageId: "subcutaneous_fat",
+        reveal: 28, yaw: 0, pitch: 0, zoom: 1.02, explode: 0,
+        selectedMesh: "Subcutaneous_Fat_Mesh",
+        highlightedGroup: ["Subcutaneous_Fat_Mesh", "Malar_Fat_Pad_Mesh"],
+        titleEn: ANATOMICAL_STAGES.subcutaneous_fat.titleEn,
+        titleTh: ANATOMICAL_STAGES.subcutaneous_fat.titleTh,
+        descEn: ANATOMICAL_STAGES.subcutaneous_fat.descEn,
+        descTh: ANATOMICAL_STAGES.subcutaneous_fat.descTh
+      },
+      chapter2_deep_plane: {
+        stageId: "smas_deep_plane",
+        reveal: 62, yaw: -18, pitch: -2, zoom: 1.04, explode: 0,
+        selectedMesh: "SMAS_Mesh",
+        highlightedGroup: ["SMAS_Mesh", "Zygomatic_Retaining_Ligament_Mesh", "Masseteric_Retaining_Ligaments_Mesh", "Mandibular_Retaining_Ligament_Mesh", "Facial_Nerve_Mesh"],
+        titleEn: ANATOMICAL_STAGES.smas_deep_plane.titleEn,
+        titleTh: ANATOMICAL_STAGES.smas_deep_plane.titleTh,
+        descEn: ANATOMICAL_STAGES.smas_deep_plane.descEn,
+        descTh: ANATOMICAL_STAGES.smas_deep_plane.descTh
+      },
+      chapter3_neck_lift: {
+        stageId: "neck_platysma",
+        reveal: 48, yaw: 22, pitch: -6, zoom: 1.06, explode: 0,
+        selectedMesh: "Platysma_Mesh",
+        highlightedGroup: ["Platysma_Mesh", "Mandibular_Retaining_Ligament_Mesh", "SMAS_Mesh", "Facial_Vein_Mesh"],
+        titleEn: ANATOMICAL_STAGES.neck_platysma.titleEn,
+        titleTh: ANATOMICAL_STAGES.neck_platysma.titleTh,
+        descEn: ANATOMICAL_STAGES.neck_platysma.descEn,
+        descTh: ANATOMICAL_STAGES.neck_platysma.descTh
+      },
+      neck_lift_explorer: {
+        stageId: "neck_platysma",
+        reveal: 48, yaw: 22, pitch: -6, zoom: 1.06, explode: 0,
+        selectedMesh: "Platysma_Mesh",
+        highlightedGroup: ["Platysma_Mesh", "Mandibular_Retaining_Ligament_Mesh", "SMAS_Mesh", "Facial_Vein_Mesh"],
+        titleEn: ANATOMICAL_STAGES.neck_platysma.titleEn,
+        titleTh: ANATOMICAL_STAGES.neck_platysma.titleTh,
+        descEn: ANATOMICAL_STAGES.neck_platysma.descEn,
+        descTh: ANATOMICAL_STAGES.neck_platysma.descTh
+      },
+      chapter4_nerve_safety: {
+        stageId: "smas_deep_plane",
+        reveal: 76, yaw: -26, pitch: -2, zoom: 1.06, explode: 0,
+        selectedMesh: "Facial_Nerve_Mesh",
+        highlightedGroup: ["Facial_Nerve_Mesh", "Zygomatic_Retaining_Ligament_Mesh", "Parotid_Gland_Mesh", "Deep_Fascia_Muscle_Mesh", "Facial_Artery_Mesh"],
+        titleEn: "Stage 3B — Facial Nerve (CN VII) & Deep Parotid-Masseteric Safety Floor",
+        titleTh: "ระยะที่ 3B — เส้นประสาทใบหน้าคู่ที่ 7 (CN VII) และชั้นพังผืดลึก Parotid-Masseteric",
+        descEn: "5 motor divisions of CN VII protected beneath the deep parotid-masseteric fascia floor alongside the Zygomatic/Masseteric/Mandibular retaining ligaments.",
+        descTh: "แขนงเส้นประสาทใบหน้าคู่ที่ 7 ทั้ง 5 แขนง ซึ่งได้รับการปกป้องอยู่ใต้ชั้นพังผืดลึก Parotid-Masseteric Fascia"
+      },
+      anatomy_mirror: {
+        stageId: "smas_deep_plane",
+        reveal: 54, yaw: 0, pitch: 0, zoom: 1.02, explode: 0,
+        selectedMesh: "SMAS_Mesh",
+        highlightedGroup: ["Skin_Mesh", "Subcutaneous_Fat_Mesh", "SMAS_Mesh", "Facial_Nerve_Mesh", "Bone_Skull_Mesh"],
+        titleEn: "INTRARAT — 3D Anatomy Mirror (50/50 Bilateral Dissection Split)",
+        titleTh: "INTRARAT — กระจกกายวิภาค 3 มิติ (เปรียบเทียบซ้าย-ขวา 50/50)",
+        descEn: "Synchronized bilateral comparison between external 3D facial contour and deep sub-SMAS surgical planes.",
+        descTh: "เปรียบเทียบโครงสร้างใบหน้า 3 มิติชั้นนอกและชั้นลึกใต้พังผืด SMAS แบบ 50/50 ไปพร้อมกัน"
+      }
+    };
+
+    function getExplorerTelemetry() {
+      const visCount = STRUCTURES_17.filter(item => isMeshCurrentlyVisible(item.id)).length;
+      const isIso = Boolean(state.isolatedMesh || state.isolatedGroup);
+      const exprGate = (!isIso && state.revealDepth <= 6 && state.explode <= 6) ? 1.0 : 0.0;
+      return {
+        type: "intrarat-3d-telemetry",
+        ready: Boolean(window.__INTRARAT_FULL_MODEL_READY__ || state.totalVertices > 0),
+        glbSourceName: state.glbSourceName,
+        lang: state.lang || "en",
+        activeStage: state.activeStage,
+        meshCount: STRUCTURES_17.length,
+        visibleCount: visCount,
+        totalVertices: state.totalVertices,
+        totalTriangles: state.totalTriangles,
+        revealDepth: Math.round(state.targetReveal),
+        yaw: Math.round(state.targetYaw),
+        pitch: Math.round(state.targetPitch),
+        zoom: Number(state.targetZoom.toFixed(2)),
+        explode: Math.round(state.targetExplode),
+        blinkAmount: Number((state.blinkAmount * exprGate).toFixed(3)),
+        smileAmount: Number((state.smileAmount * exprGate).toFixed(3)),
+        autoBlinkCount: state.autoBlinkCount || 0,
+        expressionGate: exprGate,
+        expressionMode: state.activeExpressionMode,
+        expressionPaused: Boolean(state.expressionPaused),
+        isRecordingProof: Boolean(state.isRecordingProof),
+        lastRecordedProofUrl: state.lastRecordedProofUrl || "",
+        selectedMesh: state.selectedMesh,
+        highlightedGroup: state.highlightedGroup,
+        isolatedMesh: state.isolatedMesh,
+        isolatedGroup: state.isolatedGroup
+      };
+    }
+
+    // Continuous 17.0-Second (30 FPS, 1280x720) Real-Browser WebGL Video Recorder for Section 5 Visual Proof
+    async function recordContinuousBlinkProofVideo(opts = {}) {
+      if (state.isRecordingProof) return { ok: false, status: "already_recording" };
+      state.isRecordingProof = true;
+      state.lastRecordedProofUrl = "";
+      const btnRec = document.getElementById("btnRecordProof16s");
+      if (btnRec) {
+        btnRec.textContent = "🔴 REC 0.0s / 17.0s";
+        btnRec.classList.add("active");
+      }
+
+      // 1. Start in exact Intact-Face Default State (Skin 100%, Reveal 0%, Explode 0%, Neutral, Unpaused, 0° Front)
+      focusAnatomicalStage("outer_skin");
+      state.revealDepth = 0; state.targetReveal = 0; state.revealVel = 0;
+      state.explode = 0; state.targetExplode = 0;
+      state.yaw = 0; state.targetYaw = 0;
+      state.pitch = 0; state.targetPitch = 0;
+      state.zoom = 1.0; state.targetZoom = 1.0;
+      state.shaderMode = 0;
+      state.expressionPaused = false;
+      state.manualBlinkHold = null;
+      state.blinkAmount = 0.0;
+      state.smileAmount = 0.0;
+      state.targetSmile = 0.0;
+      state.activeExpressionMode = "neutral";
+      state.activeBlinkCycleStart = -1;
+      state.autoBlinkCount = 0;
+      const startTime = performance.now();
+      // Schedule Automatic Blink #1 at t = 1.25s (and renderLoop will autonomously schedule Automatic Blink #2 ~2.4s later at t ~ 4.2s!)
+      state.nextAutoBlinkTime = startTime + 1250;
+
+      const durationMs = Number(opts.durationMs) || 17000;
+      const filename = opts.filename || "round04_page04_v56_live_3d_eyelid_blink_and_smile_17s_proof.mp4";
+
+      const recCanvas = document.createElement("canvas");
+      recCanvas.width = 1280;
+      recCanvas.height = 720;
+      const ctx = recCanvas.getContext("2d");
+
+      // Schedule Manual Control Phases ONLY after Automatic Blink #1 and Automatic Blink #2 have completed autonomously (t >= 6.3s):
+      // Phase 1 (0.0s..1.25s): Full human face with both eyes open (No user input)
+      // Phase 2 (1.25s..3.6s): Automatic Blink #1 without user input
+      // Phase 3 (3.6s..6.3s):  Automatic Blink #2 without user input
+      // Phase 4 (6.3s..8.8s):  Manual Full Eyelid Closure (100% Closed Eyes)
+      // Phase 5 (8.8s..10.7s): Eyelids Reopening to Neutral (100% -> 0%)
+      // Phase 6 (10.7s..14.1s): Gentle Smile (100% Natural Zygomaticus/Duchenne Smile)
+      // Phase 7 (14.1s..17.0s): Return to Neutral (0% Smile, Automatic Blinking Active)
+      const timers = [
+        setTimeout(() => { setFacialExpression("full_blink"); }, 6300),
+        setTimeout(() => { setFacialExpression("neutral"); }, 8800),
+        setTimeout(() => { setFacialExpression("smile"); }, 10700),
+        setTimeout(() => { setFacialExpression("neutral"); }, 14100)
+      ];
+
+      let active = true;
+      function getPhaseLabel(sec) {
+        if (sec < 1.20) return "STEP 1/7 · Full Human Face — Both Eyes Open (Default Intact Face · 0% Peel · Auto-Blink Active)";
+        if (sec < 3.50) return `STEP 2/7 · Automatic Blink #1 (No User Input · Autonomous Scheduler · Auto-Blinks: ${state.autoBlinkCount})`;
+        if (sec < 6.30) return `STEP 3/7 · Automatic Blink #2 (No User Input · Autonomous Scheduler · Auto-Blinks: ${state.autoBlinkCount})`;
+        if (sec < 8.80) return "STEP 4/7 · Manual Full Eyelid Closure (100% Closed Eyes — 3D Eyelid Mesh Covering Eyeballs)";
+        if (sec < 10.70) return "STEP 5/7 · Eyelids Reopening Naturally Across Eyeballs (100% Closed → 0% Open)";
+        if (sec < 14.10) return "STEP 6/7 · Gentle Smile (100% Zygomaticus Commissure Lift, Cheek Elevation & Duchenne Lower Lid)";
+        return `STEP 7/7 · Return to Neutral Face (0% Smile · Continuous Auto-Blink Active · Auto-Blinks: ${state.autoBlinkCount})`;
+      }
+
+      function compositeFrame() {
+        if (!active) return;
+        const elapsed = performance.now() - startTime;
+        const sec = elapsed / 1000.0;
+        if (btnRec) btnRec.textContent = `🔴 REC ${sec.toFixed(1)}s / ${(durationMs / 1000).toFixed(1)}s`;
+
+        // Draw warm pearl studio background matching .stage-frame
+        const grad = ctx.createRadialGradient(640, 310, 40, 640, 340, 650);
+        grad.addColorStop(0.0, "#FDFBF7");
+        grad.addColorStop(0.55, "#EDE5D4");
+        grad.addColorStop(1.0, "#C4B8A3");
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, 1280, 720);
+
+        // Draw live WebGL 2.0 3D canvas preserving aspect ratio
+        if (canvas && canvas.width > 0 && canvas.height > 0) {
+          const cAspect = canvas.width / canvas.height;
+          const targetH = 616;
+          const targetW = Math.round(targetH * cAspect);
+          const dx = Math.round((1280 - targetW) / 2);
+          ctx.drawImage(canvas, dx, 48, targetW, targetH);
+        }
+
+        // Top Clinical Header Strip
+        ctx.fillStyle = "rgba(7, 26, 30, 0.94)";
+        ctx.fillRect(0, 0, 1280, 48);
+        ctx.fillStyle = "#EFE0BE";
+        ctx.font = "bold 14px 'Plus Jakarta Sans', Inter, sans-serif";
+        ctx.fillText("INTRARAT INTERNATIONAL — Page 04 Live 3D Facial Expression & Eyelid Blink Verification (v5.6)", 20, 29);
+        ctx.fillStyle = "#6EE7B7";
+        ctx.font = "600 12px 'JetBrains Mono', monospace";
+        ctx.fillText(`TIME: ${sec.toFixed(2)}s / ${(durationMs / 1000).toFixed(1)}s · 17/17 MESHES · 108,276V`, 900, 29);
+
+        // Bottom Live Telemetry & Step Verification Strip
+        ctx.fillStyle = "rgba(7, 26, 30, 0.95)";
+        ctx.fillRect(0, 660, 1280, 60);
+        ctx.fillStyle = "#FFFFFF";
+        ctx.font = "bold 14px 'Plus Jakarta Sans', Inter, sans-serif";
+        ctx.fillText(getPhaseLabel(sec), 20, 683);
+
+        const blinkPct = Math.round(state.blinkAmount * 100);
+        const smilePct = Math.round(state.smileAmount * 100);
+        ctx.fillStyle = "#EFE0BE";
+        ctx.font = "600 12px 'JetBrains Mono', monospace";
+        ctx.fillText(
+          `Eyelid Blink: ${String(blinkPct).padStart(3, " ")}% | Natural Smile: ${String(smilePct).padStart(3, " ")}% | Auto-Blinks: #${state.autoBlinkCount} | Mode: ${state.activeExpressionMode.toUpperCase()} | Peel: ${Math.round(state.revealDepth)}% | Gate: ACTIVE (1.0)`,
+          20, 706
+        );
+
+        // Live Blink & Smile visual meter bars on bottom right
+        ctx.fillStyle = "rgba(255,255,255,0.18)";
+        ctx.fillRect(980, 672, 130, 10);
+        ctx.fillStyle = "#34D399";
+        ctx.fillRect(980, 672, Math.round(1.3 * blinkPct), 10);
+        ctx.fillStyle = "rgba(255,255,255,0.18)";
+        ctx.fillRect(1130, 672, 130, 10);
+        ctx.fillStyle = "#FBBF24";
+        ctx.fillRect(1130, 672, Math.round(1.3 * smilePct), 10);
+
+        requestAnimationFrame(compositeFrame);
+      }
+      requestAnimationFrame(compositeFrame);
+
+      const stream = recCanvas.captureStream(30);
+      const mime = MediaRecorder.isTypeSupported("video/webm;codecs=vp9")
+        ? "video/webm;codecs=vp9"
+        : MediaRecorder.isTypeSupported("video/webm;codecs=vp8")
+        ? "video/webm;codecs=vp8"
+        : "video/webm";
+      const recorder = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: 3200000 });
+      const chunks = [];
+      recorder.ondataavailable = (e) => { if (e.data && e.data.size > 0) chunks.push(e.data); };
+
+      return new Promise((resolve) => {
+        recorder.onstop = () => {
+          active = false;
+          timers.forEach(t => clearTimeout(t));
+          const blob = new Blob(chunks, { type: mime });
+          const reader = new FileReader();
+          reader.onloadend = async () => {
+            try {
+              const resp = await fetch("/api/save-live-recording", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  filename,
+                  dataUrl: reader.result,
+                  musicTrack: "music-surgical-precision.mp3"
+                })
+              });
+              const d = await resp.json();
+              state.isRecordingProof = false;
+              state.lastRecordedProofUrl = d.url || ("shared-media/" + filename);
+              if (btnRec) {
+                btnRec.textContent = "✅ 17s Video Saved";
+                btnRec.classList.remove("active");
+              }
+              try { if (window.parent && window.parent !== window) window.parent.postMessage(getExplorerTelemetry(), "*"); } catch (err) {}
+              resolve(d);
+            } catch (err) {
+              state.isRecordingProof = false;
+              if (btnRec) {
+                btnRec.textContent = "🎥 17s Blink Video";
+                btnRec.classList.remove("active");
+              }
+              resolve({ ok: false, error: String(err) });
+            }
+          };
+          reader.readAsDataURL(blob);
+        };
+        recorder.start(200);
+        setTimeout(() => {
+          if (recorder.state !== "inactive") recorder.stop();
+        }, durationMs);
+      });
+    }
+
+    function applyExplorerCommand(cmd) {
+      if (!cmd || typeof cmd !== "object") return getExplorerTelemetry();
+      const action = cmd.action || "";
+      const payload = cmd.payload || {};
+
+      if (action === "setPreset") {
+        const pKey = payload.preset || "outer_skin";
+        if (ANATOMICAL_STAGES[pKey]) {
+          focusAnatomicalStage(pKey);
+        } else {
+          const p = PRESET_CONFIGS[pKey] || PRESET_CONFIGS.chapter2_deep_plane;
+          state.activeStage = p.stageId || "smas_deep_plane";
+          state.isolatedMesh = null;
+          state.isolatedGroup = null;
+          STRUCTURES_17.forEach(s => { state.visible[s.id] = true; });
+          state.targetReveal = p.reveal;
+          state.targetYaw = clampYaw(p.yaw);
+          state.targetPitch = clampPitch(p.pitch);
+          state.targetZoom = p.zoom;
+          state.targetExplode = p.explode;
+          state.selectedMesh = p.selectedMesh;
+          state.highlightedGroup = p.highlightedGroup.slice();
+          const hTitle = document.getElementById("heroTitleText");
+          const hDesc = document.getElementById("heroDescText");
+          const isTh = state.lang === "th";
+          if (hTitle) hTitle.textContent = isTh ? (p.titleTh || p.modeTitleTh) : (p.titleEn || p.modeTitle);
+          if (hDesc) hDesc.textContent = isTh ? (p.descTh || p.modeDescTh) : (p.descEn || p.modeDesc);
+          buildLayerDrawerUI();
+          updateInspectorUI();
+        }
+      } else if (action === "setExpression") {
+        if (payload.triggerBlink || payload.mode === "natural_blink") {
+          triggerNaturalBlink();
+        } else if (payload.mode) {
+          setFacialExpression(payload.mode);
+        }
+        if (payload.blink !== undefined) {
+          setBlinkPercent(payload.blink);
+        }
+        if (payload.smile !== undefined) {
+          setSmilePercent(payload.smile);
+        }
+        if (payload.paused !== undefined) {
+          toggleExpressionPause(Boolean(payload.paused));
+        } else if (payload.togglePause) {
+          toggleExpressionPause();
+        }
+      } else if (action === "recordBlinkProof") {
+        recordContinuousBlinkProofVideo(payload);
+      } else if (action === "isolateGroup" && payload.group) {
+        isolateClinicalGroup(payload.group);
+      } else if (action === "toggleDrawer") {
+        toggleLayerDrawer(payload.open);
+      } else if (action === "showAll17") {
+        applyLayerPreset("all");
+      } else if (action === "selectMesh" && payload.meshId) {
+        selectAnatomicalMesh(payload.meshId);
+      } else if (action === "toggleMesh" && payload.meshId) {
+        state.visible[payload.meshId] = payload.visible !== undefined ? Boolean(payload.visible) : !state.visible[payload.meshId];
+        buildLayerDrawerUI();
+        updateInspectorUI();
+      } else if (action === "setReveal") {
+        setRevealTarget(payload.reveal);
+      } else if (action === "setExplode") {
+        const rawExp = Number(payload.explode) || 0;
+        const pctExp = (rawExp > 0 && rawExp <= 1) ? rawExp * 100 : rawExp;
+        if (pctExp > 35) {
+          focusAnatomicalStage("explode_17");
+        } else {
+          setExplodePercent(pctExp);
+        }
+      } else if (action === "setCamera") {
+        if (payload.yaw !== undefined) state.targetYaw = clampYaw(Number(payload.yaw) || 0);
+        if (payload.pitch !== undefined) state.targetPitch = clampPitch(Number(payload.pitch) || 0);
+        if (payload.zoom !== undefined) state.targetZoom = Math.max(0.65, Math.min(2.2, Number(payload.zoom) || 1.0));
+      } else if (action === "setLang" && payload.lang) {
+        toggleExplorerLanguage(payload.lang);
+      } else if (action === "reset") {
+        reset3DView();
+      }
+      const tel = getExplorerTelemetry();
+      try {
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage(tel, "*");
+        }
+      } catch (e) {}
+      return tel;
+    }
+
+    window.__INTRARAT_3D_API__ = {
+      applyCommand: applyExplorerCommand,
+      getTelemetry: getExplorerTelemetry,
+      focusAnatomicalStage,
+      isolateClinicalGroup,
+      triggerNaturalBlink,
+      setFacialExpression,
+      setBlinkPercent,
+      setSmilePercent,
+      toggleExpressionPause,
+      recordContinuousBlinkProofVideo,
+      PRESET_CONFIGS,
+      ANATOMICAL_STAGES
+    };
+
+    window.addEventListener("message", (ev) => {
+      const d = ev.data;
+      if (!d || typeof d !== "object" || d.type !== "intrarat-3d-command") return;
+      applyExplorerCommand(d);
+    });
+
+    (function initBootLanguageAndMode() {
+      try {
+        if (window.self !== window.top) {
+          document.documentElement.classList.add("is-embedded");
+        }
+      } catch (_e) {
+        document.documentElement.classList.add("is-embedded");
+      }
+      const params = new URLSearchParams(window.location.search);
+      let parentLang = "";
+      try {
+        if (window.parent && window.parent !== window && window.parent.document) {
+          parentLang = (window.parent.document.documentElement.lang || "").toLowerCase();
+        }
+      } catch (_e) {}
+      const initLang = (params.get("lang") || parentLang || "en").toLowerCase();
+      toggleExplorerLanguage(initLang === "th" ? "th" : "en");
+      setTimeout(() => {
+        const mode = (params.get("mode") || "").toLowerCase();
+        if (mode === "neck-lift" || mode === "neck") {
+          focusAnatomicalStage("neck_platysma");
+        } else if (mode === "anatomy-mirror" || mode === "mirror") {
+          applyExplorerCommand({ action: "setPreset", payload: { preset: "anatomy_mirror" } });
+        } else if (ANATOMICAL_STAGES[mode]) {
+          focusAnatomicalStage(mode);
+        } else if (PRESET_CONFIGS[mode]) {
+          applyExplorerCommand({ action: "setPreset", payload: { preset: mode } });
+        } else {
+          try {
+            if (window.parent && window.parent !== window) {
+              window.parent.postMessage(getExplorerTelemetry(), "*");
+            }
+          } catch (e) {}
+        }
+      }, 250);
+    })();
+  </script>
+</body>
+</html>

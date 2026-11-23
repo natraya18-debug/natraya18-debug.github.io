@@ -1,0 +1,7 @@
+{
+  "source_zip_sha256": "8897e7a2c586a381f2475f16d63ae8ea5f3e6b0fc29d22406dc020092aa942b7",
+  "commit_sha": "23b8532e780a0e13e921c76c360b16852d4d94e3 + fa7bd7dd66c1d2958abaf58d28db649093b20073",
+  "structures": 17,
+  "yaw_degrees": "-90..+90; no 360 orbit",
+  "clinical_review": "PENDING"
+}
