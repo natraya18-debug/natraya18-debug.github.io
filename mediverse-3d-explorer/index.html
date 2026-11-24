@@ -89,6 +89,10 @@
     body.mirror-mode .mv-bottom-hud {
       display: none !important;
     }
+    body.mirror-mode #mvCanvasHost {
+      height: 100% !important;
+      min-height: 100% !important;
+    }
     .mv-topbar > * {
       pointer-events: auto;
     }
@@ -494,14 +498,19 @@
     let clipPlane = new THREE.Plane(new THREE.Vector3(-1, 0, 0), 0);
 
     function resizeRenderer() {
-      const w = Math.max(1, host.clientWidth);
-      const h = Math.max(1, host.clientHeight);
+      const rect = host.getBoundingClientRect();
+      const w = Math.max(1, Math.round(rect.width || host.clientWidth || window.innerWidth || 300));
+      const h = Math.max(1, Math.round(rect.height || host.clientHeight || window.innerHeight || 300));
       renderer.setSize(w, h, false);
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
     }
     window.addEventListener('resize', resizeRenderer);
+    if (typeof ResizeObserver === 'function') {
+      new ResizeObserver(() => resizeRenderer()).observe(host);
+    }
     resizeRenderer();
+    requestAnimationFrame(resizeRenderer);
 
     async function loadJson(url) {
       const r = await fetch(url);
@@ -644,6 +653,7 @@
         document.getElementById('chkCrossSection').checked = false;
       }
 
+      resizeRenderer();
       modelBox.setFromObject(rootGroup);
       const center = modelBox.getCenter(new THREE.Vector3());
       const size = modelBox.getSize(new THREE.Vector3());
