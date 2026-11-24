@@ -3395,6 +3395,15 @@ body.is-page02-active .home-explore-tools-cta {
 #page06-stage .p6-tool-showcase-card.is-active-tool-card .p6-card-desc {
   color: #D1FAE5 !important;
 }
+/* Executive Presentation Mode: remove leftover template SHOWCASE/CONTACT pillbox and hide CMS editor FAB unless server-authenticated */
+#nav-pillbox {
+  display: none !important;
+}
+body:not(.intrarat-admin-verified) #editor-fab,
+body:not(.intrarat-admin-verified) #visual-editor-drawer {
+  display: none !important;
+}
+
 /* Keep Desktop Page 02 header compact so no right-side pill clips offscreen */
 body.is-page02-active .chrome-header {
   padding: 12px 24px !important;

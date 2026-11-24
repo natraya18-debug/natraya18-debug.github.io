@@ -52,11 +52,16 @@
       position: relative;
       width: 100%;
       height: 100%;
+      display: flex;
+      flex-direction: column;
       overflow: hidden;
+      background: #061710;
     }
     #mvCanvasHost {
+      flex: 1 1 auto;
+      min-height: 0;
       width: 100%;
-      height: 100%;
+      position: relative;
     }
     #mvCanvasHost canvas {
       width: 100% !important;
@@ -68,17 +73,21 @@
       cursor: grabbing;
     }
     .mv-topbar {
-      position: absolute;
-      top: 8px;
-      left: 8px;
-      right: 8px;
+      position: static;
+      flex: 0 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 6px;
       flex-wrap: wrap;
-      pointer-events: none;
+      padding: 6px 8px;
+      background: rgba(4, 18, 12, 0.96);
+      border-bottom: 1px solid var(--border-emerald);
       z-index: 10;
+    }
+    body.mirror-mode .mv-topbar,
+    body.mirror-mode .mv-bottom-hud {
+      display: none !important;
     }
     .mv-topbar > * {
       pointer-events: auto;
@@ -138,19 +147,16 @@
       display: inline-block;
     }
     .mv-bottom-hud {
-      position: absolute;
-      bottom: 8px;
-      left: 8px;
-      right: 8px;
+      position: static;
+      flex: 0 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 6px;
       flex-wrap: wrap;
-      background: rgba(6, 22, 15, 0.86);
-      border: 1px solid var(--border-emerald);
-      border-radius: 10px;
-      padding: 5px 9px;
+      background: rgba(4, 18, 12, 0.96);
+      border-top: 1px solid var(--border-emerald);
+      padding: 6px 9px;
       z-index: 10;
     }
     .mv-slider-wrap {
@@ -642,7 +648,11 @@
       const center = modelBox.getCenter(new THREE.Vector3());
       const size = modelBox.getSize(new THREE.Vector3());
       const maxDim = Math.max(size.x, size.y, size.z, 0.01);
-      const fitDist = maxDim * 1.65;
+      const vFovRad = THREE.MathUtils.degToRad(camera.fov || 40);
+      const halfTan = Math.tan(vFovRad / 2);
+      const fitH = (size.y * 0.5) / halfTan;
+      const fitW = (size.x * 0.5) / (halfTan * Math.max(0.55, camera.aspect || 1));
+      const fitDist = Math.max(fitH, fitW) * (type === 'body' ? 1.24 : 1.38) + size.z * 0.5;
 
       controls.target.copy(center);
       controls.minDistance = maxDim * 0.25;
@@ -652,7 +662,7 @@
       } else if (type === 'knee') {
         camera.position.set(center.x + fitDist * 0.45, center.y + fitDist * 0.12, center.z + fitDist * 0.88);
       } else {
-        camera.position.set(center.x, center.y + maxDim * 0.04, center.z + fitDist);
+        camera.position.set(center.x, center.y, center.z + fitDist);
       }
       controls.update();
 

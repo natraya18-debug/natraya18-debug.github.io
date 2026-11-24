@@ -3114,6 +3114,7 @@
       try { window.sessionStorage.removeItem("intrarat_admin_token"); } catch (_e) {}
     }
     document.body.classList.toggle("admin-mode-active", masterState.adminMode);
+    document.body.classList.toggle("intrarat-admin-verified", Boolean(masterState.adminSessionVerified));
     const chk = document.getElementById("cms-admin-meta-toggle");
     if (chk) chk.checked = masterState.adminMode;
     const authStatusEl = document.getElementById("cms-editor-auth-status");
@@ -3388,25 +3389,8 @@
       return;
     }
 
-    // 2. Otherwise use a clearly distinct professional documentary narrator via Web Speech Synthesis
-    if (window.speechSynthesis && typeof window.SpeechSynthesisUtterance === "function") {
-      try {
-        const textToSpeak = t(curScene.subtitle) || t(curScene.description) || t(activeCh.narrationScript);
-        if (!textToSpeak) return;
-        const utter = new window.SpeechSynthesisUtterance(textToSpeak);
-        utter.lang = masterState.cms.lang === "th" ? "th-TH" : "en-US";
-        utter.rate = 0.96;
-        utter.pitch = 0.98;
-        utter.volume = Math.max(0, Math.min(1, masterState.storyVolume));
-        utter.onstart = () => setStoryMusicDucking(true);
-        utter.onend = () => setStoryMusicDucking(false);
-        utter.onerror = () => setStoryMusicDucking(false);
-        setStoryMusicDucking(true);
-        window.speechSynthesis.speak(utter);
-      } catch (e) {
-        setStoryMusicDucking(false);
-      }
-    }
+    // 2. Browser robotic TTS disabled in executive showcase mode (authentic subtitles & chapter audio preserved)
+    return;
   }
 
   function startDocumentaryPlayback() {
@@ -6089,35 +6073,35 @@
                 : "100% on-device processing (0 photo uploads). Unvalidated sagging grade prediction (Facial Sagging AI V2) is strictly BLOCKED for public visitors and restricted to Server-Authenticated Administrators."}
             </div>
 
-            <div class="p6-region-chips-wrap" role="group" aria-label="11 Contract v2 Facial Consultation Regions">
+            <div class="p6-region-chips-wrap" role="group" aria-label="11 Facial Consultation Regions">
               ${CONTRACT_V2_FACE_REGIONS_11.map((r, i) => {
                 const sel = masterState.p6FaceSelectedAreas.includes(r.id);
                 return `
                   <button type="button" class="p6-region-chip ${sel ? "is-selected" : ""}" data-face-region="${r.id}" aria-pressed="${sel ? "true" : "false"}">
-                    ${i + 1}. ${t(r.label)}
+                    ${i + 1}. ${t(r.label).replace(/\s*\(Contract v2\)/gi, "")}
                   </button>
                 `;
               }).join("")}
             </div>
 
             <label style="display:block;font-size:11.5px;font-weight:700;color:#173B2D;margin-top:6px;">
-              ${isTh ? "บันทึกจุดที่ต้องการปรึกษา นพ.รัชพล (Contract v2 Notes):" : "Your Personal Consultation Map Notes (Contract v2):"}
+              ${isTh ? "บันทึกจุดที่ต้องการปรึกษา นพ.รัชพล:" : "Personal Consultation Map Notes:"}
               <input type="text" id="p6-facescan-notes-input" class="p8-input" value="${masterState.p6FaceNotes}" style="margin-top:4px;padding:6px 10px;font-size:12px;">
             </label>
 
             <input type="file" id="p6-facescan-upload-input" accept="image/jpeg,image/png,image/webp" style="display:none;">
             <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;">
-              <button type="button" class="p3-gal-btn" id="p6-facescan-upload-btn">🖼 ${isTh ? "อัปโหลดรูปภาพ (On-Device)" : "Upload Photo (On-Device)"}</button>
-              <button type="button" class="p3-gal-btn" id="p6-facescan-cam-btn">📷 ${isTh ? "เปิดกล้องสด (getUserMedia)" : "Test Live Camera Capture"}</button>
-              <button type="button" class="p3-gal-btn" id="p6-facescan-invalid-suite-btn">🧪 ${isTh ? "ทดสอบไฟล์เสีย/ภาพมืด/ภาพเบลอ และการกู้คืน" : "Test Invalid Inputs & Recovery"}</button>
+              <button type="button" class="p3-gal-btn" id="p6-facescan-upload-btn">🖼 ${isTh ? "อัปโหลดรูปภาพ (บนอุปกรณ์)" : "Upload Photo (On-Device)"}</button>
+              <button type="button" class="p3-gal-btn" id="p6-facescan-cam-btn">📷 ${isTh ? "เปิดกล้องสด" : "Live Camera Preview"}</button>
+              ${masterState.adminSessionVerified ? `<button type="button" class="p3-gal-btn" id="p6-facescan-invalid-suite-btn">🧪 ${isTh ? "ทดสอบไฟล์เสีย/ภาพมืด/ภาพเบลอ" : "Test Invalid Inputs & Recovery"}</button>` : ""}
               <button type="button" class="p3-gal-btn" id="p6-facescan-reset-btn">↺ ${isTh ? "รีเซ็ตจุด" : "Reset Map"}</button>
-              <button type="button" class="p8-submit-btn" id="p6-facescan-dl-png" style="padding:7px 12px;font-size:11px;">⬇ ${isTh ? "บันทึกภาพแผนที่ใบหน้า (.PNG)" : "Generate & Export Face Map (.PNG + JSON)"}</button>
-              <button type="button" class="p3-gal-btn" id="p6-facescan-send-p8">${isTh ? "ส่งแผนที่ 11 จุดไปยังฟอร์มปรึกษาแพทย์ →" : "Send 11-Region Map to Page 08 →"}</button>
-              <button type="button" class="p3-gal-btn admin-only-meta" id="p6-facescan-run-v2-admin">🔬 Admin: Run V2 4-Region cropPad224 & 88-Image Benchmark</button>
+              <button type="button" class="p8-submit-btn" id="p6-facescan-dl-png" style="padding:7px 12px;font-size:11px;">⬇ ${isTh ? "บันทึกภาพแผนที่ใบหน้า (.PNG)" : "Export Face Map (.PNG)"}</button>
+              <button type="button" class="p3-gal-btn" id="p6-facescan-send-p8">${isTh ? "นำจุดที่เลือกไปยังหน้า 08 →" : "Carry Selected Zones to Page 08 →"}</button>
+              ${masterState.adminSessionVerified ? `<button type="button" class="p3-gal-btn admin-only-meta" id="p6-facescan-run-v2-admin">🔬 Admin: Run V2 4-Region cropPad224 & 88-Image Benchmark</button>` : ""}
             </div>
             <div id="p6-facescan-status-msg" style="font-size:11.5px;color:#087A3B;font-weight:700;margin-top:6px;"></div>
-            <div id="p6-facescan-pipeline-log" class="p6-api-result-box" style="margin-top:6px;font-size:11px;font-family:'JetBrains Mono',monospace;max-height:130px;">
-              <strong>ACTUAL OUTPUT & PIPELINE LOG (ON-DEVICE):</strong> Click any point on the face canvas, upload a portrait, or run the Camera / Invalid-Input / PNG+JSON Export checks.
+            <div id="p6-facescan-pipeline-log" class="p6-api-result-box" style="margin-top:6px;font-size:11px;max-height:110px;">
+              <strong>${isTh ? "สถานะแผนที่ใบหน้า (ประมวลผลบนอุปกรณ์ 100%):" : "Consultation Map Status (100% On-Device):"}</strong> ${isTh ? "คลิกจุดบนใบหน้าหรือเลือกบริเวณด้านบนเพื่อเตรียมหัวข้อปรึกษาแพทย์" : "Select facial regions above or click points on the canvas to prepare discussion topics for your consultation."}
             </div>
 
             <!-- SERVER-AUTHENTICATED ADMIN-ONLY FACESCAN V2 4-REGION CROPPAD 224×224 & 88-SYNTHETIC-IMAGE BENCHMARK PANEL -->
@@ -6138,7 +6122,7 @@
       toolWorkspaceHTML = `
         <div class="p6-functional-grid">
           <div class="p6-canvas-box">
-            <iframe id="p6-mirror-iframe" src="${iframeUrlWithLang}" title="MEDIVERSE 3D Body, Eye, Knee & Deep Plane Explorer" style="width:100%;height:345px;border:1px solid rgba(32,198,106,0.35);border-radius:12px;background:#061710;"></iframe>
+            <iframe id="p6-mirror-iframe" loading="lazy" src="${iframeUrlWithLang}" title="MEDIVERSE 3D Body, Eye, Knee & Deep Plane Explorer" style="width:100%;height:420px;border:1px solid rgba(32,198,106,0.35);border-radius:12px;background:#061710;"></iframe>
           </div>
           <div class="p6-controls-box">
             <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px;" role="tablist" aria-label="Mediverse 3D Model Selector">
@@ -6246,7 +6230,7 @@
           <div style="display:flex;gap:6px;flex-wrap:wrap;">
             <input type="text" id="p6-medline-input" class="p8-input" value="${isTh ? "ดึงหน้า" : "facelift"}" placeholder="${isTh ? "ค้นหาหัวข้อสุขภาพ (เช่น ดึงหน้า, ต้อกระจก, เปลี่ยนข้อเข่า, ดมยาสลบ)..." : "Search verified health topics (facelift, cataract, knee replacement, anesthesia)..."}" style="flex:1;min-width:200px;">
             <button type="button" class="p8-submit-btn" id="p6-medline-btn" style="padding:7px 14px;font-size:11.5px;">${isTh ? "ค้นหาฐานข้อมูล MedlinePlus NIH" : "Search MedlinePlus NIH"}</button>
-            <button type="button" class="p3-gal-btn" id="p6-medline-invalid-btn">🧪 ${isTh ? "ทดสอบคำค้นสั้นเกินไป (HTTP 400)" : "Test Invalid Short Query (HTTP 400)"}</button>
+            ${masterState.adminSessionVerified ? `<button type="button" class="p3-gal-btn" id="p6-medline-invalid-btn">🧪 ${isTh ? "ทดสอบคำค้นสั้นเกินไป (HTTP 400)" : "Test Invalid Short Query (HTTP 400)"}</button>` : ""}
           </div>
           <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:6px;">
             ${medlineChips.map(q => `
@@ -6266,7 +6250,7 @@
           <div style="display:flex;gap:6px;flex-wrap:wrap;">
             <input type="text" id="p6-nutri-input" class="p8-input" value="${isTh ? "โยเกิร์ต" : "Greek Yogurt"}" placeholder="${isTh ? "ค้นหาอาหารช่วงพักฟื้น (เช่น โยเกิร์ต, นมโอ๊ต, ข้าวหอมมะลิ, น้ำมะพร้าว)..." : "Search recovery nutrition (Greek Yogurt, Oat Milk, Jasmine Rice, Coconut Water, Salmon)..."}" style="flex:1;min-width:200px;">
             <button type="button" class="p8-submit-btn" id="p6-nutri-btn" style="padding:7px 14px;font-size:11.5px;">${isTh ? "เปรียบเทียบคุณค่าโภชนาการต่อ 100 กรัม" : "Compare Per-100g Nutrients"}</button>
-            <button type="button" class="p3-gal-btn" id="p6-nutri-invalid-btn">🧪 ${isTh ? "ทดสอบคำค้นว่าง (HTTP 400)" : "Test Empty Query (HTTP 400)"}</button>
+            ${masterState.adminSessionVerified ? `<button type="button" class="p3-gal-btn" id="p6-nutri-invalid-btn">🧪 ${isTh ? "ทดสอบคำค้นว่าง (HTTP 400)" : "Test Empty Query (HTTP 400)"}</button>` : ""}
           </div>
           <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:6px;">
             ${nutriChips.map(q => `
@@ -6288,14 +6272,13 @@
             <div style="display:flex;gap:6px;flex-wrap:wrap;">
               <input type="text" id="p6-barcode-input" class="p8-input" value="3017620422003" placeholder="${isTh ? "กรอกรหัสบาร์โค้ด 8, 12 หรือ 13 หลัก..." : "Enter 8, 12, or 13-digit GS1 barcode..."}" style="flex:1;">
               <button type="button" class="p8-submit-btn" id="p6-barcode-btn" style="padding:7px 14px;font-size:11.5px;">${isTh ? "ตรวจสอบบาร์โค้ดและค้นหาข้อมูลสด" : "Verify GS1 & Query Open Food Facts"}</button>
-              <button type="button" class="p3-gal-btn" id="p6-barcode-invalid-test-btn">🧪 ${isTh ? "ทดสอบเลขเช็คซัมผิด (400) และสถานะเซิร์ฟเวอร์" : "Test Bad Checksum (400) & Upstream Status"}</button>
+              ${masterState.adminSessionVerified ? `<button type="button" class="p3-gal-btn" id="p6-barcode-invalid-test-btn">🧪 ${isTh ? "ทดสอบเลขเช็คซัมผิด (400)" : "Test Bad Checksum (400)"}</button>` : ""}
             </div>
             <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:6px;">
               ${[
-                { c: "3017620422003", l: "3017620422003 (EAN-13 · Valid GS1)" },
-                { c: "0041303001646", l: "0041303001646 (EAN-13 · Valid GS1)" },
-                { c: "8851212220043", l: "8851212220043 (Thai GS1-885 · Valid)" },
-                { c: "0041303001647", l: isTh ? "0041303001647 (ทดสอบเช็คซัมผิด · HTTP 400)" : "0041303001647 (Invalid Check Digit · HTTP 400)" }
+                { c: "3017620422003", l: "3017620422003 (Sample EAN-13)" },
+                { c: "0041303001646", l: "0041303001646 (Sample EAN-13)" },
+                { c: "8851212220043", l: "8851212220043 (Thai GS1-885)" }
               ].map(b => `<button type="button" class="p6-region-chip" data-barcode-quick="${b.c}">${b.l}</button>`).join("")}
             </div>
             <div id="p6-barcode-output" class="p6-api-result-box" style="margin-top:8px;">${isTh ? "คลิกปุ่มตรวจสอบบาร์โค้ดเพื่อคำนวณเลขเช็คซัม GS1 Modulo-10 และเชื่อมต่อไปยังฐานข้อมูลสด Open Food Facts (world.openfoodfacts.org)" : "Click Verify to validate GS1 Modulo-10 check digit and query the live Open Food Facts API (world.openfoodfacts.org)."}</div>
@@ -6332,7 +6315,7 @@
               <button type="button" class="p6-region-chip" id="p6-dicom-rotate">${isTh ? "หมุนภาพ 90°" : "Rotate 90°"}</button>
               <button type="button" class="p6-region-chip" id="p6-dicom-reset">${isTh ? "รีเซ็ตค่าเริ่มต้น" : "Reset 100%"}</button>
               <button type="button" class="p3-gal-btn" id="p6-dicom-upload-btn">📂 ${isTh ? "เปิดไฟล์ .DCM หรือรูปภาพ" : "Open .DCM or Picture"}</button>
-              <button type="button" class="p3-gal-btn" id="p6-dicom-reject-test-btn">🧪 ${isTh ? "ทดสอบไฟล์เสียที่ไม่ใช่ DICOM (not-dicom.dcm)" : "Test Corrupt Non-DICOM (not-dicom.dcm)"}</button>
+              ${masterState.adminSessionVerified ? `<button type="button" class="p3-gal-btn" id="p6-dicom-reject-test-btn">🧪 ${isTh ? "ทดสอบไฟล์เสียที่ไม่ใช่ DICOM" : "Test Corrupt Non-DICOM"}</button>` : ""}
               <button type="button" class="p8-submit-btn" id="p6-dicom-export" style="padding:5px 11px;font-size:11px;">⬇ ${isTh ? "ส่งออกภาพ (.PNG)" : "Export Slice (.PNG)"}</button>
             </div>
             <div id="p6-dicom-status-log" class="p6-api-result-box" style="margin-top:6px;font-size:10.5px;font-family:'JetBrains Mono',monospace;">${isTh ? "กำลังโหลดไฟล์ทดสอบมาตรฐาน DICOM Part-10 ที่ไม่ระบุตัวตน..." : "Loading anonymized Part-10 DICOM test slice..."}</div>
@@ -6340,14 +6323,20 @@
         </div>
       `;
     } else if (tIdx === 7) {
-      // TOOL 08: International Patient Consultation Enquiry Wizard (Idempotency + Rate Guard + Real File Download + Consent Verification)
+      // TOOL 08: International Patient Consultation Enquiry & Written Quote Checklist (Safe Executive Mockup)
       toolWorkspaceHTML = `
         <div class="p6-controls-box">
+          <div class="p6-safety-banner" style="background:#FFFBEB;border-color:#F59E0B;color:#92400E;margin-bottom:8px;">
+            <strong>ℹ️ ${isTh ? "โหมดสาธิตสำหรับผู้บริหาร (Executive Mockup):" : "Executive Mockup Notice:"}</strong>
+            ${isTh
+              ? "แบบฟอร์มนี้ใช้เพื่อแสดงตัวอย่างเท่านั้น ไม่มีการส่งหรือจัดเก็บข้อมูลส่วนตัว กรุณาอย่ากรอกข้อมูลผู้ป่วยจริง หากต้องการติดต่อโรงพยาบาล กรุณาติดต่อ info@intrarathospital.co.th หรือโทร +66 2 481 5555"
+              : "Demonstration only — no information is submitted or stored in this public mockup. Please do not enter real personal or medical information. For real enquiries, contact info@intrarathospital.co.th or +66 2 481 5555."}
+          </div>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px;">
-            <label style="font-size:11px;font-weight:700;">${isTh ? "ชื่อ-นามสกุล (จำเป็น)" : "Full Name (Required)"}
-              <input type="text" id="p6-intake-name" class="p8-input" value="Alex Morgan" required style="margin-top:3px;">
+            <label style="font-size:11px;font-weight:700;">${isTh ? "ชื่อ-นามสกุล (ตัวอย่างเท่านั้น)" : "Full Name (Demo Only)"}
+              <input type="text" id="p6-intake-name" class="p8-input" value="" placeholder="${isTh ? "กรอกชื่อตัวอย่างเพื่อทดสอบ" : "Enter sample name (do not use real PHI)"}" required style="margin-top:3px;">
             </label>
-            <label style="font-size:11px;font-weight:700;">${isTh ? "หัตถการหรือหัวข้อที่ต้องการปรึกษา (จำเป็น)" : "Procedure Focus (Required)"}
+            <label style="font-size:11px;font-weight:700;">${isTh ? "หัตถการหรือหัวข้อที่ต้องการปรึกษา" : "Procedure Focus"}
               <select id="p6-intake-proc" class="p8-select" style="margin-top:3px;">
                 <option value="Deep Plane Facelift & Neck Lift">${isTh ? "ดึงหน้าชั้นลึกและยกกระชับลำคอ (Deep Plane Facelift & Neck Lift)" : "Deep Plane Facelift & Neck Lift"}</option>
                 <option value="Sub-Platysmal Neck Lift">${isTh ? "ยกกระชับลำคอใต้ชั้นกล้ามเนื้อ (Sub-Platysmal Neck Lift)" : "Sub-Platysmal Neck Lift"}</option>
@@ -6357,7 +6346,7 @@
               </select>
             </label>
             <label style="font-size:11px;font-weight:700;">${isTh ? "ประเทศที่พำนัก" : "Country of Residence"}
-              <input type="text" id="p6-intake-country" class="p8-input" value="Singapore" style="margin-top:3px;">
+              <input type="text" id="p6-intake-country" class="p8-input" value="" placeholder="${isTh ? "เช่น ประเทศไทย / สิงคโปร์" : "e.g. Country / Region"}" style="margin-top:3px;">
             </label>
             <label style="font-size:11px;font-weight:700;">${isTh ? "แนวทางการชำระเงิน / ประกันสุขภาพ" : "Payment & Insurance Pathway"}
               <select id="p6-intake-pay" class="p8-select" style="margin-top:3px;">
@@ -6369,19 +6358,19 @@
             </label>
           </div>
           <label style="display:flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;color:#087A3B;margin-top:8px;cursor:pointer;">
-            <input type="checkbox" id="p6-intake-consent" checked>
+            <input type="checkbox" id="p6-intake-consent">
             <span>${isTh
-              ? "ข้าพเจ้ายินยอมให้โรงพยาบาลอินทรารัตน์จัดเก็บข้อมูลคำขอรับคำปรึกษาเป็นเวลา 30 วันเพื่อประสานงานนัดหมาย (ไม่มีการแนบเวชระเบียนหรือภาพถ่ายทางการแพทย์)"
-              : "I consent to Intrarat Hospital storing my consultation enquiry for 30 days to coordinate my assessment (no medical records or photos attached)."}</span>
+              ? "ข้าพเจ้ารับทราบว่าแบบฟอร์มนี้เป็นตัวอย่างเพื่อการสาธิต และไม่มีการส่งหรือจัดเก็บข้อมูลส่วนตัวผ่านหน้านี้"
+              : "I understand this enquiry form is a demonstration preview only and does not submit or store personal information."}</span>
           </label>
           <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;">
-            <button type="button" class="p8-submit-btn" id="p6-intake-submit-btn" style="padding:7px 14px;font-size:11.5px;">${isTh ? "ส่งคำขอและออกรหัสอ้างอิง" : "Submit Enquiry & Generate Receipt"}</button>
+            <button type="button" class="p8-submit-btn" id="p6-intake-submit-btn" style="padding:7px 14px;font-size:11.5px;">${isTh ? "ทดสอบแบบฟอร์ม (โหมดสาธิต)" : "Preview Enquiry (Demo Only)"}</button>
             <button type="button" class="p3-gal-btn" id="p6-intake-mailto-btn">✉ ${isTh ? "ส่งอีเมลถึงโรงพยาบาล (info@intrarathospital.co.th)" : "Email Hospital (info@intrarathospital.co.th)"}</button>
-            <button type="button" class="p3-gal-btn" id="p6-intake-save-txt-btn">⬇ ${isTh ? "บันทึกสำเนาแบบฟอร์ม (.txt)" : "Save a Copy (.txt)"}</button>
+            <button type="button" class="p3-gal-btn" id="p6-intake-save-txt-btn">⬇ ${isTh ? "บันทึกสำเนาแบบฟอร์ม (.txt)" : "Save Local Copy (.txt)"}</button>
             <button type="button" class="p3-gal-btn" id="p6-intake-clear-btn">${isTh ? "ล้างข้อมูล" : "Clear Form"}</button>
-            <button type="button" class="p3-gal-btn" id="p6-intake-test-suite-btn">🧪 ${isTh ? "ทดสอบการยินยอม (400), ส่งซ้ำ (201→200 / 409) และการปกป้องข้อมูล (401/403)" : "Verify Idempotency (201→200), Conflict (409), Consent (400) & Auth Inbox"}</button>
+            ${masterState.adminSessionVerified ? `<button type="button" class="p3-gal-btn" id="p6-intake-test-suite-btn">🧪 Verify Idempotency & Auth Inbox</button>` : ""}
           </div>
-          <div id="p6-intake-output" class="p6-api-result-box" style="margin-top:8px;">${isTh ? "กดส่งคำขอเพื่อรับรหัสอ้างอิงการนัดหมาย (INT-R05-XXXXXX) หรือกดบันทึกสำเนาไฟล์ .txt เก็บไว้ในเครื่อง" : "Submit to generate a consultation reference code (INT-R05-XXXXXX) or download a local .txt copy."}</div>
+          <div id="p6-intake-output" class="p6-api-result-box" style="margin-top:8px;">${isTh ? "โหมดสาธิตเท่านั้น — ไม่มีการส่งข้อมูลไปยังเซิร์ฟเวอร์ คุณสามารถดาวน์โหลดสำเนา .txt หรือติดต่อโรงพยาบาลโดยตรงที่ info@intrarathospital.co.th" : "Demonstration only — no information is transmitted. You may save a local .txt draft or contact info@intrarathospital.co.th directly."}</div>
         </div>
       `;
     } else {
@@ -6396,11 +6385,11 @@
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:8px;width:100%;">
               <div>
                 <div style="font-size:10px;font-weight:800;color:#087A3B;margin-bottom:3px;font-family:'JetBrains Mono',monospace;">1. CAMERA / MOTION 33-POINT BLAZEPOSE</div>
-                <canvas id="p6-pose-canvas" width="420" height="270" style="width:100%;height:230px;object-fit:contain;border-radius:12px;border:1px solid rgba(32,198,106,0.55);background:#071811;"></canvas>
+                <canvas id="p6-pose-canvas" width="420" height="330" style="width:100%;height:330px;object-fit:contain;border-radius:12px;border:1px solid rgba(32,198,106,0.55);background:#071811;"></canvas>
               </div>
               <div>
-                <div style="font-size:10px;font-weight:800;color:#087A3B;margin-bottom:3px;font-family:'JetBrains Mono',monospace;">2. LIVE 3D ANATOMY MIRROR (37-MESH KINEMATIC)</div>
-                <iframe id="p6-pose-mirror-iframe" src="mediverse-3d-explorer/index.html?model=body&mirror=1&lang=${isTh ? "th" : "en"}" title="Live 3D Anatomy Mirror Synchronized with 33-Point BlazePose" style="width:100%;height:230px;border-radius:12px;border:1px solid rgba(32,198,106,0.55);background:#061710;"></iframe>
+                <div style="font-size:10px;font-weight:800;color:#087A3B;margin-bottom:3px;font-family:'JetBrains Mono',monospace;">2. LIVE 3D ANATOMY MIRROR (FULL-BODY HEAD-TO-FOOT)</div>
+                <iframe id="p6-pose-mirror-iframe" loading="lazy" src="mediverse-3d-explorer/index.html?model=body&mirror=1&lang=${isTh ? "th" : "en"}" title="Live 3D Anatomy Mirror Synchronized with 33-Point BlazePose" style="width:100%;height:330px;border-radius:12px;border:1px solid rgba(32,198,106,0.55);background:#061710;"></iframe>
               </div>
             </div>
             <div class="p6-telemetry-strip" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
@@ -6484,11 +6473,11 @@
         <header class="p3-cinema-header-bar">
           <div class="p3-cinema-title-cluster">
             <div class="p3-cinema-kicker-row">
-              <span class="ir-eyebrow" style="margin:0;">${isTh ? "สตูดิโอเครื่องมือแพทย์ 9 รายการ · คลังความรู้ทางการแพทย์" : "WORKSTREAM B · 9 HEALTH TOOLS & KNOWLEDGE GALAXY"}</span>
+              <span class="ir-eyebrow" style="margin:0;">${isTh ? "สตูดิโอเครื่องมือสุขภาพ 9 รายการ · คลังความรู้ทางการแพทย์" : "INTRARAT DIGITAL HEALTH STUDIO · 9 INTERACTIVE TOOLS"}</span>
               <span class="p3-cinema-divider-dot">·</span>
               <span class="p3-cinema-doc-cred">TOOL ${activeTool.no} · ${activeTool.categoryBadge}</span>
             </div>
-            <h1 class="p3-cinema-main-headline">${isTh ? "สตูดิโอเครื่องมือแพทย์ 9 รายการ" : "HEALTH TOOL LAB & GALAXY"}</h1>
+            <h1 class="p3-cinema-main-headline">${isTh ? "เครื่องมือสุขภาพและคลังความรู้" : "INTERACTIVE HEALTH TOOLS & PATIENT GUIDES"}</h1>
           </div>
 
           <!-- HEALTH TOOLS 3x3 EXECUTIVE SHOWCASE GRID (All 9 tools visible with readable names, descriptions, status badges, and Open Tool actions) -->
@@ -6538,30 +6527,24 @@
           </nav>
         </header>
 
-        <!-- SERVER-SIDE ADMINISTRATOR AUTHENTICATION BAR (Honest per-tool status; never relies on ?admin=1 alone) -->
+        ${(masterState.adminSessionVerified || masterState.adminLoginPromptOpen) ? `
+        <!-- SERVER-SIDE ADMINISTRATOR AUTHENTICATION BAR (Shown only for authenticated sessions or explicit ?admin=1) -->
         <div id="p6-admin-auth-bar" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:6px 12px;border-radius:10px;background:${masterState.adminSessionVerified ? "rgba(8,122,59,0.12)" : "rgba(15,38,28,0.06)"};border:1px solid ${masterState.adminSessionVerified ? "rgba(8,122,59,0.35)" : "rgba(15,38,28,0.15)"};font-size:11px;">
           <div>
             <strong>${masterState.adminSessionVerified
               ? (isTh ? "🔐 ยืนยันตัวตนผู้ดูแลระบบฝั่งเซิร์ฟเวอร์แล้ว:" : "🔐 SERVER-AUTHENTICATED ADMIN SESSION ACTIVE:")
-              : (isTh ? "🛡 โหมดความปลอดภัยทางคลินิกและความโปร่งใสของสถานะเครื่องมือ:" : "🛡 CLINICAL SAFETY & HONEST TOOL STATUS MODE:")}</strong>
-            <span>${masterState.adminSessionVerified
-              ? (isTh
-                ? "ปลดล็อกการอ่านรายการคำขอรับคำปรึกษาฝั่งเจ้าหน้าที่ และเชื่อมต่อการประมวลผลสด V2/V6 (Tool 07 แยกจากระบบ PACS · Tool 09 ซิงก์ BlazePose 33 จุดกับโมเดลกายวิภาค 3 มิติแบบเรียลไทม์)"
-                : "Server-side HMAC-SHA256 session verified for Staff Intake Readback & Live V2/V6 PyTorch Inference (Tool 07 is Local Viewer Only / No PACS · Tool 09 runs live BlazePose 33-Point → 3D Anatomy Mirror).")
-              : (isTh
-                ? "Tool 01 เชื่อมต่อการประมวลผลภาพใหม่ผ่านเซิร์ฟเวอร์ V2/V6 และ MediaPipe 478 จุด · Tool 04–06 เชื่อมต่อแหล่งข้อมูลจริง · Tool 07 เปิดไฟล์ DICOM ทดสอบในเครื่อง (ไม่เชื่อม PACS) · Tool 09 รัน BlazePose 33 จุดขับเคลื่อนโมเดลกายวิภาค 3 มิติ"
-                : "Tool 01 runs fresh V2/V6 + 478-point MediaPipe inference · Tools 04–06 query live upstream APIs · Tool 07 is a local anonymized file viewer (No PACS) · Tool 09 runs live BlazePose 33-point tracking driving the 3D Anatomy Mirror.")}</span>
+              : (isTh ? "🔐 เข้าสู่ระบบผู้ดูแล:" : "🔐 ADMINISTRATOR AUTHENTICATION:")}</strong>
           </div>
           <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-            <a href="/facescan-v2/" id="p6-open-facescan-v2-studio-link" class="p3-gal-btn" style="padding:4px 10px;font-size:10.5px;text-decoration:none;background:#087A3B;color:#FFFFFF;">🔬 ${isTh ? "เปิดสตูดิโอ Dominic FaceScan" : "Open Dominic FaceScan Studio"}</a>
             ${masterState.adminSessionVerified ? `
+              <a href="/facescan-v2/" id="p6-open-facescan-v2-studio-link" class="p3-gal-btn" style="padding:4px 10px;font-size:10.5px;text-decoration:none;background:#087A3B;color:#FFFFFF;">🔬 Open Dominic FaceScan Studio</a>
               <button type="button" class="p3-gal-btn" id="p6-admin-logout-btn" style="padding:4px 10px;font-size:10.5px;">${isTh ? "ออกจากระบบผู้ดูแล" : "Logout Admin Session"}</button>
             ` : `
               <input type="password" id="p6-admin-passcode-input" class="p8-input" placeholder="${isTh ? "รหัสผู้ดูแลระบบ..." : "Admin passcode..."}" style="width:145px;padding:3px 8px;font-size:11px;">
               <button type="button" class="p3-gal-btn" id="p6-admin-login-btn" style="padding:4px 10px;font-size:10.5px;">🔐 ${isTh ? "ยืนยันตัวตนผู้ดูแล" : "Authenticate Admin"}</button>
             `}
           </div>
-        </div>
+        </div>` : ""}
 
         <!-- ACTIVE FUNCTIONAL MEDICAL TOOL WORKSPACE -->
         <div class="p6-tool-studio-card" id="p6-active-tool-workspace">
@@ -6661,11 +6644,14 @@
       renderPage06();
     });
 
-    // Bind Tool Selector Tabs
+    // Bind Tool Selector Tabs (Reveal and smoothly scroll to active tool workspace)
     stage.querySelectorAll("[data-tool-idx]").forEach(btn => {
       btn.addEventListener("click", () => {
         masterState.p6ActiveToolIdx = parseInt(btn.dataset.toolIdx || "0", 10);
         renderPage06();
+        setTimeout(() => {
+          document.getElementById("p6-active-tool-workspace")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 50);
       });
     });
 
@@ -7046,8 +7032,8 @@
         const lines = [];
         if (urgent) {
           lines.push(isTh
-            ? "🚨 <strong style='color:#DC2626;'>แจ้งเตือนอาการฉุกเฉิน (URGENT RED-FLAG HALT):</strong> อาการเจ็บหน้าอก หายใจลำบาก หรือมีไข้สูง ต้องได้รับการตรวจรักษาฉุกเฉินทันที (โทร 1669 หรือ +66 2 481 5555) ห้ามเดินทางเพื่อผ่าตัดที่ไม่เร่งด่วน"
-            : "🚨 <strong style='color:#DC2626;'>URGENT RED-FLAG HALT:</strong> Active chest pain, shortness of breath, or high fever requires immediate emergency medical attention (Dial 1669 in Thailand or +66 2 481 5555). Do not travel for elective surgery.");
+            ? "🚨 <strong style='color:#DC2626;'>แจ้งเตือนอาการฉุกเฉิน (URGENT RED-FLAG HALT):</strong> อาการเจ็บหน้าอก หายใจลำบาก หรือมีไข้สูง ต้องได้รับการตรวจรักษาฉุกเฉินทันที — หากอยู่ในประเทศไทยโทร. 1669 · หากอยู่ต่างประเทศกรุณาโทรหมายเลขฉุกเฉินในประเทศของท่าน (เช่น 911, 999, 112 หรือ 000) ห้ามเดินทางเพื่อผ่าตัดที่ไม่เร่งด่วน"
+            : "🚨 <strong style='color:#DC2626;'>URGENT RED-FLAG HALT:</strong> Active chest pain, shortness of breath, or high fever requires immediate emergency medical attention — dial 1669 if in Thailand, or your local emergency number (e.g., 911, 999, 112, or 000) if located abroad. Do not travel for elective surgery.");
         } else {
           if (anticoag) lines.push(isTh
             ? "• <strong>การตรวจสอบยาละลายลิ่มเลือดและอาหารเสริม:</strong> เตรียมรายชื่อยาต้านการแข็งตัวของเลือด แอสไพริน วิตามินอี หรือน้ำมันปลาทั้งหมด เพื่อวางแผนหยุดยาก่อนผ่าตัดร่วมกับแพทย์"
@@ -7546,7 +7532,7 @@
                 <div style="color:#087A3B;font-size:10.5px;font-weight:800;margin-bottom:3px;">✅ LIVE OPEN FOOD FACTS PRODUCT v2 (<code>${d.upstreamEndpoint}</code>)</div>
                 <div><strong>${p.name}</strong> (${p.brand || "Open Food Facts"} · ${p.quantity || ""} · Nutri-Score: <strong>${(p.nutriscore || p.nutriScore || "N/A").toUpperCase()}</strong>)</div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:11px;margin:4px 0;color:#087A3B;">
-                  Per 100g: ${n.kcal ?? "–"} kcal · Protein: <strong>${n.proteinG ?? n.protein ?? "–"}g</strong> · Sugars: ${n.sugarsG ?? n.sugars ?? "–"}g · Salt: <strong>${n.saltG ?? n.salt ?? "–"}g</strong> · Allergens: ${(p.allergens || []).join(", ") || "None"}
+                  Per 100g: ${n.kcal ?? "–"} kcal · Protein: <strong>${n.proteinG ?? n.protein ?? "–"}g</strong> · Sugars: ${n.sugarsG ?? n.sugars ?? "–"}g · Salt: <strong>${n.saltG ?? n.salt ?? "–"}g</strong> · Allergens: ${(Array.isArray(p.allergens) && p.allergens.length > 0) ? p.allergens.join(", ") : (isTh ? "ไม่ระบุ / ไม่มีข้อมูล (กรุณาตรวจสอบฉลากสินค้าจริง)" : "Unknown / Not provided (verify physical product label)")}
                 </div>
               `;
             } else if (rStatus === 503) {
@@ -7820,18 +7806,31 @@
         };
         if (btn) btn.disabled = true;
         try {
+          const isStaticHost = !window.__INTRARAT_API_BASE__ && (window.location.hostname.endsWith(".github.io") || window.location.hostname.endsWith(".pages.dev"));
+          if (isStaticHost) {
+            if (!consent) {
+              if (out) {
+                out.innerHTML = `<strong style="color:#B91C1C;">${isTh ? "กรุณาทำเครื่องหมายรับทราบโหมดสาธิตก่อนดำเนินการ" : "Please check the acknowledgement box first."}</strong>`;
+              }
+              return;
+            }
+            if (out) {
+              out.innerHTML = isTh
+                ? `<strong style="color:#92400E;">โหมดสาธิตเท่านั้น — ไม่มีการส่งหรือจัดเก็บข้อมูลส่วนตัว</strong> หากต้องการติดต่อโรงพยาบาลอินทรารัตน์โดยตรง กรุณาส่งอีเมลที่ <a href="mailto:info@intrarathospital.co.th">info@intrarathospital.co.th</a> หรือโทร +66 2 481 5555`
+                : `<strong style="color:#92400E;">Demonstration only — no information has been submitted.</strong> For real enquiries, please contact Intrarat International Hospital directly at <a href="mailto:info@intrarathospital.co.th">info@intrarathospital.co.th</a> or +66 2 481 5555.`;
+            }
+            return;
+          }
           const { status: rStatus, ok: rOk, data: d } = await runIntakeRequest(payload);
           if (rOk && d.ok) {
             if (out) {
-              const modeNoteTh = d.staticPreviewOnly ? " · [โหมดตัวอย่างสาธารณะบนอุปกรณ์: ไม่ส่งข้อมูลผู้ป่วยออกไปยังเซิร์ฟเวอร์ภายนอก กรุณากดส่งอีเมลหรือบันทึกสำเนา .txt]" : " · [จัดเก็บเข้ารหัสบนเซิร์ฟเวอร์ 30 วัน]";
-              const modeNoteEn = d.staticPreviewOnly ? " · [Public Static Host Mode: 0 bytes sent to external server — use 'Email Hospital' or 'Save a Copy (.txt)']" : " · [Server-Persisted 30-Day Retention]";
               out.innerHTML = isTh
-                ? `✅ <strong>[HTTP ${rStatus}${d.duplicate ? " · ป้องกันการส่งซ้ำ (IDEMPOTENT REPLAY)" : ""}] ออกรหัสอ้างอิง: <code>${d.referenceId}</code></strong> (${d.record.procedure} · ${d.record.country} · ยืนยันความยินยอม PDPA${modeNoteTh})`
-                : `✅ <strong>[HTTP ${rStatus}${d.duplicate ? " · IDEMPOTENT REPLAY" : ""}] Reference Code Generated: <code>${d.referenceId}</code></strong> (${d.record.procedure} · ${d.record.country} · ${d.record.paymentPathway} · Consent Verified${modeNoteEn}).`;
+                ? `✅ <strong>บันทึกคำขอเรียบร้อย · รหัสอ้างอิง: <code>${d.referenceId}</code></strong> (${d.record.procedure} · ${d.record.country})`
+                : `✅ <strong>Enquiry Recorded · Reference: <code>${d.referenceId}</code></strong> (${d.record.procedure} · ${d.record.country}).`;
             }
           } else {
             const errMsg = isTh ? (d.errorTh || d.error) : d.error;
-            if (out) out.innerHTML = `⚠️ <strong style="color:#DC2626;">[HTTP ${rStatus}] ${errMsg}</strong>`;
+            if (out) out.innerHTML = `⚠️ <strong style="color:#DC2626;">${errMsg}</strong>`;
           }
         } catch (e) {
           if (out) out.textContent = isTh ? "เกิดข้อผิดพลาดในการส่งข้อมูล" : "Submission error.";
@@ -8708,31 +8707,37 @@
             </div>
 
             <div class="p4-layer-detail-card" style="border-color:rgba(220,38,38,0.28);background:#FFF8F8;margin-top:8px;">
-              <strong style="color:#991B1B;">${isTh ? "แจ้งเหตุฉุกเฉินทางการแพทย์:" : "Emergency Notice:"}</strong>
+              <strong style="color:#991B1B;">${isTh ? "แจ้งเหตุฉุกเฉินทางการแพทย์:" : "Emergency Medical Notice:"}</strong>
               ${isTh
-                ? "กรณีเจ็บป่วยฉุกเฉินในประเทศไทย โทร. 1669 (สถาบันการแพทย์ฉุกเฉินแห่งชาติ) หรือติดต่อแผนกฉุกเฉินใกล้บ้านท่านทันที"
-                : "In a medical emergency in Thailand, call 1669 (National Institute for Emergency Medicine) or visit the nearest emergency department immediately."}
+                ? "หากท่านอยู่ในประเทศไทย โทร. 1669 (สถาบันการแพทย์ฉุกเฉินแห่งชาติ) หรือติดต่อแผนกฉุกเฉินใกล้บ้านท่านทันที · หากท่านอยู่ต่างประเทศ กรุณาติดต่อหมายเลขฉุกเฉินในประเทศของท่าน (เช่น 911, 999, 112 หรือ 000) และไม่ควรรอการตอบกลับจากเว็บไซต์นี้"
+                : "If you are currently in Thailand, call 1669 or go to the nearest emergency department immediately. If you are located outside Thailand, call your local emergency number (e.g., 911, 999, 112, or 000) — do not use this website for medical emergencies."}
             </div>
           </div>
 
-          <!-- Right: Interactive Consultation Enquiry Composer -->
+          <!-- Right: Interactive Consultation Enquiry Composer (Safe Executive Mockup) -->
           <form class="p8-form-card" id="p8-consultation-form">
-            <span class="p3-timeline-kicker">${isTh ? "แบบฟอร์มนัดหมายปรึกษาแพทย์" : "PRIVATE CONSULTATION ENQUIRY COMPOSER"}</span>
-            <h3 style="margin:4px 0 10px;font-family:'Cormorant Garamond',serif;font-size:25px;color:#173B2D;">
-              ${isTh ? "ส่งคำขอรับคำปรึกษากับทีม นพ.รัชพล สดาวรรธน์" : "Request an Assessment with Dr. Rushapol’s Team"}
+            <span class="p3-timeline-kicker">${isTh ? "ตัวอย่างแบบฟอร์มนัดหมายปรึกษาแพทย์ (โหมดสาธิต)" : "CONSULTATION ENQUIRY COMPOSER (EXECUTIVE DEMO)"}</span>
+            <h3 style="margin:4px 0 8px;font-family:'Cormorant Garamond',serif;font-size:25px;color:#173B2D;">
+              ${isTh ? "แบบฟอร์มตัวอย่างสำหรับติดต่อทีม นพ.รัชพล สดาวรรธน์" : "Consultation Enquiry Preview — Dr. Rushapol’s Team"}
             </h3>
+            <div class="p6-safety-banner" style="background:#FFFBEB;border-color:#F59E0B;color:#92400E;margin-bottom:10px;font-size:11.5px;">
+              <strong>ℹ️ ${isTh ? "โหมดสาธิตเท่านั้น:" : "Demonstration Only:"}</strong>
+              ${isTh
+                ? "หน้าเว็บนี้เป็นตัวอย่างสำหรับผู้บริหาร ไม่มีการส่งหรือจัดเก็บข้อมูลผู้ป่วยจริง กรุณาอย่ากรอกข้อมูลส่วนตัวหรือข้อมูลทางการแพทย์ หากต้องการติดต่อจริง กรุณาอีเมล info@intrarathospital.co.th หรือโทร +66 2 481 5555"
+                : "No information is submitted or collected in this public mockup. Please do not enter real personal or medical information. For real enquiries, email info@intrarathospital.co.th or call +66 2 481 5555."}
+            </div>
             <div class="p8-field-group">
-              <label for="p8-name">${isTh ? "ชื่อ-นามสกุลของคุณ" : "Your Full Name"}</label>
-              <input type="text" id="p8-name" class="p8-input" autocomplete="name" placeholder="${isTh ? "เช่น คุณอเล็กซ์ มอร์แกน" : "e.g. Alex Morgan"}" required>
+              <label for="p8-name">${isTh ? "ชื่อ-นามสกุล (ตัวอย่างเท่านั้น)" : "Full Name (Demo Only)"}</label>
+              <input type="text" id="p8-name" class="p8-input" autocomplete="off" placeholder="${isTh ? "กรอกชื่อตัวอย่างเพื่อทดสอบ" : "Enter sample name (do not enter real PHI)"}" required>
             </div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
               <div class="p8-field-group">
-                <label for="p8-contact">${isTh ? "อีเมลหรือเบอร์โทรศัพท์ติดต่อ" : "Email or Phone / WhatsApp"}</label>
-                <input type="text" id="p8-contact" class="p8-input" autocomplete="email" placeholder="${isTh ? "เช่น alex.morgan@example.com" : "e.g. alex.morgan@example.com"}" required>
+                <label for="p8-contact">${isTh ? "ช่องทางติดต่อ (ตัวอย่างเท่านั้น)" : "Contact Detail (Demo Only)"}</label>
+                <input type="text" id="p8-contact" class="p8-input" autocomplete="off" placeholder="${isTh ? "เช่น sample@example.com" : "e.g. sample@example.com"}" required>
               </div>
               <div class="p8-field-group">
                 <label for="p8-country">${isTh ? "ประเทศ / เมืองที่พำนัก" : "Country / Region"}</label>
-                <input type="text" id="p8-country" class="p8-input" autocomplete="country-name" placeholder="${isTh ? "เช่น ประเทศไทย / สิงคโปร์ / ออสเตรเลีย" : "e.g. Australia / Singapore"}" value="${isTh ? "ประเทศไทย" : "International"}">
+                <input type="text" id="p8-country" class="p8-input" autocomplete="off" placeholder="${isTh ? "เช่น ประเทศไทย / สิงคโปร์" : "e.g. Country / Region"}" value="">
               </div>
             </div>
             <div class="p8-field-group">
@@ -8757,15 +8762,15 @@
               <textarea id="p8-notes" class="p8-textarea" rows="2" placeholder="${isTh ? "ระบุคำถามเพิ่มเติมเกี่ยวกับการปรึกษาแพทย์ การเดินทาง หรือห้องพักผู้ป่วยใน" : "Any specific questions about consultation, travel, or inpatient recovery suites"}">${masterState.p8PrefillSuite ? (isTh ? `สนใจสอบถามห้องพัก ${masterState.p8PrefillSuite} สำหรับการพักฟื้น` : `Interested in ${masterState.p8PrefillSuite} during my consultation stay.`) : ""}</textarea>
             </div>
             <label style="display:flex;align-items:flex-start;gap:8px;font-size:11.5px;color:#355849;margin-bottom:10px;cursor:pointer;">
-              <input type="checkbox" id="p8-consent" required checked style="margin-top:3px;">
+              <input type="checkbox" id="p8-consent" required style="margin-top:3px;">
               <span>${isTh
-                ? "ข้าพเจ้ารับทราบว่าการส่งข้อมูลนี้เป็นการนัดหมายเพื่อรับคำปรึกษาเบื้องต้น การวินิจฉัยและใบเสนอราคาจะเกิดขึ้นภายหลังแพทย์ตรวจประเมินโดยตรงเท่านั้น"
-                : "I understand this enquiry requests a consultation schedule only, and does not constitute medical diagnosis or a binding price quote before an in-person physician assessment."}</span>
+                ? "ข้าพเจ้ารับทราบว่าหน้านี้เป็นตัวอย่างเพื่อการสาธิต ไม่มีการส่งหรือจัดเก็บข้อมูลส่วนตัว และการวินิจฉัยหรือใบเสนอราคาจะเกิดขึ้นภายหลังแพทย์ตรวจประเมินโดยตรงเท่านั้น"
+                : "I understand this page is a demonstration preview only (no personal information is submitted or stored), and medical assessment or pricing requires an in-person consultation."}</span>
             </label>
             <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-              <button type="submit" id="p8-submit-btn" class="p8-submit-btn">${isTh ? "ส่งคำขอนัดหมายปรึกษาแพทย์ →" : "Send Consultation Request →"}</button>
-              <button type="button" id="p8-save-copy-txt-btn" class="p3-gal-btn">⬇ ${isTh ? "บันทึกสำเนาแบบฟอร์ม (.txt)" : "Save a Copy (.txt)"}</button>
-              <span id="p8-form-status" role="status" aria-live="polite" style="font-size:12px;font-weight:700;color:#087A3B;"></span>
+              <button type="submit" id="p8-submit-btn" class="p8-submit-btn">${isTh ? "ทดสอบส่งแบบฟอร์ม (โหมดสาธิต) →" : "Preview Consultation Request (Demo Only) →"}</button>
+              <button type="button" id="p8-save-copy-txt-btn" class="p3-gal-btn">⬇ ${isTh ? "บันทึกสำเนาแบบฟอร์ม (.txt)" : "Save Local Copy (.txt)"}</button>
+              <span id="p8-form-status" role="status" aria-live="polite" style="font-size:12px;font-weight:700;color:#92400E;"></span>
             </div>
           </form>
         </div>
@@ -8840,13 +8845,11 @@
           const idemKey = `p8-${[name, contact, country, goal].map(s => s.toLowerCase().replace(/[^a-z0-9ก-๙]/g, "")).join("-")}`.slice(0, 96);
           const isStaticHost = window.location.hostname.endsWith(".github.io") || window.location.hostname.endsWith(".pages.dev");
           if (isStaticHost) {
-            const hashHex = Math.abs(idemKey.split("").reduce((a, c) => ((a << 5) - a) + c.charCodeAt(0), 0)).toString(16).toUpperCase().padStart(6, "0").slice(0, 6);
-            const refId = `INT-R05-${hashHex}`;
             if (statusEl) {
-              statusEl.style.color = "#087A3B";
+              statusEl.style.color = "#92400E";
               statusEl.textContent = isTh
-                ? `✓ บันทึกคำขอนัดหมายเรียบร้อย · รหัสอ้างอิง: ${refId} (โหมดพรีวิวสาธารณะ · ไม่ส่งข้อมูลผู้ป่วยออกภายนอก)`
-                : `✓ Consultation Request Validated · Ref: ${refId} (Public Preview Mode — 0 patient records transmitted externally; use "Save Copy (.txt)" or call +66 2 481 5555).`;
+                ? "โหมดสาธิตเท่านั้น — ไม่มีการส่งหรือจัดเก็บข้อมูลส่วนตัว กรุณาติดต่อโรงพยาบาลอินทรารัตน์โดยตรงที่ info@intrarathospital.co.th หรือโทร +66 2 481 5555"
+                : "Demonstration only — no information has been submitted. For real enquiries, please email info@intrarathospital.co.th or call +66 2 481 5555.";
             }
           } else {
             const res = await fetch("/api/patient-intake", {
@@ -9021,19 +9024,14 @@
       drawer.innerHTML = `
         <div class="concierge-header">
           <div class="concierge-header-title">
-            <strong>INTRARAT INTELLIGENT CONCIERGE</strong>
-            <span>International Patient Guidance · Interactive Site Navigation</span>
+            <strong>INTRARAT DIGITAL CONCIERGE (DEMO)</strong>
+            <span>Interactive Prototype Guide · Site Navigation</span>
           </div>
           <div class="concierge-header-actions">
-            <a href="/crm/" class="concierge-hdr-btn" id="concierge-open-crm-link" style="text-decoration:none;background:rgba(16,185,129,0.24);border-color:#34D399;color:#ECFDF5;">Patient AI CRM</a>
             <button type="button" class="concierge-hdr-btn" id="concierge-lang-btn">EN | TH</button>
             <button type="button" class="concierge-hdr-btn" id="concierge-clear-btn">Reset</button>
             <button type="button" class="concierge-hdr-btn" id="concierge-close-btn" aria-label="Close Concierge">✕</button>
           </div>
-        </div>
-        <div id="concierge-crm-qual-bar" style="padding:7px 12px;background:rgba(6,28,18,0.92);border-bottom:1px solid rgba(110,231,183,0.22);font-size:11.5px;color:#A7F3D0;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">
-          <span id="concierge-crm-status-text">CRM Qualification Bridge Ready · Share email/treatment in chat or click Qualify to create CRM Lead</span>
-          <button type="button" class="concierge-hdr-btn" id="concierge-crm-sync-btn" style="font-size:11px;padding:3px 9px;background:#10B981;color:#03140B;font-weight:800;">+ Sync Chat to CRM</button>
         </div>
         <div class="concierge-chips-bar" aria-label="Suggested Questions"></div>
         <div class="concierge-messages-log" id="concierge-messages-log" role="log" aria-live="polite"></div>
@@ -9202,10 +9200,88 @@
     }
   }
 
+  function buildDemoConciergeReply(questionText) {
+    const isTh = masterState.cms.lang === "th";
+    const q = String(questionText || "").toLowerCase();
+    const demoTag = isTh ? "[ตัวอย่างระบบตอบกลับอัตโนมัติ · ไม่มีการบันทึกข้อมูลผู้ป่วย]\n" : "[Prototype Demonstration Response — No patient enquiry has been received or stored]\n";
+
+    if (/price|cost|fee|quote|how much|budget|baht|usd|ราคา|ค่าใช้จ่าย|ค่ารักษา|เท่าไร|ประเมินราคา/.test(q)) {
+      return {
+        role: "assistant",
+        text: demoTag + (isTh
+          ? "นโยบายการประเมินค่ารักษาของโรงพยาบาลอินทรารัตน์: ค่าผ่าตัดขึ้นอยู่กับโครงสร้างกายวิภาคและขอบเขตการรักษาของแต่ละบุคคล จึงไม่สามารถออกใบเสนอราคาตายตัวออนไลน์ได้ ใบเสนอราคาที่เป็นลายลักษณ์อักษรจะจัดทำภายหลังแพทย์ตรวจประเมินโดยตรง (ติดต่อโดยตรงที่ info@intrarathospital.co.th หรือ +66 2 481 5555)"
+          : "Intrarat Pricing Policy: Surgical fees depend on individual facial/neck anatomy, operating theatre time, anesthesia, and inpatient recovery nights. Formal written quotations are issued only after an in-person physician assessment. For official fee guidance, contact info@intrarathospital.co.th or +66 2 481 5555."),
+        actions: [
+          { type: "open-medical-tool", toolIdx: 7, label: isTh ? "เปิดเช็กลิสต์ใบเสนอราคา (Tool 08)" : "Open Written Quote Checklist (Tool 08)" },
+          { type: "goto-page", page: 8, label: isTh ? "ไปหน้า 08 · ข้อมูลติดต่อโรงพยาบาล" : "Open Page 08 · Hospital Contact" }
+        ]
+      };
+    }
+    if (/emergenc|urgent|chest pain|bleed|1669|911|ฉุกเฉิน|เจ็บหน้าอก|หายใจไม่ออก/.test(q)) {
+      return {
+        role: "assistant",
+        text: demoTag + (isTh
+          ? "หากมีเหตุฉุกเฉินทางการแพทย์: ในประเทศไทยโทร. 1669 หรือไปแผนกฉุกเฉินใกล้บ้านทันที · หากท่านอยู่ต่างประเทศ กรุณาโทรหมายเลขฉุกเฉินในประเทศของท่าน (เช่น 911, 999, 112 หรือ 000) ห้ามรอการตอบกลับจากหน้าเว็บนี้"
+          : "Medical Emergency Notice: If you are in Thailand, dial 1669 or visit the nearest emergency department immediately. If you are located abroad, call your local emergency number (e.g., 911, 999, 112, or 000). Do not rely on this demo website for urgent care."),
+        actions: [{ type: "goto-page", page: 8, label: isTh ? "ดูข้อมูลติดต่อฉุกเฉิน (หน้า 08)" : "View Hospital Contact Details (Page 08)" }]
+      };
+    }
+    if (/3d|anatom|deep plane|smas|neck|ligament|nerve|กายวิภาค|ดึงหน้า|ลำคอ/.test(q)) {
+      return {
+        role: "assistant",
+        text: demoTag + (isTh
+          ? "คุณสามารถสำรวจโครงสร้างใบหน้าและลำคอ 3 มิติ 17 ชั้น (SMAS, Platysma, Retaining Ligaments และเส้นประสาทใบหน้า CN VII) ได้แบบอินเทอร์แอคทีฟที่หน้า 04"
+          : "Explore our interactive 17-structure 3D Head & Neck Anatomy Explorer on Page 04, including SMAS/Deep Plane, Platysma, retaining ligaments, and facial nerve (CN VII) safety landmarks."),
+        actions: [
+          { type: "goto-page", page: 4, label: isTh ? "เปิดหน้า 04 · กายวิภาค 3 มิติ" : "Open Page 04 · 3D Anatomy Explorer" },
+          { type: "open-medical-tool", toolIdx: 1, label: isTh ? "เปิด MEDIVERSE 3D (Tool 02)" : "Open MEDIVERSE 3D (Tool 02)" }
+        ]
+      };
+    }
+    if (/room|suite|inpatient|hotel|stay|recovery|ห้องพัก|สวีท|พักฟื้น/.test(q)) {
+      return {
+        role: "assistant",
+        text: demoTag + (isTh
+          ? "รับชมห้องพักผู้ป่วยในส่วนตัวของโรงพยาบาลอินทรารัตน์ (ห้อง 6211, 5102, 6114 และ 6205) พร้อมภาพถ่ายจริงและวิดีโอเดินชมห้องได้ที่หน้า 07"
+          : "Tour Intrarat Hospital's private inpatient recovery suites (Rooms 6211, 5102, 6114, and 6205) with authentic photography and room walkthrough videos on Page 07."),
+        actions: [{ type: "goto-page", page: 7, label: isTh ? "เปิดหน้า 07 · ห้องพักผู้ป่วยใน" : "Open Page 07 · Private Suite Tour" }]
+      };
+    }
+    if (/tool|facescan|scan|dicom|nutrition|barcode|mirror|เครื่องมือ|สแกน|โภชนาการ/.test(q)) {
+      return {
+        role: "assistant",
+        text: demoTag + (isTh
+          ? "หน้า 06 รวบรวมเครื่องมือสุขภาพ 9 รายการ ได้แก่ Dominic FaceScan (ประมวลผลบนอุปกรณ์), MEDIVERSE 3D, เช็กลิสต์ก่อนเดินทาง, MedlinePlus, โภชนาการ, บาร์โค้ด, DICOM Viewer, เช็กลิสต์ใบเสนอราคา และกระจกกายวิภาค 3 มิติสด"
+          : "Page 06 brings together all 9 interactive health tools: Dominic FaceScan (on-device), MEDIVERSE 3D, Pre-Travel Checklist, MedlinePlus Search, Nutrition Explorer, Barcode Inspector, Local DICOM Viewer, Quote Checklist, and Live 3D Anatomy Mirror."),
+        actions: [{ type: "goto-page", page: 6, label: isTh ? "เปิดหน้า 06 · เครื่องมือสุขภาพ 9 รายการ" : "Open Page 06 · 9 Health Tools" }]
+      };
+    }
+    return {
+      role: "assistant",
+      text: demoTag + (isTh
+        ? "นพ.รัชพล สดาวรรธน์ (ศัลยแพทย์ตกแต่งและเสริมสร้าง ประจำโรงพยาบาลอินทรารัตน์ ถ.รามอินทรา กรุงเทพฯ · โทร. +66 2 481 5555) สามารถเลือกปุ่มด้านล่างเพื่อดูประวัติแพทย์ โมเดล 3 มิติ เครื่องมือสุขภาพ 9 รายการ หรือห้องพักผู้ป่วยในได้ทันที"
+        : "Rushapol Sdawat, M.D. is a Plastic and Reconstructive Surgeon at Intrarat Hospital (555/5 Ram Inthra Road, Bangkok · +66 2 481 5555 · info@intrarathospital.co.th). Choose a section below to explore the executive mockup."),
+      actions: [
+        { type: "goto-page", page: 3, label: isTh ? "หน้า 03 · ประวัติ นพ.รัชพล" : "Page 03 · Dr. Rushapol" },
+        { type: "goto-page", page: 4, label: isTh ? "หน้า 04 · กายวิภาค 3 มิติ" : "Page 04 · 3D Anatomy" },
+        { type: "goto-page", page: 6, label: isTh ? "หน้า 06 · เครื่องมือสุขภาพ 9 รายการ" : "Page 06 · 9 Health Tools" },
+        { type: "goto-page", page: 8, label: isTh ? "หน้า 08 · ข้อมูลติดต่อโรงพยาบาล" : "Page 08 · Hospital Contact" }
+      ]
+    };
+  }
+
   async function sendConciergeQuestion(questionText, opts = {}) {
     if (!opts.silentUserBubble) {
       masterState.chatMessages.push({ role: "user", text: questionText });
       renderConciergeMessages();
+    }
+
+    const isStaticHost = !window.__INTRARAT_API_BASE__ && (window.location.hostname.endsWith(".github.io") || window.location.hostname.endsWith(".pages.dev"));
+    if (isStaticHost) {
+      masterState.chatMessages.push(buildDemoConciergeReply(questionText));
+      window.sessionStorage.setItem(CHAT_STORE_KEY, JSON.stringify(masterState.chatMessages.slice(-20)));
+      renderConciergeMessages();
+      return;
     }
 
     try {
@@ -9223,16 +9299,6 @@
       });
       const data = await resp.json();
       let replyText = data.reply || "Intrarat Hospital (+66 2 481 5555 · info@intrarathospital.co.th).";
-      if (data.crmSync && data.crmSync.ok) {
-        const cs = data.crmSync;
-        const crmStatusEl = document.getElementById("concierge-crm-status-text");
-        if (crmStatusEl) {
-          crmStatusEl.textContent = `CRM Synced: ${cs.referenceCode} · Status: ${cs.status} · Missing: ${(cs.missingFields || []).length}`;
-        }
-        if (data.qualificationPrompt) {
-          replyText += `\n\n[CRM Qualification · ${cs.referenceCode} · ${cs.status}] ${data.qualificationPrompt}`;
-        }
-      }
       const replyMsg = {
         role: "assistant",
         text: replyText,
@@ -9247,15 +9313,7 @@
         executeConciergeAction(data.autoAction);
       }
     } catch (err) {
-      masterState.chatMessages.push({
-        role: "assistant",
-        text: "Rushapol Sdawat, M.D. is a Plastic and Reconstructive Surgeon at Intrarat Hospital (555/5 Ram Inthra Road, Bangkok · +66 2 481 5555). Use the action buttons below to explore his 48-photo biography, the 3D Deep Plane Explorer, or the Luxury Suite Tour.",
-        actions: [
-          { type: "goto-page", page: 3, label: "Open Page 03 · Dr. Rushapol" },
-          { type: "goto-page", page: 4, label: "Open Page 04 · 3D Explorer" },
-          { type: "goto-page", page: 7, label: "Open Page 07 · Luxury Suite Tour" }
-        ]
-      });
+      masterState.chatMessages.push(buildDemoConciergeReply(questionText));
       renderConciergeMessages();
     }
   }
@@ -10065,8 +10123,15 @@
     }
   }
 
-  function goToPage(pageNum) {
+  function goToPage(pageNum, opts = {}) {
     const p = Math.max(1, Math.min(8, Number(pageNum) || 1));
+    const prevPage = masterState.currentPage;
+    if (p !== prevPage) {
+      // Stop all playing videos when navigating away
+      document.querySelectorAll("video").forEach((vid) => {
+        try { vid.pause(); } catch (_e) {}
+      });
+    }
     if (p !== 3 && masterState.storyPlaying) pauseDocumentaryPlayback();
     if (p !== 4 && masterState.p4StoryPlaying && typeof pausePage04Documentary === "function") pausePage04Documentary();
     if (p !== 7 && masterState.p7StoryPlaying && typeof pausePage07Tour === "function") pausePage07Tour();
@@ -10091,9 +10156,28 @@
       }
     }
 
+    // Sync browser history & shareable URL (?page=N)
+    if (!opts.fromPopState && !opts.skipHistory && window.history && typeof window.history.pushState === "function") {
+      try {
+        const u = new URL(window.location.href);
+        if (p === 1) u.searchParams.delete("page");
+        else u.searchParams.set("page", String(p));
+        const nextUrl = u.pathname + (u.search ? u.search : "") + (u.hash || "");
+        if (nextUrl !== window.location.pathname + window.location.search + window.location.hash) {
+          window.history.pushState({ page: p }, "", nextUrl);
+        }
+      } catch (_e) {}
+    }
+
     updateNavHighlights();
     updateSeoAndJsonLdTags();
   }
+
+  window.addEventListener("popstate", (ev) => {
+    const stPage = ev.state && ev.state.page;
+    const urlPage = Number(new URLSearchParams(window.location.search).get("page")) || 1;
+    goToPage(stPage || urlPage, { fromPopState: true });
+  });
 
   function handleInitialUrlParams() {
     const params = new URLSearchParams(window.location.search);
