@@ -869,7 +869,7 @@
           .replace(/"/g, "&quot;");
       }
 
-      const STAGING_BACKEND_ORIGIN = window.__INTRARAT_BACKEND_ORIGIN__ || "https://41f5957704227f.app.lhr.life";
+      const STAGING_BACKEND_ORIGIN = window.__INTRARAT_BACKEND_ORIGIN__ || "";
       let __fsOnDeviceFaceLandmarker = null;
       let __fsV6MlpWeights = null;
 
@@ -1203,8 +1203,8 @@
         }
 
         const candidateOrigins = isStaticHost
-          ? ["http://127.0.0.1:3080", STAGING_BACKEND_ORIGIN]
-          : ["", "http://127.0.0.1:3080", STAGING_BACKEND_ORIGIN];
+          ? (STAGING_BACKEND_ORIGIN ? [STAGING_BACKEND_ORIGIN] : [])
+          : ["", STAGING_BACKEND_ORIGIN].filter(Boolean);
 
         for (const origin of candidateOrigins) {
           try {
@@ -2104,7 +2104,7 @@
             </div>
             <div class="q-card">
               <strong>Physician Annotations</strong>
-              <div>${cr.physicianAnnotationFilesCount} Rater Files · Local App: <code>127.0.0.1:8702</code></div>
+              <div>${cr.physicianAnnotationFilesCount} Rater Files · Clinical Review Tool: Restricted Offline</div>
             </div>
           </div>
           <div class="q-card" style="margin-block-end:0.65rem;">

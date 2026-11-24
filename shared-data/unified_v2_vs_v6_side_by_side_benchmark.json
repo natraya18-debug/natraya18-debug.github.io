@@ -3,7 +3,7 @@
   "elapsed_seconds": 44.81,
   "models_loaded": {
     "v2_convnext_tiny_5fold": {
-      "checkpoint_dir": "D:\\AI\\Facial-Sagging\\synthetic_dataset\\experiment\\v2\\checkpoints\\SYNTHETIC_EXPERIMENT_ONLY_v2cv_regions",
+      "checkpoint_dir": "[REDACTED_INTERNAL_WORKSPACE]",
       "checkpoints": [
         "fold0.pt",
         "fold1.pt",
@@ -11,7 +11,7 @@
         "fold3.pt",
         "fold4.pt"
       ],
-      "onnx_export": "D:\\AI\\Facial-Sagging\\synthetic_dataset\\experiment\\v2\\checkpoints\\SYNTHETIC_EXPERIMENT_ONLY_v2cv_regions\\v2-fold0-int8.onnx",
+      "onnx_export": "[REDACTED_INTERNAL_WORKSPACE]",
       "architecture": "convnext_tiny.fb_in22k_ft_in1k backbone + 4 independent region linear heads (Grades 0..3)",
       "parameters_per_fold": 27832432,
       "ensemble_parameters_5fold": 139162160,
@@ -1036,13 +1036,13 @@
       }
     },
     "v6_s3fd_hessian_mlp": {
-      "checkpoint_path": "C:\\Users\\user\\.gemini\\antigravity\\scratch\\intrarat_face_sagging_detection\\models\\intrarat_sagging_net_v6.pt",
-      "detector_checkpoint_path": "C:\\Users\\user\\.cache\\torch\\hub\\checkpoints\\s3fd-619a316812.pth",
+      "checkpoint_path": "[REDACTED_LOCAL_PATH]",
+      "detector_checkpoint_path": "[REDACTED_LOCAL_PATH]",
       "architecture": "Pretrained S3FD (VGG-16 SSD) face detector + 10-region Anisotropic Hessian Crease-Valley & 21-Point Mandibular Edge Tracer + 2-layer IntraratSaggingNetV6 MLP",
       "s3fd_detector_parameters": 22459110,
       "sagging_mlp_trainable_parameters": 466,
       "untrained_unet_in_repo": {
-        "script": "C:\\Users\\user\\.gemini\\antigravity\\scratch\\intrarat_face_sagging_detection\\train_clinical_sagging_model.py",
+        "script": "[REDACTED_LOCAL_PATH]",
         "class": "IntraratMultiViewSaggingUNet",
         "parameters": 1923043,
         "trained_weights_exist": false,

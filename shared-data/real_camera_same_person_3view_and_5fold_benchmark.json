@@ -2,7 +2,7 @@
   "productName": "DOMINIC FACESCAN",
   "generatedAtUtc": "2026-11-22T05:51:25Z",
   "elapsedSeconds": 39.55,
-  "visualEvidenceBoardPath": "C:\\Users\\user\\.gemini\\antigravity\\brain\\d038059b-94a3-4fef-bfd4-43b1ca1c588a\\dominic_facescan_same_person_3view_and_5fold_vs_fold0_board.png",
+  "visualEvidenceBoardPath": "[REDACTED_LOCAL_PATH]",
   "captureSourceProvenanceSummary": {
     "physicalLiveWebRtcCameraOnWindowsHost": "FAIL / BLOCKED_NO_PHYSICAL_CAMERA_HARDWARE (0 UVC webcams connected to Windows host; getUserMedia throws NotFoundError)",
     "realUploadedPhotographs": "PASS — Tested on authentic unwarped portraits (SUBJ_11_52F frontal -1.3°, android_01/04 dual 34F front-cam +1.5°, subject_03_oblique -14.6° left oblique, unseen_07_oblique -8.1° left oblique)",

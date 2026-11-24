@@ -1,6 +1,6 @@
 {
  "local_next_start": {
-  "url": "http://127.0.0.1:3000/international/face-scan-v2",
+  "url": "[INTERNAL_OFFLINE_TOOL]",
   "images_run": 88,
   "phase_result": 88,
   "same_grade_as_PC_pytorch_fp32": "350/352",

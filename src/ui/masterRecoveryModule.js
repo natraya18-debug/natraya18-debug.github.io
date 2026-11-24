@@ -5347,9 +5347,10 @@
       // 1. Primary Live HTTPS PyTorch V2 (5-Fold ConvNeXt-Tiny) + V6 (S3FD/Hessian/MLP) Backend Evaluation
       const imgB64 = off.toDataURL("image/jpeg", 0.85);
       let backendEvalData = null;
-      const candidateBases = (window.location.hostname.endsWith(".github.io") || window.location.hostname.endsWith(".pages.dev"))
-        ? [window.__INTRARAT_API_BASE__ || "https://41f5957704227f.app.lhr.life", "http://127.0.0.1:3080"]
-        : ["", "http://127.0.0.1:3080", "https://41f5957704227f.app.lhr.life"];
+      const isStaticPublicHost = (window.location.hostname.endsWith(".github.io") || window.location.hostname.endsWith(".pages.dev"));
+      const candidateBases = isStaticPublicHost
+        ? (window.__INTRARAT_API_BASE__ ? [window.__INTRARAT_API_BASE__] : [])
+        : [""];
       for (const apiBase of candidateBases) {
         try {
           const r = await fetch(`${apiBase}/api/face-scan-v2/evaluate`, {

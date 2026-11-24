@@ -705,7 +705,7 @@
     "backbone": "convnext_tiny.fb_in22k_ft_in1k (4 region heads, grades 0–3)",
     "onnxFile": "public/face-scan-v2/internal/v2-fold0-int8.onnx",
     "onnxSha256": "fc7b0ac12515696c753127e43275be33369e9a1cca4754b021cc388ceb9d1d82",
-    "pytorchCheckpointsDir": "D:\\AI\\Facial-Sagging\\synthetic_dataset\\experiment\\v2\\checkpoints\\SYNTHETIC_EXPERIMENT_ONLY_v2cv_regions",
+    "pytorchCheckpointsDir": "[REDACTED_INTERNAL_WORKSPACE]",
     "regionAssessments": [
       {
         "region": "cheek",
