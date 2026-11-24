@@ -3208,6 +3208,24 @@
       });
     }
 
+    if (!document.getElementById("home-explore-tools-cta")) {
+      const homeCtaWrap = document.createElement("div");
+      homeCtaWrap.id = "home-explore-tools-cta";
+      homeCtaWrap.className = "home-explore-tools-cta";
+      homeCtaWrap.innerHTML = `
+        <button type="button" id="home-explore-tools-btn" class="home-explore-tools-btn">
+          <span class="home-cta-sparkle" aria-hidden="true">✦</span>
+          <span id="home-explore-tools-label">EXPLORE 9 HEALTH TOOLS</span>
+          <span class="home-cta-arrow" aria-hidden="true">→</span>
+        </button>
+        <div id="home-explore-tools-sub" class="home-explore-tools-sub">Dominic FaceScan · MEDIVERSE 3D · Live 3D Anatomy Mirror · Pre-Op &amp; Clinical Tools</div>
+      `;
+      document.body.appendChild(homeCtaWrap);
+      document.getElementById("home-explore-tools-btn")?.addEventListener("click", () => {
+        goToPage(6);
+      });
+    }
+
     if (!document.getElementById("master-progress-rail")) {
       const rail = document.createElement("div");
       rail.id = "master-progress-rail";
@@ -6472,15 +6490,47 @@
             <h1 class="p3-cinema-main-headline">${isTh ? "สตูดิโอเครื่องมือแพทย์ 9 รายการ" : "HEALTH TOOL LAB & GALAXY"}</h1>
           </div>
 
-          <!-- HEALTH TOOLS SELECTOR PILLS (All 9 tools inspectable with honest status badges: 07 [NO PACS], 09 [LIVE 3D MIRROR]) -->
-          <nav class="p3-minimal-chapter-nav" role="tablist" aria-label="Interactive Health Tools">
+          <!-- HEALTH TOOLS 3x3 EXECUTIVE SHOWCASE GRID (All 9 tools visible with readable names, descriptions, status badges, and Open Tool actions) -->
+          <nav class="p3-minimal-chapter-nav p6-showcase-grid-3x3" role="tablist" aria-label="Interactive Health Tools">
             ${HEALTH_TOOLS_9.map((tl, idx) => {
-              const statusSuffix = idx === 6 ? " [LOCAL·NO PACS]" : idx === 8 ? " [LIVE 3D]" : "";
+              const isSelected = idx === masterState.p6ActiveToolIdx;
+              const badgeLabelsEn = [
+                "AI R&D · ON-DEVICE MAP",
+                "LIVE 3D WEBGL · 3 MODELS",
+                "PRE-OP SAFETY CHECK",
+                "NIH MEDLINEPLUS API",
+                "USDA NUTRITION LAB",
+                "OPENFOODFACTS API",
+                "LOCAL DICOM · NO PACS",
+                "QUOTE & CONSENT",
+                "LIVE 3D ANATOMY MIRROR"
+              ];
+              const badgeLabelsTh = [
+                "AI R&D · แผนที่ใบหน้า",
+                "โมเดล 3 มิติ · 3 ระบบ",
+                "เช็กลิสต์ก่อนเดินทาง",
+                "ฐานข้อมูล MedlinePlus",
+                "โภชนาการและโซเดียม",
+                "ตรวจฉลากโภชนาการ",
+                "ไฟล์ DICOM · ไม่เชื่อม PACS",
+                "ใบเสนอราคาและความยินยอม",
+                "กระจกกายวิภาค 3 มิติสด"
+              ];
+              const statusBadge = isTh ? badgeLabelsTh[idx] : badgeLabelsEn[idx];
               const cleanToolTitle = t(tl.name).replace(/^\[(?:สถานะ\s*)?DEMO\]\s*/i, "").split("(")[0].trim();
+              const shortDesc = t(tl.summary);
+              const openLabel = isSelected
+                ? (isTh ? "✓ กำลังเปิดใช้งาน" : "✓ Active Tool")
+                : (isTh ? "เปิดเครื่องมือ →" : "Open Tool →");
               return `
-                <button type="button" role="tab" class="p3-chapter-tab p3-minimal-ch-btn" data-tool-idx="${idx}" aria-selected="${idx === masterState.p6ActiveToolIdx ? "true" : "false"}">
-                  <span class="p3-min-ch-num">${tl.no}${statusSuffix}</span>
-                  <span class="p3-min-ch-title">${cleanToolTitle}</span>
+                <button type="button" role="tab" class="p3-chapter-tab p3-minimal-ch-btn p6-tool-showcase-card ${isSelected ? "is-active-tool-card" : ""}" data-tool-idx="${idx}" aria-selected="${isSelected ? "true" : "false"}">
+                  <div class="p6-card-top-row">
+                    <span class="p3-min-ch-num">TOOL ${tl.no}</span>
+                    <span class="p6-card-status-pill">${statusBadge}</span>
+                    <span class="p6-card-open-cta">${openLabel}</span>
+                  </div>
+                  <div class="p3-min-ch-title p6-card-main-title">${tl.no} · ${cleanToolTitle}</div>
+                  <div class="p6-card-desc">${shortDesc}</div>
                 </button>
               `;
             }).join("")}
@@ -9833,6 +9883,8 @@
 
     setTxt("lab-link-btn", (cfg.brand && cfg.brand.labLabel) || "// REPLAY 3D INTRO", "// เล่นอินโทร 3 มิติอีกครั้ง");
     setTxt("sr-hero-headline", "INTRARAT INTERNATIONAL HOSPITAL · BANGKOK", "โรงพยาบาลอินทรารัตน์ · กรุงเทพมหานคร");
+    setTxt("home-explore-tools-label", "EXPLORE 9 HEALTH TOOLS", "สำรวจเครื่องมือสุขภาพ 9 รายการ");
+    setTxt("home-explore-tools-sub", "Dominic FaceScan · MEDIVERSE 3D · Live 3D Anatomy Mirror · Pre-Op & Clinical Tools", "Dominic FaceScan · กายวิภาค 3 มิติ MEDIVERSE · กระจกกายวิภาค 3 มิติสด · เครื่องมือเตรียมความพร้อม");
     setTxt("nav-work-btn", "SHOWCASE", "วิดีโอแนะนำ");
     setTxt("nav-contact-btn", "CONTACT", "ติดต่อเรา");
     setTxt("scroll-cue-text", "SCROLL TO EXPLORE", "เลื่อนเพื่อสำรวจ");
@@ -9966,6 +10018,10 @@
     const isMaster = p >= 3 && p <= 8;
     document.body.classList.toggle("master-stage-open", isMaster);
     document.body.classList.toggle("is-page02-active", p === 2);
+    const homeCta = document.getElementById("home-explore-tools-cta");
+    if (homeCta) {
+      homeCta.classList.toggle("is-hidden", p !== 1);
+    }
 
     for (let i = 3; i <= 8; i++) {
       const st = document.getElementById(`page0${i}-stage`);
@@ -10111,6 +10167,7 @@
     if (pageParam) {
       const p = Number(pageParam);
       if (p >= 1 && p <= 8) {
+        goToPage(p);
         setTimeout(() => goToPage(p), 120);
       }
     } else if (sceneParam === "contact" || sceneParam === "doctor" || sceneParam === "page3") {
