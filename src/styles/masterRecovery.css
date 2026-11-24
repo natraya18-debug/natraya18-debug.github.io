@@ -3395,7 +3395,26 @@ body.is-page02-active .home-explore-tools-cta {
 #page06-stage .p6-tool-showcase-card.is-active-tool-card .p6-card-desc {
   color: #D1FAE5 !important;
 }
+/* Keep Desktop Page 02 header compact so no right-side pill clips offscreen */
+body.is-page02-active .chrome-header {
+  padding: 12px 24px !important;
+}
+body.is-page02-active #brand-logo-img {
+  height: 36px !important;
+  max-width: 190px !important;
+}
+body.is-page02-active #nav-pillbox {
+  display: none !important;
+}
+
 @media (max-width: 820px) {
+  .sr-hero-headline {
+    font-size: 9.5px !important;
+    letter-spacing: 0.11em !important;
+    max-width: 94vw !important;
+    text-align: center !important;
+    padding: 3px 6px !important;
+  }
   .chrome-header {
     flex-direction: column !important;
     align-items: stretch !important;

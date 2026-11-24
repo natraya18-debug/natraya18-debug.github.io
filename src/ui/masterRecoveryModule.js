@@ -10081,8 +10081,13 @@
     } else if (p === 2) {
       document.getElementById("nav-work-btn")?.click();
       if (window.__TEMPLATE_APP_STATE) {
-        window.__TEMPLATE_APP_STATE.targetScroll = 0.36;
-        window.__TEMPLATE_APP_STATE.scrollProgress = 0.36;
+        window.__TEMPLATE_APP_STATE.targetScroll = 0.48;
+        window.__TEMPLATE_APP_STATE.scrollProgress = 0.48;
+      }
+      const workStage = document.getElementById("work-stage");
+      if (workStage) {
+        workStage.style.opacity = "1";
+        workStage.style.pointerEvents = "auto";
       }
     }
 
@@ -10170,6 +10175,9 @@
       if (p >= 1 && p <= 8) {
         goToPage(p);
         setTimeout(() => goToPage(p), 120);
+        if (p === 2) {
+          setTimeout(() => goToPage(2), 650);
+        }
       }
     } else if (sceneParam === "contact" || sceneParam === "doctor" || sceneParam === "page3") {
       setTimeout(() => goToPage(3), 120);
