@@ -3404,6 +3404,13 @@ body.is-page02-active .home-explore-tools-cta {
     height: auto !important;
   }
   .chrome-header .nav-right-cluster {
+    display: flex !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    justify-content: center !important;
+  }
+  .chrome-header #audio-toggle-btn,
+  .chrome-header #nav-pillbox {
     display: none !important;
   }
   .chrome-header .master-page-ribbon {
